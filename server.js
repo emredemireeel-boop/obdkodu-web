@@ -192,6 +192,30 @@ function handleAbout(req, res) {
   sendHtml(res, 200, html);
 }
 
+function handlePrivacy(req, res) {
+  const html = render('privacy', {
+    pageTitle: 'Gizlilik Politikası',
+    metaDescription: 'obdkodu.com gizlilik politikası ve çerez (cookie) kullanım ilkeleri.',
+  });
+  sendHtml(res, 200, html);
+}
+
+function handleTerms(req, res) {
+  const html = render('terms', {
+    pageTitle: 'Kullanım Koşulları',
+    metaDescription: 'obdkodu.com kullanım koşulları ve yasal sorumluluk reddi beyanı.',
+  });
+  sendHtml(res, 200, html);
+}
+
+function handleContact(req, res) {
+  const html = render('contact', {
+    pageTitle: 'İletişim',
+    metaDescription: 'Soru, görüş ve önerileriniz için obdkodu.com iletişim bilgileri.',
+  });
+  sendHtml(res, 200, html);
+}
+
 function handleApiSearch(req, res, query) {
   const q = (query.q || '').trim();
   const limit = parseInt(query.limit) || 10;
@@ -253,6 +277,21 @@ function handleSitemap(req, res) {
     <loc>${baseUrl}/hakkinda</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>${baseUrl}/gizlilik-politikasi</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>${baseUrl}/kullanim-kosullari</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>${baseUrl}/iletisim</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
   </url>
 `;
 
@@ -348,6 +387,18 @@ const server = http.createServer((req, res) => {
 
   if (pathname === '/hakkinda' && req.method === 'GET') {
     return handleAbout(req, res);
+  }
+
+  if (pathname === '/gizlilik-politikasi' && req.method === 'GET') {
+    return handlePrivacy(req, res);
+  }
+
+  if (pathname === '/kullanim-kosullari' && req.method === 'GET') {
+    return handleTerms(req, res);
+  }
+
+  if (pathname === '/iletisim' && req.method === 'GET') {
+    return handleContact(req, res);
   }
 
   // SEO
