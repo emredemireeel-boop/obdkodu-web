@@ -116,13 +116,11 @@ async function main() {
   // 4. Authenticate
   console.log('Google Sunucularına Bağlanılıyor...');
   const key = JSON.parse(fs.readFileSync(KEY_FILE, 'utf-8'));
-  const jwtClient = new google.auth.JWT(
-    key.client_email,
-    null,
-    key.private_key,
-    ['https://www.googleapis.com/auth/indexing'],
-    null
-  );
+  const jwtClient = new google.auth.JWT({
+    email: key.client_email,
+    key: key.private_key,
+    scopes: ['https://www.googleapis.com/auth/indexing']
+  });
 
   try {
     await jwtClient.authorize();
