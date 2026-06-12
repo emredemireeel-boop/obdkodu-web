@@ -115,7 +115,7 @@
     {{/if}}
 
     <!-- Brands Cloud (Internal Linking for SEO) -->
-    {{#if isNotBrandPage}}
+    {{#if showBrandsCloud}}
     <div class="premium-related-section" style="margin-top: 20px;">
       <h3 class="premium-section-title">Markalara Göre {{code}} Arızası</h3>
       <div class="premium-brands-cloud">
@@ -126,11 +126,36 @@
     </div>
     {{/if}}
 
+    <!-- Models Cloud -->
+    {{#if showModelsCloud}}
+    <div class="premium-related-section" style="margin-top: 20px;">
+      <h3 class="premium-section-title">{{brandName}} Modellerine Göre {{code}} Arızası</h3>
+      <div class="premium-brands-cloud">
+        {{#each brandModels}}
+        <a href="/kod/{{code}}/{{brandSlug}}/{{slug}}" class="brand-chip">{{name}}</a>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+
+    <!-- Back Buttons -->
     {{#if isBrandPage}}
     <div class="premium-related-section" style="margin-top: 20px; text-align: center;">
       <a href="/kod/{{code}}" class="brand-chip-active">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         {{code}} Genel Açıklamasına Dön
+      </a>
+    </div>
+    {{/if}}
+
+    {{#if isModelPage}}
+    <div class="premium-related-section" style="margin-top: 20px; text-align: center; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+      <a href="/kod/{{code}}/{{brandSlug}}" class="brand-chip-active">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        {{brandName}} Marka Sayfasına Dön
+      </a>
+      <a href="/kod/{{code}}" class="brand-chip" style="display: inline-flex; align-items: center; gap: 8px;">
+        {{code}} Genel Koda Dön
       </a>
     </div>
     {{/if}}

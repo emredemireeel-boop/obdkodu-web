@@ -1,0 +1,732 @@
+[
+  {
+    "id": 2001,
+    "brand": "Renault",
+    "model": "19 (Europa)"
+  },
+  {
+    "id": 2002,
+    "brand": "Renault",
+    "model": "9 (Spring / Broadway)"
+  },
+  {
+    "id": 2003,
+    "brand": "Renault",
+    "model": "Kangoo (Eski Kasa)"
+  },
+  {
+    "id": 2004,
+    "brand": "Peugeot",
+    "model": "206 (1.4)"
+  },
+  {
+    "id": 2005,
+    "brand": "Ford",
+    "model": "Fiesta (Eski Kasa)"
+  },
+  {
+    "id": 2006,
+    "brand": "Renault",
+    "model": "12 Toros"
+  },
+  {
+    "id": 2007,
+    "brand": "Peugeot",
+    "model": "406 (2.0)"
+  },
+  {
+    "id": 2008,
+    "brand": "Opel",
+    "model": "Astra G (1.4 / 1.6)"
+  },
+  {
+    "id": 2009,
+    "brand": "Chevrolet",
+    "model": "Aveo (1.2)"
+  },
+  {
+    "id": 2010,
+    "brand": "Fiat",
+    "model": "Linea (1.4 / 1.3 M.jet)"
+  },
+  {
+    "id": 2011,
+    "brand": "Ford",
+    "model": "Fiesta (1.4)"
+  },
+  {
+    "id": 2012,
+    "brand": "Hyundai",
+    "model": "Accent Admire (1.3)"
+  },
+  {
+    "id": 2013,
+    "brand": "Renault",
+    "model": "Symbol (1.5 dCi)"
+  },
+  {
+    "id": 2014,
+    "brand": "Honda",
+    "model": "Civic (VTEC 2)"
+  },
+  {
+    "id": 2015,
+    "brand": "Opel",
+    "model": "Astra (H Kasa)"
+  },
+  {
+    "id": 2016,
+    "brand": "Ford",
+    "model": "Focus (MK2)"
+  },
+  {
+    "id": 2017,
+    "brand": "Renault",
+    "model": "Clio 3"
+  },
+  {
+    "id": 2018,
+    "brand": "Fiat",
+    "model": "Linea (1.3 / 1.6 M.jet)"
+  },
+  {
+    "id": 2019,
+    "brand": "Renault",
+    "model": "Megane 2"
+  },
+  {
+    "id": 2020,
+    "brand": "Kia",
+    "model": "Rio"
+  },
+  {
+    "id": 2021,
+    "brand": "Mitsubishi",
+    "model": "Colt (1.3)"
+  },
+  {
+    "id": 2022,
+    "brand": "Peugeot",
+    "model": "207"
+  },
+  {
+    "id": 2023,
+    "brand": "Volkswagen",
+    "model": "Golf 4"
+  },
+  {
+    "id": 2024,
+    "brand": "Renault",
+    "model": "Fluence (1.5 dCi)"
+  },
+  {
+    "id": 2025,
+    "brand": "Opel",
+    "model": "Astra J Kasa (1.3 Dizel)"
+  },
+  {
+    "id": 2026,
+    "brand": "Peugeot / Citroen",
+    "model": "301 / C-Elysee"
+  },
+  {
+    "id": 2027,
+    "brand": "Volkswagen",
+    "model": "Golf 6 (BlueMotion)"
+  },
+  {
+    "id": 2028,
+    "brand": "Renault",
+    "model": "Grand Scenic (1.5 dCi)"
+  },
+  {
+    "id": 2029,
+    "brand": "Hyundai / Renault",
+    "model": "i20 / Clio 4"
+  },
+  {
+    "id": 2030,
+    "brand": "Mercedes",
+    "model": "E Serisi (W210 Kompressor)"
+  },
+  {
+    "id": 2031,
+    "brand": "Fiat",
+    "model": "Egea (1.3/1.6 M.jet, 1.4 Fire)"
+  },
+  {
+    "id": 2032,
+    "brand": "Renault",
+    "model": "Megane 4 (Joy Paket)"
+  },
+  {
+    "id": 2033,
+    "brand": "Ford",
+    "model": "Focus MK3 (1.6 TDCi)"
+  },
+  {
+    "id": 2034,
+    "brand": "Volkswagen",
+    "model": "Jetta & Golf 6"
+  },
+  {
+    "id": 2035,
+    "brand": "Hyundai",
+    "model": "Accent Blue"
+  },
+  {
+    "id": 2036,
+    "brand": "Honda",
+    "model": "Civic FB7"
+  },
+  {
+    "id": 2037,
+    "brand": "Toyota",
+    "model": "Corolla (E150 Kasa)"
+  },
+  {
+    "id": 2038,
+    "brand": "Opel",
+    "model": "Astra J Kasa"
+  },
+  {
+    "id": 2039,
+    "brand": "Citroen",
+    "model": "C4 (1.6 BlueHDi)"
+  },
+  {
+    "id": 2040,
+    "brand": "Citroen",
+    "model": "C3 (1.2 Puretech)"
+  },
+  {
+    "id": 2041,
+    "brand": "Fiat",
+    "model": "Doblo (1.6 M.jet)"
+  },
+  {
+    "id": 2042,
+    "brand": "Toyota / Honda",
+    "model": "Auris vb. (CVT)"
+  },
+  {
+    "id": 2043,
+    "brand": "Renault",
+    "model": "Megane 4 (1.5 dCi)"
+  },
+  {
+    "id": 2044,
+    "brand": "Skoda / VW",
+    "model": "Scala / Jetta"
+  },
+  {
+    "id": 2045,
+    "brand": "Dacia",
+    "model": "Sandero (2022+)"
+  },
+  {
+    "id": 2046,
+    "brand": "Renault",
+    "model": "Clio 5 (1.0 TCe - Icon Paket)"
+  },
+  {
+    "id": 2047,
+    "brand": "Opel",
+    "model": "Insignia (1.6 Dizel)"
+  },
+  {
+    "id": 2048,
+    "brand": "Seat",
+    "model": "Leon (1.6 TDI)"
+  },
+  {
+    "id": 2049,
+    "brand": "Fiat",
+    "model": "Egea Sedan (1.6 Multijet Lounge)"
+  },
+  {
+    "id": 2050,
+    "brand": "Honda",
+    "model": "City (1.5 Executive)"
+  },
+  {
+    "id": 2051,
+    "brand": "Opel / Hyundai",
+    "model": "Corsa / i20 (1.2T / 1.0T)"
+  },
+  {
+    "id": 2052,
+    "brand": "Fiat",
+    "model": "Egea Cross (1.6 Multijet Otomatik)"
+  },
+  {
+    "id": 2053,
+    "brand": "Opel",
+    "model": "Astra K Kasa (1.6 Dizel Otomatik)"
+  },
+  {
+    "id": 2054,
+    "brand": "Opel",
+    "model": "Corsa (1.2 Turbo Otomatik)"
+  },
+  {
+    "id": 2055,
+    "brand": "Volkswagen",
+    "model": "Golf / Polo"
+  },
+  {
+    "id": 2056,
+    "brand": "Ford",
+    "model": "Focus (Hatchback)"
+  },
+  {
+    "id": 2057,
+    "brand": "Opel / Peugeot",
+    "model": "Astra / 308 (1.2 Puretech)"
+  },
+  {
+    "id": 2058,
+    "brand": "Citroen",
+    "model": "C4X (1.2 Turbo)"
+  },
+  {
+    "id": 2059,
+    "brand": "Ford",
+    "model": "Focus 4 (1.5 Dizel - Trend X)"
+  },
+  {
+    "id": 2060,
+    "brand": "Toyota",
+    "model": "Corolla (1.8 Hybrid - Dream)"
+  },
+  {
+    "id": 2061,
+    "brand": "Skoda",
+    "model": "Scala (1.0 TSI - Elite/Premium)"
+  },
+  {
+    "id": 2062,
+    "brand": "Chery",
+    "model": "Omoda 5 (Comfort)"
+  },
+  {
+    "id": 2063,
+    "brand": "Hyundai / Kia",
+    "model": "Bayon / Stonic"
+  },
+  {
+    "id": 2064,
+    "brand": "Dacia / Renault",
+    "model": "Duster / Megane 4 (1.3 TCe)"
+  },
+  {
+    "id": 2065,
+    "brand": "Seat / VW",
+    "model": "Arona / T-Cross (1.0 TSI)"
+  },
+  {
+    "id": 2066,
+    "brand": "Hyundai",
+    "model": "Ioniq 6"
+  },
+  {
+    "id": 2067,
+    "brand": "DS Automobiles",
+    "model": "DS 4"
+  },
+  {
+    "id": 2068,
+    "brand": "Peugeot",
+    "model": "308 (Yeni Kasa)"
+  },
+  {
+    "id": 2069,
+    "brand": "TOGG",
+    "model": "T10F (Standart Menzil)"
+  },
+  {
+    "id": 2070,
+    "brand": "BYD",
+    "model": "Dolphin (Design Paket)"
+  },
+  {
+    "id": 2071,
+    "brand": "Ford",
+    "model": "Puma (1.0 Titanium)"
+  },
+  {
+    "id": 2072,
+    "brand": "Renault",
+    "model": "Duster (Evolution Turbo)"
+  },
+  {
+    "id": 2073,
+    "brand": "Toyota",
+    "model": "Corolla (1.5 Drive/Dream)"
+  },
+  {
+    "id": 2074,
+    "brand": "Skoda / Seat",
+    "model": "Kamiq / Arona"
+  },
+  {
+    "id": 2075,
+    "brand": "Citroen",
+    "model": "C3 Aircross (1.2 Plus)"
+  },
+  {
+    "id": 2076,
+    "brand": "Hyundai / Kia",
+    "model": "i30 / XCeed"
+  },
+  {
+    "id": 2077,
+    "brand": "Toyota",
+    "model": "Corolla (Hibrit)"
+  },
+  {
+    "id": 2078,
+    "brand": "Mercedes-Benz",
+    "model": "C Serisi (2018-2019)"
+  },
+  {
+    "id": 2079,
+    "brand": "Mercedes-Benz",
+    "model": "A Serisi"
+  },
+  {
+    "id": 2080,
+    "brand": "Skoda",
+    "model": "Kodiaq"
+  },
+  {
+    "id": 2081,
+    "brand": "Skoda",
+    "model": "Kamiq"
+  },
+  {
+    "id": 2082,
+    "brand": "BYD",
+    "model": "Seal Sedan (Design)"
+  },
+  {
+    "id": 2083,
+    "brand": "BYD",
+    "model": "Sealion 7"
+  },
+  {
+    "id": 2084,
+    "brand": "DS Automobiles",
+    "model": "DS 9 (1.6 Puretech)"
+  },
+  {
+    "id": 2085,
+    "brand": "Peugeot",
+    "model": "508 GT (1.5 Dizel)"
+  },
+  {
+    "id": 2086,
+    "brand": "Skoda",
+    "model": "Octavia (1.5 e-TEC)"
+  },
+  {
+    "id": 2087,
+    "brand": "Tesla",
+    "model": "Model Y (Long Range)"
+  },
+  {
+    "id": 2088,
+    "brand": "Volkswagen",
+    "model": "Passat Variant B9 (1.5 eTSI)"
+  },
+  {
+    "id": 2089,
+    "brand": "Chery",
+    "model": "Tiggo 8 Pro Max"
+  },
+  {
+    "id": 2090,
+    "brand": "DS Automobiles",
+    "model": "DS 7 Crossback (1.5 Dizel)"
+  },
+  {
+    "id": 2091,
+    "brand": "Peugeot",
+    "model": "E-3008 (GT 2024)"
+  },
+  {
+    "id": 2092,
+    "brand": "TOGG",
+    "model": "T10X"
+  },
+  {
+    "id": 2093,
+    "brand": "Mercedes-Benz",
+    "model": "GL / GLS Serisi"
+  },
+  {
+    "id": 2094,
+    "brand": "Volvo",
+    "model": "S90"
+  },
+  {
+    "id": 2095,
+    "brand": "Audi",
+    "model": "A5 Quattro S-Line (45 TFSI)"
+  },
+  {
+    "id": 2096,
+    "brand": "Volvo",
+    "model": "XC60"
+  },
+  {
+    "id": 2097,
+    "brand": "BMW",
+    "model": "4 Serisi Coupe"
+  },
+  {
+    "id": 2098,
+    "brand": "Audi",
+    "model": "A6 Quattro"
+  },
+  {
+    "id": 2099,
+    "brand": "BMW",
+    "model": "520i"
+  },
+  {
+    "id": 2100,
+    "brand": "Audi",
+    "model": "A6"
+  },
+  {
+    "id": 2101,
+    "brand": "Mercedes-Benz",
+    "model": "E200"
+  },
+  {
+    "id": 2102,
+    "brand": "Mercedes-Benz",
+    "model": "Vito (VIP Dizayn)"
+  },
+  {
+    "id": 3001,
+    "brand": "Peugeot",
+    "model": "206 (1.4)"
+  },
+  {
+    "id": 3002,
+    "brand": "Peugeot",
+    "model": "406 (2.0)"
+  },
+  {
+    "id": 3003,
+    "brand": "Opel",
+    "model": "Astra G (1.4 / 1.6)"
+  },
+  {
+    "id": 3004,
+    "brand": "Chevrolet",
+    "model": "Aveo (1.2)"
+  },
+  {
+    "id": 3005,
+    "brand": "Fiat",
+    "model": "Linea (1.4 / 1.3 M.jet)"
+  },
+  {
+    "id": 3006,
+    "brand": "Ford",
+    "model": "Fiesta (1.4)"
+  },
+  {
+    "id": 3007,
+    "brand": "Hyundai",
+    "model": "Accent Admire (1.3)"
+  },
+  {
+    "id": 3008,
+    "brand": "Renault",
+    "model": "Symbol (1.5 dCi)"
+  },
+  {
+    "id": 3009,
+    "brand": "Fiat",
+    "model": "Linea (1.3 / 1.6 M.jet)"
+  },
+  {
+    "id": 3010,
+    "brand": "Mitsubishi",
+    "model": "Colt (1.3)"
+  },
+  {
+    "id": 3011,
+    "brand": "Renault",
+    "model": "Fluence (1.5 dCi)"
+  },
+  {
+    "id": 3012,
+    "brand": "Opel",
+    "model": "Astra J Kasa (1.3 Dizel)"
+  },
+  {
+    "id": 3013,
+    "brand": "Renault",
+    "model": "Grand Scenic (1.5 dCi)"
+  },
+  {
+    "id": 3014,
+    "brand": "Fiat",
+    "model": "Egea (1.3/1.6 M.jet, 1.4 Fire)"
+  },
+  {
+    "id": 3015,
+    "brand": "Ford",
+    "model": "Focus MK3 (1.6 TDCi)"
+  },
+  {
+    "id": 3016,
+    "brand": "Citroen",
+    "model": "C4 (1.6 BlueHDi)"
+  },
+  {
+    "id": 3017,
+    "brand": "Citroen",
+    "model": "C3 (1.2 Puretech)"
+  },
+  {
+    "id": 3018,
+    "brand": "Fiat",
+    "model": "Doblo (1.6 M.jet)"
+  },
+  {
+    "id": 3019,
+    "brand": "Renault",
+    "model": "Megane 4 (1.5 dCi)"
+  },
+  {
+    "id": 3020,
+    "brand": "Citroen",
+    "model": "C3 (1.2 Puretech)"
+  },
+  {
+    "id": 3021,
+    "brand": "Renault",
+    "model": "Clio 5 (1.0 TCe - Icon Paket)"
+  },
+  {
+    "id": 3022,
+    "brand": "Opel",
+    "model": "Insignia (1.6 Dizel)"
+  },
+  {
+    "id": 3023,
+    "brand": "Seat",
+    "model": "Leon (1.6 TDI)"
+  },
+  {
+    "id": 3024,
+    "brand": "Fiat",
+    "model": "Egea Sedan (1.6 Multijet Lounge)"
+  },
+  {
+    "id": 3025,
+    "brand": "Honda",
+    "model": "City (1.5 Executive)"
+  },
+  {
+    "id": 3026,
+    "brand": "Opel / Hyundai",
+    "model": "Corsa / i20 (1.2T / 1.0T)"
+  },
+  {
+    "id": 3027,
+    "brand": "Fiat",
+    "model": "Egea Cross (1.6 Multijet Otomatik)"
+  },
+  {
+    "id": 3028,
+    "brand": "Opel",
+    "model": "Astra K Kasa (1.6 Dizel Otomatik)"
+  },
+  {
+    "id": 3029,
+    "brand": "Opel",
+    "model": "Corsa (1.2 Turbo Otomatik)"
+  },
+  {
+    "id": 3030,
+    "brand": "Opel / Peugeot",
+    "model": "Astra / 308 (1.2 Puretech)"
+  },
+  {
+    "id": 3031,
+    "brand": "Citroen",
+    "model": "C4X (1.2 Turbo)"
+  },
+  {
+    "id": 3032,
+    "brand": "Ford",
+    "model": "Focus 4 (1.5 Dizel - Trend X)"
+  },
+  {
+    "id": 3033,
+    "brand": "Toyota",
+    "model": "Corolla (1.8 Hybrid - Dream)"
+  },
+  {
+    "id": 3034,
+    "brand": "Skoda",
+    "model": "Scala (1.0 TSI - Elite/Premium)"
+  },
+  {
+    "id": 3035,
+    "brand": "Dacia / Renault",
+    "model": "Duster / Megane 4 (1.3 TCe)"
+  },
+  {
+    "id": 3036,
+    "brand": "Seat / VW",
+    "model": "Arona / T-Cross (1.0 TSI)"
+  },
+  {
+    "id": 3037,
+    "brand": "Ford",
+    "model": "Puma (1.0 Titanium)"
+  },
+  {
+    "id": 3038,
+    "brand": "Toyota",
+    "model": "Corolla (1.5 Drive/Dream)"
+  },
+  {
+    "id": 3039,
+    "brand": "Citroen",
+    "model": "C3 Aircross (1.2 Plus)"
+  },
+  {
+    "id": 3040,
+    "brand": "DS Automobiles",
+    "model": "DS 9 (1.6 Puretech)"
+  },
+  {
+    "id": 3041,
+    "brand": "Peugeot",
+    "model": "508 GT (1.5 Dizel)"
+  },
+  {
+    "id": 3042,
+    "brand": "Skoda",
+    "model": "Octavia (1.5 e-TEC)"
+  },
+  {
+    "id": 3043,
+    "brand": "Volkswagen",
+    "model": "Passat Variant B9 (1.5 eTSI)"
+  },
+  {
+    "id": 3044,
+    "brand": "DS Automobiles",
+    "model": "DS 7 Crossback (1.5 Dizel)"
+  }
+]

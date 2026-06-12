@@ -16,6 +16,25 @@ const codesData = JSON.parse(
   fs.readFileSync(path.join(__dirname, 'data', 'obd-codes.json'), 'utf-8')
 );
 
+// Load Models
+let vehiclesData = [];
+try {
+  vehiclesData = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'vehicles.json'), 'utf-8'));
+} catch (e) {
+  console.log('vehicles.json not found, continuing without models.');
+}
+
+function createSlug(str) {
+  return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
+const modelsList = vehiclesData.map(v => ({
+  brandName: v.brand,
+  brandSlug: createSlug(v.brand),
+  name: v.model,
+  slug: createSlug(v.model)
+}));
+
 // Deduplicate codes (keep first occurrence of each code)
 const codesMap = new Map();
 codesData.forEach(code => {
@@ -177,7 +196,7 @@ function handleSearch(req, res, query) {
   sendHtml(res, 200, html);
 }
 
-function handleDetail(req, res, codeId, brandSlug = null) {
+function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
   const code = codes.find(c => c.code.toUpperCase() === codeId.toUpperCase());
   
   if (!code) {
@@ -185,10 +204,22 @@ function handleDetail(req, res, codeId, brandSlug = null) {
   }
 
   let brandObj = null;
+  let modelObj = null;
+  let brandModels = [];
+
   if (brandSlug) {
     brandObj = popularBrands.find(b => b.slug === brandSlug.toLowerCase());
     if (!brandObj) {
       return handle404(req, res);
+    }
+    
+    brandModels = modelsList.filter(m => m.brandSlug === brandObj.slug);
+
+    if (modelSlug) {
+      modelObj = brandModels.find(m => m.slug === modelSlug.toLowerCase());
+      if (!modelObj) {
+        return handle404(req, res);
+      }
     }
   }
 
@@ -211,12 +242,18 @@ function handleDetail(req, res, codeId, brandSlug = null) {
   let canonicalUrl = `https://www.obdkodu.com/kod/${code.code}`;
   let displayDescription = code.description;
 
-  if (brandObj) {
+  if (brandObj && !modelObj) {
     pageTitle = `${brandObj.name} ${code.code} Arıza Kodu: Nedenleri ve Çözümü`;
     metaDescription = `${brandObj.name} aracınızda ${code.code} arıza kodu mu var? ${code.name} sorununun nedenleri, belirtileri ve kesin çözüm yöntemleri.`;
     displayCodeName = `${brandObj.name} ${code.code} - ${code.name}`;
     canonicalUrl = `https://www.obdkodu.com/kod/${code.code}/${brandObj.slug}`;
     displayDescription = `Eğer ${brandObj.name} marka aracınızda ${code.code} arıza kodunu görüyorsanız, ${code.description}`;
+  } else if (brandObj && modelObj) {
+    pageTitle = `${brandObj.name} ${modelObj.name} ${code.code} Arıza Kodu Çözümü`;
+    metaDescription = `${brandObj.name} ${modelObj.name} model aracınızda ${code.code} arıza kodu mu var? ${code.name} sorununun nedenleri ve kesin çözümü.`;
+    displayCodeName = `${brandObj.name} ${modelObj.name} ${code.code} - ${code.name}`;
+    canonicalUrl = `https://www.obdkodu.com/kod/${code.code}/${brandObj.slug}/${modelObj.slug}`;
+    displayDescription = `Eğer ${brandObj.name} ${modelObj.name} aracınızda ${code.code} arıza kodunu görüyorsanız, ${code.description}`;
   }
 
   const html = render('detail', {
@@ -233,9 +270,14 @@ function handleDetail(req, res, codeId, brandSlug = null) {
     hasRelated: related.length > 0 ? 'true' : '',
     relatedCodes: related,
     brandName: brandObj ? brandObj.name : '',
+    modelName: modelObj ? modelObj.name : '',
     popularBrands,
-    isBrandPage: brandObj ? 'true' : '',
-    isNotBrandPage: !brandObj ? 'true' : ''
+    brandModels,
+    showBrandsCloud: !brandObj ? 'true' : '',
+    showModelsCloud: (brandObj && !modelObj && brandModels.length > 0) ? 'true' : '',
+    isBrandPage: (brandObj && !modelObj) ? 'true' : '',
+    isModelPage: (brandObj && modelObj) ? 'true' : '',
+    brandSlug: brandObj ? brandObj.slug : ''
   });
   sendHtml(res, 200, html);
 }
@@ -467,10 +509,10 @@ const server = http.createServer((req, res) => {
     return handleSitemap(req, res);
   }
 
-  // Code detail: /kod/P0300 or /kod/P0300/hyundai
-  const codeMatch = pathname.match(/^\/kod\/([A-Za-z0-9]+)(?:\/([A-Za-z0-9-]+))?$/);
+  // Code detail: /kod/P0300 or /kod/P0300/hyundai or /kod/P0300/hyundai/i20
+  const codeMatch = pathname.match(/^\/kod\/([A-Za-z0-9]+)(?:\/([A-Za-z0-9-]+))?(?:\/([A-Za-z0-9-]+))?$/);
   if (codeMatch && req.method === 'GET') {
-    return handleDetail(req, res, codeMatch[1], codeMatch[2]);
+    return handleDetail(req, res, codeMatch[1], codeMatch[2], codeMatch[3]);
   }
 
   // API endpoints
