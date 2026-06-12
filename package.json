@@ -7,7 +7,16 @@
     "start": "node server.js",
     "dev": "node --watch server.js"
   },
-  "keywords": ["obd", "arıza", "kodları", "diagnostic", "araç"],
+  "keywords": [
+    "obd",
+    "arıza",
+    "kodları",
+    "diagnostic",
+    "araç"
+  ],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "googleapis": "^173.0.0"
+  }
 }
