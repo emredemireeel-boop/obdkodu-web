@@ -1905,10 +1905,10 @@ img {
   border-radius: var(--radius-lg);
   padding: 32px;
   position: relative;
-  overflow: hidden;
   backdrop-filter: blur(12px);
   transition: all var(--transition-normal);
-  height: 100%;
+  height: auto;
+  min-height: 100%;
 }
 .premium-card:hover {
   border-color: var(--border-hover);
