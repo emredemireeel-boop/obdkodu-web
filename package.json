@@ -1,0 +1,13 @@
+{
+  "name": "obdkodu-web",
+  "version": "1.0.0",
+  "description": "OBD Arıza Kodları Web Sitesi - Türkçe",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": ["obd", "arıza", "kodları", "diagnostic", "araç"],
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,108 @@
+<!-- Detail Page -->
+<section class="detail-page" id="detailPage">
+  <div class="container">
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" id="breadcrumb">
+      <a href="/" class="breadcrumb-link">Ana Sayfa</a>
+      <span class="breadcrumb-sep">/</span>
+      <a href="/arama?kategori={{category}}" class="breadcrumb-link">{{categoryName}}</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">{{code}}</span>
+    </nav>
+
+    <!-- Code Header -->
+    <div class="detail-header" id="detailHeader">
+      <div class="detail-header-top">
+        <span class="code-badge code-badge-lg category-{{category}}">{{category}}</span>
+        <span class="severity-badge severity-badge-lg severity-{{severity}}">
+          {{#if isHighSeverity}}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          {{/if}}
+          {{severityText}}
+        </span>
+      </div>
+      <h1 class="detail-code" id="detailCode">{{code}}</h1>
+      <h2 class="detail-name" id="detailName">{{name}}</h2>
+      <div class="detail-system">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+        <span>{{affectedSystem}}</span>
+      </div>
+    </div>
+
+    <!-- Detail Content Grid -->
+    <div class="detail-grid">
+      <!-- Description -->
+      <div class="detail-card detail-card-full" id="detailDescription">
+        <div class="detail-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+        </div>
+        <h3 class="detail-card-title">Açıklama</h3>
+        <p class="detail-card-text">{{description}}</p>
+      </div>
+
+      <!-- Causes -->
+      <div class="detail-card" id="detailCauses">
+        <div class="detail-card-icon detail-card-icon-warning">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
+        <h3 class="detail-card-title">Olası Nedenler</h3>
+        <ul class="detail-list detail-list-causes">
+          {{#each causes}}
+          <li>{{this}}</li>
+          {{/each}}
+        </ul>
+      </div>
+
+      <!-- Solutions -->
+      <div class="detail-card" id="detailSolutions">
+        <div class="detail-card-icon detail-card-icon-success">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <h3 class="detail-card-title">Çözüm Önerileri</h3>
+        <ul class="detail-list detail-list-solutions">
+          {{#each solutions}}
+          <li>{{this}}</li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Related Codes -->
+    {{#if hasRelated}}
+    <div class="related-section" id="relatedSection">
+      <h3 class="related-title">İlgili Arıza Kodları</h3>
+      <div class="related-grid">
+        {{#each relatedCodes}}
+        <a href="/kod/{{code}}" class="related-card" id="related-{{code}}">
+          <span class="code-badge category-{{category}}">{{code}}</span>
+          <span class="related-name">{{name}}</span>
+        </a>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+
+    <!-- Back Button -->
+    <div class="detail-actions">
+      <a href="/arama" class="btn-secondary" id="backToSearch">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>Tüm Kodlara Dön</span>
+      </a>
+    </div>
+  </div>
+</section>

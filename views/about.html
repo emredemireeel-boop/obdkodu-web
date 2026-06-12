@@ -1,0 +1,150 @@
+<!-- About Page -->
+<section class="about-page" id="aboutPage">
+  <div class="container">
+    <div class="about-header">
+      <h1 class="page-title">OBD-II Sistemi <span class="gradient-text">Hakkında</span></h1>
+      <p class="page-subtitle">Araçlardaki arıza teşhis sistemini tanıyın</p>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-card" id="aboutWhat">
+        <div class="about-card-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
+        <h2 class="about-card-title">OBD-II Nedir?</h2>
+        <p>OBD-II (On-Board Diagnostics II), 1996 yılından itibaren tüm araçlarda zorunlu hale gelen standart bir araç teşhis sistemidir. Bu sistem, aracın motor, şanzıman, egzoz ve diğer sistemlerini sürekli izler ve bir sorun tespit ettiğinde arıza kodları (DTC - Diagnostic Trouble Codes) oluşturur.</p>
+        <p>OBD-II sistemi sayesinde, araç sahipleri ve tamirciler sorunları hızlıca tespit edebilir, gereksiz tamirat masraflarından kaçınabilir ve aracın emisyon değerlerini kontrol altında tutabilir.</p>
+      </div>
+
+      <div class="about-card" id="aboutHow">
+        <div class="about-card-icon about-icon-blue">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>
+          </svg>
+        </div>
+        <h2 class="about-card-title">Nasıl Çalışır?</h2>
+        <p>Aracınızın gösterge panelinde yanan "check engine" (motor uyarı) lambası, OBD-II sisteminin bir arıza tespit ettiğini gösterir. Bu durumda:</p>
+        <ol class="about-list">
+          <li>Aracın OBD-II portuna (genellikle direksiyon altında) bir OBD tarayıcı bağlanır</li>
+          <li>Tarayıcı, ECU'dan (motor kontrol ünitesi) kayıtlı arıza kodlarını okur</li>
+          <li>Her kod, belirli bir sisteme ve soruna işaret eden alfanümerik bir koddur</li>
+          <li>Kodlar analiz edilerek arızanın kaynağı tespit edilir</li>
+          <li>Gerekli onarım yapıldıktan sonra kodlar silinir</li>
+        </ol>
+      </div>
+
+      <div class="about-card" id="aboutCodes">
+        <div class="about-card-icon about-icon-green">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+        </div>
+        <h2 class="about-card-title">Kod Yapısı</h2>
+        <p>Her OBD-II arıza kodu 5 karakterden oluşur:</p>
+        <div class="code-structure">
+          <div class="code-char">
+            <span class="char-value">P</span>
+            <span class="char-label">Kategori</span>
+            <span class="char-desc">P, B, C veya U</span>
+          </div>
+          <div class="code-char">
+            <span class="char-value">0</span>
+            <span class="char-label">Tip</span>
+            <span class="char-desc">0=Genel, 1=Üretici</span>
+          </div>
+          <div class="code-char">
+            <span class="char-value">3</span>
+            <span class="char-label">Alt Sistem</span>
+            <span class="char-desc">Etkilenen alt sistem</span>
+          </div>
+          <div class="code-char code-char-double">
+            <span class="char-value">00</span>
+            <span class="char-label">Spesifik Arıza</span>
+            <span class="char-desc">Arızanın detayı</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-card" id="aboutCategories">
+        <div class="about-card-icon about-icon-orange">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+          </svg>
+        </div>
+        <h2 class="about-card-title">Kod Kategorileri</h2>
+        <div class="about-categories">
+          <div class="about-cat-item">
+            <span class="code-badge category-P">P</span>
+            <div>
+              <strong>Powertrain (Güç Aktarma)</strong>
+              <p>Motor, şanzıman, yakıt sistemi, ateşleme ve emisyon kontrol sistemleri</p>
+            </div>
+          </div>
+          <div class="about-cat-item">
+            <span class="code-badge category-B">B</span>
+            <div>
+              <strong>Body (Gövde)</strong>
+              <p>Hava yastıkları, klima, aydınlatma, merkezi kilit ve güvenlik sistemleri</p>
+            </div>
+          </div>
+          <div class="about-cat-item">
+            <span class="code-badge category-C">C</span>
+            <div>
+              <strong>Chassis (Şasi)</strong>
+              <p>ABS fren, direksiyon, süspansiyon ve stabilite kontrol sistemleri</p>
+            </div>
+          </div>
+          <div class="about-cat-item">
+            <span class="code-badge category-U">U</span>
+            <div>
+              <strong>Network (Ağ İletişim)</strong>
+              <p>CAN bus, modüller arası iletişim ve veri transferi hataları</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-card" id="aboutSeverity">
+        <div class="about-card-icon about-icon-red">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
+        <h2 class="about-card-title">Ciddiyet Seviyeleri</h2>
+        <div class="severity-info">
+          <div class="severity-item">
+            <span class="severity-badge severity-düşük">Düşük</span>
+            <p>Acil müdahale gerektirmez, ancak yakın zamanda kontrol ettirilmelidir. Emisyon ve konfor sistemleriyle ilgili kodlar genellikle bu kategoridedir.</p>
+          </div>
+          <div class="severity-item">
+            <span class="severity-badge severity-orta">Orta</span>
+            <p>Yakın zamanda müdahale gerektirir. Araç kullanılabilir ancak performans düşüklüğü veya yakıt tüketimi artışı olabilir.</p>
+          </div>
+          <div class="severity-item">
+            <span class="severity-badge severity-yüksek">Yüksek</span>
+            <p>Acil müdahale gerektirir. Araç sürmek güvenli olmayabilir veya ciddi motor/şanzıman hasarı riski vardır.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-card" id="aboutTip">
+        <div class="about-card-icon about-icon-purple">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
+        </div>
+        <h2 class="about-card-title">Önemli İpuçları</h2>
+        <ul class="about-tips">
+          <li>Motor uyarı lambası yandığında panik yapmayın, ancak en kısa sürede kodları okutun</li>
+          <li>Arıza kodları sadece yol göstericidir, kesin teşhis için profesyonel kontrol gerekir</li>
+          <li>Kodları silmek sorunu çözmez, altta yatan neden giderilmelidir</li>
+          <li>Bazı kodlar geçici olabilir, sorun tekrarlanmıyorsa kendiliğinden silinebilir</li>
+          <li>Birden fazla arıza kodu olabilir, tüm kodları birlikte değerlendirmek önemlidir</li>
+          <li>OBD tarayıcılar uygun fiyatlıdır ve her araç sahibinin bulundurması faydalıdır</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

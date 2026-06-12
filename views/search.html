@@ -1,0 +1,107 @@
+<!-- Search Page -->
+<section class="search-page" id="searchPage">
+  <div class="container">
+    <div class="search-page-header">
+      <h1 class="page-title">
+        {{#if isSearchQuery}}
+        "<span class="gradient-text">{{searchQuery}}</span>" için sonuçlar
+        {{/if}}
+        {{#if isActiveCategory}}
+        <span class="gradient-text">{{categoryName}}</span> Kodları
+        {{/if}}
+        {{#if isAllCodes}}
+        Tüm <span class="gradient-text">Arıza Kodları</span>
+        {{/if}}
+      </h1>
+      <p class="results-count">{{resultCount}} sonuç bulundu</p>
+    </div>
+
+    <!-- Search Bar -->
+    <form class="page-search" action="/arama" method="GET" id="pageSearchForm">
+      <div class="search-input-wrapper">
+        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.3-4.3"></path>
+        </svg>
+        <input 
+          type="text" 
+          name="q" 
+          class="search-input" 
+          id="pageSearchInput"
+          placeholder="Kod veya anahtar kelime arayın..." 
+          value="{{searchQuery}}"
+          autocomplete="off"
+        >
+        <button type="submit" class="search-btn" id="pageSearchBtn">
+          <span>Ara</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+    </form>
+
+    <!-- Category Filters -->
+    <div class="filter-tabs" id="filterTabs">
+      <a href="{{urlAll}}" class="filter-tab {{activeAll}}" id="filterAll">
+        Tümü
+        <span class="filter-count">{{totalCount}}</span>
+      </a>
+      <a href="{{urlP}}" class="filter-tab filter-p {{activeP}}" id="filterP">
+        P - Motor
+        <span class="filter-count">{{pFilterCount}}</span>
+      </a>
+      <a href="{{urlB}}" class="filter-tab filter-b {{activeB}}" id="filterB">
+        B - Gövde
+        <span class="filter-count">{{bFilterCount}}</span>
+      </a>
+      <a href="{{urlC}}" class="filter-tab filter-c {{activeC}}" id="filterC">
+        C - Şasi
+        <span class="filter-count">{{cFilterCount}}</span>
+      </a>
+      <a href="{{urlU}}" class="filter-tab filter-u {{activeU}}" id="filterU">
+        U - İletişim
+        <span class="filter-count">{{uFilterCount}}</span>
+      </a>
+    </div>
+
+    <!-- Results -->
+    {{#if hasResults}}
+    <div class="results-grid" id="resultsGrid">
+      {{#each results}}
+      <a href="/kod/{{code}}" class="result-card" id="result-{{code}}">
+        <div class="result-card-left">
+          <span class="code-badge category-{{category}}">{{category}}</span>
+          <div class="result-info">
+            <div class="result-code">{{code}}</div>
+            <div class="result-name">{{name}}</div>
+          </div>
+        </div>
+        <div class="result-card-right">
+          <span class="severity-badge severity-{{severity}}">{{severity}}</span>
+          <span class="result-system">{{affectedSystem}}</span>
+          <svg class="result-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
+        </div>
+      </a>
+      {{/each}}
+    </div>
+    {{/if}}
+    {{#if noResults}}
+    <div class="no-results" id="noResults">
+      <div class="no-results-icon">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.3-4.3"></path>
+          <line x1="8" y1="8" x2="14" y2="14"></line>
+          <line x1="14" y1="8" x2="8" y2="14"></line>
+        </svg>
+      </div>
+      <h3 class="no-results-title">Sonuç Bulunamadı</h3>
+      <p class="no-results-desc">Arama kriterlerinize uygun arıza kodu bulunamadı. Farklı bir arama terimi deneyin.</p>
+      <a href="/arama" class="btn-primary">Tüm Kodları Görüntüle</a>
+    </div>
+    {{/if}}
+  </div>
+</section>
