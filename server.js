@@ -25,6 +25,34 @@ codesData.forEach(code => {
 });
 const codes = Array.from(codesMap.values());
 
+const popularBrands = [
+  { name: 'Audi', slug: 'audi' },
+  { name: 'BMW', slug: 'bmw' },
+  { name: 'BYD', slug: 'byd' },
+  { name: 'Chery', slug: 'chery' },
+  { name: 'Chevrolet', slug: 'chevrolet' },
+  { name: 'Citroen', slug: 'citroen' },
+  { name: 'Dacia', slug: 'dacia' },
+  { name: 'DS Automobiles', slug: 'ds-automobiles' },
+  { name: 'Fiat', slug: 'fiat' },
+  { name: 'Ford', slug: 'ford' },
+  { name: 'Honda', slug: 'honda' },
+  { name: 'Hyundai', slug: 'hyundai' },
+  { name: 'Kia', slug: 'kia' },
+  { name: 'Mercedes', slug: 'mercedes' },
+  { name: 'Mitsubishi', slug: 'mitsubishi' },
+  { name: 'Opel', slug: 'opel' },
+  { name: 'Peugeot', slug: 'peugeot' },
+  { name: 'Renault', slug: 'renault' },
+  { name: 'Seat', slug: 'seat' },
+  { name: 'Skoda', slug: 'skoda' },
+  { name: 'Tesla', slug: 'tesla' },
+  { name: 'TOGG', slug: 'togg' },
+  { name: 'Toyota', slug: 'toyota' },
+  { name: 'Volkswagen', slug: 'volkswagen' },
+  { name: 'Volvo', slug: 'volvo' }
+];
+
 // Precompute category counts
 const categoryNames = {
   P: 'Powertrain (Motor & Şanzıman)',
@@ -149,11 +177,19 @@ function handleSearch(req, res, query) {
   sendHtml(res, 200, html);
 }
 
-function handleDetail(req, res, codeId) {
+function handleDetail(req, res, codeId, brandSlug = null) {
   const code = codes.find(c => c.code.toUpperCase() === codeId.toUpperCase());
   
   if (!code) {
     return handle404(req, res);
+  }
+
+  let brandObj = null;
+  if (brandSlug) {
+    brandObj = popularBrands.find(b => b.slug === brandSlug.toLowerCase());
+    if (!brandObj) {
+      return handle404(req, res);
+    }
   }
 
   // Find related codes (same category, same affected system)
@@ -169,16 +205,37 @@ function handleDetail(req, res, codeId) {
     'yüksek': 'Yüksek Ciddiyet',
   };
 
+  let pageTitle = `${code.code} - ${code.name}`;
+  let metaDescription = `${code.code} arıza kodu: ${code.name}. ${code.description.substring(0, 150)}`;
+  let displayCodeName = code.name;
+  let canonicalUrl = `https://www.obdkodu.com/kod/${code.code}`;
+  let displayDescription = code.description;
+
+  if (brandObj) {
+    pageTitle = `${brandObj.name} ${code.code} Arıza Kodu: Nedenleri ve Çözümü`;
+    metaDescription = `${brandObj.name} aracınızda ${code.code} arıza kodu mu var? ${code.name} sorununun nedenleri, belirtileri ve kesin çözüm yöntemleri.`;
+    displayCodeName = `${brandObj.name} ${code.code} - ${code.name}`;
+    canonicalUrl = `https://www.obdkodu.com/kod/${code.code}/${brandObj.slug}`;
+    displayDescription = `Eğer ${brandObj.name} marka aracınızda ${code.code} arıza kodunu görüyorsanız, ${code.description}`;
+  }
+
   const html = render('detail', {
-    pageTitle: `${code.code} - ${code.name}`,
-    metaDescription: `${code.code} arıza kodu: ${code.name}. ${code.description.substring(0, 150)}`,
+    pageTitle,
+    metaDescription,
+    canonicalUrl,
     activeSearch: 'active',
     ...code,
+    name: displayCodeName,
+    description: displayDescription,
     categoryName: categoryNames[code.category] || code.category,
     severityText: severityTextMap[code.severity] || code.severity,
     isHighSeverity: code.severity === 'yüksek' ? 'true' : '',
     hasRelated: related.length > 0 ? 'true' : '',
     relatedCodes: related,
+    brandName: brandObj ? brandObj.name : '',
+    popularBrands,
+    isBrandPage: brandObj ? 'true' : '',
+    isNotBrandPage: !brandObj ? 'true' : ''
   });
   sendHtml(res, 200, html);
 }
@@ -410,10 +467,10 @@ const server = http.createServer((req, res) => {
     return handleSitemap(req, res);
   }
 
-  // Code detail: /kod/P0300
-  const codeMatch = pathname.match(/^\/kod\/([A-Za-z0-9]+)$/);
+  // Code detail: /kod/P0300 or /kod/P0300/hyundai
+  const codeMatch = pathname.match(/^\/kod\/([A-Za-z0-9]+)(?:\/([A-Za-z0-9-]+))?$/);
   if (codeMatch && req.method === 'GET') {
-    return handleDetail(req, res, codeMatch[1]);
+    return handleDetail(req, res, codeMatch[1], codeMatch[2]);
   }
 
   // API endpoints

@@ -2103,3 +2103,45 @@ img {
   padding-top: 40px;
   border-top: 1px solid var(--border-subtle);
 }
+
+/* Brand Cloud */
+.premium-brands-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 16px;
+}
+.brand-chip {
+  display: inline-flex;
+  padding: 8px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+}
+.brand-chip:hover {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: var(--accent-blue);
+  color: var(--text-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+.brand-chip-active {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: var(--gradient-primary);
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  color: white;
+  transition: all var(--transition-fast);
+}
+.brand-chip-active:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow-blue);
+}

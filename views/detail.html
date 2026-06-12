@@ -114,6 +114,27 @@
     </div>
     {{/if}}
 
+    <!-- Brands Cloud (Internal Linking for SEO) -->
+    {{#if isNotBrandPage}}
+    <div class="premium-related-section" style="margin-top: 20px;">
+      <h3 class="premium-section-title">Markalara Göre {{code}} Arızası</h3>
+      <div class="premium-brands-cloud">
+        {{#each popularBrands}}
+        <a href="/kod/{{code}}/{{slug}}" class="brand-chip">{{name}}</a>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+
+    {{#if isBrandPage}}
+    <div class="premium-related-section" style="margin-top: 20px; text-align: center;">
+      <a href="/kod/{{code}}" class="brand-chip-active">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        {{code}} Genel Açıklamasına Dön
+      </a>
+    </div>
+    {{/if}}
+
     <!-- Back Button -->
     <div class="premium-actions">
       <a href="/arama" class="btn-secondary premium-btn">
