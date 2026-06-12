@@ -277,8 +277,9 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
 
   const urlParts = req.url.split('?');
   const pathname = urlParts[0];
-  const searchParams = new URLSearchParams(urlParts[1] || '');
-  const page = parseInt(searchParams.get('page')) || 1;
+  const queryStr = urlParts[1] || '';
+  const pageMatch = queryStr.match(/(?:^|&)page=(\d+)/);
+  const page = pageMatch ? parseInt(pageMatch[1]) : 1;
   const limit = 10;
   const totalPages = Math.ceil(formattedComments.length / limit);
   
