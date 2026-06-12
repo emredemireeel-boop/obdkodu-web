@@ -24,6 +24,16 @@ try {
   console.log('vehicles.json not found, continuing without models.');
 }
 
+// Load Comments
+const commentsFile = path.join(__dirname, 'data', 'comments.json');
+let commentsData = [];
+try {
+  commentsData = JSON.parse(fs.readFileSync(commentsFile, 'utf-8'));
+} catch (e) {
+  commentsData = [];
+}
+const commentRateLimit = {};
+
 function createSlug(str) {
   return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 }
@@ -256,6 +266,15 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
     displayDescription = `Eğer ${brandObj.name} ${modelObj.name} aracınızda ${code.code} arıza kodunu görüyorsanız, ${code.description}`;
   }
 
+  const codeComments = commentsData.filter(c => c.code === code.code).reverse();
+  const formattedComments = codeComments.map(c => {
+    const d = new Date(c.date);
+    return {
+      ...c,
+      formattedDate: `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`
+    };
+  });
+
   const html = render('detail', {
     pageTitle,
     metaDescription,
@@ -277,7 +296,10 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
     showModelsCloud: (brandObj && !modelObj && brandModels.length > 0) ? 'true' : '',
     isBrandPage: (brandObj && !modelObj) ? 'true' : '',
     isModelPage: (brandObj && modelObj) ? 'true' : '',
-    brandSlug: brandObj ? brandObj.slug : ''
+    brandSlug: brandObj ? brandObj.slug : '',
+    comments: formattedComments,
+    hasComments: formattedComments.length > 0 ? 'true' : '',
+    commentCount: formattedComments.length
   });
   sendHtml(res, 200, html);
 }
@@ -335,6 +357,65 @@ function handleApiSearch(req, res, query) {
     name: c.name,
     severity: c.severity,
   })));
+}
+
+function escapeHtml(str) {
+  const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+  return str.replace(/[&<>"']/g, c => map[c]);
+}
+
+function handleApiComments(req, res) {
+  let body = '';
+  req.on('data', chunk => {
+    body += chunk.toString();
+    if (body.length > 10000) req.connection.destroy();
+  });
+  req.on('end', () => {
+    try {
+      const data = JSON.parse(body);
+      const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+
+      const now = Date.now();
+      if (!commentRateLimit[ip]) commentRateLimit[ip] = [];
+      commentRateLimit[ip] = commentRateLimit[ip].filter(t => now - t < 3600000);
+      if (commentRateLimit[ip].length >= 2) {
+        return sendJson(res, 429, { error: 'Çok fazla yorum gönderdiniz. Lütfen 1 saat bekleyin.' });
+      }
+
+      if (data.website && data.website.trim() !== '') {
+        return sendJson(res, 200, { success: true }); // Honeypot trap
+      }
+
+      if (!data.name || !data.comment || !data.code) {
+        return sendJson(res, 400, { error: 'Lütfen tüm alanları doldurun.' });
+      }
+
+      const text = data.comment.toLowerCase();
+      if (text.includes('http') || text.includes('www.') || text.includes('.com') || text.includes('<a ')) {
+        return sendJson(res, 400, { error: 'Spam koruması: Yorumlarda link paylaşımına izin verilmemektedir.' });
+      }
+
+      const cleanComment = escapeHtml(data.comment.trim());
+      const cleanName = escapeHtml(data.name.trim().substring(0, 50));
+      const codeId = escapeHtml(data.code.trim().toUpperCase());
+
+      const newComment = {
+        id: Date.now().toString(),
+        code: codeId,
+        name: cleanName,
+        comment: cleanComment,
+        date: new Date().toISOString()
+      };
+
+      commentsData.push(newComment);
+      fs.writeFileSync(commentsFile, JSON.stringify(commentsData, null, 2));
+
+      commentRateLimit[ip].push(now);
+      sendJson(res, 200, { success: true, comment: newComment });
+    } catch (e) {
+      sendJson(res, 400, { error: 'Geçersiz veri.' });
+    }
+  });
 }
 
 function handle404(req, res) {
@@ -518,6 +599,10 @@ const server = http.createServer((req, res) => {
   // API endpoints
   if (pathname === '/api/search' && req.method === 'GET') {
     return handleApiSearch(req, res, query);
+  }
+
+  if (pathname === '/api/comments' && req.method === 'POST') {
+    return handleApiComments(req, res);
   }
 
   // Static files: /css/*, /js/*, /images/*
