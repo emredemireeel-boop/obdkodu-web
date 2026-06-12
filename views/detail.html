@@ -175,6 +175,8 @@
             <p class="comment-text">{{comment}}</p>
           </div>
           {{/each}}
+          
+          {{{paginationHtml}}}
         {{/if}}
         {{#if noComments}}
           <p class="no-comments-msg">Bu arıza kodu için henüz yorum yapılmamış. Çözümü biliyorsanız ilk yorumu siz yapın!</p>
@@ -234,7 +236,8 @@
           <div class="faq-answer">
             {{#if isHighSeverity}}
             Bu kod <strong>Yüksek (Kritik)</strong> ciddiyet seviyesine sahiptir. Motor bileşenlerinde veya sürüş güvenliğinde acil bir tehdit oluşturabileceğinden, aracınızı derhal yetkili bir servise veya güvenli bir alana çekip kontrol ettirmeniz şiddetle tavsiye edilir. Uzun süre bu arıza ile aracı kullanmak motorunuzda kalıcı hasarlara yol açabilir.
-            {{else}}
+            {{/if}}
+            {{#if isNotHighSeverity}}
             Bu kod <strong>{{severityText}}</strong> ciddiyet seviyesindedir. Anında yolda kalmanıza sebep olmasa da, aracınızın performansını, yakıt tüketimini veya emisyon değerlerini etkileyebilir. Mümkün olan en kısa sürede bir OBD cihazı ile detaylı tarama yapıp, belirtilen çözüm adımlarını uygulamanız tavsiye edilir.
             {{/if}}
           </div>
@@ -279,7 +282,7 @@
       "name": "{{code}} kodu ne kadar ciddi, aracı sürmeye devam edebilir miyim?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "{{#if isHighSeverity}}Bu kod Yüksek (Kritik) ciddiyet seviyesine sahiptir. Motor bileşenlerinde veya sürüş güvenliğinde acil bir tehdit oluşturabileceğinden, aracınızı derhal yetkili bir servise çekmeniz tavsiye edilir.{{else}}Bu kod {{severityText}} ciddiyet seviyesindedir. Aracınızın performansını veya emisyon değerlerini etkileyebilir. Mümkün olan en kısa sürede kontrol ettirmeniz tavsiye edilir.{{/if}}"
+        "text": "{{#if isHighSeverity}}Bu kod Yüksek (Kritik) ciddiyet seviyesine sahiptir. Motor bileşenlerinde veya sürüş güvenliğinde acil bir tehdit oluşturabileceğinden, aracınızı derhal yetkili bir servise çekmeniz tavsiye edilir.{{/if}}{{#if isNotHighSeverity}}Bu kod {{severityText}} ciddiyet seviyesindedir. Aracınızın performansını veya emisyon değerlerini etkileyebilir. Mümkün olan en kısa sürede kontrol ettirmeniz tavsiye edilir.{{/if}}"
       }
     },
     {

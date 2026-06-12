@@ -275,6 +275,25 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
     };
   });
 
+  const urlParts = req.url.split('?');
+  const pathname = urlParts[0];
+  const searchParams = new URLSearchParams(urlParts[1] || '');
+  const page = parseInt(searchParams.get('page')) || 1;
+  const limit = 10;
+  const totalPages = Math.ceil(formattedComments.length / limit);
+  
+  let paginationHtml = '';
+  if (totalPages > 1) {
+    paginationHtml = '<div class="pagination">';
+    for (let i = 1; i <= totalPages; i++) {
+      const activeClass = i === page ? 'active' : '';
+      paginationHtml += `<a href="${pathname}?page=${i}#yorumlar" class="page-link ${activeClass}">${i}</a>`;
+    }
+    paginationHtml += '</div>';
+  }
+
+  const paginatedComments = formattedComments.slice((page - 1) * limit, page * limit);
+
   const html = render('detail', {
     pageTitle,
     metaDescription,
@@ -286,6 +305,7 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
     categoryName: categoryNames[code.category] || code.category,
     severityText: severityTextMap[code.severity] || code.severity,
     isHighSeverity: code.severity === 'yüksek' ? 'true' : '',
+    isNotHighSeverity: code.severity !== 'yüksek' ? 'true' : '',
     hasRelated: related.length > 0 ? 'true' : '',
     relatedCodes: related,
     brandName: brandObj ? brandObj.name : '',
@@ -297,10 +317,11 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
     isBrandPage: (brandObj && !modelObj) ? 'true' : '',
     isModelPage: (brandObj && modelObj) ? 'true' : '',
     brandSlug: brandObj ? brandObj.slug : '',
-    comments: formattedComments,
+    comments: paginatedComments,
     hasComments: formattedComments.length > 0 ? 'true' : '',
     noComments: formattedComments.length === 0 ? 'true' : '',
-    commentCount: formattedComments.length
+    commentCount: formattedComments.length,
+    paginationHtml: paginationHtml
   });
   sendHtml(res, 200, html);
 }
