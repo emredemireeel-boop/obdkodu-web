@@ -48,24 +48,20 @@
   {
     "code": "B0020",
     "category": "B",
-    "name": "Sol Yan Hava Yastığı Ateşleme Devresi Açık",
-    "severity": "orta",
-    "description": "Sol Yan Hava Yastığı Ateşleme Devresi Açık",
-    "affectedSystem": "Gövde Sistemi",
+    "name": "Sol Yan Hava Yastığı (Airbag) Açılma Devresi Arızası",
+    "severity": "high",
+    "description": "Sürücü koltuğunun içine yerleştirilmiş olan yan hava yastığı ile bağlantı kopmuştur. Hava yastığı (Airbag) lambası yanar ve olası bir kazada o yastık patlamaz. En sık karşılaşılan B (Body) kodlarındandır.",
+    "affectedSystem": "SRS / Hava Yastığı Sistemi",
     "symptoms": [
       "Airbag (Hava Yastığı) arıza lambasının yanması",
       "Olası bir kazada ilgili hava yastığının veya kemer gergisinin çalışmaması"
     ],
     "causes": [
-      "Koltuk altı airbag soketlerinde temassızlık",
-      "Direksiyon zembereği (Clock spring) kopması",
-      "Darbe sensörünün su alması veya kablo kopukluğu",
-      "Airbag modülünde donanımsal hata"
+      "Koltuk altındaki sarı soketin (Airbag soketi) gevşemesi veya oksitlenmesi",
+      "Koltuk ileri geri çekilirken kablonun kopması"
     ],
     "solutions": [
-      "Bağlantıların ve tesisatın kontrolü/onarımı",
-      "Hatalı modül/sensör değişimi ve yeniden kodlama",
-      "ECU arıza kaydının silinmesi"
+      "AKÜYÜ SÖKÜN ve 15 dakika bekleyin! Ardından koltuğun altındaki sarı renkli hava yastığı soketini çıkarın, kontak spreyi sıkıp sıkıca geri takın. (Çoğu zaman sorun buradadır)."
     ]
   },
   {
@@ -687,24 +683,20 @@
   {
     "code": "C0040",
     "category": "C",
-    "name": "Sağ Ön Tekerlek Hız Sensörü Devresi Arızası",
-    "severity": "yüksek",
-    "description": "Sağ Ön Tekerlek Hız Sensörü Devresi Arızası",
-    "affectedSystem": "Şasi ve Fren Sistemi",
+    "name": "Sağ Ön Tekerlek Hız Sensörü Devre Arızası",
+    "severity": "high",
+    "description": "ABS sisteminin sağ ön tekerin hızını okuyamaması durumu. ABS lambası yanar ve fren mesafesi uzar.",
+    "affectedSystem": "ABS ve Çekiş",
     "symptoms": [
       "ABS uyarı lambasının yanması",
       "ESP/TCS sistemlerinin devre dışı kalması"
     ],
     "causes": [
-      "Sağ ön sensör soketinde oksitlenme",
-      "Tekerlek bilyası değişimi sırasında sensörün hasar görmesi",
-      "Sensör iç direnç arızası"
+      "Kopmuş sensör kablosu",
+      "Tekerlek poyrası bilyasının dağılması (Manyetik halka zarar görür)"
     ],
     "solutions": [
-      "Bağlantı ve tesisatın osiloskop ve multimetre ile ölçülmesi",
-      "Hasarlı/kopuk iletişim kablolarının onarılması",
-      "Arızalı modül veya sensörün değişimi ve gerekli kodlamaların/adaptasyonların (direksiyon açısı sıfırlama vb.) yapılması",
-      "Diagnostik cihazı ile tüm ağ modüllerinin taranıp arıza kayıtlarının temizlenmesi"
+      "Tekerleği söküp sensörü temizleyin ve poyrada boşluk olup olmadığını sallayarak test edin."
     ]
   },
   {
@@ -733,24 +725,20 @@
   {
     "code": "C0050",
     "category": "C",
-    "name": "Sağ Arka Tekerlek Hız Sensörü Devresi Arızası",
-    "severity": "yüksek",
-    "description": "Sağ Arka Tekerlek Hız Sensörü Devresi Arızası",
-    "affectedSystem": "Şasi ve Fren Sistemi",
+    "name": "Sağ Arka Tekerlek Hız Sensörü Devre Arızası",
+    "severity": "high",
+    "description": "Sağ arka tekerlekteki ABS sensöründe elektriksel kopukluk.",
+    "affectedSystem": "ABS ve Çekiş",
     "symptoms": [
       "ABS ve ESP uyarı lambalarının yanması",
       "Hız sabitleyicinin (Cruise Control) çalışmaması"
     ],
     "causes": [
-      "Sensörün manyetik okuyucusunda hasar",
-      "Soket içine su girmesi",
-      "Kablo kopukluğu"
+      "Çamur veya pasla kaplanmış sensör",
+      "Kopuk kablo"
     ],
     "solutions": [
-      "Bağlantı ve tesisatın osiloskop ve multimetre ile ölçülmesi",
-      "Hasarlı/kopuk iletişim kablolarının onarılması",
-      "Arızalı modül veya sensörün değişimi ve gerekli kodlamaların/adaptasyonların (direksiyon açısı sıfırlama vb.) yapılması",
-      "Diagnostik cihazı ile tüm ağ modüllerinin taranıp arıza kayıtlarının temizlenmesi"
+      "Sensör direncini (Ohm) ölçün."
     ]
   },
   {
@@ -1220,42 +1208,45 @@
   {
     "code": "P0011",
     "category": "P",
-    "name": "'A' Eksantrik Mili Pozisyonu - Zamanlama Aşırı İleri veya Sistem Performansı Bank 1",
-    "severity": "yüksek",
-    "description": "Değişken Supap Zamanlama (VVT) mekanizmalarındaki kritik mekanik/hidrolik arızadır. Eksantrik mili hedeflenen 'ileri' konumda takılı kalır ve rölanti pozisyonuna dönemez.",
-    "affectedSystem": "Performans Destek Sistemleri (VVT)",
+    "name": "Eksantrik Mili Pozisyonu - Zamanlama Aşırı İleride (Bank 1)",
+    "severity": "high",
+    "description": "Değişken Valf Zamanlaması (VVT/VANOS/VTEC) sisteminin kabusudur. Eksantrik mili, ECU'nun emrettiği açısından daha ileride (erken) dönmektedir. Ustaların 'zamanlama atlamış' dediği bu durum, genellikle kirli motor yağından dolayı tıkanmış VVT selenoidlerinden (OCV) veya uzamış bir triger zincirinden kaynaklanır.",
+    "affectedSystem": "Motor Zamanlaması (VVT)",
     "symptoms": [
       "Emme supapları ile pistonlar arasında fiziksel çarpışmalar (interference) ve mekanik yıkım",
       "Motorda ciddi güç kaybı ve rölanti bozukluğu"
     ],
     "causes": [
-      "İhmal edilmiş bakım ve kirli motor yağı",
-      "Yağ tortuları (sludge) ve çamurlaşmanın VVT hidrolik yağ kontrol valfi eleklerini tıkaması",
-      "Solenoidin sıkışması"
+      "Yağ değişimlerinin aksatılması (Kirli yağ ve çamur)",
+      "Arızalı veya tıkanmış Yağ Kontrol Valfi (OCV / VVT Selenoidi)",
+      "Triger zincirinde uzama veya gergide boşluk",
+      "Yanlış sente ayarı (Özellikle triger değişiminden hemen sonra veriyorsa)"
     ],
     "solutions": [
-      "VVT solenoidinin ohmmetre ile direncinin (5-15 Ω) test edilmesi ve temizliği",
-      "Motor yağı ve yağ filtresinin fabrika viskozitesine uygun tam sentetik yağla değiştirilmesi"
+      "İLK ADIM: Motor yağını ve filtresini kaliteli bir tam sentetik yağ ile değiştirin (Çoğu zaman sadece bu bile sorunu çözer).",
+      "VVT selenoidini söküp balata spreyi ile temizleyin veya 12V vererek çalışıp çalışmadığını test edin.",
+      "Sorun devam ederse triger zinciri sente işaretlerini kontrol edin."
     ]
   },
   {
     "code": "P0012",
     "category": "P",
-    "name": "Kam Mili GiriŞ Sensörü /Ön/sol/ Bank 1 Devresinde Zamanlama Hatası Düşük Performans (ROTAR)",
-    "severity": "orta",
-    "description": "Kam Mili GiriŞ Sensörü /Ön/sol/ Bank 1 Devresinde Zamanlama Hatası Düşük Performans (ROTAR)",
-    "affectedSystem": "Kam (CMP)",
+    "name": "Eksantrik Mili Pozisyonu - Zamanlama Aşırı Geride (Bank 1)",
+    "severity": "high",
+    "description": "P0011'in tam tersidir; valfler olması gerekenden daha geç açılıp kapanmaktadır. Araçta ciddi performans düşüklüğü, yokuşlarda bayılma ve sert rölanti görülür. Mekanik bir arıza olabileceği gibi sadece düşük yağ basıncı yüzünden VVT dişlisinin dönememesinden de kaynaklanabilir.",
+    "affectedSystem": "Motor Zamanlaması (VVT)",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Valf Zamanlaması Kaçık",
-      "Motor Mekanik Hata",
-      "Kam mili Sezicisi"
+      "Düşük motor yağı seviyesi veya yetersiz yağ basıncı",
+      "VVT Selenoidinin açık konumda takılı kalması",
+      "Eksantrik mili fazlayıcısında (Phaser) mekanik iç aşınma"
     ],
     "solutions": [
-      "Sensör/aktüatör sinyal testi ve parça doğrulaması",
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Yağ çubuğunu çekin, eksiklik varsa tamamlayın.",
+      "Yağ basıncını manometre ile ölçün (Rölantide çok düşükse yağ pompası gidicidir).",
+      "VVT selenoidini değiştirin."
     ]
   },
   {
@@ -1280,21 +1271,21 @@
   {
     "code": "P0014",
     "category": "P",
-    "name": "Kam Mili ÇıkıŞ Sensörü /Arka/Sağ/ Bank 1 Devresinde Zamanlama Hatası Düşük Performans (AVANS)",
-    "severity": "orta",
-    "description": "Kam Mili ÇıkıŞ Sensörü /Arka/Sağ/ Bank 1 Devresinde Zamanlama Hatası Düşük Performans (AVANS)",
-    "affectedSystem": "Kam (CMP)",
+    "name": "Egzoz Eksantrik Mili Pozisyonu - Zamanlama Aşırı İleride (Bank 1)",
+    "severity": "high",
+    "description": "Emme değil, bu kez egzoz valflerini kontrol eden eksantrik milinin zamanlaması sapmıştır. Egzoz valfleri çok erken açıldığı için yanma odasındaki basınç (kompresyon) egzoza kaçar, bu da arabanın çiğ benzin atmasına ve zengin karışım vermesine yol açar.",
+    "affectedSystem": "Motor Zamanlaması (VVT)",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Valf Zamanlaması Kaçık",
-      "Motor Mekanik Hata",
-      "Kam mili Sezicisi"
+      "Egzoz VVT selenoidinde tıkanıklık",
+      "Yağ kanallarında kurumlaşma (Sludge)",
+      "Eksantrik sensöründe elektriksel parazit"
     ],
     "solutions": [
-      "Sensör/aktüatör sinyal testi ve parça doğrulaması",
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Motor içi temizleyici (Engine Flush) kullanıp yağ değiştirin.",
+      "Egzoz VVT valfini temizleyin/değiştirin."
     ]
   },
   {
@@ -1415,21 +1406,20 @@
   {
     "code": "P0021",
     "category": "P",
-    "name": "Kam Mili GiriŞ Sensörü /Ön/sol/ Bank 2 Devresinde Zamanlama Hatası Düşük Performans (AVANS)",
-    "severity": "orta",
-    "description": "Kam Mili GiriŞ Sensörü /Ön/sol/ Bank 2 Devresinde Zamanlama Hatası Düşük Performans (AVANS)",
-    "affectedSystem": "Kam (CMP)",
+    "name": "Eksantrik Mili Pozisyonu - Zamanlama Aşırı İleride (Bank 2)",
+    "severity": "high",
+    "description": "P0011'in V6 veya V8 motorlardaki diğer silindir kapağı (Bank 2) için geçerli olanıdır. Subaru, Nissan ve Infiniti marka araçların kronik baş belasıdır. Bank 1'de sorun yokken sadece Bank 2'de olması genellikle o bloğa giden yağ kanalının tıkandığına işaret eder.",
+    "affectedSystem": "Motor Zamanlaması (VVT)",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Valf Zamanlaması Kaçık",
-      "Motor Mekanik Hata",
-      "Kam mili Sezicisi"
+      "Bank 2 VVT Selenoidinin bozulması",
+      "Bank 2 eksantrik sensör arızası",
+      "Bank 2 tarafındaki yağ basıncının düşmesi"
     ],
     "solutions": [
-      "Sensör/aktüatör sinyal testi ve parça doğrulaması",
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Bank 1 ve Bank 2 selenoidlerini birbirleriyle yer değiştirin (Swap Test). Kod P0011'e kayarsa selenoid arızalıdır."
     ]
   },
   {
@@ -1594,40 +1584,40 @@
   {
     "code": "P0030",
     "category": "P",
-    "name": "Lamda sondanın ıstma sistemi (Bank 1 Isıtma1)",
-    "severity": "orta",
-    "description": "Lamda sondanın ıstma sistemi (Bank 1 Isıtma1)",
-    "affectedSystem": "O2/Lambda",
+    "name": "Oksijen Sensörü Isıtıcı Kontrol Devresi (Bank 1, Sensör 1)",
+    "severity": "low",
+    "description": "Modern O2 sensörleri motor soğukken hemen çalışmaya başlamak için kendi içlerinde elektrikli bir ısıtıcı barındırır. P0030, bu ısıtıcının bozulduğunu veya kablosunun koptuğunu belirtir. Motor ısındığında sensör normal çalışsa da, ilk çalıştırmada egzoz emisyonları çok yüksek olacaktır.",
+    "affectedSystem": "Emisyon Sistemi (O2 Isıtıcı)",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "kumanda : hat kesintisi",
-      "sensör",
-      "Motor Elektroniği"
+      "Oksijen sensörü içindeki ısıtıcı rezistansın yanması",
+      "Isıtıcı devresi sigortasının (O2 Heater Fuse) atması",
+      "Kablo tesisatının egzoza değip erimesi"
     ],
     "solutions": [
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Önce sigorta kutusunda 'O2 HTR' sigortasını kontrol edin.",
+      "Sensörün soketini söküp, ısıtıcı pinleri (genelde aynı renk olan iki kablo) arasındaki direnci ölçün. Sonsuz direnç varsa sensör çöp olmuştur, değiştirin."
     ]
   },
   {
     "code": "P0031",
     "category": "P",
-    "name": "Lamda sondanın ıstma sistemi (Bank 1 Isıtma1) Düşük",
-    "severity": "orta",
-    "description": "Lamda sondanın ıstma sistemi (Bank 1 Isıtma1) Düşük",
-    "affectedSystem": "O2/Lambda",
+    "name": "Oksijen Sensörü Isıtıcı Kontrol Devresi Düşük Voltaj (Bank 1, Sensör 1)",
+    "severity": "low",
+    "description": "Isıtıcı devresinde şasiye kısa devre olduğunu gösterir. Akım çok yüksek çekildiği için ECU devreyi korumaya alır. Çoğu zaman sensör kablolarının sıcak egzoz borusuna veya manifolduna değip erimesinden kaynaklanır.",
+    "affectedSystem": "Emisyon Sistemi (O2 Isıtıcı)",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Kumanda : Şaseye kısa devre",
-      "sensör",
-      "Motor Elektroniğ"
+      "O2 sensörü kablosunda erime ve şasiye kısa devre",
+      "İç kısa devre yapmış oksijen sensörü"
     ],
     "solutions": [
-      "Sensör/aktüatör sinyal testi ve parça doğrulaması",
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Aracın altına girip sensör kablosunu (özellikle konektöre giden yolu) görsel olarak inceleyin.",
+      "Kablo sağlamsa sensörü değiştirin."
     ]
   },
   {
@@ -1717,20 +1707,19 @@
   {
     "code": "P0036",
     "category": "P",
-    "name": "O2 Sensörü 2 Bank 1 Isıtma Devresinde Hata",
-    "severity": "orta",
-    "description": "O2 Sensörü 2 Bank 1 Isıtma Devresinde Hata",
-    "affectedSystem": "O2/Lambda",
+    "name": "Oksijen Sensörü Isıtıcı Kontrol Devresi (Bank 1, Sensör 2)",
+    "severity": "low",
+    "description": "Katalitik konvertörden SONRAKİ (Sensör 2) oksijen sensörünün ısıtıcı arızasıdır. Arabanın çekişini veya yakıt tüketimini etkilemez (çünkü 2. sensör sadece katalizörün sağlığını denetler), ancak motor arıza ışığını yakarak muayeneden kalmanıza sebep olur.",
+    "affectedSystem": "Emisyon Sistemi (O2 Isıtıcı)",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Tesisat",
-      "Sensör",
-      "Motor Elektroniği"
+      "Alt oksijen sensörü ısıtıcı rezistans arızası",
+      "Su birikintisine hızlı girildiğinde sensöre su sıçrayıp termal şokla kırılması"
     ],
     "solutions": [
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Kablo tesisatını kontrol edip, sensörü (Bank 1 Sensör 2) yenisiyle değiştirin."
     ]
   },
   {
@@ -2052,37 +2041,35 @@
   {
     "code": "P0053",
     "category": "P",
-    "name": "O2 Sensör Bank 1 Sensör 1 Isıtma Reistansı hata",
-    "severity": "orta",
-    "description": "O2 Sensör Bank 1 Sensör 1 Isıtma Reistansı hata",
-    "affectedSystem": "O2/Lambda",
+    "name": "HO2S (Isıtmalı Oksijen Sensörü) Isıtıcı Direnci (Bank 1, Sensör 1)",
+    "severity": "low",
+    "description": "Sensörün içindeki ısıtıcının direnci (ohm) fabrika spesifikasyonlarının dışına çıkmıştır.",
+    "affectedSystem": "Emisyon Sistemi",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Tesisat",
-      "O2 Sensör"
+      "Sensör rezistansında yıpranma"
     ],
     "solutions": [
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Sensörü orijinal ekipman (OEM) ile değiştirin."
     ]
   },
   {
     "code": "P0054",
     "category": "P",
-    "name": "O2 Sensör Bank 1 Sensör 2 Isıtma Reistansı hata",
-    "severity": "orta",
-    "description": "O2 Sensör Bank 1 Sensör 2 Isıtma Reistansı hata",
-    "affectedSystem": "O2/Lambda",
+    "name": "HO2S (Isıtmalı Oksijen Sensörü) Isıtıcı Direnci (Bank 1, Sensör 2)",
+    "severity": "low",
+    "description": "Katalizör sonrası sensörün ısıtıcı arızası. Genellikle yan sanayi sensör kullanıldığında beynin bu direnci beğenmemesinden kaynaklanır.",
+    "affectedSystem": "Emisyon Sistemi",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Tesisat",
-      "O2 Sensör"
+      "Uygunsuz (yan sanayi) sensör kullanılması"
     ],
     "solutions": [
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Kalitesiz (ucuz) oksijen sensörleri yerine sadece NGK veya Denso marka kullanın."
     ]
   },
   {
@@ -3096,44 +3083,43 @@
   {
     "code": "P0102",
     "category": "P",
-    "name": "Kütle veya Hacim Hava Akışı 'A' Devresi Düşük Giriş",
-    "severity": "yüksek",
-    "description": "Sensörün performansından ziyade elektriksel bir devrenin çöküşünü ifade eder. Sensör sinyal devresindeki voltajın veya frekansın önceden belirlenmiş eşik değerinin tamamen altına inmesidir. Sistem acil durum haritasına (limp-home mode) geçer.",
-    "affectedSystem": "Sensör Dinamikleri",
+    "name": "Kütle Hava Akış (MAF) Sensörü Devresi Düşük Frekans/Voltaj",
+    "severity": "medium",
+    "description": "Motor beyni, motora giren havanın miktarını ölçen MAF sensöründen beklediğinden çok daha DÜŞÜK bir sinyal (voltaj) almaktadır. Genellikle MAF sensörünün tamamen bozulduğu veya fişinin çekildiği durumlarda görülür. Araba rölantide titrer ve gaza basınca boğulur.",
+    "affectedSystem": "Hava Emiş Sistemi",
     "symptoms": [
       "Emisyonlarda ve yakıt tüketiminde ciddi dalgalanmalar",
       "Limp-home (acil durum) moduna geçiş",
       "Performansın kilitlenmesi"
     ],
     "causes": [
-      "Kablo tesisatında ciddi bir kopukluk",
-      "Şasiye kısa devre durumu",
-      "Sensörün iç elektroniğinin yanması"
+      "MAF sensörü kablosunda kopukluk veya çıkmış soket",
+      "Aşırı kirli veya arızalı MAF sensörü",
+      "Emme manifoldunda devasa bir vakum kaçağı (Hava MAF'tan değil kaçaktan giriyordur)"
     ],
     "solutions": [
-      "Tesisat kısa devresinin kontrolü ve kabloların onarımı",
-      "Fiş korozyonunun temizlenmesi",
-      "Sigortaların ve sensörün değiştirilmesi"
+      "MAF sensörü soketinin takılı ve temiz olduğundan emin olun.",
+      "Live Data'da gaz verdikçe MAF değerinin (g/s) artıp artmadığına bakın. Tepki yoksa MAF arızalıdır."
     ]
   },
   {
     "code": "P0103",
     "category": "P",
-    "name": "hava kütle ölçer giriŞ sinyali yüksek",
-    "severity": "orta",
-    "description": "hava kütle ölçer giriŞ sinyali yüksek",
-    "affectedSystem": "MAF (Hava Kütle)",
+    "name": "Kütle Hava Akış (MAF) Sensörü Devresi Yüksek Frekans/Voltaj",
+    "severity": "medium",
+    "description": "P0102'nin aksine, MAF sensörü içeriye inanılmaz derecede yüksek hava girdiğini (adeta bir kasırga varmış gibi) rapor etmektedir. Genellikle sensör içindeki sıcak telin kısa devre yapması sonucu 5 Volt beslemenin doğrudan sinyal hattına kaçmasıyla oluşur.",
+    "affectedSystem": "Hava Emiş Sistemi",
     "symptoms": [
       "Arıza lambası (MIL) yanar",
       "Rölantide dalgalanma",
       "Gaz tepkisinde zayıflık"
     ],
     "causes": [
-      "hava kütlesi çok yüksek (sinyal frekansı çok yüksek)"
+      "MAF sensörü iç kısa devresi",
+      "MAF sinyal kablosunun 5V referans kablosuna kısa devre yapması"
     ],
     "solutions": [
-      "Sensör/aktüatör sinyal testi ve parça doğrulaması",
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Multimetre ile MAF sinyal kablosunu ölçün; rölantide 1.0V - 1.5V civarında olmalıdır, 5V görüyorsanız kablo veya sensör kısa devredir."
     ]
   },
   {
@@ -3300,44 +3286,41 @@
   {
     "code": "P0112",
     "category": "P",
-    "name": "giriŞ hava sıcaklık sezicisi devresinde giriŞ sinyali düşük",
-    "severity": "orta",
-    "description": "giriŞ hava sıcaklık sezicisi devresinde giriŞ sinyali düşük",
-    "affectedSystem": "Diğer",
+    "name": "Emme Havası Sıcaklık (IAT) Sensörü Devresi Düşük Voltaj",
+    "severity": "low",
+    "description": "IAT sensörü (genellikle MAF sensörünün içine entegredir), giren havanın çok sıcak (örneğin 140°C) olduğunu rapor etmektedir. Düşük voltaj, sensör termistörünün yüksek sıcaklık algıladığı veya kablolarının kısa devre yaptığı anlamına gelir.",
+    "affectedSystem": "Hava Emiş Sistemi",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Hat eksiye Kısa devre",
-      "Sensörde açık devre",
-      "Motor Elektroniği"
+      "IAT sensör kablolarının birbirine kısa devre yapması",
+      "Arızalı IAT (veya entegre MAF) sensörü",
+      "Açık hava filtresinin egzoza çok yakın monte edilip gerçekten sıcak hava çekmesi"
     ],
     "solutions": [
-      "Sensör/aktüatör sinyal testi ve parça doğrulaması",
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Soketi çekin; eğer arıza P0113'e (Yüksek Voltaj / -40°C) dönüşüyorsa kablolama sağlamdır, sensör bozuktur."
     ]
   },
   {
     "code": "P0113",
     "category": "P",
-    "name": "Emme Havası Sıcaklık Sensörü 1 Devresi Yüksek Giriş",
-    "severity": "yüksek",
-    "description": "Negatif Sıcaklık Katsayısına sahip IAT sensöründe kablo kopması nedeniyle direncin sonsuza çıkması ve PCM'in 4.7V üzeri giriş okumasıdır. PCM sıcaklığı -40°C olarak hesaplar.",
-    "affectedSystem": "Sensör Dinamikleri",
+    "name": "Emme Havası Sıcaklık (IAT) Sensörü Devresi Yüksek Voltaj",
+    "severity": "low",
+    "description": "IAT sensörü havayı -40°C olarak ölçmektedir. Yüksek voltaj (5V), termistör devresinin tamamen AÇIK olduğunu (kopukluk) gösterir. ECU, hava çok soğuk sanıp gereksiz yere aşırı yakıt basar (zengin karışım), egzozdan çiğ benzin kokusu gelir.",
+    "affectedSystem": "Hava Emiş Sistemi",
     "symptoms": [
       "Egzozdan siyah duman atılması",
       "-40°C algısına bağlı devasa miktarda çiğ yakıt atımı ve boğulma",
       "Rölanti dengesizlikleri ve teklemeler"
     ],
     "causes": [
-      "Kablo tesisatının kopması",
-      "Sensör konnektörünün çekili unutulması",
-      "Sensör iç direnç kopması"
+      "Çıkmış IAT/MAF soketi",
+      "Kopuk IAT kablosu",
+      "İçi kopmuş termistör"
     ],
     "solutions": [
-      "Kablo tesisatının voltaj ve direnç ölçümü",
-      "Kopan kabloların onarılması",
-      "Arızalı IAT sensörünün yenilenmesi"
+      "Soketin takılı olduğundan emin olun. Live data üzerinden sıcaklığın -40°C'de sabit kalıp kalmadığını kontrol edin."
     ]
   },
   {
@@ -3512,44 +3495,42 @@
   {
     "code": "P0121",
     "category": "P",
-    "name": "Bogaz kelebeği pozizyon sensörü-gaz pedalı pozizyon sensör 1 devresi de perfomans arızası",
-    "severity": "orta",
-    "description": "Bogaz kelebeği pozizyon sensörü-gaz pedalı pozizyon sensör 1 devresi de perfomans arızası",
-    "affectedSystem": "Diğer",
+    "name": "Gaz Kelebeği Pozisyon Sensörü/Anahtarı (TPS) 'A' Devresi Menzil/Performans",
+    "severity": "high",
+    "description": "Elektronik gaz kelebeği üzerindeki TPS sensörünün okuduğu açı, MAP/MAF gibi diğer sensörlerin verisiyle uyuşmamaktadır. Araç aniden gaz yemeyi bırakıp 'Limp Mode'a (Koruma Modu / Güvenli Mod) geçebilir, hızınız 30 km/h'yi geçmez.",
+    "affectedSystem": "Gaz Kelebeği Kontrolü",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Program",
-      "Bogaz kelebegi gaz Pedalı Sensörü",
-      "Motor elektroniği",
-      "Kablo baglantılarında hata",
-      "Ayarlama ve düzeltme hatası"
+      "Kirli veya kurum bağlamış elektronik gaz kelebeği gövdesi",
+      "TPS sensörü içindeki potansiyometrede ölü noktalar (aşınma)",
+      "Gaz pedalı sensörü (APP) ile uyumsuzluk"
     ],
     "solutions": [
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Gaz kelebeği boğazını söküp temizleyici sprey ve diş fırçasıyla pırıl pırıl yapın.",
+      "Cihazla gaz kelebeği adaptasyonu/kalibrasyonu (TBA) yapın."
     ]
   },
   {
     "code": "P0122",
     "category": "P",
-    "name": "Gaz Kelebeği/Pedal Konum Sensörü 'A' Devresi Düşük Giriş",
-    "severity": "yüksek",
-    "description": "Gaz kelebeği üzerindeki bir potansiyometre olan TPS sensöründen gelen referans voltajının sıfıra yaklaştığını (genellikle 0.5V'un altına düştüğünü) ifade eder.",
-    "affectedSystem": "Sensör Dinamikleri",
+    "name": "Gaz Kelebeği Pozisyon Sensörü/Anahtarı (TPS) 'A' Devresi Düşük Giriş",
+    "severity": "high",
+    "description": "TPS sensörünün sinyal voltajı beklenenden (genellikle 0.5V altı) çok daha düşüktür. ECU gaz kelebeğinin kapalı olduğunu düşünürken siz gaza basıyor olabilirsiniz. Kopuk veya kısa devre yapmış kablo habercisidir.",
+    "affectedSystem": "Gaz Kelebeği Kontrolü",
     "symptoms": [
       "İvmelenme kaybı ve kısıtlanması",
       "Otomatik şanzımanın vites değiştirme noktalarını (shift points) hesaplayamaması",
       "Vites kararsızlığı"
     ],
     "causes": [
-      "Potansiyometre fırçalarının aşınması",
-      "TPS voltajının 0.5V altına çakılması",
-      "Kablo kopukluğu veya kısa devre"
+      "Kopuk 5V referans besleme kablosu",
+      "Arızalı TPS sensörü",
+      "Sinyal kablosunun şasiye değmesi"
     ],
     "solutions": [
-      "Sensör referans voltajının (5V) ve topraklamasının ölçümü",
-      "TPS sensör değişimi ve kalibrasyonu"
+      "TPS fişini çekin ve multimetre ile 5V besleme gelip gelmediğine bakın."
     ]
   },
   {
@@ -3711,41 +3692,39 @@
   {
     "code": "P0131",
     "category": "P",
-    "name": "O2 Sensör Sensörü Düşük Voltaj (Bank1 Sensör1)",
-    "severity": "orta",
-    "description": "O2 Sensör Sensörü Düşük Voltaj (Bank1 Sensör1)",
-    "affectedSystem": "O2/Lambda",
+    "name": "Oksijen Sensörü Devresi Düşük Voltaj (Bank 1, Sensör 1)",
+    "severity": "medium",
+    "description": "Ön oksijen sensörü (Sensör 1) inatla düşük voltaj (0.1V - 0.2V arası) üretmektedir. Düşük voltaj = FAKİR KARIŞIM demektir. Ancak ECU ekstra yakıt basmasına rağmen voltaj yükselmiyorsa, sensörün kendisi bozuktur veya egzozda devasa bir hava kaçağı vardır.",
+    "affectedSystem": "Emisyon ve Yakıt Sistemi",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "bank 1 devresinde kısa devre",
-      "bank1 sensörü ME",
-      "program"
+      "Arızalı ve kilitlenmiş oksijen sensörü",
+      "Egzoz manifoldunda oksijen sensöründen önce çatlak",
+      "Aşırı zayıf yakıt basıncı"
     ],
     "solutions": [
-      "Sensör/aktüatör sinyal testi ve parça doğrulaması",
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Fren spreyini emme manifolduna çok hafif sıkarak karışımı bilerek zenginleştirin; eğer O2 sensörü anında 0.9V'a fırlıyorsa sensör SAĞLAMDIR, sorun gerçekten fakir karışımdır."
     ]
   },
   {
     "code": "P0132",
     "category": "P",
-    "name": "O2 Sensör Devresi Yüksek Voltaj (Bank1 Sensör1)",
-    "severity": "orta",
-    "description": "O2 Sensör Devresi Yüksek Voltaj (Bank1 Sensör1)",
-    "affectedSystem": "O2/Lambda",
+    "name": "Oksijen Sensörü Devresi Yüksek Voltaj (Bank 1, Sensör 1)",
+    "severity": "high",
+    "description": "Ön oksijen sensörü inatla yüksek voltaj (0.9V ve üzeri) okumaktadır. Yüksek voltaj = ZENGİN KARIŞIM. Motor boğulur, kara duman atar. Sensör arızalı olabileceği gibi, açık kalmış bir yakıt enjektörü motoru benzinle dolduruyor olabilir.",
+    "affectedSystem": "Emisyon ve Yakıt Sistemi",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Artıya dogru kısa devre",
-      "sensör",
-      "ME arızası"
+      "Açık (işeyen) yakıt enjektörü",
+      "Arızalı/Kısa devre yapmış O2 sensörü",
+      "Aşırı yüksek yakıt ray basıncı (Bozuk regülatör)"
     ],
     "solutions": [
-      "Sensör/aktüatör sinyal testi ve parça doğrulaması",
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "O2 sensörünü söküp ucuna bakın; kömür gibi kapkara ise motor gerçekten çok zengin çalışıyordur. Soketi sökün, ECU voltajı 0.45V'a (bias voltajı) sabitleyecektir."
     ]
   },
   {
@@ -3774,20 +3753,19 @@
   {
     "code": "P0134",
     "category": "P",
-    "name": "O2 Sensör Devresinde Hareketlilik Tespit Edilemedi (Bank1 Sensör1)",
-    "severity": "orta",
-    "description": "O2 Sensör Devresinde Hareketlilik Tespit Edilemedi (Bank1 Sensör1)",
-    "affectedSystem": "O2/Lambda",
+    "name": "Oksijen Sensörü Devresinde Aktivite Tespit Edilmedi (Bank 1, Sensör 1)",
+    "severity": "medium",
+    "description": "Motor beyni O2 sensöründen bir sinyal bekliyor, ancak sensör 0.45V referans değerinde donup kalmış ve ne zengin ne de fakir tepkisi veriyor. Isıtıcı arızasıyla (P0030) birleştiğinde, sensörün hiç çalışmadığının (ısınmadığının) net kanıtıdır.",
+    "affectedSystem": "Emisyon Sistemi",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "yazılım açık devre",
-      "Lamda ısıtması",
-      "sensör"
+      "Kopuk sinyal kablosu",
+      "Tamamen ölmüş/zehirlenmiş oksijen sensörü"
     ],
     "solutions": [
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Kablo tesisatını kontrol edin ve O2 sensörünü yenileyin."
     ]
   },
   {
@@ -4110,42 +4088,37 @@
   {
     "code": "P0151",
     "category": "P",
-    "name": "O2 Sensör Devresi Düşük Voltaj (Bank2 Sensör1)",
-    "severity": "orta",
-    "description": "O2 Sensör Devresi Düşük Voltaj (Bank2 Sensör1)",
-    "affectedSystem": "O2/Lambda",
+    "name": "Oksijen Sensörü Devresi Düşük Voltaj (Bank 2, Sensör 1)",
+    "severity": "medium",
+    "description": "V6/V8 motorlarda Bank 2 tarafının fakir karışım okumasıdır. ECU Bank 2'ye ekstra yakıt pompalar ancak voltaj hala 0.1V'da takılı kalmıştır.",
+    "affectedSystem": "Emisyon ve Yakıt Sistemi",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "sigorta",
-      "Tesisat",
-      "Sensör",
-      "ME"
+      "Bank 2 manifoldunda vakum/egzoz kaçağı",
+      "Arızalı O2 sensörü"
     ],
     "solutions": [
-      "Sensör/aktüatör sinyal testi ve parça doğrulaması",
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Bank 1 ve Bank 2 sensörlerini yer değiştirin. Hata P0131'e dönerse sensör arızalıdır."
     ]
   },
   {
     "code": "P0152",
     "category": "P",
-    "name": "O2 Sensör Devresi Yüksek Voltaj (Bank2 Sensör1)",
-    "severity": "orta",
-    "description": "O2 Sensör Devresi Yüksek Voltaj (Bank2 Sensör1)",
-    "affectedSystem": "O2/Lambda",
+    "name": "Oksijen Sensörü Devresi Yüksek Voltaj (Bank 2, Sensör 1)",
+    "severity": "high",
+    "description": "Bank 2 tarafındaki oksijen sensörünün inatla yüksek voltaj (zengin karışım) vermesidir.",
+    "affectedSystem": "Emisyon ve Yakıt Sistemi",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Artıya dogru kısa devre",
-      "sensör",
-      "ME arızası"
+      "Bank 2'de işeyen (sızdıran) yakıt enjektörü",
+      "Oksijen sensörü kısa devresi"
     ],
     "solutions": [
-      "Sensör/aktüatör sinyal testi ve parça doğrulaması",
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Bujileri söküp kontrol edin, eğer Bank 2 tarafındaki bujiler zift gibiyse sorun mekanik/yakıt sistemindedir."
     ]
   },
   {
@@ -5168,77 +5141,72 @@
   {
     "code": "P0201",
     "category": "P",
-    "name": "Enjektör Devre Arızası-Silindir = 1",
-    "severity": "orta",
-    "description": "Enjektör Devre Arızası-Silindir = 1",
-    "affectedSystem": "Enjektör",
+    "name": "Enjektör Devresi Açık (Silindir 1)",
+    "severity": "high",
+    "description": "Motor beyni, 1 numaralı silindirin yakıt enjektörünün elektriksel devresini açtığında (şasi verdiğinde) devrenin tamamlanmadığını tespit etti. Enjektör çalışmıyor.",
+    "affectedSystem": "Yakıt Enjeksiyon Sistemi",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Tesisat",
-      "Enjektör",
-      "Motor Elektroniği"
+      "Enjektör bobininde iç kopukluk (Açık devre)",
+      "Kopuk enjektör kablosu"
     ],
     "solutions": [
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Enjektör fişini çekin, multimetre ile direnç ölçün (genelde 12-16 Ohm). Değer sonsuzsa enjektör değişmelidir."
     ]
   },
   {
     "code": "P0202",
     "category": "P",
-    "name": "Enjektör Devre Arızası-Silindir = 2",
-    "severity": "orta",
-    "description": "Enjektör Devre Arızası-Silindir = 2",
-    "affectedSystem": "Enjektör",
+    "name": "Enjektör Devresi Açık (Silindir 2)",
+    "severity": "high",
+    "description": "2 numaralı silindirin yakıt enjektöründe elektriksel kopukluk var.",
+    "affectedSystem": "Yakıt Enjeksiyon Sistemi",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Tesisat",
-      "Enjektör",
-      "Motor Elektroniği"
+      "Bozuk enjektör",
+      "Kablolama veya ECU arızası"
     ],
     "solutions": [
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Noid Işığı (Noid light) kullanarak enjektöre elektrik gelip gelmediğini kontrol edin."
     ]
   },
   {
     "code": "P0203",
     "category": "P",
-    "name": "Enjektör Devre Arızası-Silindir = 3",
-    "severity": "orta",
-    "description": "Enjektör Devre Arızası-Silindir = 3",
-    "affectedSystem": "Enjektör",
+    "name": "Enjektör Devresi Açık (Silindir 3)",
+    "severity": "high",
+    "description": "3 numaralı silindirin enjektörüne ECU'dan gelen sinyalin ulaşamaması durumudur.",
+    "affectedSystem": "Yakıt Enjeksiyon Sistemi",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Tesisat",
-      "Enjektör",
-      "Motor Elektroniği"
+      "Enjektör fişinde oksitlenme",
+      "Eriyen kablo tesisatı"
     ],
     "solutions": [
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Soketleri kontak spreyi ile temizleyin."
     ]
   },
   {
     "code": "P0204",
     "category": "P",
-    "name": "Enjektör Devre Arızası-Silindir = 4",
-    "severity": "orta",
-    "description": "Enjektör Devre Arızası-Silindir = 4",
-    "affectedSystem": "Enjektör",
+    "name": "Enjektör Devresi Açık (Silindir 4)",
+    "severity": "high",
+    "description": "4 numaralı silindirin enjektör devresinde kopukluk.",
+    "affectedSystem": "Yakıt Enjeksiyon Sistemi",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Tesisat",
-      "Enjektör",
-      "Motor Elektroniği"
+      "Bozuk enjektör (İçten kopuk)"
     ],
     "solutions": [
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "4. enjektörü 1. enjektörle yer değiştirin, arıza P0201'e kayarsa enjektörü yenileyin."
     ]
   },
   {
@@ -7199,111 +7167,96 @@
   {
     "code": "P0302",
     "category": "P",
-    "name": "Silindir = 2 Ateşleme Hatası Tespit Edildi",
-    "severity": "orta",
-    "description": "Silindir = 2 Ateşleme Hatası Tespit Edildi",
-    "affectedSystem": "Diğer",
+    "name": "2. Silindirde Tekleme Tespit Edildi",
+    "severity": "high",
+    "description": "Krank sensörünün verisine göre 2. silindir ateşleme sırası geldiğinde motora beklenen itici gücü veremiyor. P0301 (1. silindir) ile aynı teşhis adımları geçerlidir.",
+    "affectedSystem": "Ateşleme ve Mekanik",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Motorda Mekanik Hata Tesisat",
-      "Ateşleme",
-      "Yakıt Sistemi",
-      "Enjektör",
-      "Hava Kütle ölçer",
-      "Motor Elektroniği"
+      "Bozuk ateşleme bobini",
+      "Aşınmış buji",
+      "Tıkalı enjektör",
+      "Kompresyon kaybı"
     ],
     "solutions": [
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "2. silindirin bobinini 3. silindirle yer değiştirin. Arıza P0303'e kayarsa sorun bobindir."
     ]
   },
   {
     "code": "P0303",
     "category": "P",
-    "name": "Silindir = 3 Ateşleme Hatası Tespit Edildi",
-    "severity": "orta",
-    "description": "Silindir = 3 Ateşleme Hatası Tespit Edildi",
-    "affectedSystem": "Diğer",
+    "name": "3. Silindirde Tekleme Tespit Edildi",
+    "severity": "high",
+    "description": "3. silindirde ateşleme veya yakıt problemi. Motor rölantide 'pat-pat' sesi çıkararak sarsıntılı çalışır ve gaz yemez. V6 motorlarda emme manifoldunun altında kalan (erişimi zor) arka banka denk geliyorsa işçiliği çok zordur.",
+    "affectedSystem": "Ateşleme ve Mekanik",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Motorda Mekanik Hata Tesisat",
-      "Ateşleme",
-      "Yakıt Sistemi",
-      "Enjektör",
-      "Hava Kütle ölçer",
-      "Motor Elektroniği"
+      "Buji yağlanması veya su/antifriz girmesi (conta kaçağı)",
+      "Bobin arızası",
+      "Kırık sekman veya yanık supap"
     ],
     "solutions": [
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Bujiyi söküp ucuna bakın; ucunda yağ varsa külbütör kapak contası sızdırıp buji yuvasını yağla doldurmuş olabilir (Kısa devre yaptırır)."
     ]
   },
   {
     "code": "P0304",
     "category": "P",
-    "name": "Silindir = 4 Ateşleme Hatası Tespit Edildi",
-    "severity": "orta",
-    "description": "Silindir = 4 Ateşleme Hatası Tespit Edildi",
-    "affectedSystem": "Diğer",
+    "name": "4. Silindirde Tekleme Tespit Edildi",
+    "severity": "high",
+    "description": "Sıralı 4 silindirli bir motorda genellikle şanzımana en yakın olan silindirdir. Tekleme lambasının (MIL) yanıp sönmesine (flaş yapmasına) neden oluyorsa, katalizörünüz an itibariyle çiğ benzin yüzünden eriyor demektir; ARACI KESİNLİKLE DURDURUN.",
+    "affectedSystem": "Ateşleme ve Mekanik",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Motorda Mekanik Hata Tesisat",
-      "Ateşleme",
-      "Yakıt Sistemi",
-      "Enjektör",
-      "Hava Kütle ölçer",
-      "Motor Elektroniği"
+      "Ateşleme bobini ölümü",
+      "Buji tırnak aralığının (gap) kapanması",
+      "Enjektör sürücü devresi arızası"
     ],
     "solutions": [
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Motor lambası YANIP SÖNÜYORSA (flashing), aracı asla sürmeyin. Çekici çağırın, aksi takdirde pahalı katalitik konvertörünüz kelimenin tam anlamıyla lav gibi eriyecektir."
     ]
   },
   {
     "code": "P0305",
     "category": "P",
-    "name": "Silindir = 5 Ateşleme Hatası Tespit Edildi",
-    "severity": "orta",
-    "description": "Silindir = 5 Ateşleme Hatası Tespit Edildi",
-    "affectedSystem": "Diğer",
+    "name": "5. Silindirde Tekleme Tespit Edildi",
+    "severity": "high",
+    "description": "V6 veya V8 motorlarda 5 numaralı silindirin patlama üretememesi.",
+    "affectedSystem": "Ateşleme Sistemi",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Motorda Mekanik Hata Tesisat",
-      "Ateşleme",
-      "Yakıt Sistemi",
-      "Enjektör",
-      "Hava Kütle ölçer",
-      "Motor Elektroniği"
+      "Bobin arızası",
+      "Buji eskimesi",
+      "Düşük kompresyon"
     ],
     "solutions": [
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "5. silindirin bobinini söküp bujisini kontrol edin."
     ]
   },
   {
     "code": "P0306",
     "category": "P",
-    "name": "Silindir = 6 Ateşleme Hatası Tespit Edildi",
-    "severity": "orta",
-    "description": "Silindir = 6 Ateşleme Hatası Tespit Edildi",
-    "affectedSystem": "Diğer",
+    "name": "6. Silindirde Tekleme Tespit Edildi",
+    "severity": "high",
+    "description": "V6/V8 motorların 6 numaralı silindirinde gerçekleşen güç kaybı.",
+    "affectedSystem": "Ateşleme Sistemi",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Motorda Mekanik Hata Tesisat",
-      "Ateşleme",
-      "Yakıt Sistemi",
-      "Enjektör",
-      "Hava Kütle ölçer",
-      "Motor Elektroniği"
+      "Yağlanmış buji",
+      "Ateşleme modülü veya bobin sorunu"
     ],
     "solutions": [
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Kompresyon testi yaparak mekanik sağlığı doğrulayın."
     ]
   },
   {
@@ -7870,42 +7823,40 @@
   {
     "code": "P0335",
     "category": "P",
-    "name": "Krank Mili Pozisyon Sensörü 'A' Devresi Arızası",
-    "severity": "yüksek",
-    "description": "Ateşleme zamanlamasının ve enjeksiyon palsının ana referans noktası olan CKP sensörünün işlevini yitirdiğini belirtir.",
-    "affectedSystem": "Ateşleme Senkronizasyonu",
+    "name": "Krank Mili Pozisyon Sensörü 'A' Devre Arızası",
+    "severity": "high",
+    "description": "Motorun çalışması için (ateşleme zamanını belirlemek adına) en KRTİK sensördür. Bu kod varsa veya sensör tamamen öldüyse, aracınız kesinlikle marş basar ama ÇALIŞMAZ (Crank no start). Takometre (devir saati) marş anında kıpırdamıyorsa fail bellidir.",
+    "affectedSystem": "Motor Zamanlama / Ateşleme",
     "symptoms": [
       "Ateşleme sisteminin tamamen durması",
       "Motorun marş basması ancak çalışmaması (no-start/no-crank)"
     ],
     "causes": [
-      "Sensör tesisatının kopması veya oksitlenmesi",
-      "Krank kasnağındaki manyetik okuyucu dişlilerin (tone ring) zarar görmesi",
-      "Sensör iç sargı kopukluğu"
+      "Bozulmuş krank sensörü (CKP)",
+      "Sensör okuma ucu ile okuyucu dişli arasına giren metal talaşları",
+      "Kopuk veya erimiş sensör kablosu"
     ],
     "solutions": [
-      "Krank sensörü soket ve kablolarının ölçülmesi",
-      "Sensör değişimi ve manyetik okuyucu alanın kontrolü"
+      "Marşa basarken devir saatinize bakın; ibre hiç oynamıyorsa (0'da kalıyorsa) ECU krankın döndüğünü göremiyordur, sensör bozuktur."
     ]
   },
   {
     "code": "P0336",
     "category": "P",
-    "name": "Krank Mili Sensör Devresi Sınırı / Performansı",
-    "severity": "orta",
-    "description": "Krank Mili Sensör Devresi Sınırı / Performansı",
-    "affectedSystem": "Krank (CKP)",
+    "name": "Krank Mili Pozisyon Sensörü 'A' Devresi Menzil/Performans",
+    "severity": "high",
+    "description": "Sensör çalışıyor ancak okuduğu devir sinyalinde (kare veya sinüs dalgası) gürültü, atlama veya bozukluk var. Araç giderken aniden tekleyip stop edebilir (Stalling). Genellikle ısındığında genleşen sensör sargıları yüzünden olur.",
+    "affectedSystem": "Motor Zamanlama",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Hava Girdap Aralığı Fazla",
-      "Sensör Kendisi Hatalı",
-      "Tesisat"
+      "Isınınca açık devre yapan (bozulan) sensör",
+      "Gevşemiş krank okuyucu kasnağı (Reluctor Wheel)",
+      "Manyetik sensörün ucunda biriken metal talaşları"
     ],
     "solutions": [
-      "Sensör/aktüatör sinyal testi ve parça doğrulaması",
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Sensörü sökün ve ucunu bir bezle temizleyin. Şikayet sadece motor ısındığında oluyorsa sensörü doğrudan değiştirin."
     ]
   },
   {
@@ -7967,40 +7918,39 @@
   {
     "code": "P0340",
     "category": "P",
-    "name": "Kam Mili Yer Sensör Devre Arızası (SensörA Devre1)",
-    "severity": "orta",
-    "description": "Kam Mili Yer Sensör Devre Arızası (SensörA Devre1)",
-    "affectedSystem": "Kam (CMP)",
+    "name": "Eksantrik Mili Pozisyon Sensörü 'A' Devre Arızası (Bank 1)",
+    "severity": "medium",
+    "description": "Eksantrik sensörü, yakıt enjeksiyonunun ve silindir tanımalarının doğru yapılabilmesi için krank sensörünün tamamlayıcısıdır. Krank verisi var ama eksantrik verisi yoksa, motor uzun marş (uzun süre marş basıldıktan sonra zar zor çalışma) yapar.",
+    "affectedSystem": "Motor Zamanlama",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Tesisat",
-      "Sensör",
-      "Motor Elektroniği"
+      "Kopuk eksantrik sensörü (CMP)",
+      "Kötü kablo bağlantısı",
+      "Triger kayışı koptuysa (krank dönüyor ama eksantrik dönmüyorsa)"
     ],
     "solutions": [
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Eksantrik sensörünün kablosunu multimetre ile kontrol edin. Ayrıca triger kayışınızın sağlam olup olmadığını yağ kapağından bakarak teyit edin."
     ]
   },
   {
     "code": "P0341",
     "category": "P",
-    "name": "Kam Mili Yer Sensör Devre Sınırı / Performansı(SensörA Devre1)",
-    "severity": "orta",
-    "description": "Kam Mili Yer Sensör Devre Sınırı / Performansı(SensörA Devre1)",
-    "affectedSystem": "Kam (CMP)",
+    "name": "Eksantrik Mili Pozisyon Sensörü 'A' Devresi Menzil/Performans",
+    "severity": "high",
+    "description": "ECU, eksantrik sensöründen gelen sinyalin krank sensöründen gelen sinyalle olan senkronizasyonunda sorun görüyor. Sente atlamış (zamanlaması kaymış) triger zincirinin/kayışının veya uzamış bir zincirin kesin kanıtlarından biridir.",
+    "affectedSystem": "Motor Zamanlama",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Hava Girdap Aralığı Fazla",
-      "Sensör Kendisi Hatalı",
-      "Program"
+      "Triger zincirinde uzama",
+      "Sente atlaması",
+      "Elektriksel sinyal gürültüsü (Marş motorunun yaydığı parazit)"
     ],
     "solutions": [
-      "Sensör/aktüatör sinyal testi ve parça doğrulaması",
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Ateşleme sistemi ile sensör kablolarını birbirinden ayırın. Sorun gitmezse triger kapaklarını söküp sente işaretlerini gözle kontrol edin."
     ]
   },
   {
@@ -9020,82 +8970,76 @@
   {
     "code": "P0400",
     "category": "P",
-    "name": "EGR AkıŞ Arızası",
-    "severity": "orta",
-    "description": "EGR AkıŞ Arızası",
-    "affectedSystem": "EGR",
+    "name": "Egzoz Gazı Devridaimi (EGR) Akış Arızası",
+    "severity": "medium",
+    "description": "EGR sisteminde genel bir akış problemi. Valf açılmasına rağmen manifolt basıncı beklenen oranda değişmiyor.",
+    "affectedSystem": "EGR Sistemi",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Boru Bağlantı Hatası",
-      "EGR Selonoit Valfi",
-      "EGR Valfi",
-      "EGR"
+      "Tıkalı EGR kanalı",
+      "EGR valfinin vakum hortumunun çıkması"
     ],
     "solutions": [
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "EGR hortumlarını kontrol edin, yırtık/çatlak olanları silikon hortumla değiştirin."
     ]
   },
   {
     "code": "P0401",
     "category": "P",
-    "name": "Egzoz Gazı Geri Çevrim 'A' Akışı Yetersiz",
-    "severity": "yüksek",
-    "description": "Yanma odasındaki tepe sıcaklıkları düşüren EGR sistemindeki fiziksel daralmayı belirtir. PCM, EGR valfi açıldığında beklenen basınç değişimini göremezse bu kod tetiklenir.",
-    "affectedSystem": "Egzoz Emisyon Sistemleri",
+    "name": "Egzoz Gazı Devridaimi (EGR) Akışı Yetersiz",
+    "severity": "medium",
+    "description": "Emisyonları düşürmek için yanma odasına geri gönderilmesi gereken egzoz gazı miktarının çok az olduğu tespit edildi. Özellikle dizel ve eski benzinli araçlarda EGR valfinin veya manifold kanallarının kurumla tamamen tıkanması (taşlaşması) sonucu ortaya çıkar.",
+    "affectedSystem": "EGR (Egzoz Gazı Geri Çevrimi)",
     "symptoms": [
       "Yanma odası sıcaklıklarının kontrolsüzce artması",
       "Vuruntu (detonation) denilen yıkıcı motor patlamaları",
       "Çekiş kaybı"
     ],
     "causes": [
-      "Motor bloğundan manifolda giden dar EGR kanallarının sertleşmiş karbon ve kurumla tamamen tıkanması",
-      "EGR valfinin bozulması"
+      "Kurum (karbon) birikimi ile tamamen tıkanmış EGR kanalları",
+      "Açılmayan (sıkışmış) EGR valfi",
+      "Yırtık EGR vakum hortumu",
+      "Arızalı EGR basınç sensörü (DPFE)"
     ],
     "solutions": [
-      "EGR kanallarının mekanik olarak temizlenmesi",
-      "Karbon ve kurum birikintilerinin kazınması",
-      "Gerekirse EGR valfinin değişimi"
+      "EGR valfini yerinden sökün; eğer manifolda giden delikler tamamen simsiyah kurumla kapalıysa tornavida ve karbon temizleyici ile o delikleri açın."
     ]
   },
   {
     "code": "P0402",
     "category": "P",
-    "name": "EGR AkıŞ Fazlalığı Tespit Edildi",
-    "severity": "orta",
-    "description": "EGR AkıŞ Fazlalığı Tespit Edildi",
-    "affectedSystem": "EGR",
+    "name": "Egzoz Gazı Devridaimi (EGR) Akışı Fazla",
+    "severity": "high",
+    "description": "P0401'in aksine, EGR valfi AÇIK KONUMDA SIKIŞMIŞTIR. Rölantide egzoz gazı girmemesi gerekirken girdiği için araç rölantide titreyerek çalışır ve stop eder. Kırmızı ışıkta dururken aracın boğulmasının ana nedenlerindendir.",
+    "affectedSystem": "EGR (Egzoz Gazı Geri Çevrimi)",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Boru Bağlantı Hatası",
-      "EGR Selonoit Valfi",
-      "EGR Valfi",
-      "EGR"
+      "EGR valfi miline sıkışan küçük bir kurum parçası",
+      "Arızalı EGR vakum kontrol selenoidi"
     ],
     "solutions": [
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Geçici çözüm: EGR valfini söküp altını bir parça metal teneke (kör conta) ile kapatarak motorun stop etmesini durdurabilirsiniz. Kalıcı çözüm: Valfi temizleyin veya değiştirin."
     ]
   },
   {
     "code": "P0403",
     "category": "P",
-    "name": "EGR Devre Arızası",
-    "severity": "orta",
-    "description": "EGR Devre Arızası",
-    "affectedSystem": "EGR",
+    "name": "Egzoz Gazı Devridaimi (EGR) Devre Arızası",
+    "severity": "medium",
+    "description": "Elektronik EGR valfinin sargısında (motorunda) veya kablo demetinde elektriksel bir kopukluk veya kısa devre var.",
+    "affectedSystem": "EGR Sistemi",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Tesisat",
-      "EGR Selonoid",
-      "Motor Elektroniği"
+      "EGR valfi içindeki elektrik motorunun yanması"
     ],
     "solutions": [
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "EGR valfinin fişini çekin ve voltaj beslemesini ölçün."
     ]
   },
   {
@@ -9943,31 +9887,29 @@
   {
     "code": "P0440",
     "category": "P",
-    "name": "Buharlaşmalı Emisyon Sistemi Genel Arızası",
-    "severity": "orta",
-    "description": "EVAP sisteminin genel hatlarıyla izolasyon testini geçemediğini, sistemin beklenen negatif veya pozitif basıncı oluşturamadığını ifade eder.",
-    "affectedSystem": "Buharlaşmalı Emisyon (EVAP)",
+    "name": "Buharlaşma Emisyon Sistemi (EVAP) Arızası",
+    "severity": "low",
+    "description": "EVAP sistemi genel hatasıdır. Sistem buhar tutma kabiliyetini yitirmiştir.",
+    "affectedSystem": "EVAP Sistemi",
     "symptoms": [
       "Yakıt buharı kokusu",
       "Emisyon muayenesinden başarısızlık"
     ],
     "causes": [
-      "Sistemdeki valflerin işleyişinde bozulma",
-      "Hortumlarda fiziksel bir delik veya kaçak",
-      "Depo izolasyon hatası"
+      "Depo kapağının hiç takılmamış olması",
+      "Karbon kanisterin hasar görmesi"
     ],
     "solutions": [
-      "Alt kodların incelenerek spesifik sorunun bulunması",
-      "Sistemin basınç/vakum testi ile kontrolü"
+      "Benzin kapağınızı sıkın."
     ]
   },
   {
     "code": "P0441",
     "category": "P",
-    "name": "Yakıt Tankı Emisyon Kontrol Sistemi YanlıŞ Boşaltma Akışı",
-    "severity": "orta",
-    "description": "Yakıt Tankı Emisyon Kontrol Sistemi YanlıŞ Boşaltma Akışı",
-    "affectedSystem": "Yakıt Sistemi",
+    "name": "Buharlaşma Emisyon Sistemi Düzensiz Tahliye (Purge) Akışı",
+    "severity": "medium",
+    "description": "Purge valfi açılıyor ancak manifolda istenilen miktarda benzin buharı gitmiyor veya valf kapalıyken kaçırıyor.",
+    "affectedSystem": "EVAP Sistemi",
     "symptoms": [
       "Arıza lambası (MIL) yanar",
       "ÇekiŞ düşüklüğü",
@@ -9975,34 +9917,30 @@
       "Rölantide dalgalanma"
     ],
     "causes": [
-      "Hortum Baglantıları",
-      "GiriŞ Tankı",
-      "Depo Hava Alma Valfi"
+      "Arızalı Purge valfi",
+      "Tıkalı EVAP hortumları"
     ],
     "solutions": [
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Purge valfini söküp üfleyin. Eğer hava geçiyorsa valf bozulmuştur, çünkü kapalıyken hava geçirmemelidir."
     ]
   },
   {
     "code": "P0442",
     "category": "P",
-    "name": "Buharlaşmalı Emisyon Sistemi Sızıntı Tespit Edildi - Küçük Sızıntı",
-    "severity": "orta",
-    "description": "Sistemde çapı 0.040 inç civarında çok ufak bir sızıntı noktası algılandığını gösterir.",
-    "affectedSystem": "Buharlaşmalı Emisyon (EVAP)",
+    "name": "Buharlaşma Emisyon Sistemi Küçük Kaçak (Small Leak)",
+    "severity": "low",
+    "description": "Deli edici bir kod! Depo basıncında toplu iğne başı kadar (0.040 inç) bir kaçak olduğunu belirtir. Koku yapmaz ama ışık yakar.",
+    "affectedSystem": "EVAP Sistemi",
     "symptoms": [
       "Araç çevresinde hafif benzin kokusu",
       "Arıza lambasının (MIL) yanması"
     ],
     "causes": [
-      "Benzin kapağının tam oturtulmaması",
-      "Kapağın altındaki sızdırmazlık O-ringinin aşınması",
-      "Karbon kanister hortumlarındaki yüzey çatlakları"
+      "Benzin kapağı contasında mikroskobik çatlak",
+      "Kanister hortumlarında iğne ucu kadar sızıntı"
     ],
     "solutions": [
-      "Benzin kapağı contasının kontrolü/değişimi",
-      "Sisteme duman testi (EVAP smoke testing) uygulanması",
-      "Karanlık ortamda halojen veya UV ışıkla sızıntı aranması"
+      "Smoke test makinesi olmadan bulunması neredeyse imkansızdır. Depoya duman basıp karanlıkta fenerle kaçak arayın."
     ]
   },
   {
@@ -11221,23 +11159,22 @@
   {
     "code": "P0500",
     "category": "P",
-    "name": "Araç Hız Sensörü Malfonksiyonu",
-    "severity": "yüksek",
-    "description": "Güç aktarım organı ile gövde sistemleri arasında bilgi alışverişini sağlayan VSS sensöründen gelen elektronik hız verisinin PCM'e ulaşmamasıdır.",
-    "affectedSystem": "Ağ Mimarisindeki Çöküşler",
+    "name": "Araç Hız Sensörü (VSS) 'A' Arızası",
+    "severity": "medium",
+    "description": "Beyin, şanzımandan veya ABS tekerlek sensörlerinden aracın hız bilgisini alamıyor. Aracın hız göstergesi (kadranı) sıfırda kalır, şanzıman sert vites atar veya üst viteslere geçmez ve hidrolik direksiyon (hıza duyarlıysa) ağırlaşır.",
+    "affectedSystem": "Hız ve Şanzıman İletişimi",
     "symptoms": [
       "Kilometre saatinin çalışmayı durdurması",
       "Otomatik şanzıman vites değiştirme algoritmalarının kaybıyla vuruntulu atışlar",
       "Hız sabitleme (Cruise Control) iptali"
     ],
     "causes": [
-      "ABS hız sensörleri arızası",
-      "Sensör veri ağındaki CAN-bus iletişimsizliği",
-      "Kopmuş kablolar"
+      "Şanzıman üzerindeki VSS sensörü arızası",
+      "ABS beyni ile iletişim kopukluğu",
+      "Kopmuş VSS kabloları veya sıyırmış okuyucu dişli"
     ],
     "solutions": [
-      "Tarama aletiyle yürüyüş testinde her tekerlekten gelen verilerin kontrolü",
-      "Sıfır gösteren devrenin fiziki kablo onarımı veya sensör değişimi"
+      "Aracı sürerken hız göstergenize bakın; eğer ibre çalışmıyorsa sorun VSS sensörü veya ABS hız sensörlerindedir."
     ]
   },
   {
@@ -11322,68 +11259,60 @@
   {
     "code": "P0505",
     "category": "P",
-    "name": "Rölanti Kontrol Sistemi Arızası",
-    "severity": "orta",
-    "description": "Rölanti Hava Kontrol (IAC) sisteminin çöküşünü gösterir. Sürücü gazdan ayağını çektiğinde motor devri hedeflenen 600-800 RPM bandında tutulamaz.",
-    "affectedSystem": "Rölanti Kontrol Dinamikleri",
+    "name": "Rölanti Hava Kontrol (IAC) Sistemi Arızası",
+    "severity": "medium",
+    "description": "Özellikle gaz telli (elektronik kelebeği olmayan) araçlarda görülür. Rölanti valfi arızalandığı veya kurumla tıkandığı için motor beyni rölanti devrini ayarlayamaz. Araba ya sürekli 2000 devirde bağırır (Dalgalanma) ya da ayağınızı gazdan çekince anında stop eder.",
+    "affectedSystem": "Rölanti ve Gaz Kelebeği Sistemi",
     "symptoms": [
       "Devir iğnesinin sürekli aşağı yukarı oynaması",
       "Dur-kalk trafikte motorun sarsılıp stop etmesi",
       "Rölantinin anormal yüksek kalarak fren yapmayı zorlaştırması"
     ],
     "causes": [
-      "Egzoz ve yağ buharlarının IAC valfinde oluşturduğu karbon birikintisinin hareketi kısıtlaması",
-      "Manifold contalarındaki dış vakum kaçakları",
-      "İç minyatür step motor arızası"
+      "Aşırı kirlenmiş ve sıkışmış IAC (Rölanti Motoru) valfi",
+      "Emme manifoldunda ciddi bir vakum kaçağı (motor rölanti valfini kapatsa bile hava alıyordur)",
+      "Kopuk IAC kablosu"
     ],
     "solutions": [
-      "IAC valfinin ve bypass kanallarının mekanik temizliği ile karbonun arındırılması",
-      "Manifold contası sızıntılarının dumanla testi ve onarımı",
-      "Temizlikle düzelmezse valf değişimi"
+      "Rölanti motorunu sökün (genellikle gaz kelebeğine bağlıdır), ucunu ve yuvasını balata spreyi ile temizleyin. Pistonu ZORLAYARAK İTMEYİN."
     ]
   },
   {
     "code": "P0506",
     "category": "P",
-    "name": "Rölanti Hava Kontrol Sistem RPM Beklenenden Düşük",
-    "severity": "orta",
-    "description": "Rölanti Hava Kontrol Sistem RPM Beklenenden Düşük",
-    "affectedSystem": "Diğer",
+    "name": "Rölanti Kontrol Sistemi Devri Beklenenden Düşük",
+    "severity": "medium",
+    "description": "Araba rölantide çok düşük devirde (örn: 500 RPM) titreyerek çalışıyor. Gaz kelebeği aşırı kirlenmiş ve hava alamıyordur.",
+    "affectedSystem": "Rölanti Sistemi",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Tesisat",
-      "Hava Kontrol Valfi",
-      "Bogaz Kelebeği",
-      "Boğaz Kelebek Valfi",
-      "Motor Elektroniği"
+      "Kirli gaz kelebeği boğazı",
+      "Tıkalı IAC valfi"
     ],
     "solutions": [
-      "Sensör/aktüatör sinyal testi ve parça doğrulaması",
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Gaz kelebeği gövdesini ve kelebeğin kenarlarını özel sprey ile temizleyin."
     ]
   },
   {
     "code": "P0507",
     "category": "P",
-    "name": "Rölanti Hava Kontrol Sistem RPM Beklenenden Yüksek",
-    "severity": "orta",
-    "description": "Rölanti Hava Kontrol Sistem RPM Beklenenden Yüksek",
-    "affectedSystem": "Diğer",
+    "name": "Rölanti Kontrol Sistemi Devri Beklenenden Yüksek",
+    "severity": "medium",
+    "description": "ECU, rölantinin 800 RPM olmasını isterken motor 1500 RPM'de çalışmaktadır. Kelebek kapalı olsa dahi motora fazladan hava girmektedir (Büyük Vakum Kaçağı). Motor beyni çaresiz kalıp bu kodu verir.",
+    "affectedSystem": "Rölanti ve Gaz Kelebeği Sistemi",
     "symptoms": [
       "Arıza lambası (MIL) yanar"
     ],
     "causes": [
-      "Tesisat",
-      "Hava Kontrol Valfi",
-      "Bogaz Kelebeği",
-      "Boğaz Kelebek Valfi",
-      "Motor Elektroniği"
+      "PCV (Karter Havalandırma) valfi arızası/yırtık PCV hortumu",
+      "Emme manifoldu contası patlaması",
+      "Elektronik gaz kelebeği kalibrasyon (Adaptasyon) kaybı"
     ],
     "solutions": [
-      "Sensör/aktüatör sinyal testi ve parça doğrulaması",
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Motor çalışırken PCV hortumunu sıkıştırın; devir düzeliyorsa sorun PCV valfindedir.",
+      "Eğer yakın zamanda gaz kelebeği temizlediyseniz, cihazla 'Throttle Body Alignment' (Adaptasyon) yapmanız gerekir."
     ]
   },
   {
@@ -14020,22 +13949,20 @@
   {
     "code": "P0700",
     "category": "P",
-    "name": "Şanzıman Kontrol Sistemi Arızası - MIL Talebi",
-    "severity": "yüksek",
-    "description": "Şanzıman Kontrol Modülünün (TCM) saptadığı bir sorunu ECM'ye bildirerek göstergede Check Engine ışığını (MIL) yakmasını istediği, doğrudan tamir yönlendirmesi içermeyen genel (şemsiye) koddur.",
-    "affectedSystem": "Şanzıman",
+    "name": "Şanzıman Kontrol Sistemi Arızası",
+    "severity": "info",
+    "description": "Bu sadece bilgilendirici bir genel koddur. Motor beyni (PCM), 'Şanzıman beyininde (TCM) bir arıza var, detaylar için şanzıman modülünü oku' demektedir. Tek başına P0700 çözülmez, şanzıman menüsüne girip asıl arıza kodu (Örn: P0740, P0750) okunmalıdır.",
+    "affectedSystem": "Otomatik Şanzıman (TCM)",
     "symptoms": [
       "Şanzımanın 2. veya 3. viteste kilitlenmesi (Limp-in)",
       "Vites geçişlerinde vuruntu ve yüksek hararet"
     ],
     "causes": [
-      "TCM içerisinde sensör ağı iletişim eksikliği",
-      "Aşırı ısınma durumu",
-      "İç hidrolik basınç kaybı",
-      "Vites ayrılma hatası"
+      "Şanzıman sisteminde kaydedilmiş herhangi bir asıl arıza",
+      "TCM ile PCM arasındaki iletişim kaybı"
     ],
     "solutions": [
-      "Diagnostik cihazıyla şanzıman menüsüne girilip TCM'de bekleyen alt arıza kodlarının (spesifik hataların) okunması ve bu hatalara odaklanılması"
+      "Bu kodu silmeye çalışmayın. Gelişmiş bir OBD-II tarayıcısı ile doğrudan 'Transmission' (Şanzıman) beynine bağlanıp asıl gizli kodu okuyun."
     ]
   },
   {
@@ -14454,44 +14381,40 @@
   {
     "code": "P0740",
     "category": "P",
-    "name": "Tork Konvertörü Kavrama Devresi Arızası",
-    "severity": "kritik",
-    "description": "Otomatik şanzıman tork konvertörü (lock-up) kavraması beklenen kilitlemeyi yapamıyor.",
+    "name": "Tork Konvertörü Kavrama (TCC) Devre Arızası",
+    "severity": "medium",
+    "description": "Otomatik şanzımanlı araçlarda otoyol hızlarına çıkıldığında (yaklaşık 80 km/h üzeri), yakıt tasarrufu için tork konvertörü kendini kilitler (Lock-up). Bu kod, kilitleme valfinde elektriksel bir sorun olduğunu belirtir. Araba yüksek hızlarda daha fazla bağırır ve yakıt tüketimi artar.",
     "affectedSystem": "Otomatik Şanzıman",
     "symptoms": [
       "Yüksek hızlarda aşırı yakıt tüketimi",
       "Şanzımanın aşırı ısınması"
     ],
     "causes": [
-      "Arızalı lock-up selenoidi",
-      "Tork konvertörü mekanik arızası",
-      "Kirli şanzıman yağı"
+      "Şanzıman içindeki TCC (Torque Converter Clutch) selenoidinin bozulması",
+      "Eski, yanık veya metal talaşı dolu şanzıman yağı",
+      "Kablo tesisatında kopukluk"
     ],
     "solutions": [
-      "Şanzıman yağını kontrol edin",
-      "Tork konvertörü veya selenoid onarımı"
+      "Öncelikle şanzıman yağını kontrol edin. Eğer yağ kahverengi/siyah renkteyse ve yanık kokuyorsa, valf gövdesindeki selenoidler tıkanmıştır. TCC selenoid devresini ölçün."
     ]
   },
   {
     "code": "P0741",
     "category": "P",
-    "name": "Tork Konvertörü Kavrama Selenoidi Performans Sorunu",
-    "severity": "yüksek",
-    "description": "Tork konvertörü kilitlenme kavraması düzgün çalışmıyor, yakıt tüketimi artar.",
+    "name": "Tork Konvertörü Kavrama (TCC) Devresi Performans/Sıkışmış Kapalı",
+    "severity": "medium",
+    "description": "TCC selenoidi elektrik alıyor ama şanzıman içindeki mekanik valf sıkışmış, tork konvertörü kilitlenemiyor.",
     "affectedSystem": "Otomatik Şanzıman",
     "symptoms": [
       "Arıza lambası (MIL) yanar",
       "Motor performansında düşüş hissedilir"
     ],
     "causes": [
-      "İlgili sensör veya aktüatör arızası",
-      "Kablo tesisatında kopukluk/kısa devre",
-      "Mekanik aşınma veya tıkanma"
+      "Eskiyen/kirlenen şanzıman yağı nedeniyle sıkışan valf gövdesi",
+      "Tork konvertörünün içten aşınması"
     ],
     "solutions": [
-      "Diagnostik cihaz ile canlı veri ve freeze frame analizi",
-      "İlgili sensör, selenoid veya modülün değişimi",
-      "Kablo ve soket bağlantılarının kontrol edilmesi"
+      "Acil olarak şanzıman yağı ve filtresini değiştirin. Metal talaşı çıkarsa şanzıman rektifiyesi yakındır."
     ]
   },
   {
@@ -14519,22 +14442,21 @@
   {
     "code": "P0750",
     "category": "P",
-    "name": "Vites Değiştirme Selenoidi 'A' Arızası",
-    "severity": "önemli",
-    "description": "Otomatik şanzıman içindeki A selenoid valfi elektrik veya mekanik olarak arızalı.",
+    "name": "Vites Değiştirme (Shift) Selenoidi 'A' Arızası",
+    "severity": "high",
+    "description": "Otomatik şanzımanın vites atmasını sağlayan elektro-hidrolik valflerden biri arızalıdır. Şanzıman 2. veya 3. vitese geçmeyebilir.",
     "affectedSystem": "Otomatik Şanzıman",
     "symptoms": [
       "Arıza lambası yanar",
       "Araç performansında farklılıklar gözlemlenir"
     ],
     "causes": [
-      "Kablo tesisatı arızası",
-      "Sensör ömrünün dolması",
-      "Mekanik aşınma"
+      "Arızalı Shift Selenoidi",
+      "Şanzıman yağı kirliliği",
+      "TCM arızası"
     ],
     "solutions": [
-      "Diagnostik cihaz ile detaylı canlı değer okuması",
-      "İlgili sensör veya modül değişimi"
+      "Şanzıman karterini söküp A selenoidinin direncini ölçün."
     ]
   },
   {
@@ -14584,22 +14506,20 @@
   {
     "code": "P0755",
     "category": "P",
-    "name": "Vites Değiştirme Selenoidi 'B' Arızası",
-    "severity": "önemli",
-    "description": "Otomatik şanzıman içindeki B selenoid valfi görevini yapamıyor.",
+    "name": "Vites Değiştirme (Shift) Selenoidi 'B' Arızası",
+    "severity": "high",
+    "description": "Şanzımanın 'B' valfinde elektriksel arıza. Aracınız kalkışta zorlanır veya 1. viteste kalır.",
     "affectedSystem": "Otomatik Şanzıman",
     "symptoms": [
       "Arıza lambası yanar",
       "Araç performansında farklılıklar gözlemlenir"
     ],
     "causes": [
-      "Kablo tesisatı arızası",
-      "Sensör ömrünün dolması",
-      "Mekanik aşınma"
+      "Bozuk Shift Selenoidi",
+      "Kablo kopuğu"
     ],
     "solutions": [
-      "Diagnostik cihaz ile detaylı canlı değer okuması",
-      "İlgili sensör veya modül değişimi"
+      "Şanzıman beyin tesisatını kontrol edin."
     ]
   },
   {
@@ -17131,24 +17051,21 @@
   {
     "code": "U0101",
     "category": "U",
-    "name": "Şanzıman Kontrol Modülü (TCM) ile İletişim Kaybedildi",
-    "severity": "orta",
-    "description": "Şanzıman Kontrol Modülü (TCM) ile İletişim Kaybedildi",
-    "affectedSystem": "Ağ ve İletişim Sistemi",
+    "name": "TCM (Şanzıman Kontrol Modülü) İle İletişim Kaybı",
+    "severity": "high",
+    "description": "Şanzıman beyni ağdan düşmüştür. Vites panelindeki P-R-N-D ışıkları yanıp söner ve araba viteste kitlenir.",
+    "affectedSystem": "CAN Bus Ağ İletişimi",
     "symptoms": [
       "İlgili modülün işlevini yitirmesi (Örn: ABS ile iletişim koparsa ABS devre dışı kalması)",
       "Vites geçişlerinde vuruntu (TCM iletişim hatası)",
       "Göstergelerin tamamen gitmesi (IPC iletişim hatası)"
     ],
     "causes": [
-      "İlgili modülün güç veya şasi (toprak) bağlantısında sorun",
-      "Modülün iç donanımsal arızası (su alma vb.)",
-      "CAN veya LIN hattında veri yolu kesintisi"
+      "TCM sigortası atması",
+      "Şanzımana su girmesi"
     ],
     "solutions": [
-      "Bağlantıların ve tesisatın kontrolü/onarımı",
-      "Hatalı modül/sensör değişimi ve yeniden kodlama",
-      "ECU arıza kaydının silinmesi"
+      "Şanzıman sigortasını ve rölesini kontrol edin."
     ]
   },
   {
@@ -18878,12 +18795,12 @@
   },
   {
     "code": "U0073",
-    "name": "Kontrol Modülü İletişim Yolu Bus 'A' Kapalı",
-    "description": "Ağ topolojisinin donanımı korumak veya kısa devre nedeniyle ana veri yollarını (CAN High/Low) tamamen trafiğe kapatmasıdır. U0100'den farklı olarak tüm cadde ulaşıma kapanır.",
+    "name": "Kontrol Modülü İletişim Veri Yolu (CAN Bus) A Kapalı",
+    "description": "Aracın omurgası olan CAN Bus ağının (High/Low) kısa devre yaptığını gösterir. Gösterge tablosundaki tüm ışıklar yanar, ibreler düşer, araba marş basmaz. Adeta aracın sinir sistemi felç olmuştur.",
     "causes": [
-      "Ağdaki modüllerden birinin iç kısa devresi",
-      "Sonlandırma dirençleri (terminating resistor) devresinin kopması veya sapması",
-      "Veri hattının şasiye teması"
+      "Ağa bağlı bir modülün (Örn: ABS beyninin) içten kısa devre yapıp tüm ağı çökertmesi",
+      "Kabloların şasiye değmesi",
+      "Aşırı voltaj (Akü takviyesi yaparken ters kutup bağlamak)"
     ],
     "symptoms": [
       "Gösterge panelindeki tüm ışıkların bir anda yanması (yılbaşı ağacı efekti)",
@@ -18891,11 +18808,67 @@
       "Vitesin 'Park' pozisyonunda kilitli kalması"
     ],
     "solutions": [
-      "DLC portundan CAN pinlerindeki direncin ölçülmesi (normali 60 Ω olmalıdır)",
-      "Direnç sapmalarında hatalı modülün fişi çekilerek hattın normale döndüğü anın bulunması (unplugging testi)"
+      "Çok tehlikeli ve uzmanlık gerektirir. Ustalık ipucu: Modülleri tek tek (Örn: ABS soketini) fişten çekip kontağı açın; sorunlu modülü prizden çektiğiniz an diğer tüm sistemler hayata dönecektir."
     ],
-    "severity": "yüksek",
-    "affectedSystem": "Ağ Mimarisindeki Çöküşler",
+    "severity": "high",
+    "affectedSystem": "CAN Bus İletişim Ağı",
     "category": "U"
+  },
+  {
+    "code": "C1201",
+    "name": "Motor Kontrol Sistemi Arızası (ABS Modülünde Kayıtlı)",
+    "description": "Toyota ve Lexus'larda çok sık görülür. Araba ABS, VSC (TRC) ve Motor Arıza lambasını aynı anda yakar. İnsanlar fren sistemi bozuldu sanır ancak asıl sebep motorda (örn: P0420 veya P0171) bir arıza olmasıdır; motor arıza yapınca güvenlik gereği denge sistemini de (VSC) devre dışı bırakır.",
+    "affectedSystem": "ABS ve Çekiş Kontrolü",
+    "severity": "info",
+    "category": "C",
+    "causes": [
+      "Motorda kaydedilmiş herhangi bir P (Powertrain) arıza kodu"
+    ],
+    "solutions": [
+      "ABS fren sistemine odaklanmayın! Doğrudan Motor (Engine) bölümündeki kodları okuyun ve motor arızasını (Örn: P0171) çözün. Motor düzelince ABS/VSC ışığı da kendiliğinden sönecektir."
+    ]
+  },
+  {
+    "code": "B0021",
+    "name": "Sağ Yan Hava Yastığı Açılma Devresi Arızası",
+    "description": "Yolcu koltuğu yan hava yastığı bağlantı hatasıdır.",
+    "affectedSystem": "SRS / Hava Yastığı",
+    "severity": "high",
+    "category": "B",
+    "causes": [
+      "Yolcu koltuğu altındaki sarı soket gevşekliği"
+    ],
+    "solutions": [
+      "Koltuk altı soketi sıkılaştırın (Akü sökükken)."
+    ]
+  },
+  {
+    "code": "B0031",
+    "name": "Sürücü Ön Emniyet Kemeri Ön Gergi Devresi Arızası",
+    "description": "Kaza anında emniyet kemerini hızla geriye çeken fişek (pretensioner) ile iletişim yok.",
+    "affectedSystem": "SRS / Emniyet Kemeri",
+    "severity": "high",
+    "category": "B",
+    "causes": [
+      "B sütunundaki kemer fişeği soketinin oksitlenmesi",
+      "Kaza geçirip patlamış kemer fişeği"
+    ],
+    "solutions": [
+      "Emniyet kemeri makarasındaki fişek soketini kontrol edin. Asla direnç ölçü aletiyle ölçmeyin (Patlayabilir!)."
+    ]
+  },
+  {
+    "code": "B0041",
+    "name": "Yolcu Ön Emniyet Kemeri Ön Gergi Devresi Arızası",
+    "description": "Yolcu tarafı emniyet kemeri fişeği iletişim hatası.",
+    "affectedSystem": "SRS / Emniyet Kemeri",
+    "severity": "high",
+    "category": "B",
+    "causes": [
+      "Direnç bağlayarak iptal edilmiş kemer sistemindeki direncin yanması"
+    ],
+    "solutions": [
+      "Direnç takılmışsa (pert kayıtlı araçlarda sık görülür), sistemi orijinaliyle değiştirin."
+    ]
   }
 ]
