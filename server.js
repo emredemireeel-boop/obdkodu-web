@@ -12,9 +12,20 @@ const { render } = require('./lib/template');
 const PORT = process.env.PORT || 3000;
 
 // Load OBD codes data
-const codesData = JSON.parse(
+let codesData = JSON.parse(
   fs.readFileSync(path.join(__dirname, 'data', 'obd-codes.json'), 'utf-8')
 );
+
+const severityGlobalMap = {
+  'low': 'düşük',
+  'medium': 'orta',
+  'high': 'yüksek'
+};
+
+codesData = codesData.map(c => ({
+  ...c,
+  severity: severityGlobalMap[c.severity] || c.severity
+}));
 
 // Load Models
 let vehiclesData = [];
@@ -241,10 +252,23 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
   ).slice(0, 6);
 
   const severityTextMap = {
+    'low': 'Düşük Ciddiyet',
     'düşük': 'Düşük Ciddiyet',
+    'medium': 'Orta Ciddiyet',
     'orta': 'Orta Ciddiyet',
+    'high': 'Yüksek Ciddiyet',
     'yüksek': 'Yüksek Ciddiyet',
   };
+
+  const severityClassMap = {
+    'low': 'düşük',
+    'düşük': 'düşük',
+    'medium': 'orta',
+    'orta': 'orta',
+    'high': 'yüksek',
+    'yüksek': 'yüksek'
+  };
+  const mappedSeverity = severityClassMap[code.severity] || 'düşük';
 
   let pageTitle = `${code.code} - ${code.name}`;
   let metaDescription = `${code.code} arıza kodu: ${code.name}. ${code.description.substring(0, 150)}`;
@@ -305,8 +329,9 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
     description: displayDescription,
     categoryName: categoryNames[code.category] || code.category,
     severityText: severityTextMap[code.severity] || code.severity,
-    isHighSeverity: code.severity === 'yüksek' ? 'true' : '',
-    isNotHighSeverity: code.severity !== 'yüksek' ? 'true' : '',
+    severity: mappedSeverity,
+    isHighSeverity: (code.severity === 'yüksek' || code.severity === 'high') ? 'true' : '',
+    isNotHighSeverity: (code.severity !== 'yüksek' && code.severity !== 'high') ? 'true' : '',
     hasRelated: related.length > 0 ? 'true' : '',
     relatedCodes: related,
     brandName: brandObj ? brandObj.name : '',
