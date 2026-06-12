@@ -175,7 +175,8 @@
             <p class="comment-text">{{comment}}</p>
           </div>
           {{/each}}
-        {{else}}
+        {{/if}}
+        {{#if noComments}}
           <p class="no-comments-msg">Bu arıza kodu için henüz yorum yapılmamış. Çözümü biliyorsanız ilk yorumu siz yapın!</p>
         {{/if}}
       </div>

@@ -299,6 +299,7 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
     brandSlug: brandObj ? brandObj.slug : '',
     comments: formattedComments,
     hasComments: formattedComments.length > 0 ? 'true' : '',
+    noComments: formattedComments.length === 0 ? 'true' : '',
     commentCount: formattedComments.length
   });
   sendHtml(res, 200, html);

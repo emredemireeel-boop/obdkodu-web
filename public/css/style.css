@@ -1907,8 +1907,6 @@ img {
   position: relative;
   backdrop-filter: blur(12px);
   transition: all var(--transition-normal);
-  height: auto;
-  min-height: 100%;
 }
 .premium-card:hover {
   border-color: var(--border-hover);
