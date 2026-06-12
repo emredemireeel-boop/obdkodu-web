@@ -391,8 +391,23 @@ function handleApiComments(req, res) {
       }
 
       const text = data.comment.toLowerCase();
+      const nameText = data.name.toLowerCase();
+
+      // Spam Link Check
       if (text.includes('http') || text.includes('www.') || text.includes('.com') || text.includes('<a ')) {
         return sendJson(res, 400, { error: 'Spam koruması: Yorumlarda link paylaşımına izin verilmemektedir.' });
+      }
+
+      // Profanity Filter (Küfür/Argo Filtresi)
+      const badWords = [
+        'amk', 'aq', 'oç', 'orospu', 'piç', 'yarrak', 'yarak', 'göt', 'amcık', 
+        'siktir', 'pezevenk', 'kahpe', 'fahişe', 'fuck', 'shit', 'bitch', 'asshole',
+        'sik', 'sikiş', 'am', 'yavşak', 'ibne', 'puşt', 'pic', 'amk', 'sikik'
+      ];
+      const profanityRegex = new RegExp('(^|\\s|\\W)(' + badWords.join('|') + ')(\\s|\\W|$)', 'i');
+      
+      if (profanityRegex.test(text) || profanityRegex.test(nameText)) {
+        return sendJson(res, 400, { error: 'Topluluk kurallarına aykırı (argo/küfür) kelimeler içerdiği için yorumunuz reddedildi.' });
       }
 
       const cleanComment = escapeHtml(data.comment.trim());
