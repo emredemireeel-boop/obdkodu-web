@@ -1,8 +1,8 @@
-<!-- Detail Page -->
-<section class="detail-page" id="detailPage">
+<!-- Detail Page Premium -->
+<section class="detail-page-premium">
   <div class="container">
     <!-- Breadcrumb -->
-    <nav class="breadcrumb" id="breadcrumb">
+    <nav class="breadcrumb premium-breadcrumb" id="breadcrumb">
       <a href="/" class="breadcrumb-link">Ana Sayfa</a>
       <span class="breadcrumb-sep">/</span>
       <a href="/arama?kategori={{category}}" class="breadcrumb-link">{{categoryName}}</a>
@@ -10,83 +10,102 @@
       <span class="breadcrumb-current">{{code}}</span>
     </nav>
 
-    <!-- Code Header -->
-    <div class="detail-header" id="detailHeader">
-      <div class="detail-header-top">
-        <span class="code-badge code-badge-lg category-{{category}}">{{category}}</span>
-        <span class="severity-badge severity-badge-lg severity-{{severity}}">
-          {{#if isHighSeverity}}
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-            <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+    <!-- Glowing Hero Code Box -->
+    <div class="premium-hero">
+      <div class="premium-hero-glow glow-{{severity}}"></div>
+      <div class="premium-hero-content">
+        <div class="premium-hero-badges">
+          <span class="code-badge premium-badge category-{{category}}">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 9h16M4 15h16M10 3L8 21M16 3l-2 18"/></svg>
+            Kategori: {{category}}
+          </span>
+          <span class="premium-severity-badge sev-{{severity}}">
+            <span class="pulse-dot"></span>
+            {{severityText}}
+          </span>
+        </div>
+        <h1 class="premium-code-title">{{code}}</h1>
+        <h2 class="premium-code-name">{{name}}</h2>
+        <div class="premium-affected-system">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+             <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
           </svg>
-          {{/if}}
-          {{severityText}}
-        </span>
-      </div>
-      <h1 class="detail-code" id="detailCode">{{code}}</h1>
-      <h2 class="detail-name" id="detailName">{{name}}</h2>
-      <div class="detail-system">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-        </svg>
-        <span>{{affectedSystem}}</span>
+          Sistem: <strong>{{affectedSystem}}</strong>
+        </div>
       </div>
     </div>
 
-    <!-- Detail Content Grid -->
-    <div class="detail-grid">
-      <!-- Description -->
-      <div class="detail-card detail-card-full" id="detailDescription">
-        <div class="detail-card-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
-          </svg>
+    <!-- Main Content Area -->
+    <div class="premium-content-layout">
+      
+      <!-- Left Column: Description & Causes -->
+      <div class="premium-left-col">
+        <!-- Description -->
+        <div class="premium-card desc-card">
+          <div class="premium-card-header">
+            <div class="premium-icon-box icon-blue">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+            </div>
+            <h3 class="premium-card-title">Arıza Açıklaması</h3>
+          </div>
+          <div class="premium-card-body">
+            <p class="premium-text-lead">{{description}}</p>
+          </div>
         </div>
-        <h3 class="detail-card-title">Açıklama</h3>
-        <p class="detail-card-text">{{description}}</p>
+
+        <!-- Causes -->
+        <div class="premium-card causes-card">
+          <div class="premium-card-header">
+            <div class="premium-icon-box icon-orange">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+            </div>
+            <h3 class="premium-card-title">Muhtemel Nedenler</h3>
+          </div>
+          <div class="premium-card-body">
+            <ul class="premium-list-group">
+              {{#each causes}}
+              <li class="premium-list-item">
+                <span class="list-bullet"></span>
+                <span>{{this}}</span>
+              </li>
+              {{/each}}
+            </ul>
+          </div>
+        </div>
       </div>
 
-      <!-- Causes -->
-      <div class="detail-card" id="detailCauses">
-        <div class="detail-card-icon detail-card-icon-warning">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-            <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
-          </svg>
+      <!-- Right Column: Solutions (Action Steps) -->
+      <div class="premium-right-col">
+        <div class="premium-card solutions-card">
+          <div class="neon-border-top"></div>
+          <div class="premium-card-header">
+            <div class="premium-icon-box icon-green">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            </div>
+            <h3 class="premium-card-title">Çözüm Adımları</h3>
+          </div>
+          <div class="premium-card-body">
+            <div class="premium-steps">
+              {{#each solutions}}
+              <div class="premium-step">
+                <div class="step-number"></div>
+                <div class="step-content">{{this}}</div>
+              </div>
+              {{/each}}
+            </div>
+          </div>
         </div>
-        <h3 class="detail-card-title">Olası Nedenler</h3>
-        <ul class="detail-list detail-list-causes">
-          {{#each causes}}
-          <li>{{this}}</li>
-          {{/each}}
-        </ul>
       </div>
 
-      <!-- Solutions -->
-      <div class="detail-card" id="detailSolutions">
-        <div class="detail-card-icon detail-card-icon-success">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-            <polyline points="22 4 12 14.01 9 11.01"/>
-          </svg>
-        </div>
-        <h3 class="detail-card-title">Çözüm Önerileri</h3>
-        <ul class="detail-list detail-list-solutions">
-          {{#each solutions}}
-          <li>{{this}}</li>
-          {{/each}}
-        </ul>
-      </div>
     </div>
 
     <!-- Related Codes -->
     {{#if hasRelated}}
-    <div class="related-section" id="relatedSection">
-      <h3 class="related-title">İlgili Arıza Kodları</h3>
-      <div class="related-grid">
+    <div class="premium-related-section">
+      <h3 class="premium-section-title">İlişkili Arızalar</h3>
+      <div class="premium-related-grid">
         {{#each relatedCodes}}
-        <a href="/kod/{{code}}" class="related-card" id="related-{{code}}">
+        <a href="/kod/{{code}}" class="premium-related-card">
           <span class="code-badge category-{{category}}">{{code}}</span>
           <span class="related-name">{{name}}</span>
         </a>
@@ -96,41 +115,33 @@
     {{/if}}
 
     <!-- Back Button -->
-    <div class="detail-actions">
-      <a href="/arama" class="btn-secondary" id="backToSearch">
+    <div class="premium-actions">
+      <a href="/arama" class="btn-secondary premium-btn">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M19 12H5M12 19l-7-7 7-7"/>
         </svg>
-        <span>Tüm Kodlara Dön</span>
+        <span>Tüm Arıza Kodlarına Dön</span>
       </a>
     </div>
 
-    <!-- Dynamic FAQ Section for this Code -->
-    <div class="faq-section" style="padding-top: 40px; padding-bottom: 20px;">
-      <h3 class="related-title">{{code}} Arıza Kodu Hakkında Sıkça Sorulan Sorular</h3>
-      <div class="faq-container" style="max-width: 100%; margin-top: 24px;">
-        <details class="faq-item">
+    <!-- Dynamic FAQ Section -->
+    <div class="premium-faq-section">
+      <h3 class="premium-section-title">{{code}} Sıkça Sorulan Sorular</h3>
+      <div class="faq-container premium-faq">
+        <details class="faq-item premium-faq-item">
           <summary class="faq-question">
             {{code}} arıza kodu tam olarak nedir?
-            <div class="faq-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6 9l6 6 6-6"/>
-              </svg>
-            </div>
+            <div class="faq-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
           </summary>
           <div class="faq-answer">
             <strong>{{code}} ({{name}})</strong> arıza kodu, aracınızın {{affectedSystem}} sisteminde meydana gelen bir anormalliği işaret eder. {{description}}
           </div>
         </details>
 
-        <details class="faq-item">
+        <details class="faq-item premium-faq-item">
           <summary class="faq-question">
             {{code}} kodu ne kadar ciddi, aracı sürmeye devam edebilir miyim?
-            <div class="faq-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6 9l6 6 6-6"/>
-              </svg>
-            </div>
+            <div class="faq-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
           </summary>
           <div class="faq-answer">
             {{#if isHighSeverity}}
@@ -141,20 +152,16 @@
           </div>
         </details>
 
-        <details class="faq-item">
+        <details class="faq-item premium-faq-item">
           <summary class="faq-question">
             {{code}} hatası nasıl çözülür?
-            <div class="faq-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6 9l6 6 6-6"/>
-              </svg>
-            </div>
+            <div class="faq-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
           </summary>
           <div class="faq-answer">
             {{code}} arızasını çözmek için en sık uygulanan adımlar şunlardır:
-            <ul style="margin-top: 8px; margin-left: 20px;">
+            <ul style="margin-top: 12px; margin-left: 0; padding-left: 20px; list-style-type: square; color: var(--text-secondary);">
               {{#each solutions}}
-              <li style="margin-bottom: 4px;">{{this}}</li>
+              <li style="margin-bottom: 6px;">{{this}}</li>
               {{/each}}
             </ul>
           </div>
