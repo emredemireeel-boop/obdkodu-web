@@ -174,3 +174,90 @@
     </div>
   </div>
 </section>
+
+<!-- General FAQ Section -->
+<section class="faq-section" id="faqSection">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Sıkça Sorulan <span class="gradient-text">Sorular</span></h2>
+      <p class="section-subtitle">OBD-II arıza kodları ve çözümleri hakkında en çok merak edilenler</p>
+    </div>
+    <div class="faq-container">
+      <details class="faq-item">
+        <summary class="faq-question">
+          OBD-II arıza kodları (P, B, C, U) ne anlama gelir?
+          <div class="faq-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9l6 6 6-6"/>
+            </svg>
+          </div>
+        </summary>
+        <div class="faq-answer">
+          OBD-II arıza kodları 4 ana kategoriye ayrılır: <strong>P (Powertrain)</strong> kodları motor ve şanzıman sistemlerindeki sorunları, <strong>B (Body)</strong> kodları hava yastığı, aydınlatma gibi gövde içi bileşenleri, <strong>C (Chassis)</strong> kodları ABS ve süspansiyon gibi şasi donanımlarını, <strong>U (Network)</strong> kodları ise araç modülleri arasındaki elektronik iletişim ve ağ hatalarını belirtir.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">
+          Check Engine (Motor Arıza) lambası neden yanar?
+          <div class="faq-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9l6 6 6-6"/>
+            </svg>
+          </div>
+        </summary>
+        <div class="faq-answer">
+          Aracınızın motor kontrol ünitesi (ECU), egzoz emisyon değerlerinde veya motor bileşenlerinde (sensörler, ateşleme sistemi vs.) belirlenen normal çalışma limitlerinin dışında bir durum tespit ettiğinde uyarı amacıyla motor arıza lambasını yakar. Gevşek bir benzin kapağı da bu lambayı yakabilir, ciddi bir katalitik konvertör arızası da. Kesin tespiti için araca bir OBD cihazı bağlayıp sitemizden kodu aratmalısınız.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">
+          Arıza kodunu ve motor lambasını evde kendim nasıl silebilirim?
+          <div class="faq-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9l6 6 6-6"/>
+            </svg>
+          </div>
+        </summary>
+        <div class="faq-answer">
+          Motor arıza lambasını söndürmenin (kod silmenin) iki ana yolu vardır: En güvenli yöntem akıllı telefonunuza bağlanan ucuz bir Bluetooth OBD-II okuyucu cihaz (ELM327 vb.) kullanarak mobil uygulama (Torque, Car Scanner) üzerinden "Clear Faults" komutunu göndermektir. İkinci yöntem ise aracın aküsünün eksi (-) kutup başını 15 dakika söküp geri takmaktır ancak arızayı fiziksel olarak tamir etmediyseniz lamba bir süre sonra tekrar yanacaktır.
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- JSON-LD FAQ Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "OBD-II arıza kodları (P, B, C, U) ne anlama gelir?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "OBD-II arıza kodları 4 ana kategoriye ayrılır: P (Powertrain) kodları motor ve şanzıman sistemlerindeki sorunları, B (Body) kodları hava yastığı, aydınlatma gibi gövde içi bileşenleri, C (Chassis) kodları ABS ve süspansiyon gibi şasi donanımlarını, U (Network) kodları ise araç modülleri arasındaki elektronik iletişim ve ağ hatalarını belirtir."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Check Engine (Motor Arıza) lambası neden yanar?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Aracınızın motor kontrol ünitesi (ECU), egzoz emisyon değerlerinde veya motor bileşenlerinde belirlenen normal çalışma limitlerinin dışında bir durum tespit ettiğinde uyarı amacıyla motor arıza lambasını yakar. Kesin tespiti için araca bir OBD cihazı bağlayıp sitemizden kodu aratmalısınız."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Arıza kodunu ve motor lambasını evde kendim nasıl silebilirim?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Motor arıza lambasını söndürmenin en güvenli yöntemi akıllı telefonunuza bağlanan bir Bluetooth OBD-II okuyucu cihaz (ELM327 vb.) kullanarak mobil uygulama üzerinden kodları silmektir. İkinci yöntem ise aracın aküsünün eksi (-) kutup başını 15 dakika söküp geri takmaktır ancak arızayı tamir etmediyseniz lamba tekrar yanacaktır."
+      }
+    }
+  ]
+}
+</script>

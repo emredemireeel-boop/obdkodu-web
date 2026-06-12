@@ -104,5 +104,97 @@
         <span>Tüm Kodlara Dön</span>
       </a>
     </div>
+
+    <!-- Dynamic FAQ Section for this Code -->
+    <div class="faq-section" style="padding-top: 40px; padding-bottom: 20px;">
+      <h3 class="related-title">{{code}} Arıza Kodu Hakkında Sıkça Sorulan Sorular</h3>
+      <div class="faq-container" style="max-width: 100%; margin-top: 24px;">
+        <details class="faq-item">
+          <summary class="faq-question">
+            {{code}} arıza kodu tam olarak nedir?
+            <div class="faq-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9l6 6 6-6"/>
+              </svg>
+            </div>
+          </summary>
+          <div class="faq-answer">
+            <strong>{{code}} ({{name}})</strong> arıza kodu, aracınızın {{affectedSystem}} sisteminde meydana gelen bir anormalliği işaret eder. {{description}}
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            {{code}} kodu ne kadar ciddi, aracı sürmeye devam edebilir miyim?
+            <div class="faq-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9l6 6 6-6"/>
+              </svg>
+            </div>
+          </summary>
+          <div class="faq-answer">
+            {{#if isHighSeverity}}
+            Bu kod <strong>Yüksek (Kritik)</strong> ciddiyet seviyesine sahiptir. Motor bileşenlerinde veya sürüş güvenliğinde acil bir tehdit oluşturabileceğinden, aracınızı derhal yetkili bir servise veya güvenli bir alana çekip kontrol ettirmeniz şiddetle tavsiye edilir. Uzun süre bu arıza ile aracı kullanmak motorunuzda kalıcı hasarlara yol açabilir.
+            {{else}}
+            Bu kod <strong>{{severityText}}</strong> ciddiyet seviyesindedir. Anında yolda kalmanıza sebep olmasa da, aracınızın performansını, yakıt tüketimini veya emisyon değerlerini etkileyebilir. Mümkün olan en kısa sürede bir OBD cihazı ile detaylı tarama yapıp, belirtilen çözüm adımlarını uygulamanız tavsiye edilir.
+            {{/if}}
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            {{code}} hatası nasıl çözülür?
+            <div class="faq-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9l6 6 6-6"/>
+              </svg>
+            </div>
+          </summary>
+          <div class="faq-answer">
+            {{code}} arızasını çözmek için en sık uygulanan adımlar şunlardır:
+            <ul style="margin-top: 8px; margin-left: 20px;">
+              {{#each solutions}}
+              <li style="margin-bottom: 4px;">{{this}}</li>
+              {{/each}}
+            </ul>
+          </div>
+        </details>
+      </div>
+    </div>
+
   </div>
 </section>
+
+<!-- JSON-LD FAQ Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "{{code}} arıza kodu tam olarak nedir?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "{{code}} ({{name}}) arıza kodu, aracınızın {{affectedSystem}} sisteminde meydana gelen bir anormalliği işaret eder. {{description}}"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "{{code}} kodu ne kadar ciddi, aracı sürmeye devam edebilir miyim?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "{{#if isHighSeverity}}Bu kod Yüksek (Kritik) ciddiyet seviyesine sahiptir. Motor bileşenlerinde veya sürüş güvenliğinde acil bir tehdit oluşturabileceğinden, aracınızı derhal yetkili bir servise çekmeniz tavsiye edilir.{{else}}Bu kod {{severityText}} ciddiyet seviyesindedir. Aracınızın performansını veya emisyon değerlerini etkileyebilir. Mümkün olan en kısa sürede kontrol ettirmeniz tavsiye edilir.{{/if}}"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "{{code}} hatası nasıl çözülür?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "{{code}} arızasını çözmek için başlıca adımlar şunlardır: {{#each solutions}}{{this}} {{/each}}"
+      }
+    }
+  ]
+}
+</script>
