@@ -740,12 +740,20 @@ function handleSitemap(req, res) {
     <priority>0.8</priority>
   </url>
 `;
-
-  codes.forEach(c => {
+  codesData.forEach(c => {
     xml += `  <url>
     <loc>${baseUrl}/kod/${c.code}</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+`;
+  });
+
+  dashboardLightsData.forEach(l => {
+    xml += `  <url>
+    <loc>${baseUrl}/gosterge-paneli/${l.id}</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 `;
   });
