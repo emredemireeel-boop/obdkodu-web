@@ -207,3 +207,58 @@ function initAnimations() {
     observer.observe(el);
   });
 }
+
+// =========== COMMENTS FORM ===========
+document.addEventListener('DOMContentLoaded', () => {
+  const commentForm = document.getElementById('commentForm');
+  if (commentForm) {
+    commentForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const codeId = document.getElementById('codeId').value;
+      const website = document.getElementById('website').value;
+      const name = document.getElementById('commentName').value.trim();
+      const comment = document.getElementById('commentText').value.trim();
+      const statusDiv = document.getElementById('commentStatus');
+      const submitBtn = document.getElementById('submitCommentBtn');
+      
+      if (!name || !comment) {
+        statusDiv.textContent = 'Lütfen adınızı ve yorumunuzu girin.';
+        statusDiv.style.color = '#ef4444';
+        return;
+      }
+      
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Gönderiliyor...';
+      statusDiv.textContent = '';
+      
+      fetch('/api/comments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: codeId, name, comment, website })
+      })
+      .then(res => res.json().then(data => ({ status: res.status, body: data })))
+      .then(res => {
+        if (res.status === 200) {
+          statusDiv.textContent = 'Yorumunuz başarıyla gönderildi!';
+          statusDiv.style.color = '#10b981';
+          commentForm.reset();
+          // Optional: Reload the page to show the new comment
+          setTimeout(() => window.location.reload(), 1500);
+        } else {
+          statusDiv.textContent = res.body.error || 'Bir hata oluştu.';
+          statusDiv.style.color = '#ef4444';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Yorumu Gönder';
+        }
+      })
+      .catch(() => {
+        statusDiv.textContent = 'Bağlantı hatası oluştu.';
+        statusDiv.style.color = '#ef4444';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Yorumu Gönder';
+      });
+    });
+  }
+});
+

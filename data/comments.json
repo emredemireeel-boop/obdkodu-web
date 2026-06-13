@@ -1,1 +1,30 @@
-[]
+[
+  {
+    "id": "1781380334701",
+    "code": "EV-BATTERY",
+    "name": "Ali Can",
+    "comment": "Bu lamba yandığında aracım şarj olmuyordu. Servise çektim, izolasyon arızası dediler.",
+    "date": "2026-06-13T19:52:14.701Z"
+  },
+  {
+    "id": "1781380351103",
+    "code": "EV-BATTERY",
+    "name": "Ali Can",
+    "comment": "Bu lamba yandığında aracım şarj olmuyordu. Servise çektim, izolasyon arızası dediler.",
+    "date": "2026-06-13T19:52:31.103Z"
+  },
+  {
+    "id": "1781380444932",
+    "code": "EV-BATTERY",
+    "name": "Ali Can",
+    "comment": "Bu lamba yandığında aracım şarj olmuyordu. Servise çektim, izolasyon arızası dediler.",
+    "date": "2026-06-13T19:54:04.933Z"
+  },
+  {
+    "id": "1781380458255",
+    "code": "P0A80",
+    "name": "Ali Can",
+    "comment": "Test comment OBD",
+    "date": "2026-06-13T19:54:18.255Z"
+  }
+]

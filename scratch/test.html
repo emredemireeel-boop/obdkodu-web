@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Araç gösterge panelinde yanan motor arıza, ABS, ESP, Akü, Yağ basıncı gibi ikaz ışıklarının anlamları ve ilgili OBD arıza kodları.">
+  
+  <title>Gösterge Paneli İşaretleri ve Anlamları | OBD Kodları</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" type="image/png" href="/images/logo.png">
+</head>
+<body>
+  <!-- Animated background particles -->
+  <div class="bg-particles" id="bgParticles"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="/" class="nav-logo" id="navLogo">
+        <div class="logo-icon" style="background: transparent;">
+          <img src="/images/logo.png" alt="OBD Logo" style="width: 44px; height: 44px; transform: scale(1.3);">
+        </div>
+        <span class="logo-text" style="margin-left: 5px;">OBD<span class="logo-highlight">Kodları</span></span>
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="/" class="nav-link " id="navHome">Ana Sayfa</a>
+        <a href="/arama" class="nav-link " id="navSearch">Kodları Ara</a>
+        <a href="/gosterge-paneli" class="nav-link active" id="navDashboard">Gösterge İşaretleri</a>
+        <a href="/hakkinda" class="nav-link " id="navAbout">Hakkında</a>
+        <a href="https://otosoz.com" target="_blank" class="nav-sponsor-link">🚗 Otosoz Forum</a>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Menüyü aç/kapat">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <section class="page-header" style="text-align: center; margin-bottom: 40px;">
+  <div class="container">
+    <h1 class="page-title">Gösterge Paneli İşaretleri ve Anlamları</h1>
+    <p class="page-subtitle" style="max-width: 800px; margin: 0 auto; color: var(--text-secondary);">
+      Aracınızın gösterge panelinde yanan uyarı ışıkları ne anlama geliyor? Hangi ışık yandığında hangi OBD arıza kodları ile karşılaşabilirsiniz? Aşağıdaki tablodan ilgili işareti seçerek detayları inceleyebilirsiniz.
+    </p>
+  </div>
+</section>
+
+<section class="dashboard-lights-section">
+  <div class="container">
+    <div class="premium-related-grid" style="grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 24px;">
+      
+      
+      <div class="premium-card" style="display: flex; flex-direction: column; height: 100%;">
+        <div class="premium-card-header" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 16px;">
+          
+          
+          
+          <div class="premium-icon-box" style="background: rgba(255, 255, 255, 0.05); color: #f59e0b; border: 1px solid rgba(255, 255, 255, 0.1);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 10v4m13-4v4m-10.5-8h8a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2zM3 12h2m14 0h2m-6 6v2m-4-2v2"/></svg>
+          </div>
+          
+
+          <div>
+            <h3 class="premium-card-title" style="margin: 0; font-size: 1.1rem; line-height: 1.3;">Motor Arıza Lambası (Check Engine)</h3>
+            
+            
+            <span class="premium-severity-badge sev-yüksek" style="margin-top: 8px; display: inline-flex;">
+              <span class="pulse-dot"></span>
+              Acil / Yüksek Ciddiyet
+            </span>
+            
+            
+            
+          </div>
+        </div>
+        
+        <div class="premium-card-body" style="flex: 1; display: flex; flex-direction: column;">
+          <p class="premium-text-lead" style="font-size: 0.95rem; margin-bottom: 20px;">
+            Motor kontrol ünitesi (ECU) motorda, egzozda veya yakıt sisteminde emisyonları etkileyecek veya motora zarar verebilecek bir sorun algıladığında yanar. Devamlı yanıyorsa en kısa sürede kontrol edilmeli, yanıp sönüyorsa (flaş yapıyorsa) araç derhal durdurulmalıdır (Katalizör erime tehlikesi).
+          </p>
+          
+          <div style="margin-top: auto;">
+            <h4 style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 10px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 16px;">Sık Karşılaşılan OBD Kodları:</h4>
+            <div class="premium-brands-cloud" style="gap: 8px;">
+              <a href="/kod/P0420" class="code-badge category-P" style="font-size: 0.85rem; padding: 4px 8px;">P0420</a><a href="/kod/P0171" class="code-badge category-P" style="font-size: 0.85rem; padding: 4px 8px;">P0171</a><a href="/kod/P0300" class="code-badge category-P" style="font-size: 0.85rem; padding: 4px 8px;">P0300</a><a href="/kod/P0113" class="code-badge category-P" style="font-size: 0.85rem; padding: 4px 8px;">P0113</a><a href="/kod/P0101" class="code-badge category-P" style="font-size: 0.85rem; padding: 4px 8px;">P0101</a>
+              <a href="/arama" class="code-badge" style="background: rgba(255,255,255,0.05); color: var(--text-secondary); font-size: 0.85rem; padding: 4px 8px; border: 1px dashed rgba(255,255,255,0.2);">
+                Diğerleri...
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="premium-card" style="display: flex; flex-direction: column; height: 100%;">
+        <div class="premium-card-header" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 16px;">
+          
+          
+          
+          <div class="premium-icon-box" style="background: rgba(255, 255, 255, 0.05); color: #f59e0b; border: 1px solid rgba(255, 255, 255, 0.1);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4m0-4h.01"/></svg>
+          </div>
+          
+
+          <div>
+            <h3 class="premium-card-title" style="margin: 0; font-size: 1.1rem; line-height: 1.3;">ABS Uyarı Lambası</h3>
+            
+            
+            <span class="premium-severity-badge sev-yüksek" style="margin-top: 8px; display: inline-flex;">
+              <span class="pulse-dot"></span>
+              Acil / Yüksek Ciddiyet
+            </span>
+            
+            
+            
+          </div>
+        </div>
+        
+        <div class="premium-card-body" style="flex: 1; display: flex; flex-direction: column;">
+          <p class="premium-text-lead" style="font-size: 0.95rem; margin-bottom: 20px;">
+            Kilitlenmeyi Önleyici Fren Sistemi&#039;nde (ABS) bir arıza olduğunu belirtir. Araç normal fren yapmaya devam eder ancak acil frenlemelerde tekerlekler kilitlenebilir.
+          </p>
+          
+          <div style="margin-top: auto;">
+            <h4 style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 10px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 16px;">Sık Karşılaşılan OBD Kodları:</h4>
+            <div class="premium-brands-cloud" style="gap: 8px;">
+              <a href="/kod/C0035" class="code-badge category-C" style="font-size: 0.85rem; padding: 4px 8px;">C0035</a><a href="/kod/C0040" class="code-badge category-C" style="font-size: 0.85rem; padding: 4px 8px;">C0040</a><a href="/kod/C0045" class="code-badge category-C" style="font-size: 0.85rem; padding: 4px 8px;">C0045</a><a href="/kod/C0050" class="code-badge category-C" style="font-size: 0.85rem; padding: 4px 8px;">C0050</a><a href="/kod/C1201" class="code-badge category-C" style="font-size: 0.85rem; padding: 4px 8px;">C1201</a>
+              <a href="/arama" class="code-badge" style="background: rgba(255,255,255,0.05); color: var(--text-secondary); font-size: 0.85rem; padding: 4px 8px; border: 1px dashed rgba(255,255,255,0.2);">
+                Diğerleri...
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="premium-card" style="display: flex; flex-direction: column; height: 100%;">
+        <div class="premium-card-header" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 16px;">
+          
+          
+          <div class="premium-icon-box" style="background: rgba(255, 255, 255, 0.05); color: #ef4444; border: 1px solid rgba(255, 255, 255, 0.1);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/><circle cx="12" cy="14" r="4"/></svg>
+          </div>
+          
+          
+
+          <div>
+            <h3 class="premium-card-title" style="margin: 0; font-size: 1.1rem; line-height: 1.3;">Hava Yastığı (Airbag / SRS) Lambası</h3>
+            
+            
+            <span class="premium-severity-badge sev-yüksek" style="margin-top: 8px; display: inline-flex;">
+              <span class="pulse-dot"></span>
+              Acil / Yüksek Ciddiyet
+            </span>
+            
+            
+            
+          </div>
+        </div>
+        
+        <div class="premium-card-body" style="flex: 1; display: flex; flex-direction: column;">
+          <p class="premium-text-lead" style="font-size: 0.95rem; margin-bottom: 20px;">
+            Hava yastığı veya emniyet kemeri gergisi sisteminde bir kopukluk veya arıza olduğunu gösterir. Olası bir kazada sistem devreye girmeyecektir. Genellikle koltuk altı soketlerinden kaynaklanır.
+          </p>
+          
+          <div style="margin-top: auto;">
+            <h4 style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 10px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 16px;">Sık Karşılaşılan OBD Kodları:</h4>
+            <div class="premium-brands-cloud" style="gap: 8px;">
+              <a href="/kod/B0020" class="code-badge category-B" style="font-size: 0.85rem; padding: 4px 8px;">B0020</a><a href="/kod/B0030" class="code-badge category-B" style="font-size: 0.85rem; padding: 4px 8px;">B0030</a><a href="/kod/B0042" class="code-badge category-B" style="font-size: 0.85rem; padding: 4px 8px;">B0042</a><a href="/kod/B0052" class="code-badge category-B" style="font-size: 0.85rem; padding: 4px 8px;">B0052</a>
+              <a href="/arama" class="code-badge" style="background: rgba(255,255,255,0.05); color: var(--text-secondary); font-size: 0.85rem; padding: 4px 8px; border: 1px dashed rgba(255,255,255,0.2);">
+                Diğerleri...
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="premium-card" style="display: flex; flex-direction: column; height: 100%;">
+        <div class="premium-card-header" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 16px;">
+          
+          
+          
+          <div class="premium-icon-box" style="background: rgba(255, 255, 255, 0.05); color: #f59e0b; border: 1px solid rgba(255, 255, 255, 0.1);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M17 14.5c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5v-3c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v3z"/><path d="M9.5 20c.83 0 1.5-.67 1.5-1.5v-3c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v3c0 .83.67 1.5 1.5 1.5z"/></svg>
+          </div>
+          
+
+          <div>
+            <h3 class="premium-card-title" style="margin: 0; font-size: 1.1rem; line-height: 1.3;">ESP / Çekiş Kontrol (TCS) Lambası</h3>
+            
+            
+            
+            <span class="premium-severity-badge sev-orta" style="margin-top: 8px; display: inline-flex;">
+              <span class="pulse-dot"></span>
+              Uyarı / Orta Ciddiyet
+            </span>
+            
+            
+          </div>
+        </div>
+        
+        <div class="premium-card-body" style="flex: 1; display: flex; flex-direction: column;">
+          <p class="premium-text-lead" style="font-size: 0.95rem; margin-bottom: 20px;">
+            Elektronik Stabilite Programı devredeyken (kaygan zeminde) yanıp söner. Ancak sürekli yanıyorsa sistemde (direksiyon açı sensörü, yalpalama sensörü vb.) bir arıza vardır ve ESP devre dışıdır.
+          </p>
+          
+          <div style="margin-top: auto;">
+            <h4 style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 10px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 16px;">Sık Karşılaşılan OBD Kodları:</h4>
+            <div class="premium-brands-cloud" style="gap: 8px;">
+              <a href="/kod/C0060" class="code-badge category-C" style="font-size: 0.85rem; padding: 4px 8px;">C0060</a><a href="/kod/C0065" class="code-badge category-C" style="font-size: 0.85rem; padding: 4px 8px;">C0065</a><a href="/kod/C0196" class="code-badge category-C" style="font-size: 0.85rem; padding: 4px 8px;">C0196</a>
+              <a href="/arama" class="code-badge" style="background: rgba(255,255,255,0.05); color: var(--text-secondary); font-size: 0.85rem; padding: 4px 8px; border: 1px dashed rgba(255,255,255,0.2);">
+                Diğerleri...
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="premium-card" style="display: flex; flex-direction: column; height: 100%;">
+        <div class="premium-card-header" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 16px;">
+          
+          
+          <div class="premium-icon-box" style="background: rgba(255, 255, 255, 0.05); color: #ef4444; border: 1px solid rgba(255, 255, 255, 0.1);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="10" rx="2" ry="2"/><line x1="22" y1="11" x2="22" y2="13"/><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="15" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          
+          
+
+          <div>
+            <h3 class="premium-card-title" style="margin: 0; font-size: 1.1rem; line-height: 1.3;">Akü Şarj Uyarı Lambası</h3>
+            
+            
+            <span class="premium-severity-badge sev-yüksek" style="margin-top: 8px; display: inline-flex;">
+              <span class="pulse-dot"></span>
+              Acil / Yüksek Ciddiyet
+            </span>
+            
+            
+            
+          </div>
+        </div>
+        
+        <div class="premium-card-body" style="flex: 1; display: flex; flex-direction: column;">
+          <p class="premium-text-lead" style="font-size: 0.95rem; margin-bottom: 20px;">
+            Alternatörün (şarj dinamosu) aküyü şarj etmediğini gösterir. Araç sadece aküdeki mevcut güçle ilerliyordur ve çok kısa süre sonra elektrik kesilerek yolda kalacaktır.
+          </p>
+          
+          <div style="margin-top: auto;">
+            <h4 style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 10px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 16px;">Sık Karşılaşılan OBD Kodları:</h4>
+            <div class="premium-brands-cloud" style="gap: 8px;">
+              <a href="/kod/P0562" class="code-badge category-P" style="font-size: 0.85rem; padding: 4px 8px;">P0562</a><a href="/kod/P0563" class="code-badge category-P" style="font-size: 0.85rem; padding: 4px 8px;">P0563</a><a href="/kod/P2503" class="code-badge category-P" style="font-size: 0.85rem; padding: 4px 8px;">P2503</a><a href="/kod/B1325" class="code-badge category-B" style="font-size: 0.85rem; padding: 4px 8px;">B1325</a>
+              <a href="/arama" class="code-badge" style="background: rgba(255,255,255,0.05); color: var(--text-secondary); font-size: 0.85rem; padding: 4px 8px; border: 1px dashed rgba(255,255,255,0.2);">
+                Diğerleri...
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="premium-card" style="display: flex; flex-direction: column; height: 100%;">
+        <div class="premium-card-header" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 16px;">
+          
+          
+          <div class="premium-icon-box" style="background: rgba(255, 255, 255, 0.05); color: #ef4444; border: 1px solid rgba(255, 255, 255, 0.1);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16h10M6 12h12M12 4v4m-3.5-1.5l3.5-3.5 3.5 3.5M9 20h6"/></svg>
+          </div>
+          
+          
+
+          <div>
+            <h3 class="premium-card-title" style="margin: 0; font-size: 1.1rem; line-height: 1.3;">Düşük Yağ Basıncı Lambası</h3>
+            
+            
+            <span class="premium-severity-badge sev-yüksek" style="margin-top: 8px; display: inline-flex;">
+              <span class="pulse-dot"></span>
+              Acil / Yüksek Ciddiyet
+            </span>
+            
+            
+            
+          </div>
+        </div>
+        
+        <div class="premium-card-body" style="flex: 1; display: flex; flex-direction: column;">
+          <p class="premium-text-lead" style="font-size: 0.95rem; margin-bottom: 20px;">
+            Motor yağ basıncının tehlikeli seviyede düştüğünü bildirir. Aracı ANINDA durdurup motoru kapatmanız gerekir, aksi takdirde motor yatak sarar (motor yer/kilitlenir). Yağ seviyesi veya yağ pompası sorunu olabilir.
+          </p>
+          
+          <div style="margin-top: auto;">
+            <h4 style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 10px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 16px;">Sık Karşılaşılan OBD Kodları:</h4>
+            <div class="premium-brands-cloud" style="gap: 8px;">
+              <a href="/kod/P0520" class="code-badge category-P" style="font-size: 0.85rem; padding: 4px 8px;">P0520</a><a href="/kod/P0521" class="code-badge category-P" style="font-size: 0.85rem; padding: 4px 8px;">P0521</a><a href="/kod/P0522" class="code-badge category-P" style="font-size: 0.85rem; padding: 4px 8px;">P0522</a><a href="/kod/P0523" class="code-badge category-P" style="font-size: 0.85rem; padding: 4px 8px;">P0523</a><a href="/kod/P0524" class="code-badge category-P" style="font-size: 0.85rem; padding: 4px 8px;">P0524</a>
+              <a href="/arama" class="code-badge" style="background: rgba(255,255,255,0.05); color: var(--text-secondary); font-size: 0.85rem; padding: 4px 8px; border: 1px dashed rgba(255,255,255,0.2);">
+                Diğerleri...
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="premium-card" style="display: flex; flex-direction: column; height: 100%;">
+        <div class="premium-card-header" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 16px;">
+          
+          
+          <div class="premium-icon-box" style="background: rgba(255, 255, 255, 0.05); color: #ef4444; border: 1px solid rgba(255, 255, 255, 0.1);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v14"/><path d="M12 21a4 4 0 0 0 4-4H8a4 4 0 0 0 4 4z"/><path d="M9 7h6M9 11h6"/></svg>
+          </div>
+          
+          
+
+          <div>
+            <h3 class="premium-card-title" style="margin: 0; font-size: 1.1rem; line-height: 1.3;">Hararet / Soğutma Sıvısı Uyarı Lambası</h3>
+            
+            
+            <span class="premium-severity-badge sev-yüksek" style="margin-top: 8px; display: inline-flex;">
+              <span class="pulse-dot"></span>
+              Acil / Yüksek Ciddiyet
+            </span>
+            
+            
+            
+          </div>
+        </div>
+        
+        <div class="premium-card-body" style="flex: 1; display: flex; flex-direction: column;">
+          <p class="premium-text-lead" style="font-size: 0.95rem; margin-bottom: 20px;">
+            Motor sıcaklığının güvenli sınırların (genelde 110°C+) üzerine çıktığını veya soğutma suyunun bittiğini gösterir. Araç hemen durdurulmazsa conta yakma veya üst kapak eğilmesi meydana gelir.
+          </p>
+          
+          <div style="margin-top: auto;">
+            <h4 style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 10px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 16px;">Sık Karşılaşılan OBD Kodları:</h4>
+            <div class="premium-brands-cloud" style="gap: 8px;">
+              <a href="/kod/P0115" class="code-badge category-P" style="font-size: 0.85rem; padding: 4px 8px;">P0115</a><a href="/kod/P0116" class="code-badge category-P" style="font-size: 0.85rem; padding: 4px 8px;">P0116</a><a href="/kod/P0117" class="code-badge category-P" style="font-size: 0.85rem; padding: 4px 8px;">P0117</a><a href="/kod/P0118" class="code-badge category-P" style="font-size: 0.85rem; padding: 4px 8px;">P0118</a><a href="/kod/P0217" class="code-badge category-P" style="font-size: 0.85rem; padding: 4px 8px;">P0217</a><a href="/kod/P0128" class="code-badge category-P" style="font-size: 0.85rem; padding: 4px 8px;">P0128</a>
+              <a href="/arama" class="code-badge" style="background: rgba(255,255,255,0.05); color: var(--text-secondary); font-size: 0.85rem; padding: 4px 8px; border: 1px dashed rgba(255,255,255,0.2);">
+                Diğerleri...
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="premium-card" style="display: flex; flex-direction: column; height: 100%;">
+        <div class="premium-card-header" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 16px;">
+          
+          
+          
+          <div class="premium-icon-box" style="background: rgba(255, 255, 255, 0.05); color: #f59e0b; border: 1px solid rgba(255, 255, 255, 0.1);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/><path d="M12 8v4M12 16h.01"/><path d="M8 22h8"/></svg>
+          </div>
+          
+
+          <div>
+            <h3 class="premium-card-title" style="margin: 0; font-size: 1.1rem; line-height: 1.3;">Lastik Basınç Uyarı (TPMS) Lambası</h3>
+            
+            
+            
+            <span class="premium-severity-badge sev-orta" style="margin-top: 8px; display: inline-flex;">
+              <span class="pulse-dot"></span>
+              Uyarı / Orta Ciddiyet
+            </span>
+            
+            
+          </div>
+        </div>
+        
+        <div class="premium-card-body" style="flex: 1; display: flex; flex-direction: column;">
+          <p class="premium-text-lead" style="font-size: 0.95rem; margin-bottom: 20px;">
+            Araçtaki lastiklerden birinin veya birkaçının basıncının %25&#039;ten fazla düştüğünü bildirir. Sensör arızası durumunda bu lamba ilk çalışmada yanıp sönerek sabit yanmaya geçer.
+          </p>
+          
+          <div style="margin-top: auto;">
+            <h4 style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 10px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 16px;">Sık Karşılaşılan OBD Kodları:</h4>
+            <div class="premium-brands-cloud" style="gap: 8px;">
+              <a href="/kod/C1093" class="code-badge category-C" style="font-size: 0.85rem; padding: 4px 8px;">C1093</a><a href="/kod/C1094" class="code-badge category-C" style="font-size: 0.85rem; padding: 4px 8px;">C1094</a><a href="/kod/C2126" class="code-badge category-C" style="font-size: 0.85rem; padding: 4px 8px;">C2126</a>
+              <a href="/arama" class="code-badge" style="background: rgba(255,255,255,0.05); color: var(--text-secondary); font-size: 0.85rem; padding: 4px 8px; border: 1px dashed rgba(255,255,255,0.2);">
+                Diğerleri...
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="premium-card" style="display: flex; flex-direction: column; height: 100%;">
+        <div class="premium-card-header" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 16px;">
+          
+          
+          
+          <div class="premium-icon-box" style="background: rgba(255, 255, 255, 0.05); color: #f59e0b; border: 1px solid rgba(255, 255, 255, 0.1);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="16" height="12" rx="2" ry="2"/><circle cx="8" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="16" cy="12" r="1"/><circle cx="10" cy="9" r="1"/><circle cx="14" cy="9" r="1"/><circle cx="10" cy="15" r="1"/><circle cx="14" cy="15" r="1"/></svg>
+          </div>
+          
+
+          <div>
+            <h3 class="premium-card-title" style="margin: 0; font-size: 1.1rem; line-height: 1.3;">Dizel Partikül Filtresi (DPF) Lambası</h3>
+            
+            
+            
+            <span class="premium-severity-badge sev-orta" style="margin-top: 8px; display: inline-flex;">
+              <span class="pulse-dot"></span>
+              Uyarı / Orta Ciddiyet
+            </span>
+            
+            
+          </div>
+        </div>
+        
+        <div class="premium-card-body" style="flex: 1; display: flex; flex-direction: column;">
+          <p class="premium-text-lead" style="font-size: 0.95rem; margin-bottom: 20px;">
+            Sadece dizel araçlarda bulunur. DPF&#039;nin kurumla tıkandığını ve rejenerasyon (temizleme) işleminin gerektiğini belirtir. Aracı uygun devirde sürmek veya servise götürmek gerekir.
+          </p>
+          
+          <div style="margin-top: auto;">
+            <h4 style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 10px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 16px;">Sık Karşılaşılan OBD Kodları:</h4>
+            <div class="premium-brands-cloud" style="gap: 8px;">
+              <a href="/kod/P242F" class="code-badge category-P" style="font-size: 0.85rem; padding: 4px 8px;">P242F</a><a href="/kod/P2002" class="code-badge category-P" style="font-size: 0.85rem; padding: 4px 8px;">P2002</a><a href="/kod/P2452" class="code-badge category-P" style="font-size: 0.85rem; padding: 4px 8px;">P2452</a><a href="/kod/P2453" class="code-badge category-P" style="font-size: 0.85rem; padding: 4px 8px;">P2453</a>
+              <a href="/arama" class="code-badge" style="background: rgba(255,255,255,0.05); color: var(--text-secondary); font-size: 0.85rem; padding: 4px 8px; border: 1px dashed rgba(255,255,255,0.2);">
+                Diğerleri...
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="premium-card" style="display: flex; flex-direction: column; height: 100%;">
+        <div class="premium-card-header" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 16px;">
+          
+          
+          
+          <div class="premium-icon-box" style="background: rgba(255, 255, 255, 0.05); color: #f59e0b; border: 1px solid rgba(255, 255, 255, 0.1);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16V8M9 10h6M9 14h6"/></svg>
+          </div>
+          
+
+          <div>
+            <h3 class="premium-card-title" style="margin: 0; font-size: 1.1rem; line-height: 1.3;">Elektronik Park Freni (EPB) Arıza Lambası</h3>
+            
+            
+            <span class="premium-severity-badge sev-yüksek" style="margin-top: 8px; display: inline-flex;">
+              <span class="pulse-dot"></span>
+              Acil / Yüksek Ciddiyet
+            </span>
+            
+            
+            
+          </div>
+        </div>
+        
+        <div class="premium-card-body" style="flex: 1; display: flex; flex-direction: column;">
+          <p class="premium-text-lead" style="font-size: 0.95rem; margin-bottom: 20px;">
+            Elektronik el freni sisteminde mekanik bir sıkışma, motor arızası veya iletişim kopukluğu olduğunda yanar. El freni kilitli kalabilir veya tutmayabilir.
+          </p>
+          
+          <div style="margin-top: auto;">
+            <h4 style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 10px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 16px;">Sık Karşılaşılan OBD Kodları:</h4>
+            <div class="premium-brands-cloud" style="gap: 8px;">
+              <a href="/kod/C0070" class="code-badge category-C" style="font-size: 0.85rem; padding: 4px 8px;">C0070</a><a href="/kod/C1000" class="code-badge category-C" style="font-size: 0.85rem; padding: 4px 8px;">C1000</a><a href="/kod/U0128" class="code-badge category-U" style="font-size: 0.85rem; padding: 4px 8px;">U0128</a>
+              <a href="/arama" class="code-badge" style="background: rgba(255,255,255,0.05); color: var(--text-secondary); font-size: 0.85rem; padding: 4px 8px; border: 1px dashed rgba(255,255,255,0.2);">
+                Diğerleri...
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
+    </div>
+  </div>
+</section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-section">
+          <div class="footer-logo" style="display: flex; align-items: center; gap: 5px;">
+            <img src="/images/logo.png" alt="OBD Logo" style="width: 36px; height: 36px; transform: scale(1.3);">
+            <span class="logo-text">OBD<span class="logo-highlight">Kodları</span></span>
+          </div>
+          <p class="footer-desc">Araç arıza kodlarınızı hızlıca bulun, anlayın ve çözümlerine ulaşın. OBD-II standart arıza kodları veritabanı.</p>
+          <div style="margin-top: 15px;">
+            <p style="color: var(--text-secondary); font-size: 0.85rem; margin: 0 0 5px 0;">Sponsorumuz:</p>
+            <a href="https://otosoz.com" target="_blank" style="color: #fff; text-decoration: none; font-weight: bold; font-size: 1rem; display: inline-flex; align-items: center; gap: 5px;"><span style="color: var(--accent-blue);">Otosoz.com</span> Forum</a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h4 class="footer-title">Kod Kategorileri</h4>
+          <a href="/arama?kategori=P" class="footer-link">P - Motor & Şanzıman</a>
+          <a href="/arama?kategori=B" class="footer-link">B - Gövde</a>
+          <a href="/arama?kategori=C" class="footer-link">C - Şasi</a>
+          <a href="/arama?kategori=U" class="footer-link">U - İletişim</a>
+        </div>
+        <div class="footer-section">
+          <h4 class="footer-title">Hızlı Erişim</h4>
+          <a href="/" class="footer-link">Ana Sayfa</a>
+          <a href="/arama" class="footer-link">Tüm Kodlar</a>
+          <a href="/gosterge-paneli" class="footer-link">Gösterge Paneli İşaretleri</a>
+          <a href="/hakkinda" class="footer-link">OBD-II Nedir?</a>
+        </div>
+        <div class="footer-section">
+          <h4 class="footer-title">Yasal</h4>
+          <a href="/iletisim" class="footer-link">İletişim</a>
+          <a href="/gizlilik-politikasi" class="footer-link">Gizlilik Politikası</a>
+          <a href="/kullanim-kosullari" class="footer-link">Kullanım Koşulları</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 OBDKodları. Tüm hakları saklıdır.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

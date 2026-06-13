@@ -24,6 +24,7 @@ const severityGlobalMap = {
 
 codesData = codesData.map(c => ({
   ...c,
+  category: c.code ? c.code.charAt(0).toUpperCase() : 'P',
   severity: severityGlobalMap[c.severity] || c.severity
 }));
 
@@ -44,6 +45,14 @@ try {
   commentsData = [];
 }
 const commentRateLimit = {};
+
+// Load Dashboard Lights
+let dashboardLightsData = [];
+try {
+  dashboardLightsData = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'dashboard-lights.json'), 'utf-8'));
+} catch (e) {
+  console.error('dashboard-lights.json not found.');
+}
 
 function createSlug(str) {
   return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
@@ -251,6 +260,12 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
     (c.affectedSystem === code.affectedSystem || c.code.substring(0, 3) === code.code.substring(0, 3))
   ).slice(0, 6);
 
+  let categoryName = "Bilinmeyen Kategori";
+  if (code.category === 'P') { categoryName = "Motor ve Şanzıman"; }
+  if (code.category === 'B') { categoryName = "Gövde ve Elektronik"; }
+  if (code.category === 'C') { categoryName = "Şasi ve Fren Sistemi"; }
+  if (code.category === 'U') { categoryName = "İletişim Ağı ve Veri Yolu"; }
+
   const severityTextMap = {
     'low': 'Düşük Ciddiyet',
     'düşük': 'Düşük Ciddiyet',
@@ -319,6 +334,39 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
 
   const paginatedComments = formattedComments.slice((page - 1) * limit, page * limit);
 
+  // Find related dashboard light
+  let relatedLight = dashboardLightsData.find(l => l.exampleCodes.includes(code.code));
+  if (!relatedLight) {
+    // If not directly in example codes, match by category prefix (e.g. P0, P2)
+    relatedLight = dashboardLightsData.find(l => l.relatedCodeCategories.some(cat => code.code.startsWith(cat)));
+  }
+
+  let hasDashboardLight = '';
+  let dlName = '';
+  let dlDesc = '';
+  let dlImg = '';
+  let dlSvg = '';
+  let dlIsEV = '';
+
+  let dlNoImage = '';
+  let dlGlowClass = '';
+
+  if (relatedLight) {
+    hasDashboardLight = 'true';
+    dlName = relatedLight.name;
+    dlDesc = relatedLight.description;
+    dlIsEV = relatedLight.id.startsWith('ev-') ? 'true' : '';
+    dlGlowClass = relatedLight.color === 'red' ? 'svg-glow-red' : (relatedLight.color === 'yellow' ? 'svg-glow-yellow' : 'svg-glow-green');
+    
+    const imgPath = path.join(__dirname, 'public', 'images', 'dashboard-lights', `${relatedLight.id}.png`);
+    if (fs.existsSync(imgPath)) {
+      dlImg = `/images/dashboard-lights/${relatedLight.id}.png`;
+    } else {
+      dlSvg = relatedLight.iconSvg;
+      dlNoImage = 'true';
+    }
+  }
+
   const html = render('detail', {
     pageTitle,
     metaDescription,
@@ -327,11 +375,19 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
     ...code,
     name: displayCodeName,
     description: displayDescription,
-    categoryName: categoryNames[code.category] || code.category,
+    categoryName: categoryName,
     severityText: severityTextMap[code.severity] || code.severity,
     severity: mappedSeverity,
     isHighSeverity: (code.severity === 'yüksek' || code.severity === 'high') ? 'true' : '',
     isNotHighSeverity: (code.severity !== 'yüksek' && code.severity !== 'high') ? 'true' : '',
+    hasDashboardLight,
+    dlName,
+    dlDesc,
+    dlImg,
+    dlSvg,
+    dlIsEV,
+    dlNoImage,
+    dlGlowClass,
     hasRelated: related.length > 0 ? 'true' : '',
     relatedCodes: related,
     brandName: brandObj ? brandObj.name : '',
@@ -350,6 +406,106 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
     paginationHtml: paginationHtml
   });
   sendHtml(res, 200, html);
+}
+
+function handleDashboardLightDetail(req, res, id) {
+  const light = dashboardLightsData.find(l => l.id === id);
+  if (!light) {
+    res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+    const html = render('index', { 
+      pageTitle: 'Gösterge Bulunamadı - OBDKodları', 
+      metaDescription: 'Aradığınız gösterge işareti bulunamadı.',
+      canonicalUrl: 'https://www.obdkodu.com/'
+    });
+    res.end(html);
+    return;
+  }
+
+  // First: exact matches from exampleCodes
+  let relatedCodesList = codesData.filter(c => 
+    light.exampleCodes && light.exampleCodes.includes(c.code)
+  );
+
+  // If we have fewer than 5 exact matches, supplement with category prefix matches
+  if (relatedCodesList.length < 5 && light.relatedCodeCategories) {
+    const existingCodes = new Set(relatedCodesList.map(c => c.code));
+    const categoryMatches = codesData.filter(c => 
+      !existingCodes.has(c.code) && 
+      light.relatedCodeCategories.some(cat => c.code.startsWith(cat))
+    ).slice(0, 20 - relatedCodesList.length);
+    relatedCodesList = [...relatedCodesList, ...categoryMatches];
+  }
+
+  relatedCodesList = relatedCodesList.slice(0, 20);
+
+  const imgPath = path.join(__dirname, 'public', 'images', 'dashboard-lights', `${light.id}.png`);
+  const hasImage = fs.existsSync(imgPath);
+
+  // --- Comments Logic ---
+  const codeComments = commentsData.filter(c => c.code === light.id).reverse();
+  const formattedComments = codeComments.map(c => {
+    const d = new Date(c.date);
+    return {
+      ...c,
+      formattedDate: `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`
+    };
+  });
+
+  const urlParts = req.url.split('?');
+  const pathname = urlParts[0];
+  const queryStr = urlParts[1] || '';
+  const pageMatch = queryStr.match(/(?:^|&)page=(\d+)/);
+  const page = pageMatch ? parseInt(pageMatch[1]) : 1;
+  const limit = 10;
+  const totalPages = Math.ceil(formattedComments.length / limit);
+  
+  let paginationHtml = '';
+  if (totalPages > 1) {
+    paginationHtml = '<div class="pagination">';
+    for (let i = 1; i <= totalPages; i++) {
+      const activeClass = i === page ? 'active' : '';
+      paginationHtml += `<a href="${pathname}?page=${i}#yorumlar" class="page-link ${activeClass}">${i}</a>`;
+    }
+    paginationHtml += '</div>';
+  }
+
+  const paginatedComments = formattedComments.slice((page - 1) * limit, page * limit);
+
+  const context = {
+    pageTitle: `${light.name} Neden Yanar? - OBDKodları`,
+    metaDescription: `${light.name} neden yanar? ${light.description.substring(0, 120)}`,
+    canonicalUrl: `https://www.obdkodu.com/gosterge-paneli/${light.id}`,
+    activeDashboard: 'active',
+    id: light.id,
+    name: light.name,
+    description: light.description,
+    iconSvg: light.iconSvg,
+    imageUrl: hasImage ? `/images/dashboard-lights/${light.id}.png` : '',
+    hasImage: hasImage ? 'true' : '',
+    noImage: !hasImage ? 'true' : '',
+    glowClass: light.color === 'red' ? 'svg-glow-red' : (light.color === 'yellow' ? 'svg-glow-yellow' : 'svg-glow-green'),
+    isEV: light.id.startsWith('ev-') ? 'true' : '',
+    isHighSeverity: light.severity === 'yüksek' ? 'true' : '',
+    isMediumSeverity: light.severity === 'orta' ? 'true' : '',
+    isLowSeverity: light.severity === 'düşük' ? 'true' : '',
+    hasRelatedCodes: relatedCodesList.length > 0 ? 'true' : '',
+    relatedCodesList: relatedCodesList.map(c => {
+      let mappedSeverity = 'low';
+      if (c.severity === 'yüksek' || c.severity === 'high') mappedSeverity = 'high';
+      else if (c.severity === 'orta' || c.severity === 'medium') mappedSeverity = 'medium';
+      return { ...c, severity: mappedSeverity };
+    }),
+    noRelatedCodes: relatedCodesList.length === 0 ? 'true' : '',
+    comments: paginatedComments,
+    hasComments: formattedComments.length > 0 ? 'true' : '',
+    noComments: formattedComments.length === 0 ? 'true' : '',
+    commentCount: formattedComments.length,
+    paginationHtml: paginationHtml
+  };
+
+  const html = render('dashboard-light-detail', context);
+  res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+  res.end(html);
 }
 
 function handleAbout(req, res) {
@@ -381,6 +537,48 @@ function handleContact(req, res) {
   const html = render('contact', {
     pageTitle: 'İletişim',
     metaDescription: 'Soru, görüş ve önerileriniz için obdkodu.com iletişim bilgileri.',
+  });
+  sendHtml(res, 200, html);
+}
+
+function handleDashboardLights(req, res) {
+  const processedLights = dashboardLightsData.map(light => {
+    const htmlCodes = light.exampleCodes.map(code => {
+      const cat = code.substring(0, 1);
+      return `<span class="code-badge category-${cat}" style="font-size: 0.8rem; padding: 3px 8px;">${code}</span>`;
+    }).join('');
+
+    // Check if a real image exists for this light
+    const imgPath = path.join(__dirname, 'public', 'images', 'dashboard-lights', `${light.id}.png`);
+    const hasImage = fs.existsSync(imgPath);
+
+    return {
+      ...light,
+      isRed: light.color === 'red' ? 'true' : '',
+      isYellow: light.color === 'yellow' ? 'true' : '',
+      isGreen: light.color === 'green' ? 'true' : '',
+      isHigh: light.severity === 'yüksek' ? 'true' : '',
+      isMedium: light.severity === 'orta' ? 'true' : '',
+      isLow: light.severity === 'düşük' ? 'true' : '',
+      isEV: light.id.startsWith('ev-') ? 'true' : '',
+      imageUrl: hasImage ? `/images/dashboard-lights/${light.id}.png` : '',
+      hasImage: hasImage ? 'true' : '',
+      noImage: !hasImage ? 'true' : '',
+      glowClass: light.color === 'red' ? 'svg-glow-red' : (light.color === 'yellow' ? 'svg-glow-yellow' : 'svg-glow-green'),
+      exampleCodesHtml: htmlCodes
+    };
+  });
+
+  const classicLights = processedLights.filter(l => !l.id.startsWith('ev-'));
+  const evLights = processedLights.filter(l => l.id.startsWith('ev-'));
+
+  const html = render('dashboard-lights', {
+    pageTitle: 'Gösterge Paneli İşaretleri ve Anlamları',
+    metaDescription: 'Araç gösterge panelinde yanan motor arıza, ABS, ESP, Akü, Yağ basıncı, EV batarya, şarj sistemi gibi ikaz ışıklarının anlamları ve ilgili OBD arıza kodları.',
+    activeDashboard: 'active',
+    lights: classicLights,
+    evLights: evLights,
+    hasEvLights: evLights.length > 0 ? 'true' : ''
   });
   sendHtml(res, 200, html);
 }
@@ -536,6 +734,11 @@ function handleSitemap(req, res) {
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
+  <url>
+    <loc>${baseUrl}/gosterge-paneli</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 `;
 
   codes.forEach(c => {
@@ -642,6 +845,16 @@ const server = http.createServer((req, res) => {
 
   if (pathname === '/iletisim' && req.method === 'GET') {
     return handleContact(req, res);
+  }
+
+  if (pathname === '/gosterge-paneli' || pathname === '/gosterge-paneli/') {
+    return handleDashboardLights(req, res);
+  }
+
+  // Check if it's a dashboard light detail page
+  const dlMatch = pathname.match(/^\/gosterge-paneli\/([a-zA-Z0-9-]+)$/);
+  if (dlMatch) {
+    return handleDashboardLightDetail(req, res, dlMatch[1]);
   }
 
   // SEO

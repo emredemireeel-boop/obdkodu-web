@@ -1,0 +1,147 @@
+<section class="page-header" style="text-align: center; margin-bottom: 40px;">
+  <div class="container">
+    <div style="display: flex; justify-content: center; margin-bottom: 24px;">
+      <div class="dl-detail-image-box">
+        {{#if hasImage}}
+          <img src="{{imageUrl}}" alt="{{name}} uyarı lambası" loading="lazy">
+        {{/if}}
+        {{#if noImage}}
+          <div class="dl-svg-icon {{glowClass}}">{{{iconSvg}}}</div>
+        {{/if}}
+      </div>
+    </div>
+    
+    {{#if isEV}}
+    <div class="dl-ev-badge-header" style="margin-bottom: 16px; display: inline-flex;">
+      <span style="font-size: 1.1rem;">⚡</span>
+      <span style="font-size: 0.85rem; font-weight: 700; color: #22c55e;">ELEKTRİKLİ ARAÇ GÖSTERGESİ</span>
+    </div>
+    {{/if}}
+
+    <h1 class="page-title">{{name}}</h1>
+    <p class="page-subtitle" style="max-width: 800px; margin: 0 auto; color: var(--text-secondary); line-height: 1.8;">
+      {{description}}
+    </p>
+  </div>
+</section>
+
+<section style="margin-bottom: 80px;">
+  <div class="container">
+
+    <!-- Severity Info -->
+    <div class="premium-card" style="margin-bottom: 32px;">
+      <div class="neon-border-top"></div>
+      <div class="premium-card-body" style="padding: 24px;">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+          {{#if isHighSeverity}}
+          <div class="dl-severity-badge dl-severity-acil" style="position: static;">
+            <span class="pulse-dot"></span> Acil / Kritik
+          </div>
+          <p style="margin: 0; color: var(--text-secondary); font-size: 0.9rem;">Bu uyarı lambası yandığında aracı sürmek <strong style="color: #ef4444;">tehlikelidir</strong>. Derhal güvenli bir yere çekin.</p>
+          {{/if}}
+          {{#if isMediumSeverity}}
+          <div class="dl-severity-badge dl-severity-uyari" style="position: static;">
+            <span class="dl-dot dl-dot-yellow"></span> Uyarı
+          </div>
+          <p style="margin: 0; color: var(--text-secondary); font-size: 0.9rem;">En kısa sürede kontrol ettirmeniz önerilir. Uzun süre ihmal edilmemeli.</p>
+          {{/if}}
+          {{#if isLowSeverity}}
+          <div class="dl-severity-badge dl-severity-bilgi" style="position: static;">
+            <span class="dl-dot dl-dot-blue"></span> Bilgi
+          </div>
+          <p style="margin: 0; color: var(--text-secondary); font-size: 0.9rem;">Bilgilendirme amaçlı bir göstergedir. Uygun zamanda kontrol ettirin.</p>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+
+    <!-- Related OBD Codes -->
+    <div class="premium-card">
+      <div class="neon-border-top"></div>
+      <div class="premium-card-header">
+        <div class="premium-icon-box icon-blue">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <h2 class="premium-card-title">Bu Lambayı Yakan Muhtemel OBD Arıza Kodları</h2>
+      </div>
+      <div class="premium-card-body" style="padding: 24px;">
+        <p style="color: var(--text-secondary); margin-bottom: 24px; font-size: 0.9rem;">
+          <strong>{{name}}</strong> yandığında, diagnostik (OBD-II) cihazı bağladığınızda aşağıdaki arıza kodlarından biriyle karşılaşmanız muhtemeldir:
+        </p>
+        
+        {{#if hasRelatedCodes}}
+        <div class="premium-related-grid">
+          {{#each relatedCodesList}}
+          <a href="/kod/{{code}}" class="premium-related-card">
+            <div class="related-code-header">
+              <span class="related-code">{{code}}</span>
+              <span class="related-severity severity-{{severity}}"></span>
+            </div>
+            <div class="related-desc">{{name}}</div>
+          </a>
+          {{/each}}
+        </div>
+        {{/if}}
+        
+        {{#if noRelatedCodes}}
+        <div style="text-align: center; padding: 40px; color: var(--text-secondary); background: rgba(255,255,255,0.02); border-radius: 12px;">
+          <p style="margin: 0;">Şu an veritabanımızda bu göstergeyle doğrudan eşleşen spesifik bir kod bulunamadı.</p>
+        </div>
+        {{/if}}
+      </div>
+    </div>
+    <!-- User Comments Section -->
+    <div class="premium-comments-section" id="yorumlar" style="margin-bottom: 40px;">
+      <h3 class="premium-section-title">Kullanıcı Yorumları ({{commentCount}})</h3>
+      
+      <div class="comments-list">
+        {{#if hasComments}}
+          {{#each comments}}
+          <div class="comment-card">
+            <div class="comment-header">
+              <span class="comment-author">{{name}}</span>
+              <span class="comment-date">{{formattedDate}}</span>
+            </div>
+            <p class="comment-text">{{comment}}</p>
+          </div>
+          {{/each}}
+          
+          {{{paginationHtml}}}
+        {{/if}}
+        {{#if noComments}}
+          <p class="no-comments-msg">Bu gösterge işareti için henüz yorum yapılmamış. Neden yandığını ve nasıl çözdüğünüzü biliyorsanız ilk yorumu siz yapın!</p>
+        {{/if}}
+      </div>
+
+      <div class="comment-form-card">
+        <h4 class="form-title">Deneyiminizi Paylaşın</h4>
+        <form id="commentForm">
+          <input type="hidden" id="codeId" value="{{id}}">
+          <!-- Honeypot Bot Trap -->
+          <div style="display:none;">
+            <label>Website</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <input type="text" id="commentName" placeholder="Adınız" required maxlength="50" class="premium-input">
+          </div>
+          <div class="form-group">
+            <textarea id="commentText" placeholder="Bu gösterge yandığında ne yaptınız? Nasıl çözdünüz? Deneyiminizi buraya yazın..." required rows="4" maxlength="500" class="premium-input"></textarea>
+          </div>
+          <button type="submit" class="btn-primary premium-btn" id="submitCommentBtn">Yorumu Gönder</button>
+          <div id="commentStatus" class="form-status"></div>
+        </form>
+      </div>
+    </div>
+    
+    <!-- Back Button -->
+    <div class="premium-actions" style="margin-top: 40px; text-align: center;">
+      <a href="/gosterge-paneli" class="btn-secondary premium-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>Tüm Gösterge İşaretlerine Dön</span>
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,123 @@
+<section class="page-header" style="text-align: center; margin-bottom: 40px;">
+  <div class="container">
+    <h1 class="page-title">Gösterge Paneli İşaretleri ve Anlamları</h1>
+    <p class="page-subtitle" style="max-width: 700px; margin: 0 auto; color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7;">
+      Gösterge panelinizdeki uyarı lambaları ne anlama geliyor? İlgili işareti seçerek detayları ve OBD arıza kodlarını inceleyin.
+    </p>
+  </div>
+</section>
+
+<!-- ======= KLASİK ARAÇ GÖSTERGELERİ ======= -->
+<section class="dashboard-lights-section">
+  <div class="container">
+    <div style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 8px 0;">⛽ Geleneksel Araç Göstergeleri</h2>
+      <p style="color: var(--text-secondary); margin: 0; font-size: 0.95rem;">Benzinli, dizel ve hibrit araçlarda sıkça karşılaşılan uyarı lambaları</p>
+    </div>
+
+    <div class="dl-grid">
+      {{#each lights}}
+      <div class="dl-card" onclick="window.location.href='/gosterge-paneli/{{id}}'">
+        {{#if isHigh}}
+        <div class="dl-severity-badge dl-severity-acil">
+          <span class="pulse-dot"></span> Acil
+        </div>
+        {{/if}}
+        {{#if isMedium}}
+        <div class="dl-severity-badge dl-severity-uyari">
+          <span class="dl-dot dl-dot-yellow"></span> Uyarı
+        </div>
+        {{/if}}
+        {{#if isLow}}
+        <div class="dl-severity-badge dl-severity-bilgi">
+          <span class="dl-dot dl-dot-blue"></span> Bilgi
+        </div>
+        {{/if}}
+
+        <div class="dl-icon-area">
+          {{#if hasImage}}
+          <div class="dl-image-box">
+            <img src="{{imageUrl}}" alt="{{name}} gösterge lambası görseli" width="120" height="120" loading="lazy">
+          </div>
+          {{/if}}
+          {{#if noImage}}
+          <div class="dl-image-box">
+            <div class="dl-svg-icon {{glowClass}}">{{{iconSvg}}}</div>
+          </div>
+          {{/if}}
+        </div>
+
+        <h3 class="dl-card-name">{{name}}</h3>
+        <p class="dl-card-desc">{{description}}</p>
+        
+        <div class="dl-codes-area">
+          <div class="dl-codes-label">İlgili OBD Kodları</div>
+          <div class="dl-codes-list">
+            {{{exampleCodesHtml}}}
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</section>
+
+<!-- ======= ELEKTRİKLİ ARAÇ GÖSTERGELERİ ======= -->
+{{#if hasEvLights}}
+<section class="dashboard-lights-section" style="margin-top: 60px;">
+  <div class="container">
+    <div style="margin-bottom: 32px; text-align: center;">
+      <div class="dl-ev-badge-header">
+        <span style="font-size: 1.1rem;">⚡</span>
+        <span style="font-size: 0.85rem; font-weight: 600; color: #22c55e; letter-spacing: 0.5px;">ELEKTRİKLİ ARAÇ</span>
+      </div>
+      <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 8px 0;">Elektrikli Araç (EV) Göstergeleri</h2>
+      <p style="color: var(--text-secondary); margin: 0 auto; font-size: 0.95rem; max-width: 700px;">Tesla, TOGG, BYD, Hyundai, Kia ve diğer elektrikli/plug-in hibrit araçlara özel batarya, şarj, motor ve yüksek voltaj uyarı göstergeleri.</p>
+    </div>
+
+    <div class="dl-grid">
+      {{#each evLights}}
+      <div class="dl-card dl-card-ev" onclick="window.location.href='/gosterge-paneli/{{id}}'">
+        {{#if isHigh}}
+        <div class="dl-severity-badge dl-severity-acil">
+          <span class="pulse-dot"></span> Acil
+        </div>
+        {{/if}}
+        {{#if isMedium}}
+        <div class="dl-severity-badge dl-severity-uyari">
+          <span class="dl-dot dl-dot-yellow"></span> Uyarı
+        </div>
+        {{/if}}
+
+        <div class="dl-ev-tag">EV</div>
+
+        <div class="dl-icon-area">
+          {{#if hasImage}}
+          <div class="dl-image-box">
+            <img src="{{imageUrl}}" alt="{{name}} gösterge lambası görseli" width="120" height="120" loading="lazy">
+          </div>
+          {{/if}}
+          {{#if noImage}}
+          <div class="dl-image-box">
+            <div class="dl-svg-icon {{glowClass}}">{{{iconSvg}}}</div>
+          </div>
+          {{/if}}
+        </div>
+
+        <h3 class="dl-card-name">{{name}}</h3>
+        <p class="dl-card-desc">{{description}}</p>
+        
+        <div class="dl-codes-area">
+          <div class="dl-codes-label">İlgili OBD Kodları</div>
+          <div class="dl-codes-list">
+            {{{exampleCodesHtml}}}
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</section>
+{{/if}}
+
+<div style="height: 80px;"></div>

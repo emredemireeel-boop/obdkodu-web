@@ -3058,48 +3058,52 @@
     "code": "P0101",
     "category": "P",
     "name": "Kütle veya Hacim Hava Akış (MAF) Sensörü Devre Menzil/Performans Sorunu",
-    "severity": "medium",
-    "description": "MAF sensörünün okuduğu giren hava miktarı ile, motor beyninin devir ve manifold basıncına (MAP) dayanarak beklediği hava miktarı arasında ciddi bir uyumsuzluk vardır. Araba çekişten düşer, vites geçişleri sertleşir ve yakıt tüketimi tavan yapar.",
-    "affectedSystem": "Hava Emiş ve Yakıt Enjeksiyonu",
+    "severity": "yüksek",
+    "description": "P0101 kodu, Kütle Hava Akış (MAF) Sensörünün performans aralığının dışında sinyal gönderdiğini gösterir. ECU, motor devri (RPM) ve gaz kelebeği pozisyonuna (TPS) göre motora girmesi gereken hava miktarını teorik olarak bilir. Ancak MAF sensöründen okunan gerçek hava miktarı bu teorik değerlerle tutuşmuyorsa P0101 arıza kodu kaydedilir. MAF sensörü hava filtresinin hemen arkasındadır ve ince telleri vasıtasıyla giren havanın kütlesini ölçer. Teller kirlendiğinde ölçüm bozulur.",
+    "affectedSystem": "Hava ve Yakıt Karışım Sistemi",
     "symptoms": [
-      "Çekiş kaybı",
-      "Güç düşüklüğü",
-      "Motorda performans kaybı"
+      "Motor arıza lambasının yanması",
+      "Ani gaza basmalarda vuruntu, rölantide dalgalanma veya aracın stop etmesi",
+      "Düşük yakıt ekonomisi ve egzozdan siyah duman çıkması",
+      "Motor gücünde belirgin bir azalma ve isteksiz devirlenme"
     ],
     "causes": [
-      "Açık hava filtresi veya kalitesiz filtre kullanımı nedeniyle MAF sensörü telinin yağ/toz kaplaması",
-      "MAF sensörü ile gaz kelebeği arasındaki yırtık hava emiş hortumu (Ölçülmemiş hava kaçağı)",
-      "Tıkanmış bir hava filtresi kapağı veya emiş yolu",
-      "Katalitik konvertör tıkanıklığı nedeniyle motorun yeterince hava emememesi",
-      "Arızalı MAF sensörünün kendisi"
+      "MAF sensörünün içindeki ölçüm tellerinin toz, yağ veya kir ile kaplanması",
+      "Açık hava filtresi (performans filtresi) yağının sensöre kaçarak bozması",
+      "MAF sensörü ile gaz kelebeği arasındaki yırtık bir hava hortumundan (vakum kaçağı) ölçülmemiş hava girmesi",
+      "MAF sensörünün donanımsal olarak bozulması"
     ],
     "solutions": [
-      "Hava emiş hortumunu söküp esneterek yırtık olup olmadığını gözle ve dumanla kontrol edin.",
-      "Özel MAF temizleme spreyi kullanarak sensör içindeki hassas telleri temizleyin.",
-      "Araç çalışırken MAF sensörü kablosunu hafifçe sallayın; motor tekliyorsa kabloda temassızlık vardır.",
-      "Canlı veri cihazıyla tam gaz (WOT) durumunda MAF'ın g/s (gram/saniye) cinsinden motor hacmine uygun okuma yapıp yapmadığını test edin."
+      "MAF sensörüne giden kauçuk/plastik hava hortumlarında yırtık, çatlak veya kelepçe gevşekliği olup olmadığını kontrol edin. Ölçülmemiş hava en büyük nedendir.",
+      "MAF sensörünü söküp, karbüratör spreyi DEĞİL, sadece MAF Sensörü Temizleyici sprey kullanarak tellere dokunmadan temizleyin.",
+      "Hava filtresini kontrol edin, çok kirliyse veya yırtıksa değiştirin.",
+      "Eğer temizlik ve kaçak kontrolü işe yaramazsa, sensörün elektriksel çıkışlarını osiloskop ile test edin ve bozuksa değiştirin."
     ]
   },
   {
     "code": "P0102",
     "category": "P",
     "name": "Kütle Hava Akış (MAF) Sensörü Devresi Düşük Frekans/Voltaj",
-    "severity": "medium",
-    "description": "Motor beyni, motora giren havanın miktarını ölçen MAF sensöründen beklediğinden çok daha DÜŞÜK bir sinyal (voltaj) almaktadır. Genellikle MAF sensörünün tamamen bozulduğu veya fişinin çekildiği durumlarda görülür. Araba rölantide titrer ve gaza basınca boğulur.",
-    "affectedSystem": "Hava Emiş Sistemi",
+    "severity": "yüksek",
+    "description": "P0102 kodu, Kütle Hava Akış (MAF) sensörünün 'A' devresinde çok düşük frekans veya voltaj girişine rastlandığını belirtir. MAF sensörü, motora çok az hava girdiğini ya da sensörün tamamen işlevsiz kaldığını ECU'ya bildiriyordur. ECU 0.4 voltun (veya spesifik bir alt limitin) altında sinyal aldığında bu kodu atar. Araba bu durumda 'Safe Mode' (Koruma Modu) na girebilir veya çok sarsıntılı çalışabilir.",
+    "affectedSystem": "Hava ve Yakıt Karışım Sistemi",
     "symptoms": [
-      "Emisyonlarda ve yakıt tüketiminde ciddi dalgalanmalar",
-      "Limp-home (acil durum) moduna geçiş",
-      "Performansın kilitlenmesi"
+      "Arıza lambası (Check Engine) sürekli yanar",
+      "Aracın marş alması zorlaşır, çalışsa bile hemen stop etme eğilimi gösterir",
+      "Limp Mode (Koruma Modu) sebebiyle araç 3000 devri veya belli bir hızı geçmez",
+      "Aşırı güç kaybı yaşanır"
     ],
     "causes": [
-      "MAF sensörü kablosunda kopukluk veya çıkmış soket",
-      "Aşırı kirli veya arızalı MAF sensörü",
-      "Emme manifoldunda devasa bir vakum kaçağı (Hava MAF'tan değil kaçaktan giriyordur)"
+      "MAF sensörünün tamamen fişten çıkık olması veya kablolarının kopması",
+      "Sensörün iç devresinin kısa devre veya açık devre sonucu yanması",
+      "Hava filtresinin veya hava emiş borusunun bir bez, poşet veya yoğun pislik ile tamamen tıkanması",
+      "Sensör şasi bağlantısının zayıflaması"
     ],
     "solutions": [
-      "MAF sensörü soketinin takılı ve temiz olduğundan emin olun.",
-      "Live Data'da gaz verdikçe MAF değerinin (g/s) artıp artmadığına bakın. Tepki yoksa MAF arızalıdır."
+      "MAF sensörünün fişini çıkarın. Bazı araçlar fiş çekiliyken varsayılan değerleri kullanıp düzelir. Eğer fiş çekildiğinde araç daha iyi çalışıyorsa MAF sensörü kesinlikle bozuktur.",
+      "Hava filtresini söküp emiş borusunun içini kontrol edin, fiziksel bir tıkanıklık (yaprak, poşet) varsa çıkarın.",
+      "Multimetre ile MAF soketinde 12V (veya 5V referans) ve Şasi bağlantısı olduğunu doğrulayın.",
+      "Kablo demetinde kopukluk yoksa MAF sensörünü yenisi ile değiştirin."
     ]
   },
   {
@@ -3306,21 +3310,27 @@
     "code": "P0113",
     "category": "P",
     "name": "Emme Havası Sıcaklık (IAT) Sensörü Devresi Yüksek Voltaj",
-    "severity": "low",
-    "description": "IAT sensörü havayı -40°C olarak ölçmektedir. Yüksek voltaj (5V), termistör devresinin tamamen AÇIK olduğunu (kopukluk) gösterir. ECU, hava çok soğuk sanıp gereksiz yere aşırı yakıt basar (zengin karışım), egzozdan çiğ benzin kokusu gelir.",
-    "affectedSystem": "Hava Emiş Sistemi",
+    "severity": "orta",
+    "description": "P0113 kodu, Emme Havası Sıcaklık (IAT - Intake Air Temperature) Sensörü devresinden ECU'ya çok yüksek bir voltaj girişi olduğunu belirtir. Bu durum genellikle IAT sensörü içindeki termistör devresinin açığa çıkması (kopması) veya kablo soketinin çıkık olmasından kaynaklanır. IAT sensörü, motora giren havanın sıcaklığını ölçer. Hava soğuksa yoğundur ve daha çok yakıt gerekir; hava sıcaksa seyreltiktir ve daha az yakıt gerekir. Bu sensör arızalandığında ECU hava sıcaklığını -40°C olarak varsayar ve motora aşırı zengin yakıt gönderir.",
+    "affectedSystem": "Hava ve Yakıt Karışım Sistemi",
     "symptoms": [
-      "Egzozdan siyah duman atılması",
-      "-40°C algısına bağlı devasa miktarda çiğ yakıt atımı ve boğulma",
-      "Rölanti dengesizlikleri ve teklemeler"
+      "Motor arıza lambasının yanması",
+      "Zengin karışıma bağlı olarak artan yakıt tüketimi",
+      "Motor sıcakken ilk marşta zor çalışma (Zengin karışım nedeniyle boğulma)",
+      "Egzozdan siyah duman atması",
+      "Rölanti dalgalanması"
     ],
     "causes": [
-      "Çıkmış IAT/MAF soketi",
-      "Kopuk IAT kablosu",
-      "İçi kopmuş termistör"
+      "IAT sensörü soketinin çıkmış veya kablosunun kopmuş olması (Devre açıklığı)",
+      "IAT sensörünün iç direncinin tamamen yanması (Sensör arızası)",
+      "Sensör toprak (şasi) veya sinyal hattında kısa devre",
+      "Nadir durumlarda Motor Kontrol Ünitesi (ECU) arızası"
     ],
     "solutions": [
-      "Soketin takılı olduğundan emin olun. Live data üzerinden sıcaklığın -40°C'de sabit kalıp kalmadığını kontrol edin."
+      "Öncelikle IAT sensörünün soketinin yerine tam oturduğundan ve kilitlendiğinden emin olun.",
+      "Sensör soketini çıkarıp multimetre ile referans voltajını (genelde 5V) ve şasi bağlantısını kontrol edin.",
+      "Sensörün direncini Ohmmetre ile ölçün, eğer sonsuz direnç (açık devre) gösteriyorsa sensörü yenisiyle değiştirin.",
+      "Hava filtresi değişiminden sonra genellikle usta sensör soketini takmayı unutur, en çok bu koda sebep olan ihmaldir."
     ]
   },
   {
@@ -3630,24 +3640,26 @@
     "code": "P0128",
     "category": "P",
     "name": "Soğutma Suyu Sıcaklığı Termostat Düzenleme Sıcaklığının Altında",
-    "severity": "medium",
-    "description": "Kış aylarında forumlarda en çok açılan konudur. Motor, belirli bir süre çalışmasına rağmen ECU'nun beklediği optimum çalışma sıcaklığına (genellikle 85-90 derece) ulaşamamıştır. Kaloriferiniz ısıtmaz ve motor sürekli 'soğuk çalıştırma' (zengin karışım) modunda kalarak yakıtı adeta içer.",
+    "severity": "orta",
+    "description": "P0128 arıza kodu, motor soğutma sıvısı sıcaklığının (Coolant Temperature) termostat tarafından belirlenen düzene ulaşmadığını (beklenen sürede ısınmadığını) bildirir. Modern motorların verimli ve düşük emisyonlu çalışabilmesi için yaklaşık 85°C - 95°C sıcaklığa ulaşması gerekir. Termostat, motor suyu ısınana kadar suyu motor içinde hapsederek radyatöre göndermeyen mekanik bir valftir. Termostat açık konumda takılı kalırsa motor suyu sürekli soğur ve motor hiçbir zaman ideal sıcaklığa ulaşamaz.",
     "affectedSystem": "Motor Soğutma Sistemi",
     "symptoms": [
-      "Bujilerin kurum bağlaması",
-      "Katalizörün çiğ yakıtla dolması",
-      "Araç içi kalorifer sisteminin sürekli soğuk üflemesi"
+      "Motor arıza ışığının (MIL) yanması",
+      "Hararet göstergesinin çok yavaş yükselmesi veya uzun yolda sürat yapıldığında çeyrek seviyesine hatta sıfıra kadar düşmesi",
+      "Kaloriferin içeriye sıcak hava yerine ılık veya soğuk hava üflemesi",
+      "Motor soğuk çalıştığı için (Closed Loop rejimine geçemediğinden) yakıt tüketiminin ciddi oranda artması"
     ],
     "causes": [
-      "Açık konumda sıkışmış (bozulmuş) motor termostatı (En yaygın neden)",
-      "Yanlış dereceye sahip (örneğin 90 derece yerine 70 derecelik) termostat takılması",
-      "Soğutma suyu sıcaklık (ECT) sensörünün yanlış (düşük) değer okuması",
-      "Motor soğutma fanının sürekli çalışmasına neden olan kısa devre veya arızalı fan rölesi"
+      "Soğutma sıvısı termostatının açık pozisyonda (veya erken açacak şekilde) bozulması (En yaygın sebep)",
+      "Motor Soğutma Sıvısı Sıcaklık (ECT) sensörünün yanlış, düşük değer ölçmesi",
+      "Soğutma fanının sürekli, yüksek devirde aralıksız çalışması",
+      "Radyatör suyunun bitmesi (nadiren de olsa bu kodu tetikleyebilir)"
     ],
     "solutions": [
-      "Motor tamamen soğukken çalıştırın ve radyatöre giden üst hortuma dokunun; motor ısınmadan hortum anında ısınıyorsa termostat açık kalmıştır, değiştirin.",
-      "Live data üzerinden ECT sensörünün gösterdiği derece ile motor bloğunun sıcaklığını lazer termometre ile karşılaştırın.",
-      "Antifriz seviyesini ve radyatör fanının araç soğukken dönüp dönmediğini kontrol edin."
+      "Termostat muhtemelen açık kalmıştır. Çözüm %90 oranında termostatın yenilenmesidir.",
+      "Termostat değiştirmeden önce, OBD cihazı veya canlı veri okuyucu ile motor sıcaklığını (ECT) izleyin. Cihazda gösterilen sıcaklık ile göstergedeki tutmuyorsa sorun ECT sensöründedir.",
+      "Araç fanının motor soğukken bile çalışıp çalışmadığını kontrol edin; rölesi takılı kaldıysa motor ısınamaz.",
+      "Termostat değişimi sırasında antifriz yenilemesi de yapılması önerilir."
     ]
   },
   {
@@ -3773,21 +3785,25 @@
     "category": "P",
     "name": "O2 Sensörü Isıtıcı Devresi Bank 1, Sensör 1",
     "severity": "orta",
-    "description": "Katalitik konvertörden önce bulunan birincil oksijen sensörünün iç ısıtma devresindeki arızadır. Sensörün 315°C operasyonel sıcaklığa ulaşması geciktiğinden PCM kapalı döngüye girmekte zorlanır.",
-    "affectedSystem": "Egzoz Emisyon Sistemleri",
+    "description": "P0135 arıza kodu, motorun 1. sıra (Bank 1) 1. sensör (Sensör 1) konumundaki Oksijen (O2) sensörünün ısıtıcı devresinde arıza olduğunu gösterir. Oksijen sensörlerinin doğru ölçüm yapabilmesi için yaklaşık 300°C ile 400°C arası bir sıcaklığa ulaşması gerekir. Modern sensörler, egzoz gazının ısınmasını beklememek için içlerinde kendi ısıtıcı rezistanslarını taşırlar. ECU bu ısıtıcı devreye giden akımda bir sorun (açık devre, kısa devre veya yüksek direnç) saptarsa P0135 kodunu tetikler. Bu arıza motor ısındıktan sonra performansı pek etkilemez ancak soğuk motor emisyonlarını bozar.",
+    "affectedSystem": "Egzoz ve Emisyon Sistemi",
     "symptoms": [
-      "Soğuk çalıştırma emisyonlarında artış",
-      "Kapalı döngüye geçişin gecikmesi",
-      "Yakıt israfı"
+      "Motor arıza lambasının yanması",
+      "Soğuk motor ilk çalıştırıldığında (motor tam ısınana kadar) rölantide düzensizlik veya zengin karışım belirtileri",
+      "Yakıt tüketiminde çok ufak miktarda artış",
+      "Emisyon muayenesinden geçememe"
     ],
     "causes": [
-      "Sensör içindeki ısıtıcı rezistansın açık devre olması",
-      "Isıtıcı devresinin kısa devre yapması"
+      "Oksijen sensörü içindeki ısıtıcı elemanın (rezistans) kopması veya yanması",
+      "Oksijen sensörüne giden kablolarda (özellikle egzoz sıcağından dolayı) erime veya kopukluk",
+      "O2 ısıtıcı devresine ait sigortanın atması veya ısıtıcı rölesinin bozulması",
+      "Sensör soketine su/nem girmesi sonucu oksitlenme"
     ],
     "solutions": [
-      "Isıtıcı devresi voltaj ve direnç ölçümü",
-      "Sensör soket ve bağlantılarının kontrolü",
-      "Hasarlı oksijen sensörünün değiştirilmesi"
+      "O2 sensörünün fişini çekin ve multimetre ile sensör tarafındaki iki aynı renkli kablo (genelde iki beyaz veya iki siyah) arasındaki direnci ölçün. Sonsuz (açık devre) ise sensör değişmelidir.",
+      "Aracın O2 ısıtıcı sigortasını kontrol edin, atmışsa tesisatta kısa devre arayın.",
+      "Kablo demetinin egzoz borusuna temas edip erimediğini fiziksel olarak kontrol edin.",
+      "Arızalı olduğu teyit edilen birinci oksijen sensörünü yenileyin."
     ]
   },
   {
@@ -3893,20 +3909,24 @@
     "code": "P0141",
     "category": "P",
     "name": "O2 Sensör Isıtıcı Devre Arızası (Bank1 Sensör2)",
-    "severity": "orta",
-    "description": "O2 Sensör Isıtıcı Devre Arızası (Bank1 Sensör2)",
-    "affectedSystem": "O2/Lambda",
+    "severity": "düşük",
+    "description": "P0141 arıza kodu, 1. sıra (Bank 1) 2. sensör (Sensör 2) pozisyonundaki, yani katalitik konvertörden *sonraki* Oksijen (O2) sensörünün ısıtıcı devresi arızasını temsil eder. P0135 kodunun katalizör arkasındaki versiyonudur. İkinci sensörün birincil amacı motor karışımını ayarlamak değil, katalitik konvertörün verimliliğini izlemektir. Bu sensörün ısıtıcısı bozulursa, sensör çalışma sıcaklığına geç ulaşır ve bu süre zarfında ECU katalizör performansını test edemez.",
+    "affectedSystem": "Egzoz ve Emisyon Sistemi",
     "symptoms": [
-      "Arıza lambası (MIL) yanar"
+      "Sadece Motor arıza lambasının yanması",
+      "Sürüş performansında, çekişte veya rölantide hiçbir değişiklik olmaması",
+      "Araç emisyon (egzoz) muayenesinden sistem hazır olmadığı için geçememe"
     ],
     "causes": [
-      "sigorta",
-      "program",
-      "Sensör",
-      "ME"
+      "Sensör 2 içindeki ısıtıcı rezistansının ömrünü doldurup kopması",
+      "Aracın altındaki sensöre giden kabloların taş sekmesi, su girmesi veya kasis sürtmesi sonucu kopması/hasar görmesi",
+      "Isıtıcı devresi sigortasının (genellikle Heater Fuse) atması"
     ],
     "solutions": [
-      "ECU arıza kaydını silip yol testiyle doğrulama"
+      "Katalizörün arkasında yer alan O2 sensörünün kablolarını aracın altına girerek görsel olarak inceleyin.",
+      "Sensör soketindeki ısıtıcı uçlarının direncini ölçün (Genellikle 3 ile 30 Ohm arası çıkmalıdır). Direnç okunmuyorsa sensör değiştirilmelidir.",
+      "Eğer direnç sağlamsa, ECU'dan gelen 12V ısıtıcı voltajının gelip gelmediğini kontrol edin.",
+      "Uygun, orijinal ekipman bir O2 sensörü takarak arıza kodunu silin."
     ]
   },
   {
@@ -4488,22 +4508,28 @@
     "category": "P",
     "name": "Sistem Çok Fakir - Bank 1",
     "severity": "yüksek",
-    "description": "Birinci silindir sırasındaki (Bank 1) hava-yakıt karışımının, motorun telafi edemeyeceği kadar fazla hava veya yetersiz yakıt içerdiğini (stokiometrik 14.7:1 oranının bozulduğunu) gösterir. PCM, STFT ve LTFT değerlerini pozitif yönde %15-%20 artırarak silindirlere ekstra yakıt pompalamaya çalışır.",
-    "affectedSystem": "Yakıt ve Hava Karışımı",
+    "description": "P0171 kodu, motorun 'Sıra 1' (Bank 1) tarafında hava/yakıt karışımının çok fakir (System Too Lean) olduğunu belirtir. Bu, motora giren havanın çok fazla veya motora enjekte edilen yakıtın çok az olduğu anlamına gelir. İdeal hava yakıt karışımı (stokiyometrik oran) 14.7:1'dir. ECU bu dengeyi sağlamak için yakıt miktarını artırmaya çalışır (Long Term Fuel Trim artar). Eğer ECU yakıtı maksimum seviyeye kadar artırmasına rağmen hala yeterli zenginliğe ulaşamazsa P0171 kodunu yakar. Bu durum genellikle vakum kaçakları, tıkalı enjektörler veya arızalı MAF sensöründen kaynaklanır.",
+    "affectedSystem": "Hava ve Yakıt Karışım Sistemi",
     "symptoms": [
-      "LTFT (Uzun Vadeli Yakıt Kesme) değerlerinde %15 üzerinde pozitif artış",
-      "Performans ve çekiş düşüklüğü",
-      "Dalgalı rölanti"
+      "Motor arıza lambasının (MIL) yanması",
+      "Rölantide titreme, dalgalanma veya motorun stop etmesi",
+      "Araç hızlanırken tekleme veya güç kaybı yaşanması",
+      "Motorun ilk çalıştırılmasında (soğuk marş) zorlanma",
+      "Fakir karışımdan dolayı yanma odasının aşırı ısınması ve supap vuruntusu"
     ],
     "causes": [
-      "Emme manifoldu veya vakum hortumlarındaki çatlaklardan sisteme giren ölçülmemiş hava",
-      "Kirlenmiş bir Kütle Hava Akış (MAF) sensörü",
-      "Gerekli yakıt basıncını sağlayamayan arızalı yakıt pompası"
+      "Emme manifoldunda, vakum hortumlarında veya PCV valfinde hava kaçağı (Vakum kaçağı)",
+      "Kirlenmiş veya arızalanmış Kütle Hava Akış (MAF) sensörü",
+      "Tıkanmış yakıt filtresi veya zayıf yakıt pompası nedeniyle düşük yakıt basıncı",
+      "Kirli veya tıkanmış yakıt enjektörleri",
+      "Egzost manifoldu veya O2 sensörü çevresinde egzoz kaçağı"
     ],
     "solutions": [
-      "Duman testi (smoke test) ile sistemdeki gizli vakum kaçaklarının görselleştirilmesi ve onarımı",
-      "MAF sensörünün saniye başına gram (g/s) verilerinin anlık olarak izlenmesi ve sensörün temizlenmesi/değişimi",
-      "Yakıt basınç testi yapılarak pompanın kontrolü"
+      "Duman testi (smoke test) yaparak motordaki vakum kaçaklarını tespit edin ve onarın.",
+      "MAF sensörünü özel MAF temizleyici sprey ile dikkatlice temizleyin.",
+      "Yakıt basıncını bir manometre ile ölçerek yakıt pompasının durumunu kontrol edin.",
+      "Eğer LPG takılı ise, LPG ayarlarının (haritasının) bozuk olması bu koda sebep olabilir; LPG ayarını yenileyin.",
+      "Ön Oksijen (O2) sensörünün doğru okuma yapıp yapmadığını osiloskop veya OBD cihazı ile test edin."
     ]
   },
   {
@@ -4555,26 +4581,28 @@
     "code": "P0174",
     "category": "P",
     "name": "Sistem Çok Fakir (Bank 2)",
-    "severity": "medium",
-    "description": "Motorun Bank 2 tarafına (V6 veya V8 motorlarda) giren havanın yakıta oranla çok fazla olduğunu gösterir. ECU, yakıt enjeksiyonunu %25'e kadar artırmasına rağmen (Long Term Fuel Trim) hava-yakıt dengesini sağlayamamıştır. Rölantide dalgalanma ve stop etme şikayetlerinin baş aktörüdür.",
-    "affectedSystem": "Yakıt ve Hava Karışım Sistemi",
+    "severity": "yüksek",
+    "description": "P0174 kodu, P0171 kodunun kardeşi olup 'Sıra 2' (Bank 2) tarafında sistemin çok fakir (System Too Lean) olduğunu belirtir. Bu kod genellikle V6 veya V8 motorlarda karşımıza çıkar. ECU, Sıra 2 egzozundan gelen Oksijen sensörü verisine dayanarak karışımın aşırı hava barındırdığını veya yeterli yakıt içermediğini tespit eder. Bu durum motor sıcaklığının artmasına, piston ve supap erimelerine yol açabileceğinden dikkate alınması gereken ciddi bir koddur.",
+    "affectedSystem": "Hava ve Yakıt Karışım Sistemi",
     "symptoms": [
-      "Sistemde yüksek hava/düşük yakıt durumu",
-      "Motor güç kaybı",
-      "Rölantide dalgalanma"
+      "Motor arıza ışığının yanması",
+      "Motorun sarsıntılı çalışması ve tekleme yapması",
+      "Ani gaza basışlarda aracın boğulması ve ivmelenmeme",
+      "Egzozdan çiğ yakıt kokusu gelmemesi, aksine aracın aşırı ısınma eğilimi göstermesi",
+      "Rölanti devrinin sürekli inip çıkması (dalgalanma)"
     ],
     "causes": [
-      "Bank 2 tarafındaki emme manifoldu contası sızıntısı",
-      "Vakum hortumlarında çatlak veya kopukluk",
-      "Kirlenmiş veya arızalı MAF (Kütle Hava Akış) sensörü (Genellikle P0171 ile birlikte görülür)",
-      "Zayıf yakıt pompası basıncı veya tıkalı yakıt filtresi",
-      "Bank 2 tarafında tıkanmış veya kirlenmiş yakıt enjektörleri"
+      "Sıra 2 tarafındaki emme manifold contası kaçağı veya vakum hortumu yırtığı",
+      "Arızalı veya kirlenmiş Kütle Hava Akış (MAF) sensörü (bu durumda genellikle P0171 ile birlikte görülür)",
+      "Zayıf yakıt pompası veya tıkalı yakıt filtresi",
+      "Sıra 2 tarafındaki yakıt enjektörlerinde tıkanıklık veya arıza",
+      "Egzozda veya ön Oksijen sensörü (Sıra 2 Sensör 1) bağlantısında hava kaçağı"
     ],
     "solutions": [
-      "Duman testi (Smoke Test) hayat kurtarır; emme manifoldu ve vakum hatlarındaki kaçakları anında gösterir.",
-      "MAF sensörünü özel MAF temizleyici sprey (balata spreyi KULLANMAYIN) ile temizleyin.",
-      "Yakıt ray basıncını manometre ile ölçerek yakıt pompasının sağlığını kontrol edin.",
-      "Canlı veride LTFT (Uzun Dönem Yakıt Kesme) değerlerini inceleyip kaçağın büyüklüğünü analiz edin."
+      "Eğer P0171 ve P0174 kodları birlikte alınıyorsa sorun geneldir (MAF sensörü veya Yakıt pompası gibi). İlk olarak MAF sensörünü temizleyin.",
+      "Sadece P0174 kodu varsa sorun Sıra 2'ye özeldir. Sıra 2 tarafındaki manifold contalarına balata spreyi sıkarak motor devrinde değişme olup olmadığını (vakum kaçağı) test edin.",
+      "Yakıt basıncını ölçün.",
+      "Araç lpg'li ise lpg enjektörlerinin Sıra 2 tarafındaki bağlantılarını ve gaz ayarını kontrol ettirin."
     ]
   },
   {
@@ -7122,104 +7150,134 @@
     "category": "P",
     "name": "Rastgele/Çoklu Silindir Teklemesi Tespit Edildi",
     "severity": "yüksek",
-    "description": "Yanma reaksiyonlarının birçok silindirde asimetrik gerçekleştiğini gösteren jenerik koddur. Krank mili pozisyon sensörü ivme düşüşlerini saptar. Semptomlar tek bir silindire izole değildir.",
-    "affectedSystem": "Ateşleme Senkronizasyonu",
+    "description": "P0300 kodu, motorun farklı silindirlerinde rastgele veya çoklu tekleme (Random/Multiple Cylinder Misfire) algılandığını gösterir. Normalde tekleme tek bir silindirde olduğunda P0301, P0302 gibi spesifik kodlar verilir. Ancak P0300 varsa, sorun motordaki genel bir sistemi (yakıt basıncı, genel vakum kaçağı, kötü yakıt, tıkalı katalizör veya eksantrik/krank sensörü arızası) işaret eder. Tekleme, silindir içerisindeki hava/yakıt karışımının doğru zamanda tutuşmamasından kaynaklanır. Zamanında müdahale edilmezse yanmamış yakıt doğrudan egzoza atılır ve katalitik konvertörü eriterek çok yüksek masraflara yol açabilir.",
+    "affectedSystem": "Ateşleme Sistemi",
     "symptoms": [
-      "Yanıp sönen arıza lambası (flashing CEL)",
-      "Çiğ benzinin egzoza dökülmesi ve katalizör tahribatı",
-      "Sarsıntılı çalışma"
+      "Motor arıza lambasının yanması (Eğer tekleme şiddetliyse arıza lambası yanıp söner / flaş yapar)",
+      "Motorda şiddetli sarsıntı ve titreme (Özellikle rölantide)",
+      "Hızlanma sırasında silkelenme, güç kaybı ve gaz yememe",
+      "Egzozdan patlama (backfire) sesi gelmesi veya çiğ yakıt kokusu",
+      "Araç çalışmasında zorlanma veya stop etme"
     ],
     "causes": [
-      "Zayıf basınçlı bir yakıt pompası",
-      "Büyük çaplı vakum kaçakları",
-      "Düşük oktanlı, su karışmış kalitesiz yakıt",
-      "Kirlenmiş yakıt enjektörleri"
+      "Bozuk, kirli veya yanlış aralıklı bujiler",
+      "Zayıf ateşleme bobinleri veya kopuk buji kabloları",
+      "Düşük yakıt basıncı (Arızalı yakıt pompası veya tıkalı yakıt filtresi)",
+      "Büyük vakum kaçakları veya EGR valfinin açık kalması",
+      "Kötü veya sulu yakıt alınması"
     ],
     "solutions": [
-      "Yakıt basıncının ölçülmesi",
-      "Kapsamlı vakum kaçağı araması",
-      "Yakıt kalitesinin kontrolü ve kirli enjektörlerin temizlenmesi/değişimi"
+      "Motor arıza lambası yanıp sönüyorsa, aracı güvenli bir şekilde kenara çekip stop edin; aksi halde katalizör eriyebilir.",
+      "Buji ve ateşleme bobinlerinin durumunu kontrol edin; çatlak veya karbon izi varsa değiştirin.",
+      "Araçta LPG varsa, LPG enjektörlerini devre dışı bırakarak benzinde test edin.",
+      "Yakıt basıncını ölçün ve düşükse yakıt filtresi ile pompayı değiştirin.",
+      "EGR sisteminin sıkışıp sıkışmadığını ve manifoldda kaçak olup olmadığını duman testi ile doğrulayın."
     ]
   },
   {
     "code": "P0301",
     "category": "P",
     "name": "1. Silindirde Tekleme Tespit Edildi",
-    "severity": "high",
-    "description": "P0300'ün (Rastgele Tekleme) spesifik halidir, ancak 'Rabbit Hole' (Tavşan Deliği) olarak bilinir. Motor beyni, krank milinin dönüş hızındaki anlık yavaşlamaları izleyerek tam 1 numaralı silindirin patlama (güç) üretemediğini tespit etmiştir. Çözümü bazen 5 liralık bir buji, bazen ise 50 bin liralık bir motor rektifiyesi gerektirir.",
-    "affectedSystem": "Ateşleme, Yakıt veya Mekanik",
+    "severity": "yüksek",
+    "description": "P0301 arıza kodu, motorun 1 numaralı silindirinde tekleme (misfire) algılandığını gösterir. ECU, krank mili konum sensöründen aldığı verilerle pistonların dönüş hızını hesaplar. 1 numaralı silindir ateşleme anında beklenen krank mili ivmelenmesini sağlayamazsa bu kod üretilir. Tekleme, silindirde yakıtın yanmaması anlamına gelir. Yanmayan çiğ yakıt doğrudan egzoza gönderilir ve kısa sürede katalitik konvertörün erimesine yol açabilir. 1 numaralı silindir genellikle motorun triger kayışı/zinciri tarafındaki ilk silindirdir.",
+    "affectedSystem": "Ateşleme Sistemi",
     "symptoms": [
-      "Motorda sarsıntı",
-      "Silindir bazlı vuruntu ve güç kaybı"
+      "Motor arıza lambasının yanıp sönmesi (Flaş yapması, katalizör hasarı tehlikesi)",
+      "Araçta belirgin bir çekiş düşüklüğü ve güç kaybı",
+      "Rölantide beklerken motorun beşik gibi sallanması",
+      "Egzoz sesinde patırtı veya ritim bozukluğu duyulması",
+      "Yakıt tüketiminde aşırı artış"
     ],
     "causes": [
-      "Aşınmış buji, arızalı ateşleme bobini veya buji kablosu",
-      "1. silindirin yakıt enjektörünün tıkanması veya bozulması",
-      "Emme manifoldunun sadece 1. silindire giden kanalında vakum kaçağı",
-      "Yanmış supap, aşınmış eksantrik mili veya kırık sekman nedeniyle düşük kompresyon"
+      "1. Silindirdeki bujinin ömrünü tamamlaması, yağlanması veya kırılması",
+      "1. Silindirdeki ateşleme bobininin zayıflaması veya tamamen bozulması",
+      "1. Silindire giden buji kablosunda kopukluk veya elektrik atlaması (şelale yapması)",
+      "1. Silindir yakıt enjektörünün tıkanması veya arızalanması",
+      "1. Silindirde düşük kompresyon (Supap yanması, segman kırılması veya kapak contası hasarı)"
     ],
     "solutions": [
-      "EN BASİT TEST: 1. silindirin ateşleme bobinini 2. silindirin bobini ile yer değiştirin. Kod P0302'ye kayarsa sorun kesinlikle bobindir.",
-      "Aynı yer değiştirme işlemini bujiler ve enjektörler için sırasıyla uygulayarak arızalı parçayı izole edin.",
-      "Yukarıdaki adımlar işe yaramazsa 1. silindire kompresyon (basınç) ve sızıntı (leak down) testi uygulayarak supap/piston durumunu kontrol edin."
+      "Öncelikle 1. silindirin ateşleme bobinini veya buji kablosunu söküp 2. silindir ile yer değiştirin. Arıza kodu P0302'ye kayarsa sorun bobin/kablodur.",
+      "Bujileri söküp durumunu kontrol edin, elektrot erimesi veya karbon birikimi varsa set olarak değiştirin.",
+      "Ateşleme sistemi sağlamsa 1. silindir enjektörünü test edin.",
+      "Buji ve enjektör sağlamsa kompresyon testi (basınç testi) yaparak motor içi mekanik hasar olup olmadığını kontrol edin."
     ]
   },
   {
     "code": "P0302",
     "category": "P",
     "name": "2. Silindirde Tekleme Tespit Edildi",
-    "severity": "high",
-    "description": "Krank sensörünün verisine göre 2. silindir ateşleme sırası geldiğinde motora beklenen itici gücü veremiyor. P0301 (1. silindir) ile aynı teşhis adımları geçerlidir.",
-    "affectedSystem": "Ateşleme ve Mekanik",
+    "severity": "yüksek",
+    "description": "P0302 arıza kodu, motorun 2 numaralı silindirinde tekleme (misfire) algılandığı anlamına gelir. Tıpkı P0301 gibi, bu silindirdeki hava-yakıt karışımı ya hiç ateşlenmiyor ya da eksik ateşleniyordur. Bu durum aracın performansını anında hissettirecek şekilde düşürür. Sorunun kaynağı genellikle ateşleme elemanlarıdır (buji, bobin), ancak yakıt sistemi (enjektör) veya mekanik kompresyon kayıpları da bu koda neden olabilir.",
+    "affectedSystem": "Ateşleme Sistemi",
     "symptoms": [
-      "Arıza lambası (MIL) yanar"
+      "Check Engine (Motor Arıza) ışığının yanması veya yanıp sönmesi",
+      "Motorda gözle görülür titreme ve rölanti dalgalanması",
+      "Hızlanma taleplerinde aracın tepkisiz kalması",
+      "Araçta sarsıntılı ve konforsuz sürüş",
+      "Egzozda sülfür/benzin kokusu"
     ],
     "causes": [
-      "Bozuk ateşleme bobini",
-      "Aşınmış buji",
-      "Tıkalı enjektör",
-      "Kompresyon kaybı"
+      "2. silindir bujisinin veya ateşleme bobininin arızalı olması",
+      "2. silindir enjektörünün yakıt püskürtmemesi",
+      "Emme manifoldunun sadece 2. silindire yakın kısmında oluşan bir vakum kaçağı",
+      "Mekanik sorunlar (Subap ayarı bozukluğu, yanık subap, erimiş piston veya düşük kompresyon)"
     ],
     "solutions": [
-      "2. silindirin bobinini 3. silindirle yer değiştirin. Arıza P0303'e kayarsa sorun bobindir."
+      "Yer değiştirme taktiğini kullanın: 2. silindirin bobinini 1. silindir ile, bujisini ise 3. silindir ile değiştirip arıza kodunu silin. Arıza P0301 veya P0303 olarak değişirse arızalı parçayı bulmuşsunuzdur.",
+      "Kabloları gözden geçirin, bobin soketine gelen tetikleme sinyalini test lambasıyla kontrol edin.",
+      "Eğer araç LPG'li ise LPG enjektörü arızalanmış olabilir, aracı benzine alarak test edin.",
+      "Gerekirse motor kompresyon testi yapın."
     ]
   },
   {
     "code": "P0303",
     "category": "P",
     "name": "3. Silindirde Tekleme Tespit Edildi",
-    "severity": "high",
-    "description": "3. silindirde ateşleme veya yakıt problemi. Motor rölantide 'pat-pat' sesi çıkararak sarsıntılı çalışır ve gaz yemez. V6 motorlarda emme manifoldunun altında kalan (erişimi zor) arka banka denk geliyorsa işçiliği çok zordur.",
-    "affectedSystem": "Ateşleme ve Mekanik",
+    "severity": "yüksek",
+    "description": "P0303 arıza kodu, 3 numaralı silindirde ardışık tekleme (misfire) yaşandığını belirtir. Araç beyni krank dönme hızındaki anlık yavaşlamaları sezinleyerek teklemenin hangi silindirden kaynaklandığını tespit eder. Tekleyen bir silindir güç üretmez, aksine diğer silindirlerin ürettiği gücü yutarak motoru frenler. Katalitik konvertörün yanmaması için bu koda acilen müdahale edilmesi hayati önem taşır.",
+    "affectedSystem": "Ateşleme Sistemi",
     "symptoms": [
-      "Arıza lambası (MIL) yanar"
+      "Motor arıza lambasının yanıp sönmesi (Tehlike işareti)",
+      "Özellikle düşük devirlerde ve rölantide aşırı titreme",
+      "Hızlanma esnasında aracın kesiklik yapması (sirkeleme)",
+      "Zengin karışıma bağlı olarak artan emisyon ve yakıt tüketimi"
     ],
     "causes": [
-      "Buji yağlanması veya su/antifriz girmesi (conta kaçağı)",
-      "Bobin arızası",
-      "Kırık sekman veya yanık supap"
+      "3. silindir ateşleme bobini, bujisi veya buji kablosu arızası",
+      "3. silindire giden yakıt enjektöründe tıkanma veya elektriksel devre açıklığı",
+      "Sadece 3. silindiri etkileyen bir manifold kaçağı",
+      "Silindir kapağı contası yanığı veya supap deformasyonu"
     ],
     "solutions": [
-      "Bujiyi söküp ucuna bakın; ucunda yağ varsa külbütör kapak contası sızdırıp buji yuvasını yağla doldurmuş olabilir (Kısa devre yaptırır)."
+      "Klasik teşhis yöntemi: 3. silindirin bobin ve bujisini çalışan bir silindirinkiyle yer değiştirip arızanın yer değiştirip değiştirmediğini gözlemleyin.",
+      "Ateşleme sağlamsa, enjektör soketini dinleyin veya osiloskop ile sinyali kontrol edin.",
+      "Kompresyon ve silindir kaçak testi (Leak-down test) uygulayarak supap sızdırmazlığını ölçün."
     ]
   },
   {
     "code": "P0304",
     "category": "P",
     "name": "4. Silindirde Tekleme Tespit Edildi",
-    "severity": "high",
-    "description": "Sıralı 4 silindirli bir motorda genellikle şanzımana en yakın olan silindirdir. Tekleme lambasının (MIL) yanıp sönmesine (flaş yapmasına) neden oluyorsa, katalizörünüz an itibariyle çiğ benzin yüzünden eriyor demektir; ARACI KESİNLİKLE DURDURUN.",
-    "affectedSystem": "Ateşleme ve Mekanik",
+    "severity": "yüksek",
+    "description": "P0304 arıza kodu, 4 numaralı silindirde yanma olayı gerçekleşmediğini (tekleme) bildirir. 4 silindirli motorlarda bu genellikle şanzımana en yakın olan en son silindirdir. Buji çakmıyor olabilir, enjektör işemiyor olabilir veya o silindirde hiç basınç olmayabilir. Hangi sebeple olursa olsun yanma gerçekleşmez ve motor 3 silindirli bir araç gibi oldukça dengesiz ve sarsıntılı çalışır.",
+    "affectedSystem": "Ateşleme Sistemi",
     "symptoms": [
-      "Arıza lambası (MIL) yanar"
+      "Motor kontrol ışığının aralıklı yanıp sönmesi veya sürekli yanması",
+      "Çok belirgin güç eksikliği (araba gitmez, yokuş çıkamaz)",
+      "Motor rölantisinin çok dalgalı ve sarsıntılı olması",
+      "Egzozdan patlama benzeri (Misfire) seslerin duyulması"
     ],
     "causes": [
-      "Ateşleme bobini ölümü",
-      "Buji tırnak aralığının (gap) kapanması",
-      "Enjektör sürücü devresi arızası"
+      "4 numaralı buji veya bobinin arızalanması (En yaygın neden)",
+      "4 numaralı enjektörün kirlenmesi, tıkanması veya soketinin çıkması",
+      "Emme manifold contası kaçağı",
+      "Düşük silindir kompresyonu (Eksantrik profili aşınması, subap yanması vb.)"
     ],
     "solutions": [
-      "Motor lambası YANIP SÖNÜYORSA (flashing), aracı asla sürmeyin. Çekici çağırın, aksi takdirde pahalı katalitik konvertörünüz kelimenin tam anlamıyla lav gibi eriyecektir."
+      "4. silindir ateşleme bileşenlerini sökerek fiziki durumlarını (yağlanma, kırık seramik, karbon izi) kontrol edin.",
+      "Arızalı olduğundan şüphelenilen bileşeni başka bir silindirdeki sağlam bileşenle yer değiştirerek kodun değişip değişmediğini izleyin.",
+      "Bobin tesisatını ve ECU tetikleme sinyallerini kontrol edin.",
+      "Kompresyon saati ile 4. silindirin basıncını ölçün, diğerleriyle karşılaştırın."
     ]
   },
   {
@@ -7919,19 +7977,27 @@
     "code": "P0340",
     "category": "P",
     "name": "Eksantrik Mili Pozisyon Sensörü 'A' Devre Arızası (Bank 1)",
-    "severity": "medium",
-    "description": "Eksantrik sensörü, yakıt enjeksiyonunun ve silindir tanımalarının doğru yapılabilmesi için krank sensörünün tamamlayıcısıdır. Krank verisi var ama eksantrik verisi yoksa, motor uzun marş (uzun süre marş basıldıktan sonra zar zor çalışma) yapar.",
-    "affectedSystem": "Motor Zamanlama",
+    "severity": "yüksek",
+    "description": "P0340 kodu, Eksantrik Mili Konum Sensörü (Camshaft Position Sensor - CMP) 'A' devresinde bir arıza olduğunu gösterir. Bu sensör, eksantrik milinin dönüş hızını ve konumunu ECU'ya bildirerek, ECU'nun yakıt enjeksiyonunu ve ateşleme zamanlamasını (senkronizasyon) tam mili miline ayarlamasını sağlar. Bu sensörden sinyal alınamazsa, ECU ateşleme yapacağı zamanı bilemez ve araç ya hiç çalışmaz ya da çok zor marş alır.",
+    "affectedSystem": "Ateşleme ve Zamanlama Sistemi",
     "symptoms": [
-      "Arıza lambası (MIL) yanar"
+      "Motor arıza lambası yanar",
+      "Motorun marş basmasına rağmen çalışmaması (No start)",
+      "Uzun marş süresi (Araç ancak 5-10 saniye marş yaptıktan sonra çalışır)",
+      "Seyir halindeyken motorun aniden stop etmesi ve tekrar zor çalışması",
+      "Düzensiz rölanti, gaz yememe ve güç kaybı"
     ],
     "causes": [
-      "Kopuk eksantrik sensörü (CMP)",
-      "Kötü kablo bağlantısı",
-      "Triger kayışı koptuysa (krank dönüyor ama eksantrik dönmüyorsa)"
+      "Eksantrik sensörünün tamamen arızalanması (ısıya bağlı iç devre kopması sık görülür)",
+      "Sensör soketinde oksitlenme veya tesisatta kısa/açık devre",
+      "Triger kayışının/zincirinin sente atlaması veya gevşemesi (Zamanlama hatası)",
+      "Zayıf akü voltajı veya marş motoru parazitleri"
     ],
     "solutions": [
-      "Eksantrik sensörünün kablosunu multimetre ile kontrol edin. Ayrıca triger kayışınızın sağlam olup olmadığını yağ kapağından bakarak teyit edin."
+      "Sensörün elektrik bağlantısını, sokette yağ sızıntısı olup olmadığını kontrol edin ve balata spreyi ile temizleyin.",
+      "Sensörü söküp ucunda metal talaşı birikip birikmediğine bakın (manyetik olduğu için talaş toplar ve okumayı bozar).",
+      "Sensörün arızalı olup olmadığını ölçü aleti (veya daha iyisi osiloskop) ile test edin, bozuksa orjinal parça ile değiştirin.",
+      "Sensör değişmesine rağmen hata devam ediyorsa, triger kayışı/zinciri zamanlamasını (sente) kontrol ettirin."
     ]
   },
   {
@@ -8989,22 +9055,26 @@
     "code": "P0401",
     "category": "P",
     "name": "Egzoz Gazı Devridaimi (EGR) Akışı Yetersiz",
-    "severity": "medium",
-    "description": "Emisyonları düşürmek için yanma odasına geri gönderilmesi gereken egzoz gazı miktarının çok az olduğu tespit edildi. Özellikle dizel ve eski benzinli araçlarda EGR valfinin veya manifold kanallarının kurumla tamamen tıkanması (taşlaşması) sonucu ortaya çıkar.",
-    "affectedSystem": "EGR (Egzoz Gazı Geri Çevrimi)",
+    "severity": "orta",
+    "description": "P0401 arıza kodu, Egzoz Gazı Geri Çevrim (EGR - Exhaust Gas Recirculation) sisteminde yetersiz akış algılandığını gösterir. EGR sistemi, azot oksit (NOx) emisyonlarını düşürmek için yanma odası sıcaklığını düşürmek amacıyla bir miktar egzoz gazını tekrar emme manifolduna gönderir. P0401 kodu, ECU'nun EGR valfini açmasına rağmen manifolda beklenen miktarda egzoz gazının gelmediğini (akışın yetersiz olduğunu) saptaması anlamına gelir. Bu genellikle kurum ve karbon birikintilerine bağlı mekanik tıkanıklıklardan oluşur.",
+    "affectedSystem": "Egzoz ve Emisyon Sistemi",
     "symptoms": [
-      "Yanma odası sıcaklıklarının kontrolsüzce artması",
-      "Vuruntu (detonation) denilen yıkıcı motor patlamaları",
-      "Çekiş kaybı"
+      "Motor arıza lambasının (MIL) yanması",
+      "Hızlanma esnasında hafif vuruntu veya şakırtı sesi (Pinging/Detonation)",
+      "Motor performansında veya yakıt tüketiminde çok ufak bir düşüş (genelde sürücü hissetmeyebilir)",
+      "Araç emisyon değerlerinin, özellikle NOx oranının yasal sınırları aşması"
     ],
     "causes": [
-      "Kurum (karbon) birikimi ile tamamen tıkanmış EGR kanalları",
-      "Açılmayan (sıkışmış) EGR valfi",
-      "Yırtık EGR vakum hortumu",
-      "Arızalı EGR basınç sensörü (DPFE)"
+      "EGR valfinin veya EGR borularının karbon/kurum ile tamamen tıkanması",
+      "EGR valfinin sıkışması ve açılmaması",
+      "EGR valfini kontrol eden vakum selenoidinin (veya vakum hortumlarının) arızalanması/kopması",
+      "DPFE (Fark Basınç) sensörünün bozulması veya tıkanması"
     ],
     "solutions": [
-      "EGR valfini yerinden sökün; eğer manifolda giden delikler tamamen simsiyah kurumla kapalıysa tornavida ve karbon temizleyici ile o delikleri açın."
+      "EGR valfini ve borularını sökerek içerisindeki yoğun kurum ve karbonu özel çözücü spreylerle temizleyin.",
+      "Vakum ile çalışan bir sistemse, vakum hortumlarında çatlak veya kopukluk olup olmadığını kontrol edin.",
+      "EGR sistemine hava basıncı farkını bildiren DPFE sensörü varsa, bu sensörün hortumlarını ve sensörün kendisini test edip gerekiyorsa değiştirin.",
+      "EGR valfi diyaframı yırtılmış veya elektrik motoru yanmışsa yenisi ile değiştirin."
     ]
   },
   {
@@ -9407,22 +9477,28 @@
     "category": "P",
     "name": "Katalizör Sistemi Verimliliği Eşik Değerin Altında - Bank 1",
     "severity": "yüksek",
-    "description": "Konvertör sonrası oksijen sensörü grafiğinin, konvertör öncesi sensörü taklit etmesiyle tetiklenir. Konvertör içerisindeki rodyum, paladyum ve platinin kimyasal reaksiyon yeteneklerini kalıcı olarak kaybettiğini kanıtlar.",
-    "affectedSystem": "Egzoz Emisyon Sistemleri",
+    "description": "P0420 arıza kodu, 'Katalitik Konvertör Sistemi Verimliliği Sınırın Altında (Sıra 1)' anlamına gelir. Motor kontrol ünitesi (ECU), egzoz sistemindeki katalitik konvertörün egzoz gazlarını temizleme görevini yeterince yerine getiremediğini tespit ettiğinde bu kodu kaydeder. Katalitik konvertör, zararlı emisyonları zararsız gazlara dönüştürmekle görevlidir. Sıra 1, motorun 1 numaralı silindirini içeren tarafı ifade eder. Bu arıza genellikle konvertörün iç petek yapısının erimesi, tıkanması veya ömrünü yitirmesi sonucu ortaya çıkar. Ancak bazen sadece arızalı bir oksijen (O2) sensörü veya egzoz kaçağı da bu kodun tetiklenmesine neden olabilir.",
+    "affectedSystem": "Egzoz ve Emisyon Sistemi",
     "symptoms": [
-      "Egzoz emisyon testlerinden kalma",
-      "İkinci sensör grafiğinin birincisiyle aynı şekilde inip çıkması",
-      "Performans kısıtlaması (bazen)"
+      "Motor arıza lambasının (Check Engine) sürekli yanması",
+      "Araçta yakıt tüketiminin belirgin şekilde artması",
+      "Egzozdan çürük yumurta veya kükürt kokusu gelmesi",
+      "Hızlanma esnasında çekiş düşüklüğü ve isteksizlik",
+      "Motorun rölantide düzensiz veya sarsıntılı çalışması"
     ],
     "causes": [
-      "Uzun süre onarılmamış tekleme (misfire)",
-      "Silindir içine sızan antifriz",
-      "Aşırı zengin karışıma bağlı konvertör tahribatı"
+      "Katalitik konvertörün ömrünü tamamlaması veya hasar görmesi",
+      "Katalitik konvertör öncesi veya sonrası oksijen (O2) sensörünün arızalanması",
+      "Egzoz manifoldlarında veya egzoz borularında kaçak olması",
+      "Motorun zengin veya fakir karışımla çalışıp konvertöre zarar vermesi",
+      "Kötü kalitede yakıt kullanılması"
     ],
     "solutions": [
-      "Altta yatan ana arızanın (tekleme, antifriz sızıntısı) tespit edilip giderilmesi",
-      "Egzoz sızıntılarının kontrolü",
-      "Hasar görmüş katalitik konvertörün değiştirilmesi"
+      "Egzoz sisteminde çatlak veya kaçak olup olmadığını fiziki olarak kontrol edin.",
+      "Diagnostik cihazı bağlayarak O2 sensörlerinin (Özellikle Sıra 1 Sensör 2) voltaj grafiklerini canlı izleyin. Sürekli dalgalanıyorsa konvertör işlevini yitirmiştir.",
+      "Oksijen sensörlerinin kablo tesisatını ve soketlerini oksitlenmeye karşı inceleyin.",
+      "Emme manifoldunu ve enjektörleri sızıntıya karşı kontrol edin (Motor zengin çalışıyorsa konvertörü bozar).",
+      "Gerekirse katalitik konvertörü yenisi ile değiştirin (İçi boşaltılırsa muayeneden geçmez ve araç performansı etkilenebilir)."
     ]
   },
   {
@@ -9668,25 +9744,27 @@
     "code": "P0430",
     "category": "P",
     "name": "Katalizör Sistemi Verimliliği Eşik Değerinin Altında (Bank 2)",
-    "severity": "medium",
-    "description": "P0420'nin ikiz kardeşidir. Motor kontrol ünitesi, Bank 2 (Genellikle 1. silindiri barındırmayan silindir sırası) tarafındaki katalitik konvertörün egzoz gazlarını yeterince temizleyemediğini tespit etmiştir. Reddit ustalarının deyimiyle bu kod 'Parts Cannon' (parça değiştirme tuzağı) kodudur; sorunun asıl kaynağı genellikle katalizörün kendisi değil, onu zehirleyen başka bir motor arızasıdır.",
+    "severity": "yüksek",
+    "description": "P0430 kodu, P0420 kodunun V-tipi (V6, V8) veya çok manifoltlu motorlardaki karşılığıdır. Anlamı 'Katalitik Konvertör Sistemi Verimliliği Sınırın Altında (Sıra 2)'dir. ECU, Sıra 2 tarafındaki (1 numaralı silindirin olmadığı karşı bank) katalitik konvertörün egzoz emisyonlarını filtreleme kapasitesinin düştüğünü belirlemiştir. Arkadaki Oksijen (O2) sensörünün ürettiği sinyal, öndeki sensörün sinyaliyle aynı dalgalanmayı gösterdiğinde katalizörün işlevini yitirdiği anlaşılır. Bu arıza yüksek yakıt tüketimi ve muayeneden geçememe ile sonuçlanır.",
     "affectedSystem": "Egzoz ve Emisyon Sistemi",
     "symptoms": [
-      "Yüksek emisyonlar",
-      "Sensör dalgalanmalarının Bank 2'de eşleşmesi"
+      "Motor arıza lambasının (MIL) yanması",
+      "Araç emisyon testlerinden (TÜVTÜRK egzoz muayenesi vb.) geçememesi",
+      "Yakıt tüketiminde gözle görülür bir artış",
+      "Özellikle yokuşlarda veya yüklüyken motor performansında düşüş",
+      "Egzozdan rahatsız edici kükürt veya çürük yumurta kokusu"
     ],
     "causes": [
-      "Katalitik konvertörün erimesi veya ömrünü doldurması",
-      "Egzoz manifoldunda veya konvertör öncesi borularda çatlak/kaçak (En sık gözden kaçan neden)",
-      "Bank 2 tarafındaki oksijen (O2) sensörlerinin yaşlanıp yavaş okuma yapması",
-      "Uzun süreli zengin karışım (fazla yakıt) nedeniyle katalizörün içinin kurum bağlaması",
-      "Motorun yağ veya antifriz yakarak katalizör peteklerini tıkaması"
+      "Sıra 2 tarafındaki katalitik konvertörün hasar görmesi veya içinin dağılması",
+      "Sıra 2'deki alt oksijen sensörünün (Sensör 2) arızalanması veya yavaş yanıt vermesi",
+      "Oksijen sensörü öncesinde egzoz borusunda kaçak/çatlak olması",
+      "Motorun sürekli zengin karışım veya tekleme ile çalışıp konvertörü bozması"
     ],
     "solutions": [
-      "Katalizörü değiştirmeden önce KESİNLİKLE egzoz sisteminde (özellikle manifold contalarında) duman testi (smoke test) ile kaçak arayın.",
-      "Canlı veri (Live Data) üzerinden Bank 2 Sensör 1 ve Sensör 2 oksijen sensörü grafiklerini karşılaştırın.",
-      "Motor yağında eksilme veya egzozda mavi/beyaz duman varsa önce motor mekaniğini onarın.",
-      "Oksijen sensörlerini yer değiştirerek arızanın sensörden mi yoksa gerçekten konvertörden mi kaynaklandığını test edin."
+      "Katalizörün gerçekten bozuk olup olmadığını anlamak için OBD cihazıyla O2 sensörü grafiği izleyin.",
+      "Eğer O2 sensör voltajı 0.1V ile 0.9V arası sürekli dalgalanıyorsa katalizör ömrünü tamamlamıştır, yenisi ile değiştirilmelidir.",
+      "Egzoz spiralinde, flanşlarda veya manifold bağlantılarında egzoz gazı kaçağı olup olmadığını dumanla test edin.",
+      "Oksijen sensörlerini voltmetre veya osiloskop ile kontrol edin, arızalıysa orijinal veya kaliteli muadili ile değiştirin."
     ]
   },
   {
@@ -9928,19 +10006,25 @@
     "code": "P0442",
     "category": "P",
     "name": "Buharlaşma Emisyon Sistemi Küçük Kaçak (Small Leak)",
-    "severity": "low",
-    "description": "Deli edici bir kod! Depo basıncında toplu iğne başı kadar (0.040 inç) bir kaçak olduğunu belirtir. Koku yapmaz ama ışık yakar.",
+    "severity": "düşük",
+    "description": "P0442 kodu, Evaporatif Emisyon (EVAP) sisteminde küçük bir sızıntı (Small Leak Detected) olduğunu belirtir. EVAP sistemi, benzin deposundaki yakıt buharlarının atmosfere karışmasını önler, bu buharları bir aktif karbon kutusunda (canister) depolar ve motor çalışırken manifolda emdirerek yakılmasını sağlar. Bu kod, ECU'nun sistemde 0.04 inç (1 mm) kadar küçük bir basınç kaybı saptadığı anlamına gelir. Genellikle gevşek bırakılmış bir depo kapağı bu kodun en büyük nedenidir.",
     "affectedSystem": "EVAP Sistemi",
     "symptoms": [
-      "Araç çevresinde hafif benzin kokusu",
-      "Arıza lambasının (MIL) yanması"
+      "Sadece Motor arıza lambasının (Check Engine) yanması",
+      "Sürüş hissiyatında, performansta veya yakıt tüketiminde hiçbir fark olmaması",
+      "Aracın dışında veya içinde hafif bir benzin kokusu (her zaman olmaz)"
     ],
     "causes": [
-      "Benzin kapağı contasında mikroskobik çatlak",
-      "Kanister hortumlarında iğne ucu kadar sızıntı"
+      "Benzin deposu kapağının tam kapatılmamış (tık sesi gelene kadar sıkılmamış) olması",
+      "Depo kapağı contasının (o-ring) aşınması veya çatlaması",
+      "EVAP tahliye (purge) veya havalandırma (vent) valflerinden birinde çok küçük bir sızıntı",
+      "Yakıt deposu veya karbon kutusuna giden buhar hortumlarında kılcal çatlaklar"
     ],
     "solutions": [
-      "Smoke test makinesi olmadan bulunması neredeyse imkansızdır. Depoya duman basıp karanlıkta fenerle kaçak arayın."
+      "İlk yapmanız gereken şey yakıt depo kapağını açıp tekrar sıkıca kapatmaktır. Hata kodunu silin ve birkaç gün izleyin.",
+      "Eğer kod geri gelirse depo kapağını ucuz bir yan sanayi ile değil, orijinali ile değiştirin.",
+      "Sorun devam ediyorsa serviste EVAP sistemine sis/duman makinesi (Smoke Machine) bağlanarak kaçak yeri mikroskobik çatlaklara kadar tespit edilmelidir.",
+      "Gerekirse havalandırma (Vent) veya temizleme (Purge) solenoid valfleri test edilip yenilenmelidir."
     ]
   },
   {
@@ -10016,26 +10100,25 @@
     "code": "P0446",
     "category": "P",
     "name": "Buharlaşma Emisyon Kontrol Sistemi (EVAP) Havalandırma Valfi Devresi Arızası",
-    "severity": "low",
-    "description": "EVAP sisteminin görevi, benzin deposundaki yakıt buharlarının atmosfere karışmasını engelleyip motora yakılması için göndermektir. P0446, havalandırma (vent) valfinin elektriksel devresinde bir kısa devre, açık devre veya yüksek direnç tespit edildiği anlamına gelir. Benzin kokusu şikayetinin bir numaralı failidir.",
-    "affectedSystem": "EVAP (Buharlaşma Emisyon) Sistemi",
+    "severity": "düşük",
+    "description": "P0446 arıza kodu, Evaporatif Emisyon (EVAP) Sisteminin Havalandırma (Vent) Kontrol Devresinde bir elektriksel arıza olduğunu belirtir. Havalandırma valfi, aktif karbon kutusuna dışarıdan temiz hava girmesini sağlar veya sistemin kendi basıncını test edebilmesi için valfi kapatarak sistemi mühürler. ECU, bu valfe giden devrede bir direnç, kısa devre veya açık devre tespit ettiğinde bu kodu oluşturur. Sistem sızıntısı (P0442) kodundan farklı olarak bu, direkt elektriksel bir devre sorunudur.",
+    "affectedSystem": "EVAP Sistemi",
     "symptoms": [
-      "Arıza lambası (MIL) yanar",
-      "ÇekiŞ düşüklüğü",
-      "Yakıt tüketiminde artıŞ",
-      "Rölantide dalgalanma"
+      "Motor arıza lambasının yanması",
+      "Bazen akaryakıt istasyonunda depoyu doldururken zorlanma veya pompanın sürekli atması",
+      "Araç sürüş dinamiklerinde hiçbir değişiklik hissedilmemesi"
     ],
     "causes": [
-      "Havalandırma valfinin (Vent Solenoid) iç sargısının kopması veya kısa devre yapması",
-      "Valf kablo tesisatında kopukluk, korozyon veya şasiye temas",
-      "Havalandırma hattının çamur, toz veya örümcek ağları ile fiziksel olarak tıkanması",
-      "Motor kontrol ünitesi (PCM) içindeki valf sürücü devresi arızası (Nadir)"
+      "Havalandırma (Vent) solenoid valfinin bobininin yanması veya sıkışması",
+      "Vent valfi soketine su veya çamur dolması (Valf genellikle aracın altında veya arka çamurluk davlumbazında yer aldığı için suya maruz kalır)",
+      "Havalandırma filtresinin veya valfinin örümcek ağları, böcekler veya toz ile tıkanması",
+      "Kablo demetinde kopukluk"
     ],
     "solutions": [
-      "Havalandırma valfinin soketini söküp multimetre ile direncini (Ohm) ölçün (Genellikle 15-30 ohm olmalıdır).",
-      "Sokete gelen 12V besleme voltajını ve topraklama hattını kontrol edin.",
-      "Kablo demetini, özellikle aracın altına veya tekerlek davlumbazına yakın geçen kısımlarını hasar açısından inceleyin.",
-      "Valf sağlam görünüyorsa, içine doğrudan 12V vererek 'tık' sesini dinleyin (aktif test)."
+      "Aracın altına girerek Vent valfini (genellikle karbon canisterın yanındadır) bulun, fişini çekin ve korozyon/su kontrolü yapın.",
+      "Multimetre ile valf soketine 12V gelip gelmediğini kontrol edin.",
+      "Valfi söküp doğrudan aküden 12V verin. 'Klik' sesi çıkarmıyor veya hava geçişini kapatmıyorsa valf arızalıdır, yenisi ile değiştirin.",
+      "Valf çalışıyorsa hortumlardaki fiziki tıkanıklıkları (örümcek yuvası gibi) basınçlı hava ile temizleyin."
     ]
   },
   {
@@ -10221,23 +10304,25 @@
     "code": "P0455",
     "category": "P",
     "name": "Buharlaşma Emisyon Sistemi Büyük Kaçak Tespit Edildi (Gross Leak)",
-    "severity": "low",
-    "description": "Reddit forumlarında 'Benzin Kapağı Kodu' olarak bilinir. EVAP sistemi, kendi içinde bir basınç testi yaptığında sistemin tamamen açık olduğunu veya basıncı hiç tutamadığını fark etmiştir. Çoğu zaman araç sahipleri servise panikle gidip sadece gevşek bir benzin kapağı yüzünden 100 dolar teşhis ücreti öderler.",
-    "affectedSystem": "EVAP (Buharlaşma Emisyon) Sistemi",
+    "severity": "düşük",
+    "description": "P0455 arıza kodu, Evaporatif Emisyon (EVAP) Kontrol Sisteminde büyük bir sızıntı (Gross Leak / No Flow) tespit edildiğini gösterir. Küçük sızıntı (P0442) aksine, burada çok ciddi bir basınç kaybı veya buhar kaçışı vardır. Sisteme hiç vakum tutturulamıyordur. Bu arıza genellikle yakıt deposu kapağının tamamen açık unutulması, kaybolması veya hortumların tamamen kopması/çıkması durumunda kaydedilir.",
+    "affectedSystem": "EVAP Sistemi",
     "symptoms": [
-      "Yoğun benzin buharı kokusu",
-      "Yakıt deposu basınç sensöründe sıfır vakum değişimi"
+      "Motor arıza lambasının (MIL) sürekli yanması",
+      "Aracın özellikle arka kısmında veya yakıt deposu bölgesinde güçlü benzin buharı kokusu",
+      "Aracın performansına veya çalışmasına etki eden görünür bir belirti olmaması (Motor sorunsuz çalışmaya devam eder)"
     ],
     "causes": [
-      "Tam kapatılmamış, contası yıpranmış veya yan sanayi benzin deposu kapağı",
-      "Açık kalmış veya kırılarak sızdıran EVAP tahliye (Purge) valfi",
-      "Yakıt dolum boğazında çürük veya çatlak",
-      "Karbon kanister (Charcoal Canister) gövdesinde fiziksel kırılma"
+      "Yakıt depo kapağının açık unutulması veya takılmamış olması",
+      "EVAP karbon kutusu (Charcoal Canister) veya hortumlarında büyük bir yırtık/kırık",
+      "EVAP Havalandırma (Vent) valfinin açık pozisyonda sıkışıp kalması",
+      "Yakıt doldurma boğazında çürük, delik veya büyük çatlaklar"
     ],
     "solutions": [
-      "İLK ADIM: Benzin kapağını açın, contasını silin ve 3 kez 'tık' sesi gelene kadar iyice sıkın. (Kodu silip 2 gün bekleyin).",
-      "Purge valfini söküp içinden üflemeye çalışın; hava geçiyorsa valf bozulmuş ve açık kalmıştır (Değiştirin).",
-      "EVAP test portundan sisteme duman vererek (Smoke Test) büyük kaçağın yerini gözle tespit edin."
+      "Yakıt deposu kapağının aracın üzerinde olup olmadığını kontrol edin ve sıkıca kapatın.",
+      "Aracın altına eğilerek karbon kutusu (genelde arka çamurluk veya depo yanında bulunur) hortumlarının çıkıp çıkmadığına bakın.",
+      "Havalandırma (Vent) solenoid valfini söküp 12V uygulayarak tam kapanıp kapanmadığını (klik sesi ve hava sızdırmazlığı) test edin.",
+      "Smoke test (Duman testi) uygulayarak koca deliğin/kaçak noktasının nerede olduğunu gözle görülür hale getirin."
     ]
   },
   {
@@ -58213,6 +58298,511 @@
     ],
     "solutions": [
       "Akü kutup başlarını temizleyip sıkın. Şase noktalarını zımparalayın."
+    ]
+  },
+  {
+    "code": "P2503",
+    "name": "Şarj Sistemi Voltajı Düşük",
+    "description": "Alternatörden gelen şarj voltajının sistemin ihtiyacını karşılayamayacak kadar düşük olduğunu belirtir. Akü şarj olmuyor olabilir.",
+    "severity": "yüksek",
+    "affectedSystem": "Şarj ve Elektrik Sistemi",
+    "symptoms": [
+      "Akü uyarı lambasının yanması",
+      "Farların kısık yanması",
+      "Araçta elektronik sistemlerin kapanması",
+      "Marş basmama veya zor çalışma"
+    ],
+    "causes": [
+      "Arızalı alternatör (şarj dinamosu)",
+      "Gevşek veya kopuk alternatör kayışı",
+      "Ömrünü yitirmiş akü",
+      "Şarj kablosunda korozyon veya oksitlenme"
+    ],
+    "solutions": [
+      "Alternatör kayışının gerginliğini ve fiziksel durumunu kontrol edin.",
+      "Multimetre ile motor çalışırken alternatör voltajını ölçün (13.5V - 14.5V olmalı).",
+      "Akü kutup başlarını temizleyip sıkıca bağlayın.",
+      "Arızalıysa alternatör kömürlerini veya diyot tablasını değiştirin."
+    ]
+  },
+  {
+    "code": "C1093",
+    "name": "Lastik Basınç Sensörü Sinyali Alınamıyor",
+    "description": "TPMS (Lastik Basınç İzleme Sistemi) modülünün bir veya daha fazla tekerlek sensöründen sinyal alamadığını gösterir.",
+    "severity": "orta",
+    "affectedSystem": "Lastik Basınç Sistemi (TPMS)",
+    "symptoms": [
+      "TPMS uyarı lambasının yanıp sönmesi ve sonra sabit yanması",
+      "Göstergede lastik basınçlarının tire (-) olarak görünmesi"
+    ],
+    "causes": [
+      "TPMS sensörünün pilinin bitmesi",
+      "Sensörün fiziksel hasar görmesi (lastik sökümü sırasında vb.)",
+      "TPMS alıcı anteninde veya modülünde arıza",
+      "Sonradan takılan jantlarda sensör olmaması"
+    ],
+    "solutions": [
+      "TPMS sensör kalibrasyon cihazı ile her tekerlekteki sensörlerin sinyal yayıp yaymadığını kontrol edin.",
+      "Pili biten veya bozulan sensörü yenisi ile değiştirin.",
+      "Yeni sensör takıldıysa OBD cihazı ile araca tanıtma (kodlama) işlemini yapın.",
+      "Lastik basınçlarını kontrol edip sistemi sıfırlayın."
+    ]
+  },
+  {
+    "code": "C1094",
+    "name": "Lastik Basıncı Düşük Uyarı Eşiği",
+    "description": "Bir veya birden fazla lastiğin basıncının, üreticinin belirlediği minimum güvenli sınırın altına düştüğünü bildirir.",
+    "severity": "orta",
+    "affectedSystem": "Lastik Basınç Sistemi (TPMS)",
+    "symptoms": [
+      "TPMS uyarı ışığının sabit yanması",
+      "Sürüş sırasında aracın bir tarafa çekmesi",
+      "Yol tutuşunda zayıflama"
+    ],
+    "causes": [
+      "Lastiklerden birine çivi veya yabancı madde batması",
+      "Jant kenarından veya supaptan hava kaçağı",
+      "Sıcaklık değişimlerine bağlı doğal basınç düşüşü"
+    ],
+    "solutions": [
+      "Araçtaki tüm lastiklerin basınçlarını bir manometre ile ölçün.",
+      "Eksik olan lastiğe fabrika değerlerine (kapı içinde yazar) uygun şekilde hava basın.",
+      "Lastikte patlak varsa tamir ettirin.",
+      "Hava basıldıktan sonra araçtaki TPMS sıfırlama (reset) tuşuna veya menüsüne basarak sistemi güncelleyin."
+    ]
+  },
+  {
+    "code": "C2126",
+    "name": "Lastik Basıncı Monitörü Sensör İletişim Hatası",
+    "description": "TPMS ana modülünün tekerleklerdeki sensörlerden veri alırken iletişim kesintisi yaşadığını gösterir.",
+    "severity": "orta",
+    "affectedSystem": "Lastik Basınç Sistemi (TPMS)",
+    "symptoms": [
+      "TPMS lambasının hata uyarısı vermesi",
+      "Ekrandaki basınç verilerinin aralıklı olarak kaybolup geri gelmesi"
+    ],
+    "causes": [
+      "Araç içi kablolama arızası",
+      "Alıcı anten modülünün hasar görmesi",
+      "Sensör frekansını engelleyen harici elektronik parazit (örneğin ucuz şarj aletleri)"
+    ],
+    "solutions": [
+      "TPMS modülüne giden kablo tesisatını ve soketleri kontrol edin.",
+      "Araçta sonradan takılmış elektronik cihazları (kamera, şarj cihazı) çıkarıp hatanın devam edip etmediğini gözlemleyin.",
+      "Gerekirse TPMS modülünü yazılımsal olarak güncelleyin veya yenileyin."
+    ]
+  },
+  {
+    "code": "P2452",
+    "name": "Dizel Partikül Filtresi (DPF) Basınç Sensörü 'A' Devresi",
+    "description": "Motor kontrol ünitesinin, dizel partikül filtresinin doluluk oranını ölçen diferansiyel basınç sensöründen anormal veya mantıksız bir voltaj sinyali aldığını belirtir.",
+    "severity": "orta",
+    "affectedSystem": "Egzoz Emisyon / DPF Sistemi",
+    "symptoms": [
+      "Motor arıza ve DPF lambasının yanması",
+      "Motorun kendini korumaya alması (Limp Mode) ve çekişten düşmesi",
+      "Rejenerasyon işleminin başlamaması"
+    ],
+    "causes": [
+      "DPF basınç sensörünün kendisinin arızalanması",
+      "Sensöre giden hortumların yırtılması, erimesi veya tıkanması",
+      "Sensörün kablo tesisatında kısa devre veya kopukluk",
+      "DPF'nin aşırı kurum ile tamamen tıkanması"
+    ],
+    "solutions": [
+      "DPF basınç sensörüne giden kauçuk/metal hortumları çatlak ve tıkanıklık açısından gözle muayene edin.",
+      "Hasarlı hortumları yüksek ısıya dayanıklı yenileriyle değiştirin.",
+      "Hortumlar sağlamsa basınç sensörünü değiştirin ve diagnostik cihazı ile adaptasyon yapın.",
+      "Sorun çözüldükten sonra aracı uzun yolda devirli kullanarak rejenerasyon işlemini başlatın."
+    ]
+  },
+  {
+    "code": "C1000",
+    "name": "Elektronik Park Freni Modülü İç Hata",
+    "description": "Elektronik Park Freni (EPB) kontrol modülünün kendi içinde bir donanım veya yazılım hatası algıladığını gösterir.",
+    "severity": "yüksek",
+    "affectedSystem": "Fren Sistemi / EPB",
+    "symptoms": [
+      "El freni uyarı lambasının kırmızı veya sarı yanıp sönmesi",
+      "El freninin çekilememesi veya indirilememesi (sıkışması)",
+      "Göstergede 'Park Freni Arızası' uyarısı"
+    ],
+    "causes": [
+      "EPB modülünde elektriksel kısa devre veya yanma",
+      "Modül yazılımında çökme",
+      "Arka kaliper motorlarının aşırı akım çekerek modülü bozması",
+      "Düşük akü voltajı"
+    ],
+    "solutions": [
+      "Akü voltajını kontrol edin; düşük akü voltajı EPB hatalarının en yaygın nedenidir.",
+      "Fren kaliper motorlarına giden kablo soketlerini oksitlenme ve kopukluk açısından inceleyin.",
+      "Diagnostik cihazı ile EPB modülü hata kayıtlarını silip sistemi kalibre etmeye çalışın.",
+      "Sorun devam ederse EPB kontrol modülünün tamiri veya değişimi gerekir."
+    ]
+  },
+  {
+    "code": "P0671",
+    "name": "Silindir 1 Kızdırma Bujisi Devresi Hatası",
+    "description": "Motor kontrol ünitesinin (ECU), 1 numaralı silindire ait kızdırma (ısıtma) bujisi devresinde elektriksel bir sorun tespit ettiğini belirtir.",
+    "severity": "orta",
+    "affectedSystem": "Motor / Ateşleme (Dizel)",
+    "symptoms": [
+      "Kızdırma bujisi uyarı lambasının yanıp sönmesi veya sönmemesi",
+      "Motor soğukken (özellikle kış aylarında) zor çalışma",
+      "İlk çalıştırmada beyaz/gri duman atma",
+      "Soğuk motorda sarsıntılı rölanti"
+    ],
+    "causes": [
+      "1 numaralı kızdırma bujisinin patlaması/yanması",
+      "Bujiye giden kabloda veya pipoda kopukluk/temassızlık",
+      "Kızdırma bujisi rölesi veya modülü arızası",
+      "Sigorta atması"
+    ],
+    "solutions": [
+      "1 numaralı kızdırma bujisini sökerek bir multimetre ile direnç (ohm) ölçümü yapın (Genellikle 0.5 - 2 ohm arası olmalıdır).",
+      "Direnç okunamıyorsa veya sonsuzsa buji patlaktır, yenisiyle değiştirin (Tavsiye edilen tüm bujilerin set halinde değişimidir).",
+      "Buji sağlamsa, kontağı açıp bujiye giden kablodaki voltajı kontrol edin.",
+      "Voltaj yoksa kızdırma rolesini veya ilgili sigortayı kontrol edin."
+    ]
+  },
+  {
+    "code": "P0672",
+    "name": "Silindir 2 Kızdırma Bujisi Devresi Hatası",
+    "description": "Motor kontrol ünitesinin (ECU), 2 numaralı silindire ait kızdırma (ısıtma) bujisi devresinde hata algılamasıdır. P0671 ile aynı sebep ve çözümlere sahiptir.",
+    "severity": "orta",
+    "affectedSystem": "Motor / Ateşleme (Dizel)",
+    "symptoms": [
+      "Kızdırma bujisi uyarı lambasının yanıp sönmesi",
+      "Soğuk havalarda motorun zor çalışması veya sarsıntılı çalışması",
+      "İlk çalıştırmada artan egzoz emisyonu (beyaz duman)"
+    ],
+    "causes": [
+      "2 numaralı kızdırma bujisinin arızalanması",
+      "Kablo tesisatında kopukluk",
+      "Kızdırma bujisi kontrol modülü arızası"
+    ],
+    "solutions": [
+      "2 numaralı silindirdeki kızdırma bujisini test edin.",
+      "Arızalıysa değiştirin. Kırılma riskine karşı sökerken motorun sıcak olması veya pas sökücü kullanılması tavsiye edilir.",
+      "Kablo bağlantılarını ve modülü kontrol edin."
+    ]
+  },
+  {
+    "code": "P0673",
+    "name": "Silindir 3 Kızdırma Bujisi Devresi Hatası",
+    "description": "3 numaralı silindirin kızdırma bujisinde veya devresinde hata olduğunu gösterir. Çözüm yolları diğer kızdırma bujisi hataları ile birebir aynıdır.",
+    "severity": "orta",
+    "affectedSystem": "Motor / Ateşleme (Dizel)",
+    "symptoms": [
+      "Soğuk marş zorlukları",
+      "Kızdırma uyarı lambası sönmeme sorunu"
+    ],
+    "causes": [
+      "3 numaralı bujinin ömrünü tamamlaması",
+      "Elektriksel tesisat sorunları"
+    ],
+    "solutions": [
+      "Multimetre ile bujinin omajını ölçün.",
+      "Bujiyi değiştirin.",
+      "Piponun tam oturduğundan ve kabloda oksitlenme olmadığından emin olun."
+    ]
+  },
+  {
+    "code": "P0674",
+    "name": "Silindir 4 Kızdırma Bujisi Devresi Hatası",
+    "description": "4 numaralı silindirin kızdırma bujisinde hata tespit edildiğini gösterir. (Sıralı 4 silindirli dizel motorlar için).",
+    "severity": "orta",
+    "affectedSystem": "Motor / Ateşleme (Dizel)",
+    "symptoms": [
+      "Soğuk marş zorlukları",
+      "Kızdırma uyarı lambası hatası"
+    ],
+    "causes": [
+      "4 numaralı bujinin bozulması",
+      "Kablolama veya modül hatası"
+    ],
+    "solutions": [
+      "4 numaralı bujiyi test edip değiştirin.",
+      "Eğer 4 buji de aynı anda hata veriyorsa, sorunun kızdırma rölesi veya ana modülde olduğunu unutmayın."
+    ]
+  },
+  {
+    "code": "C0176",
+    "name": "Direksiyon Açı Sensörü Devresi Hatası",
+    "description": "Elektrikli veya hidrolik direksiyon destek sisteminde (EPS) direksiyon açı sensörü ile iletişimin koptuğunu veya verilerin mantıksız olduğunu gösterir.",
+    "severity": "yüksek",
+    "affectedSystem": "Direksiyon ve ESP Sistemi",
+    "symptoms": [
+      "Direksiyon arıza lambasının (kırmızı veya sarı direksiyon simgesi) yanması",
+      "ESP/Kayma önleyici sistem lambasının yanması",
+      "Direksiyonun aniden çok sertleşmesi veya toparlamaması"
+    ],
+    "causes": [
+      "Direksiyon sargısının (clockspring) kopması",
+      "Açı sensörünün kalibrasyonunu kaybetmesi (Örn: Rot ayarı sonrası veya akü değişimi sonrası)",
+      "Sensörde donanımsal arıza"
+    ],
+    "solutions": [
+      "Aracın rot ayarının düzgün yapıldığından ve direksiyonun tam merkezde olduğundan emin olun.",
+      "OBD diagnostik cihazı ile 'Direksiyon Açı Sensörü Sıfırlama (Kalibrasyon)' işlemini yapın.",
+      "Sorun devam ediyorsa veya direksiyon çevrildiğinde sürtünme sesi geliyorsa direksiyon sargısını/sensörünü değiştirin."
+    ]
+  },
+  {
+    "code": "C0544",
+    "name": "Direksiyon Açı Sensörü Sinyali Hatalı",
+    "description": "Direksiyon açı sensöründen alınan sinyalin, tekerlek hız sensörlerinden alınan verilerle uyuşmadığını gösterir. Sistem aracın hangi yöne gittiğini belirleyemez.",
+    "severity": "orta",
+    "affectedSystem": "Direksiyon ve ESP Sistemi",
+    "symptoms": [
+      "ESP ve ABS lambalarının yanması",
+      "Viraj aydınlatma sisteminin çalışmaması",
+      "Şerit takip sisteminin devre dışı kalması"
+    ],
+    "causes": [
+      "Hatalı rot ayarı nedeniyle direksiyonun yamuk durması",
+      "Sensör kalibrasyon eksikliği",
+      "Kir, toz veya donanım arızası nedeniyle hatalı okuma"
+    ],
+    "solutions": [
+      "Ön düzen kontrolü ve düzgün bir rot ayarı yaptırın.",
+      "Bilgisayarlı cihazla sensör kalibrasyonu gerçekleştirin.",
+      "Sensör bağlantılarını ve veri yolunu kontrol edin."
+    ]
+  },
+  {
+    "code": "C1089",
+    "name": "EPS (Elektrikli Direksiyon) Motor Hızı Sensörü Hatası",
+    "description": "Elektrikli hidrolik direksiyon (EPS) motorunun dönüş hızını ölçen sensörde arıza olduğunu bildirir. EPS sistemi direksiyona gereken desteği sağlayamaz.",
+    "severity": "yüksek",
+    "affectedSystem": "Direksiyon Sistemi (EPS)",
+    "symptoms": [
+      "Direksiyonun ağırlaşması",
+      "Manevra yaparken direksiyonun kesik kesik destek vermesi",
+      "Kırmızı direksiyon ikaz lambası"
+    ],
+    "causes": [
+      "EPS motoru veya entegre sensörünün bozulması",
+      "EPS kontrol ünitesine su girmesi veya oksitlenme",
+      "Zayıf akü veya alternatör problemi"
+    ],
+    "solutions": [
+      "Akü ve şarj dinamosu voltajlarını ölçün; EPS sistemi yüksek akım çeker ve voltaj düşünce ilk kapanan sistemdir.",
+      "EPS modülü soketlerinde korozyon temizliği yapın.",
+      "Sorun donanımsalsa EPS kolonunun veya motorunun onarımı/değişimi gerekir."
+    ]
+  },
+  {
+    "code": "C0267",
+    "name": "Düşük Fren Hidrolik Seviyesi Uyarısı",
+    "description": "Fren hidroliği (yağı) rezervuarındaki seviye sensörü, sıvının güvenli sınırın altına düştüğünü algılamıştır.",
+    "severity": "yüksek",
+    "affectedSystem": "Fren Sistemi",
+    "symptoms": [
+      "Kırmızı ünlem veya fren (Brake) lambasının sürekli yanması",
+      "Fren pedalında yumuşama veya boşa gitme hissi",
+      "Fren mesafesinin uzaması"
+    ],
+    "causes": [
+      "Fren balatalarının tamamen bitmesi sonucu hidrolik seviyesinin düşmesi",
+      "Fren hortumlarında, kaliperlerde veya ana merkezde hidrolik kaçağı",
+      "Seviye sensörünün veya şamandırasının arızalanması"
+    ],
+    "solutions": [
+      "Fren hidrolik kutusunun seviyesini gözle kontrol edin; eksikse DOT standardına uygun yağ ekleyin.",
+      "Ancak yağ durduk yere eksilmez, bu nedenle DİKKAT! Aracı lifte alıp tüm tekerleklerdeki fren hortumlarını ve merkezleri kaçaklara karşı inceleyin.",
+      "Fren balatalarını kontrol edin; tamamen aşındıysa değiştirin."
+    ]
+  },
+  {
+    "code": "U0167",
+    "name": "İmmobilizer Kontrol Modülü İle İletişim Kesildi",
+    "description": "Aracın güvenlik (İmmobilizer) modülü ile ana bilgisayar (ECU veya BCM) arasındaki CAN-BUS veri iletişiminin kesildiğini bildirir.",
+    "severity": "yüksek",
+    "affectedSystem": "Güvenlik / İletişim Ağı",
+    "symptoms": [
+      "Aracın marş basmaması veya çalışıp hemen stop etmesi",
+      "Göstergede anahtar/kilit (İmmobilizer) lambasının yanıp sönmesi",
+      "Araç kapılarının kumanda ile kilitlenememesi"
+    ],
+    "causes": [
+      "Anahtarın çipinin hasar görmesi veya hafızasını yitirmesi",
+      "Kontak çevresindeki okuyucu anten (halka) arızası",
+      "İmmobilizer modülüne giden kablolarda kopukluk",
+      "Akü voltajının aniden çökmesi (kısa devre)"
+    ],
+    "solutions": [
+      "Yedek anahtarınız varsa araçla yedek anahtarı deneyerek sorunun anahtarda mı yoksa araçta mı olduğunu tespit edin.",
+      "Akü voltajını kontrol edin ve kutup başlarını sıkın.",
+      "Kontak okuyucu anten soketini kontrol edin.",
+      "Yetkili serviste veya anahtarcıda anahtarların araca yeniden kodlanmasını sağlayın."
+    ]
+  },
+  {
+    "code": "P203F",
+    "name": "Redüktant (AdBlue) Seviyesi Çok Düşük",
+    "description": "Dizel egzoz sıvısı (AdBlue / DEF) seviyesinin kritik seviyeye indiğini bildirir. Belli bir kilometre sonra aracın motoru çalışmayı reddeder.",
+    "severity": "yüksek",
+    "affectedSystem": "Egzoz Emisyon / AdBlue",
+    "symptoms": [
+      "Göstergede 'Motor XXX km sonra çalışmayacak' uyarısı",
+      "AdBlue ikaz lambasının yanması"
+    ],
+    "causes": [
+      "AdBlue tankındaki sıvının gerçekten bitmesi",
+      "Seviye sensörünün (genellikle tankın içindedir) takılı kalması veya bozulması"
+    ],
+    "solutions": [
+      "Araca derhal kaliteli ve standartlara uygun (ISO 22241) AdBlue sıvısı ekleyin.",
+      "Sıvı eklenmesine rağmen lamba sönmüyorsa, sensör şamandırası kristalleşme nedeniyle takılmış olabilir; sistemi uygun katkılarla veya temizleyici ile temizleyin.",
+      "Sorun çözülmezse AdBlue tankı/pompa ünitesi değişimi gerekebilir."
+    ]
+  },
+  {
+    "code": "P204F",
+    "name": "Redüktant (AdBlue) Sistemi Performansı Bank 1",
+    "description": "AdBlue enjeksiyon sisteminin NOx emisyonlarını yeterince düşüremediğini belirtir. Sistem görevini yerine getirememektedir.",
+    "severity": "orta",
+    "affectedSystem": "Egzoz Emisyon / AdBlue",
+    "symptoms": [
+      "AdBlue uyarı lambası",
+      "Motor arıza lambası",
+      "Egzozda beyaz kristalleşme birikintileri"
+    ],
+    "causes": [
+      "Kalitesiz, sulandırılmış veya tarihi geçmiş AdBlue kullanımı",
+      "AdBlue enjektörünün kurum veya kristalleşme ile tıkanması",
+      "NOx sensörü arızası",
+      "Katalizör arızası"
+    ],
+    "solutions": [
+      "Kötü kalitedeki AdBlue sıvısını tamamen boşaltıp sistemi yıkayın ve yeni sıvı koyun.",
+      "AdBlue enjektörünü (dozaj valfini) sökerek sıcak su ile kristalleşmeleri temizleyin.",
+      "NOx sensörü okumalarını diagnostik ile kontrol edip arızalıysa değiştirin."
+    ]
+  },
+  {
+    "code": "P218F",
+    "name": "Redüktant (AdBlue) Akışı Çok Düşük",
+    "description": "AdBlue pompasının veya enjektörünün egzoza yeterli miktarda sıvı basamadığını gösterir.",
+    "severity": "orta",
+    "affectedSystem": "Egzoz Emisyon / AdBlue",
+    "symptoms": [
+      "AdBlue sistemi arıza uyarısı",
+      "Performans kısıtlaması"
+    ],
+    "causes": [
+      "AdBlue pompasının bozulması",
+      "Hatların veya enjektörün tıkanması",
+      "Hatta kaçak olması"
+    ],
+    "solutions": [
+      "AdBlue enjektör hattındaki basıncı kontrol edin.",
+      "Enjektörü ve boruları söküp tıkanıklıkları (kristalleşmeleri) sıcak su veya özel çözücülerle temizleyin.",
+      "Pompa arızalıysa değiştirin."
+    ]
+  },
+  {
+    "code": "C0711",
+    "name": "Havalı Süspansiyon Seviye Sensörü Hatalı Sinyal",
+    "description": "Aracın şasisinin yere olan yüksekliğini ölçen seviye sensöründen dengesiz veya ulaşılamaz veriler geldiğini belirtir.",
+    "severity": "orta",
+    "affectedSystem": "Havalı Süspansiyon Sistemi",
+    "symptoms": [
+      "Sarı veya kırmızı süspansiyon arıza lambası",
+      "Aracın bir köşesinin veya tamamının yere çökmesi",
+      "Far yükseklik ayarının çalışmaması"
+    ],
+    "causes": [
+      "Seviye sensörünün çubuğunun (rotilinin) kırılması veya yerinden çıkması",
+      "Sensöre su girmesi",
+      "Kablo kopukluğu"
+    ],
+    "solutions": [
+      "Aracın altına girerek ilgili tekerlekteki yükseklik sensörünün mekanik kolunu kontrol edin.",
+      "Kırık veya çıkmışsa onarın/değiştirin.",
+      "Sensör içi su almışsa yenisi ile değiştirip kalibrasyon yapın."
+    ]
+  },
+  {
+    "code": "C1991",
+    "name": "Süspansiyon Modülü İç Arızası",
+    "description": "Havalı süspansiyon sistemini yöneten ana beyinde (modülde) donanımsal veya yazılımsal bir iç hata oluştuğunu gösterir.",
+    "severity": "yüksek",
+    "affectedSystem": "Havalı Süspansiyon Sistemi",
+    "symptoms": [
+      "Tüm süspansiyon sisteminin devre dışı kalması",
+      "Süspansiyon ayarlarının (Sport/Comfort) seçilememesi"
+    ],
+    "causes": [
+      "Süspansiyon modülüne su girmesi (Genellikle bagaj zemininde veya koltuk altındadır)",
+      "Aşırı voltaj",
+      "Kısa devre"
+    ],
+    "solutions": [
+      "Modülü bulup soketlerinde oksitlenme veya su izi olup olmadığına bakın.",
+      "Temizleyip kurutun. Çalışmazsa modülün yazılımının güncellenmesi veya parçanın değiştirilmesi gerekir."
+    ]
+  },
+  {
+    "code": "C2774",
+    "name": "Süspansiyon Yükseklik Sensörü Hatası",
+    "description": "Yükseklik sensörünün belirlenen sınırlar dışında bir voltaj (çok yüksek veya çok düşük) ürettiğini gösterir.",
+    "severity": "orta",
+    "affectedSystem": "Havalı Süspansiyon Sistemi",
+    "symptoms": [
+      "Göstergede süspansiyon arıza uyarısı",
+      "Araç yüksekliğinin ayarlanamaması"
+    ],
+    "causes": [
+      "Sensör arızası",
+      "Tesisat kısa devresi"
+    ],
+    "solutions": [
+      "Sensör tesisatını ölçerek 5V referans voltajının geldiğinden emin olun.",
+      "Sensör değiştirildiğinde OBD üzerinden yüksekliğin yeniden tanıtılması (adaptasyon) şarttır."
+    ]
+  },
+  {
+    "code": "C0689",
+    "name": "Süspansiyon Pnömatik Kompresör Arızası",
+    "description": "Havalı süspansiyon sistemine hava basan kompresörün istenen basınca ulaşamadığını veya aşırı ısındığını gösterir.",
+    "severity": "yüksek",
+    "affectedSystem": "Havalı Süspansiyon Sistemi",
+    "symptoms": [
+      "Süspansiyon lambasının yanması",
+      "Aracın yere oturması ve kompresör sesinin hiç duyulmaması veya sürekli (hiç durmadan) çalışması"
+    ],
+    "causes": [
+      "Hava körüklerinde veya valf bloğunda oluşan büyük bir kaçak yüzünden kompresörün sürekli çalışıp yanması",
+      "Kompresör rölesinin yapışık kalması",
+      "Kompresör içindeki piston sekmanının aşınması"
+    ],
+    "solutions": [
+      "Sistemi sabunlu su ile kontrol ederek hava kaçaklarını (körük patlağı vb.) bulun ve onarın.",
+      "Kompresör rölesini değiştirin (Bozulan kompresörlerin %90 nedeni yapışan röledir).",
+      "Kompresör yeterli basınç üretemiyorsa tamir takımı (yeni sekman/silindir) uygulayın veya kompresörü değiştirin."
+    ]
+  },
+  {
+    "code": "C1A16",
+    "name": "Radar Sensörü Görüşü Engellendi (Cruise Control)",
+    "description": "Adaptif Hız Sabitleyici (ACC) veya Çarpışma Önleme sistemine ait ön radar veya kamera sensörünün yolunu göremediğini bildirir.",
+    "severity": "düşük",
+    "affectedSystem": "Hız Sabitleyici / Radar",
+    "symptoms": [
+      "Hız sabitleyici lambasının hata vermesi",
+      "Ekranda 'ACC Kullanılamıyor - Sensör Görüşü Yok' uyarısı"
+    ],
+    "causes": [
+      "Radar sensörünün önünün çamur, yoğun kar veya buzla kaplanması",
+      "Sensör ayağının çarpma sonucu eğilmesi",
+      "Ön cam kamerasının buğulanması"
+    ],
+    "solutions": [
+      "Ön panjurdaki veya logodaki radar sensörünün üzerini nemli bir bezle temizleyin.",
+      "Kış aylarında kar birikintisini temizleyin.",
+      "Eğer önden ufak bir kaza yapıldıysa radarın hizası (kalibrasyonu) bozulmuş olabilir, yetkili serviste kalibre ettirin."
     ]
   }
 ]
