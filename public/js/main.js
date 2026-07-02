@@ -3,12 +3,43 @@
 // ===================================
 
 document.addEventListener('DOMContentLoaded', () => {
+  initThemeToggle();
   initNavbar();
   initParticles();
   initCounters();
   initSearch();
   initAnimations();
 });
+
+// =========== THEME TOGGLE ===========
+function initThemeToggle() {
+  const toggle = document.getElementById('themeToggle');
+  if (!toggle) return;
+
+  toggle.addEventListener('click', () => {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    const next = current === 'light' ? 'dark' : 'light';
+
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('obd-theme', next);
+
+    // Update particles colors for the new theme
+    updateParticleColors(next);
+  });
+}
+
+function updateParticleColors(theme) {
+  const particles = document.querySelectorAll('.bg-particle');
+  const darkColors = ['#3b82f6', '#8b5cf6', '#06b6d4', '#a855f7'];
+  const lightColors = ['#059669', '#047857', '#0d9488', '#10b981'];
+  const colors = theme === 'light' ? lightColors : darkColors;
+
+  particles.forEach(p => {
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    p.style.background = `radial-gradient(circle, ${color}20 0%, transparent 70%)`;
+  });
+}
 
 // =========== NAVBAR ===========
 function initNavbar() {
@@ -47,7 +78,10 @@ function initParticles() {
   const container = document.getElementById('bgParticles');
   if (!container) return;
 
-  const colors = ['#3b82f6', '#8b5cf6', '#06b6d4', '#a855f7'];
+  const theme = document.documentElement.getAttribute('data-theme');
+  const darkColors = ['#3b82f6', '#8b5cf6', '#06b6d4', '#a855f7'];
+  const lightColors = ['#059669', '#047857', '#0d9488', '#10b981'];
+  const colors = theme === 'light' ? lightColors : darkColors;
   const particleCount = 6;
 
   for (let i = 0; i < particleCount; i++) {

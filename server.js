@@ -7,6 +7,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
+const zlib = require('zlib');
 const { render } = require('./lib/template');
 
 const PORT = process.env.PORT || 3000;
@@ -141,16 +142,16 @@ const mimeTypes = {
 // =========== ROUTE HANDLERS ===========
 
 function handleHome(req, res) {
-  // Pick popular codes (The 30 most searched codes)
+  // Pick popular codes (The 12 most searched codes — reduced for faster page load)
   const popular = [
-    'P0171', 'P0174', 'P2096', 'P0101', 'P0102', 'P0135', 'P0138', 'P0420', 'P0430', 'P0401', 
-    'P0440', 'P0442', 'P0455', 'P0456', 'P0128', 'P0115', 'P0113', 'P0122', 'P0505', 'P0300', 
-    'P0301', 'P0335', 'P0500', 'P0011', 'P0299', 'P2135', 'P0700', 'C0035', 'U0100', 'U0073'
+    'P0171', 'P0420', 'P0300', 'P0301', 'P0335', 'P0011',
+    'P0174', 'P0455', 'P0128', 'P0700', 'U0100', 'C0035'
   ].map(c => codes.find(item => item.code === c)).filter(Boolean);
 
   const html = render('home', {
-    pageTitle: 'Ana Sayfa',
+    pageTitle: 'OBD-II Arıza Kodu Sorgulama',
     metaDescription: 'OBD-II arıza kodlarını arayın ve aracınızdaki sorunları hızlıca teşhis edin. Detaylı açıklamalar, olası nedenler ve çözüm önerileri.',
+    canonicalUrl: 'https://www.obdkodu.com/',
     activeHome: 'active',
     totalCodes,
     ...counts,
@@ -193,9 +194,14 @@ function handleSearch(req, res, query) {
   const queryParam = q ? `&q=${encodeURIComponent(q)}` : '';
   const searchOnlyParam = q ? `?q=${encodeURIComponent(q)}` : '';
 
+  // Build canonical URL for search page
+  let searchCanonical = 'https://www.obdkodu.com/arama';
+  if (kategori && !q) searchCanonical += `?kategori=${kategori}`;
+
   const html = render('search', {
-    pageTitle: q ? `"${q}" arama sonuçları` : (kategori ? `${categoryNames[kategori] || kategori} Kodları` : 'Tüm Arıza Kodları'),
+    pageTitle: q ? `"${q}" Arama Sonuçları` : (kategori ? `${categoryNames[kategori] || kategori} Kodları` : 'Tüm Arıza Kodları'),
     metaDescription: `OBD-II arıza kodları listesi. ${filtered.length} sonuç bulundu.`,
+    canonicalUrl: searchCanonical,
     activeSearch: 'active',
     searchQuery: query.q || '',
     isSearchQuery: q ? 'true' : '',
@@ -285,20 +291,21 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
   };
   const mappedSeverity = severityClassMap[code.severity] || 'düşük';
 
-  let pageTitle = `${code.code} - ${code.name}`;
+  // Shortened titles to stay under ~60 chars (layout appends " | OBD Kodları" = 14 chars)
+  let pageTitle = `${code.code} ${code.name}`;
   let metaDescription = `${code.code} arıza kodu: ${code.name}. ${code.description.substring(0, 150)}`;
   let displayCodeName = code.name;
   let canonicalUrl = `https://www.obdkodu.com/kod/${code.code}`;
   let displayDescription = code.description;
 
   if (brandObj && !modelObj) {
-    pageTitle = `${brandObj.name} ${code.code} Arıza Kodu: Nedenleri ve Çözümü`;
+    pageTitle = `${brandObj.name} ${code.code} Arıza Kodu`;
     metaDescription = `${brandObj.name} aracınızda ${code.code} arıza kodu mu var? ${code.name} sorununun nedenleri, belirtileri ve kesin çözüm yöntemleri.`;
     displayCodeName = `${brandObj.name} ${code.code} - ${code.name}`;
     canonicalUrl = `https://www.obdkodu.com/kod/${code.code}/${brandObj.slug}`;
     displayDescription = `Eğer ${brandObj.name} marka aracınızda ${code.code} arıza kodunu görüyorsanız, ${code.description}`;
   } else if (brandObj && modelObj) {
-    pageTitle = `${brandObj.name} ${modelObj.name} ${code.code} Arıza Kodu Çözümü`;
+    pageTitle = `${brandObj.name} ${modelObj.name} ${code.code}`;
     metaDescription = `${brandObj.name} ${modelObj.name} model aracınızda ${code.code} arıza kodu mu var? ${code.name} sorununun nedenleri ve kesin çözümü.`;
     displayCodeName = `${brandObj.name} ${modelObj.name} ${code.code} - ${code.name}`;
     canonicalUrl = `https://www.obdkodu.com/kod/${code.code}/${brandObj.slug}/${modelObj.slug}`;
@@ -411,14 +418,7 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
 function handleDashboardLightDetail(req, res, id) {
   const light = dashboardLightsData.find(l => l.id === id);
   if (!light) {
-    res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
-    const html = render('index', { 
-      pageTitle: 'Gösterge Bulunamadı - OBDKodları', 
-      metaDescription: 'Aradığınız gösterge işareti bulunamadı.',
-      canonicalUrl: 'https://www.obdkodu.com/'
-    });
-    res.end(html);
-    return;
+    return handle404(req, res);
   }
 
   // First: exact matches from exampleCodes
@@ -472,7 +472,7 @@ function handleDashboardLightDetail(req, res, id) {
   const paginatedComments = formattedComments.slice((page - 1) * limit, page * limit);
 
   const context = {
-    pageTitle: `${light.name} Neden Yanar? - OBDKodları`,
+    pageTitle: `${light.name} Neden Yanar?`,
     metaDescription: `${light.name} neden yanar? ${light.description.substring(0, 120)}`,
     canonicalUrl: `https://www.obdkodu.com/gosterge-paneli/${light.id}`,
     activeDashboard: 'active',
@@ -504,14 +504,14 @@ function handleDashboardLightDetail(req, res, id) {
   };
 
   const html = render('dashboard-light-detail', context);
-  res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-  res.end(html);
+  sendHtml(res, 200, html, req);
 }
 
 function handleAbout(req, res) {
   const html = render('about', {
-    pageTitle: 'Hakkında',
+    pageTitle: 'OBD-II Nedir?',
     metaDescription: 'OBD-II (On-Board Diagnostics II) arıza teşhis sistemi hakkında bilgi. Kod yapısı, kategoriler ve ciddiyet seviyeleri.',
+    canonicalUrl: 'https://www.obdkodu.com/hakkinda',
     activeAbout: 'active',
   });
   sendHtml(res, 200, html);
@@ -521,6 +521,7 @@ function handlePrivacy(req, res) {
   const html = render('privacy', {
     pageTitle: 'Gizlilik Politikası',
     metaDescription: 'obdkodu.com gizlilik politikası ve çerez (cookie) kullanım ilkeleri.',
+    canonicalUrl: 'https://www.obdkodu.com/gizlilik-politikasi',
   });
   sendHtml(res, 200, html);
 }
@@ -529,6 +530,7 @@ function handleTerms(req, res) {
   const html = render('terms', {
     pageTitle: 'Kullanım Koşulları',
     metaDescription: 'obdkodu.com kullanım koşulları ve yasal sorumluluk reddi beyanı.',
+    canonicalUrl: 'https://www.obdkodu.com/kullanim-kosullari',
   });
   sendHtml(res, 200, html);
 }
@@ -537,11 +539,13 @@ function handleContact(req, res) {
   const html = render('contact', {
     pageTitle: 'İletişim',
     metaDescription: 'Soru, görüş ve önerileriniz için obdkodu.com iletişim bilgileri.',
+    canonicalUrl: 'https://www.obdkodu.com/iletisim',
   });
   sendHtml(res, 200, html);
 }
 
 function handleDashboardLights(req, res) {
+  /* Process dashboard lights data */
   const processedLights = dashboardLightsData.map(light => {
     const htmlCodes = light.exampleCodes.map(code => {
       const cat = code.substring(0, 1);
@@ -573,8 +577,9 @@ function handleDashboardLights(req, res) {
   const evLights = processedLights.filter(l => l.id.startsWith('ev-'));
 
   const html = render('dashboard-lights', {
-    pageTitle: 'Gösterge Paneli İşaretleri ve Anlamları',
+    pageTitle: 'Gösterge Paneli İşaretleri',
     metaDescription: 'Araç gösterge panelinde yanan motor arıza, ABS, ESP, Akü, Yağ basıncı, EV batarya, şarj sistemi gibi ikaz ışıklarının anlamları ve ilgili OBD arıza kodları.',
+    canonicalUrl: 'https://www.obdkodu.com/gosterge-paneli',
     activeDashboard: 'active',
     lights: classicLights,
     evLights: evLights,
@@ -683,6 +688,7 @@ function handle404(req, res) {
   const html = render('404', {
     pageTitle: 'Sayfa Bulunamadı',
     metaDescription: 'Aradığınız sayfa bulunamadı.',
+    isNotFound: 'true',
   });
   sendHtml(res, 404, html);
 }
@@ -690,68 +696,173 @@ function handle404(req, res) {
 function handleRobotsTxt(req, res) {
   const robots = `User-agent: *
 Allow: /
-Sitemap: https://www.obdkodu.com/sitemap.xml`;
+Sitemap: https://www.obdkodu.com/sitemap.xml
+
+# LLM/AI Crawler Information
+User-agent: GPTBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: Google-Extended
+Allow: /`;
   
   res.writeHead(200, {
     'Content-Type': 'text/plain; charset=utf-8',
     'Cache-Control': 'public, max-age=86400',
+    'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
   });
   res.end(robots);
 }
 
+function handleLlmsTxt(req, res) {
+  const llms = `# OBD Kodları - obdkodu.com
+
+> Türkiye'nin en kapsamlı OBD-II araç arıza kodları veritabanı.
+
+## Site Hakkında
+OBD Kodları (obdkodu.com), OBD-II (On-Board Diagnostics II) standart araç arıza kodlarını Türkçe olarak açıklayan bir referans veritabanıdır. ${totalCodes} adet arıza kodu detaylı açıklamalar, olası nedenler, belirtiler ve çözüm önerileri ile birlikte sunulmaktadır.
+
+## İçerik Yapısı
+- **Arıza Kodları**: P (Motor & Şanzıman), B (Gövde), C (Şasi), U (İletişim) kategorilerinde ${totalCodes} kod
+- **Gösterge Paneli İşaretleri**: Araç gösterge panelindeki uyarı lambalarının anlamları ve ilişkili OBD kodları
+- **Marka Özel Sayfalar**: ${popularBrands.length} popüler marka için arıza kodu sayfaları
+
+## Ana Sayfalar
+- Ana Sayfa: https://www.obdkodu.com/
+- Kod Arama: https://www.obdkodu.com/arama
+- Gösterge Paneli: https://www.obdkodu.com/gosterge-paneli
+- OBD-II Hakkında: https://www.obdkodu.com/hakkinda
+- İletişim: https://www.obdkodu.com/iletisim
+
+## Kod Kategorileri
+- P Kodları (Motor & Şanzıman): https://www.obdkodu.com/arama?kategori=P (${counts.pCount} kod)
+- B Kodları (Gövde): https://www.obdkodu.com/arama?kategori=B (${counts.bCount} kod)
+- C Kodları (Şasi): https://www.obdkodu.com/arama?kategori=C (${counts.cCount} kod)
+- U Kodları (İletişim): https://www.obdkodu.com/arama?kategori=U (${counts.uCount} kod)
+
+## URL Yapısı
+- Kod detay: /kod/{KOD} (örn: /kod/P0300)
+- Marka özel: /kod/{KOD}/{marka} (örn: /kod/P0300/hyundai)
+- Model özel: /kod/{KOD}/{marka}/{model} (örn: /kod/P0300/hyundai/i20)
+- Gösterge detay: /gosterge-paneli/{id}
+
+## Dil
+Tüm içerik Türkçedir.
+
+## İletişim
+info@obdkodu.com`;
+  
+  res.writeHead(200, {
+    'Content-Type': 'text/plain; charset=utf-8',
+    'Cache-Control': 'public, max-age=86400',
+    'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+  });
+  res.end(llms);
+}
+
 function handleSitemap(req, res) {
   const baseUrl = 'https://www.obdkodu.com';
+  const today = new Date().toISOString().split('T')[0];
   
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>${baseUrl}/</loc>
+    <lastmod>${today}</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>${baseUrl}/arama</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>${baseUrl}/arama?kategori=P</loc>
+    <lastmod>${today}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>${baseUrl}/arama?kategori=B</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>${baseUrl}/arama?kategori=C</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>${baseUrl}/arama?kategori=U</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>${baseUrl}/gosterge-paneli</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>${baseUrl}/hakkinda</loc>
+    <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>${baseUrl}/iletisim</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
     <loc>${baseUrl}/gizlilik-politikasi</loc>
+    <lastmod>${today}</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>${baseUrl}/kullanim-kosullari</loc>
+    <lastmod>${today}</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
-  <url>
-    <loc>${baseUrl}/iletisim</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.4</priority>
-  </url>
-  <url>
-    <loc>${baseUrl}/gosterge-paneli</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
 `;
-  codesData.forEach(c => {
+
+  // All OBD codes
+  codes.forEach(c => {
     xml += `  <url>
     <loc>${baseUrl}/kod/${c.code}</loc>
+    <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 `;
   });
 
+  // Brand-specific OBD code pages (high SEO value)
+  popularBrands.forEach(brand => {
+    codes.forEach(c => {
+      xml += `  <url>
+    <loc>${baseUrl}/kod/${c.code}/${brand.slug}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+`;
+    });
+  });
+
+  // Dashboard lights detail pages
   dashboardLightsData.forEach(l => {
     xml += `  <url>
     <loc>${baseUrl}/gosterge-paneli/${l.id}</loc>
+    <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -777,38 +888,104 @@ function handleStatic(req, res, filePath) {
     return handle404(req, res);
   }
 
-  fs.readFile(safePath, (err, data) => {
+  // Try to serve minified version first for CSS/JS
+  const ext = path.extname(safePath).toLowerCase();
+  let servePath = safePath;
+  if (ext === '.css' || ext === '.js') {
+    const dir = path.dirname(safePath);
+    const baseName = path.basename(safePath, ext);
+    const minPath = path.join(dir, `${baseName}.min${ext}`);
+    if (fs.existsSync(minPath)) {
+      servePath = minPath;
+    }
+  }
+
+  fs.readFile(servePath, (err, data) => {
     if (err) {
       return handle404(req, res);
     }
 
-    const ext = path.extname(safePath).toLowerCase();
     const contentType = mimeTypes[ext] || 'application/octet-stream';
-
-    res.writeHead(200, {
+    const headers = {
       'Content-Type': contentType,
-      'Cache-Control': 'public, max-age=86400',
-    });
-    res.end(data);
+      'Cache-Control': 'public, max-age=2592000, immutable',
+      'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+    };
+
+    // Gzip compress text-based files
+    const isCompressible = ['.css', '.js', '.json', '.svg'].includes(ext);
+    const acceptEncoding = req.headers['accept-encoding'] || '';
+
+    if (isCompressible && acceptEncoding.includes('gzip')) {
+      zlib.gzip(data, (err, compressed) => {
+        if (err) {
+          res.writeHead(200, headers);
+          return res.end(data);
+        }
+        headers['Content-Encoding'] = 'gzip';
+        headers['Vary'] = 'Accept-Encoding';
+        res.writeHead(200, headers);
+        res.end(compressed);
+      });
+    } else {
+      res.writeHead(200, headers);
+      res.end(data);
+    }
   });
 }
 
 // =========== HELPERS ===========
 
-function sendHtml(res, statusCode, html) {
-  res.writeHead(statusCode, {
+function sendHtml(res, statusCode, html, req) {
+  const headers = {
     'Content-Type': 'text/html; charset=utf-8',
     'Cache-Control': 'no-cache',
-  });
-  res.end(html);
+    'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+  };
+
+  // Gzip compress HTML if client supports it
+  const acceptEncoding = (req && req.headers && req.headers['accept-encoding']) || '';
+  if (acceptEncoding.includes('gzip')) {
+    zlib.gzip(Buffer.from(html, 'utf-8'), (err, compressed) => {
+      if (err) {
+        res.writeHead(statusCode, headers);
+        return res.end(html);
+      }
+      headers['Content-Encoding'] = 'gzip';
+      headers['Vary'] = 'Accept-Encoding';
+      res.writeHead(statusCode, headers);
+      res.end(compressed);
+    });
+  } else {
+    res.writeHead(statusCode, headers);
+    res.end(html);
+  }
 }
 
-function sendJson(res, statusCode, data) {
-  res.writeHead(statusCode, {
+function sendJson(res, statusCode, data, req) {
+  const jsonStr = JSON.stringify(data);
+  const headers = {
     'Content-Type': 'application/json; charset=utf-8',
     'Cache-Control': 'no-cache',
-  });
-  res.end(JSON.stringify(data));
+    'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+  };
+
+  const acceptEncoding = (req && req.headers && req.headers['accept-encoding']) || '';
+  if (acceptEncoding.includes('gzip')) {
+    zlib.gzip(Buffer.from(jsonStr, 'utf-8'), (err, compressed) => {
+      if (err) {
+        res.writeHead(statusCode, headers);
+        return res.end(jsonStr);
+      }
+      headers['Content-Encoding'] = 'gzip';
+      headers['Vary'] = 'Accept-Encoding';
+      res.writeHead(statusCode, headers);
+      res.end(compressed);
+    });
+  } else {
+    res.writeHead(statusCode, headers);
+    res.end(jsonStr);
+  }
 }
 
 function parseQuery(queryString) {
@@ -872,6 +1049,10 @@ const server = http.createServer((req, res) => {
 
   if (pathname === '/sitemap.xml' && req.method === 'GET') {
     return handleSitemap(req, res);
+  }
+
+  if (pathname === '/llms.txt' && req.method === 'GET') {
+    return handleLlmsTxt(req, res);
   }
 
   // Code detail: /kod/P0300 or /kod/P0300/hyundai or /kod/P0300/hyundai/i20
