@@ -1,13 +1,13 @@
 <!-- Contact Page -->
-<section class="about-page" id="contactPage">
+<article class="about-page" id="contactPage">
   <div class="container">
-    <div class="about-header">
+    <header class="about-header">
       <h1 class="page-title">İletişim <span class="gradient-text">Bilgileri</span></h1>
       <p class="page-subtitle">Soru, görüş, öneri ve reklam talepleriniz için bize ulaşın</p>
-    </div>
+    </header>
 
     <div class="about-grid" style="grid-template-columns: 1fr;">
-      <div class="about-card" style="text-align: center; padding: 60px 20px;">
+      <section class="about-card" style="text-align: center; padding: 60px 20px;">
         <div class="about-card-icon about-icon-blue" style="margin: 0 auto 20px;">
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
@@ -17,10 +17,50 @@
         <p style="font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto;">
           Sitemizdeki içeriklerle ilgili geri bildirimde bulunmak, reklam veya iş birliği teklifleri iletmek için aşağıdaki e-posta adresinden bize 7/24 ulaşabilirsiniz.
         </p>
-        <a href="mailto:info@obdkodu.com" class="btn-primary" style="display: inline-block; font-size: 1.2rem; padding: 15px 40px;">
-          info@obdkodu.com
-        </a>
-      </div>
+        <address style="font-style: normal;">
+          <a href="mailto:info@obdkodu.com" class="btn-primary" style="display: inline-block; font-size: 1.2rem; padding: 15px 40px;">
+            info@obdkodu.com
+          </a>
+        </address>
+      </section>
+
+      <section class="about-card">
+        <h2 class="about-card-title">Sıkça Sorulan Sorular</h2>
+        <div class="faq-container">
+          <details class="faq-item">
+            <summary class="faq-question">
+              Bir arıza kodu hakkında bilgi ekletebilir miyim?
+              <div class="faq-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+            </summary>
+            <div class="faq-answer">
+              Evet! Herhangi bir arıza kodunun detay sayfasındaki yorum bölümünden deneyiminizi paylaşabilir, eksik bilgi gördüğünüz konularda bize e-posta atarak bilgilendirmede bulunabilirsiniz.
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">
+              Reklam vermek istiyorum, nasıl iletişime geçebilirim?
+              <div class="faq-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+            </summary>
+            <div class="faq-answer">
+              Reklam ve sponsorluk teklifleriniz için info@obdkodu.com adresine e-posta gönderebilirsiniz. Site trafiği, hedef kitle ve reklam seçenekleri hakkında detaylı bilgi sağlayacağız.
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- İç Linkleme: SEO için daha fazla sayfa bağlantısı -->
+      <nav class="about-card">
+        <h2 class="about-card-title">Hızlı Erişim</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 16px;">Aradığınız bilgiye hızlıca ulaşmak için aşağıdaki bağlantıları kullanabilirsiniz:</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+          <a href="/" class="footer-link" style="padding: 10px 16px; border-radius: 8px; background: var(--bg-card); border: 1px solid var(--border-subtle);">🏠 Ana Sayfa</a>
+          <a href="/arama" class="footer-link" style="padding: 10px 16px; border-radius: 8px; background: var(--bg-card); border: 1px solid var(--border-subtle);">🔍 Arıza Kodu Ara</a>
+          <a href="/gosterge-paneli" class="footer-link" style="padding: 10px 16px; border-radius: 8px; background: var(--bg-card); border: 1px solid var(--border-subtle);">🚗 Gösterge İşaretleri</a>
+          <a href="/hakkinda" class="footer-link" style="padding: 10px 16px; border-radius: 8px; background: var(--bg-card); border: 1px solid var(--border-subtle);">📖 OBD-II Nedir?</a>
+          <a href="/gizlilik-politikasi" class="footer-link" style="padding: 10px 16px; border-radius: 8px; background: var(--bg-card); border: 1px solid var(--border-subtle);">🔒 Gizlilik Politikası</a>
+          <a href="/kullanim-kosullari" class="footer-link" style="padding: 10px 16px; border-radius: 8px; background: var(--bg-card); border: 1px solid var(--border-subtle);">📋 Kullanım Koşulları</a>
+        </div>
+      </nav>
     </div>
   </div>
-</section>
+</article>

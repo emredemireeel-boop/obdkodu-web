@@ -1,18 +1,19 @@
 <!-- Privacy Page -->
-<section class="about-page" id="privacyPage">
+<article class="about-page" id="privacyPage">
   <div class="container">
-    <div class="about-header">
+    <header class="about-header">
       <h1 class="page-title">Gizlilik <span class="gradient-text">Politikası</span></h1>
       <p class="page-subtitle">Kişisel verileriniz ve çerez kullanımı hakkında bilgilendirme</p>
-    </div>
+    </header>
 
     <div class="about-grid" style="grid-template-columns: 1fr;">
-      <div class="about-card">
+      <section class="about-card">
         <h2 class="about-card-title">1. Veri Toplama ve Kullanımı</h2>
         <p>obdkodu.com olarak ziyaretçilerimizin gizliliğine önem veriyoruz. Sitemizi ziyaret ettiğinizde, standart web sunucusu günlük dosyaları (log files) aracılığıyla IP adresiniz, tarayıcı türünüz, ziyaret saatiniz ve görüntülediğiniz sayfalar gibi kişisel olmayan veriler toplanabilir. Bu veriler yalnızca site performansını analiz etmek ve kullanıcı deneyimini iyileştirmek için kullanılır.</p>
-      </div>
+        <p>OBD-II <a href="/hakkinda">arıza kodu veritabanımız</a> üzerinden yapılan aramalar ve sayfa görüntülemeleri istatistiksel amaçlarla anonim olarak kaydedilir. Bu veriler üçüncü taraflarla paylaşılmaz.</p>
+      </section>
 
-      <div class="about-card">
+      <section class="about-card">
         <h2 class="about-card-title">2. Çerezler (Cookies) ve Google AdSense</h2>
         <p>Sitemiz, içerikleri ve reklamları kişiselleştirmek, sosyal medya özellikleri sağlamak ve trafiğimizi analiz etmek için çerezler kullanmaktadır.</p>
         <ul class="about-list">
@@ -20,12 +21,30 @@
           <li>Google'ın reklam çerezlerini kullanması, Google ve iş ortaklarının kullanıcılara sitenize ve/veya internetteki diğer sitelere yaptıkları ziyaretleri temel alan reklamlar sunmasına olanak tanır.</li>
           <li>Kullanıcılar, <a href="https://myadcenter.google.com/" target="_blank" rel="noopener noreferrer" style="color: var(--primary);">Reklam Ayarları</a>'nı ziyaret ederek kişiselleştirilmiş reklamlardan devre dışı kalabilirler.</li>
         </ul>
-      </div>
+      </section>
 
-      <div class="about-card">
-        <h2 class="about-card-title">3. Dış Bağlantılar</h2>
+      <section class="about-card">
+        <h2 class="about-card-title">3. Tema Tercihi Çerezi</h2>
+        <p>Sitemizde açık/koyu tema tercihiniz tarayıcınızın yerel depolama alanında (localStorage) saklanır. Bu veri yalnızca cihazınızda tutulur ve sunucularımıza iletilmez.</p>
+      </section>
+
+      <section class="about-card">
+        <h2 class="about-card-title">4. Dış Bağlantılar</h2>
         <p>Web sitemizden, farklı internet adreslerine bağlantılar (linkler) verilebilir. Sitemiz, link verdiği sitelerin içeriklerinden veya gizlilik prensiplerinden sorumlu tutulamaz. Bahsedilen bağlantı verme işlemi hukuki olarak "atıfta bulunma" olarak değerlendirilmektedir.</p>
-      </div>
+      </section>
+
+      <!-- İç Linkleme -->
+      <nav class="about-card">
+        <h2 class="about-card-title">İlgili Sayfalar</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+          <a href="/kullanim-kosullari" class="brand-chip">📋 Kullanım Koşulları</a>
+          <a href="/iletisim" class="brand-chip">✉️ İletişim</a>
+          <a href="/hakkinda" class="brand-chip">📖 OBD-II Hakkında</a>
+          <a href="/" class="brand-chip">🏠 Ana Sayfa</a>
+          <a href="/arama" class="brand-chip">🔍 Arıza Kodu Ara</a>
+          <a href="/gosterge-paneli" class="brand-chip">🚗 Gösterge Paneli</a>
+        </div>
+      </nav>
     </div>
   </div>
-</section>
+</article>

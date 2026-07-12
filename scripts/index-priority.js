@@ -51,6 +51,8 @@ const TOP_BRANDS = [
   'hyundai', 'toyota', 'bmw', 'mercedes', 'audi',
   'peugeot', 'citroen', 'dacia', 'skoda', 'kia',
   'honda', 'seat', 'volvo', 'chevrolet', 'togg',
+  'nissan', 'suzuki', 'mazda', 'jeep', 'byd',
+  'chery', 'mitsubishi', 'tesla',
 ];
 
 // Renkli konsol
