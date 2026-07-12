@@ -1,0 +1,94 @@
+<!-- Brand Detail Page -->
+<section class="search-page" id="brandDetailPage">
+  <div class="container">
+    <!-- Breadcrumb Navigation (SEO) -->
+    <nav class="breadcrumb premium-breadcrumb" id="breadcrumb" style="margin-bottom: 16px;">
+      <a href="/" class="breadcrumb-link">Ana Sayfa</a>
+      <span class="breadcrumb-sep">/</span>
+      <a href="/marka" class="breadcrumb-link">Markalar</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">{{brandName}}</span>
+    </nav>
+
+    <div class="search-page-header">
+      <h1 class="page-title">{{brandName}} <span class="gradient-text">Arıza Kodları</span></h1>
+      <p class="results-count">{{totalCodes}} arıza kodu</p>
+    </div>
+
+    <p style="color: var(--text-secondary); max-width: 700px; margin: 0 auto 40px; text-align: center; line-height: 1.7; font-size: 0.95rem;">
+      {{brandName}} araçlarda karşılaşabileceğiniz OBD-II arıza kodlarının tam listesi. Her arıza kodu için detaylı açıklama, olası nedenler ve çözüm adımları.
+    </p>
+
+    <!-- Category Stats -->
+    <div class="stats-grid" style="margin-bottom: 40px;">
+      <div class="stat-card">
+        <div class="stat-value">{{pCount}}</div>
+        <div class="stat-label">Motor & Şanzıman</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">{{bCount}}</div>
+        <div class="stat-label">Gövde Kodları</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">{{cCount}}</div>
+        <div class="stat-label">Şasi Kodları</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">{{uCount}}</div>
+        <div class="stat-label">İletişim Kodları</div>
+      </div>
+    </div>
+
+    <!-- Popular Codes for This Brand -->
+    <div class="section-header" style="margin-bottom: 24px;">
+      <h2 class="section-title">{{brandName}} İçin En Sık <span class="gradient-text">Karşılaşılan Kodlar</span></h2>
+    </div>
+    <div class="codes-grid">
+      {{#each popularCodes}}
+      <a href="/kod/{{code}}/{{brandSlug}}" class="code-card">
+        <div class="code-card-header">
+          <span class="code-badge category-{{category}}">{{category}}</span>
+          <span class="code-number">{{code}}</span>
+          <span class="severity-dot severity-{{severity}}"></span>
+        </div>
+        <h3 class="code-card-title">{{name}}</h3>
+        <p class="code-card-system">{{affectedSystem}}</p>
+        <div class="code-card-arrow">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </div>
+      </a>
+      {{/each}}
+    </div>
+
+    <!-- Models Section -->
+    {{#if hasModels}}
+    <div class="premium-related-section" style="margin-top: 40px;">
+      <h2 class="premium-section-title">{{brandName}} Modelleri</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 24px; font-size: 0.9rem;">
+        Aracınızın modeline özel arıza kodu bilgileri için bir model seçin:
+      </p>
+      <div class="premium-brands-cloud">
+        {{#each brandModels}}
+        <a href="/kod/P0300/{{brandSlug}}/{{slug}}" class="brand-chip">{{name}}</a>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+
+    <!-- CTA -->
+    <div class="section-cta" style="margin-top: 40px;">
+      <a href="/arama" class="btn-primary">
+        <span>Tüm Kodları Görüntüle</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- JSON-LD Schemas (SEO) -->
+<script type="application/ld+json">{{{itemListJson}}}</script>
+<script type="application/ld+json">{{{breadcrumbJson}}}</script>

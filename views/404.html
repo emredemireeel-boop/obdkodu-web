@@ -4,7 +4,18 @@
     <div class="error-content">
       <div class="error-code">404</div>
       <h1 class="error-title">Sayfa Bulunamadı</h1>
-      <p class="error-desc">Aradığınız sayfa mevcut değil, taşınmış veya silinmiş olabilir. Aşağıdaki bağlantılardan siteye devam edebilirsiniz.</p>
+      <p class="error-desc">Aradığınız sayfa mevcut değil, taşınmış veya silinmiş olabilir.</p>
+      
+      {{#if hasSuggestion}}
+      <!-- Smart Code Suggestion -->
+      <div style="background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(168,85,247,0.1)); border: 1px solid rgba(99,102,241,0.3); border-radius: 16px; padding: 24px; margin: 24px auto; max-width: 500px; text-align: center;">
+        <p style="color: var(--text-secondary); margin-bottom: 12px; font-size: 0.9rem;">Bunu mu aramıştınız?</p>
+        <a href="{{suggestedUrl}}" class="btn-primary" style="font-size: 1.1rem; padding: 14px 32px;">
+          {{suggestedCode}} — {{suggestedName}}
+        </a>
+      </div>
+      {{/if}}
+      
       <div class="error-actions">
         <a href="/" class="btn-primary" id="errorHomeBtn">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -22,21 +33,27 @@
         </a>
       </div>
 
-      <!-- Hızlı Erişim Linkleri (SEO: daha fazla iç link + içerik) -->
-      <nav class="error-quick-links" style="margin-top: 48px; text-align: left;">
-        <h2 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 16px; text-align: center; color: var(--text-secondary);">Popüler Sayfalar</h2>
+      <!-- Popular Codes -->
+      <nav class="error-quick-links" style="margin-top: 48px;">
+        <h2 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 16px; text-align: center; color: var(--text-secondary);">En Çok Aranan Kodlar</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; max-width: 600px; margin: 0 auto 24px;">
+          {{#each popularSuggestions}}
+          <a href="/kod/{{code}}" class="brand-chip" style="padding: 8px 16px;">{{code}} — {{name}}</a>
+          {{/each}}
+        </div>
+        
+        <h2 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 16px; text-align: center; color: var(--text-secondary);">Popüler Sayfalar</h2>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; max-width: 600px; margin: 0 auto;">
           <a href="/arama?kategori=P" class="footer-link" style="padding: 10px 16px; border-radius: 8px; background: var(--bg-card); border: 1px solid var(--border-subtle);">P - Motor & Şanzıman Kodları</a>
           <a href="/arama?kategori=B" class="footer-link" style="padding: 10px 16px; border-radius: 8px; background: var(--bg-card); border: 1px solid var(--border-subtle);">B - Gövde Kodları</a>
           <a href="/arama?kategori=C" class="footer-link" style="padding: 10px 16px; border-radius: 8px; background: var(--bg-card); border: 1px solid var(--border-subtle);">C - Şasi Kodları</a>
           <a href="/arama?kategori=U" class="footer-link" style="padding: 10px 16px; border-radius: 8px; background: var(--bg-card); border: 1px solid var(--border-subtle);">U - İletişim Kodları</a>
+          <a href="/marka" class="footer-link" style="padding: 10px 16px; border-radius: 8px; background: var(--bg-card); border: 1px solid var(--border-subtle);">Markaya Göre Arızalar</a>
           <a href="/gosterge-paneli" class="footer-link" style="padding: 10px 16px; border-radius: 8px; background: var(--bg-card); border: 1px solid var(--border-subtle);">Gösterge Paneli İşaretleri</a>
-          <a href="/hakkinda" class="footer-link" style="padding: 10px 16px; border-radius: 8px; background: var(--bg-card); border: 1px solid var(--border-subtle);">OBD-II Nedir?</a>
         </div>
       </nav>
 
       <p style="margin-top: 32px; color: var(--text-secondary); font-size: 0.9rem; text-align: center;">
-        Eğer bu sayfaya bir bağlantıdan ulaştıysanız, bağlantının güncel olmayabileceğini göz önünde bulundurun. 
         Arıza kodunuzu doğrudan arama kutusundan arayarak ilgili sayfaya ulaşabilirsiniz.
       </p>
     </div>

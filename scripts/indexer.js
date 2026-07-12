@@ -155,6 +155,12 @@ async function main() {
     allUrls.add(`${DOMAIN}/gosterge-paneli/${dl.id}`);
   }
 
+  // Brand hub pages (SEO)
+  allUrls.add(`${DOMAIN}/marka`);
+  for (const brand of popularBrands) {
+    allUrls.add(`${DOMAIN}/marka/${brand.slug}`);
+  }
+
   // OBD Kod sayfaları (Seviye 1: Genel)
   for (const code of uniqueCodes) {
     const codeId = code.code.toUpperCase();

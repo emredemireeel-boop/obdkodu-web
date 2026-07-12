@@ -1,6 +1,19 @@
 <!-- Search Page -->
 <section class="search-page" id="searchPage">
   <div class="container">
+    <!-- Breadcrumb Navigation (SEO) -->
+    <nav class="breadcrumb premium-breadcrumb" id="breadcrumb" style="margin-bottom: 16px;">
+      <a href="/" class="breadcrumb-link">Ana Sayfa</a>
+      <span class="breadcrumb-sep">/</span>
+      {{#if isActiveCategory}}
+      <a href="/arama" class="breadcrumb-link">Arıza Kodları</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">{{categoryName}}</span>
+      {{else}}
+      <span class="breadcrumb-current">Arıza Kodları</span>
+      {{/if}}
+    </nav>
+
     <div class="search-page-header">
       <h1 class="page-title">
         {{#if isSearchQuery}}
@@ -105,3 +118,8 @@
     {{/if}}
   </div>
 </section>
+
+<!-- BreadcrumbList JSON-LD (SEO) -->
+{{#if searchBreadcrumbJson}}
+<script type="application/ld+json">{{{searchBreadcrumbJson}}}</script>
+{{/if}}

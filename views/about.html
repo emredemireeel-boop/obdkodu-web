@@ -1,6 +1,13 @@
 <!-- About Page -->
 <section class="about-page" id="aboutPage">
   <div class="container">
+    <!-- Breadcrumb Navigation (SEO) -->
+    <nav class="breadcrumb premium-breadcrumb" id="breadcrumb" style="margin-bottom: 16px;">
+      <a href="/" class="breadcrumb-link">Ana Sayfa</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">OBD-II Hakkında</span>
+    </nav>
+
     <div class="about-header">
       <h1 class="page-title">OBD-II Sistemi <span class="gradient-text">Hakkında</span></h1>
       <p class="page-subtitle">Araçlardaki arıza teşhis sistemini tanıyın</p>
@@ -148,3 +155,15 @@
     </div>
   </div>
 </section>
+
+<!-- BreadcrumbList JSON-LD (SEO) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://www.obdkodu.com/" },
+    { "@type": "ListItem", "position": 2, "name": "OBD-II Hakkında" }
+  ]
+}
+</script>

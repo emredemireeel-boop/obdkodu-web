@@ -318,36 +318,13 @@
   </div>
 </section>
 
-<!-- JSON-LD FAQ Schema -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "{{code}} arıza kodu tam olarak nedir?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "{{code}} ({{name}}) arıza kodu, aracınızın {{affectedSystem}} sisteminde meydana gelen bir anormalliği işaret eder. {{description}}"
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "{{code}} kodu ne kadar ciddi, aracı sürmeye devam edebilir miyim?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "{{#if isHighSeverity}}Bu kod Yüksek (Kritik) ciddiyet seviyesine sahiptir. Motor bileşenlerinde veya sürüş güvenliğinde acil bir tehdit oluşturabileceğinden, aracınızı derhal yetkili bir servise çekmeniz tavsiye edilir.{{/if}}{{#if isNotHighSeverity}}Bu kod {{severityText}} ciddiyet seviyesindedir. Aracınızın performansını veya emisyon değerlerini etkileyebilir. Mümkün olan en kısa sürede kontrol ettirmeniz tavsiye edilir.{{/if}}"
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "{{code}} hatası nasıl çözülür?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "{{code}} arızasını çözmek için başlıca adımlar şunlardır: {{#each solutions}}{{this}} {{/each}}"
-      }
-    }
-  ]
-}
-</script>
+<!-- Server-side rendered JSON-LD (clean, no template syntax leaks) -->
+<script type="application/ld+json">{{{faqSchemaJson}}}</script>
+<script type="application/ld+json">{{{techArticleJson}}}</script>
+{{#if hasHowTo}}
+<script type="application/ld+json">{{{howToSchemaJson}}}</script>
+{{/if}}
+<script type="application/ld+json">{{{breadcrumbJson}}}</script>
+
+
+

@@ -1,0 +1,36 @@
+<!-- Brand Hub Page -->
+<section class="search-page" id="brandHubPage">
+  <div class="container">
+    <!-- Breadcrumb Navigation (SEO) -->
+    <nav class="breadcrumb premium-breadcrumb" id="breadcrumb" style="margin-bottom: 16px;">
+      <a href="/" class="breadcrumb-link">Ana Sayfa</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">Markalar</span>
+    </nav>
+
+    <div class="search-page-header">
+      <h1 class="page-title">Araç Markalarına Göre <span class="gradient-text">Arıza Kodları</span></h1>
+      <p class="results-count">{{totalBrands}} marka • {{totalCodes}} arıza kodu</p>
+    </div>
+
+    <p style="color: var(--text-secondary); max-width: 700px; margin: 0 auto 40px; text-align: center; line-height: 1.7; font-size: 0.95rem;">
+      Aracınızın markasını seçerek o markaya özel OBD-II arıza kodlarını, detaylı açıklamaları ve çözüm adımlarını inceleyin.
+    </p>
+
+    <div class="categories-grid" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px;">
+      {{#each brands}}
+      <a href="/marka/{{slug}}" class="category-card" style="text-align: center; padding: 24px 16px;">
+        <div class="category-letter" style="font-size: 1.5rem; margin-bottom: 8px;">🚗</div>
+        <h2 class="category-name" style="font-size: 1.1rem;">{{name}}</h2>
+        {{#if hasModels}}
+        <span class="category-count" style="font-size: 0.8rem;">{{modelCount}} model</span>
+        {{/if}}
+      </a>
+      {{/each}}
+    </div>
+  </div>
+</section>
+
+<!-- JSON-LD Schemas (SEO) -->
+<script type="application/ld+json">{{{itemListJson}}}</script>
+<script type="application/ld+json">{{{breadcrumbJson}}}</script>

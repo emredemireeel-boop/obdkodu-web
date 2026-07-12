@@ -156,6 +156,7 @@ function handleHome(req, res) {
     totalCodes,
     ...counts,
     popularCodes: popular,
+    popularBrands,
   });
   sendHtml(res, 200, html);
 }
@@ -198,13 +199,48 @@ function handleSearch(req, res, query) {
   let searchCanonical = 'https://www.obdkodu.com/arama';
   if (kategori && !q) searchCanonical += `?kategori=${kategori}`;
 
+  // SEO: noindex for user search queries (thin/duplicate content)
+  const isNoIndex = q ? 'true' : '';
+
+  // isAllCodes: when there's no query and no category filter
+  const isAllCodes = (!q && !kategori) ? 'true' : '';
+
+  // Category-specific meta descriptions for better SEO
+  const categoryMetaMap = {
+    P: `OBD-II P (Powertrain) kategorisi arıza kodları listesi. Motor ve şanzıman ile ilgili ${filteredCounts.pFilterCount} adet arıza kodu.`,
+    B: `OBD-II B (Body) kategorisi arıza kodları listesi. Hava yastığı, klima ve gövde sistemleri ile ilgili ${filteredCounts.bFilterCount} adet arıza kodu.`,
+    C: `OBD-II C (Chassis) kategorisi arıza kodları listesi. ABS, direksiyon ve şasi ile ilgili ${filteredCounts.cFilterCount} adet arıza kodu.`,
+    U: `OBD-II U (Network) kategorisi arıza kodları listesi. CAN bus ve modüller arası iletişim ile ilgili ${filteredCounts.uFilterCount} adet arıza kodu.`,
+  };
+  const metaDesc = q
+    ? `"${q}" araması için ${filtered.length} OBD-II arıza kodu bulundu.`
+    : (kategori ? categoryMetaMap[kategori] : `Türkiye'nin en kapsamlı OBD-II arıza kodları veritabanı. ${totalCount} arıza kodu detaylı açıklamalar ve çözüm önerileri ile.`);
+
+  // BreadcrumbList JSON-LD for search/category pages
+  const searchBreadcrumbItems = [
+    { "@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://www.obdkodu.com/" }
+  ];
+  if (kategori && !q) {
+    searchBreadcrumbItems.push({ "@type": "ListItem", "position": 2, "name": "Arıza Kodları", "item": "https://www.obdkodu.com/arama" });
+    searchBreadcrumbItems.push({ "@type": "ListItem", "position": 3, "name": categoryNames[kategori] || kategori });
+  } else {
+    searchBreadcrumbItems.push({ "@type": "ListItem", "position": 2, "name": "Arıza Kodları" });
+  }
+  const searchBreadcrumbJson = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": searchBreadcrumbItems
+  });
+
   const html = render('search', {
     pageTitle: q ? `"${q}" Arama Sonuçları` : (kategori ? `${categoryNames[kategori] || kategori} Kodları` : 'Tüm Arıza Kodları'),
-    metaDescription: `OBD-II arıza kodları listesi. ${filtered.length} sonuç bulundu.`,
+    metaDescription: metaDesc,
     canonicalUrl: searchCanonical,
     activeSearch: 'active',
     searchQuery: query.q || '',
     isSearchQuery: q ? 'true' : '',
+    isNoIndex,
+    isAllCodes,
     activeCategory: kategori,
     isActiveCategory: (!q && kategori) ? 'true' : '',
     categoryName: categoryNames[kategori] || '',
@@ -228,6 +264,7 @@ function handleSearch(req, res, query) {
     hasResults: filtered.length > 0 ? 'true' : '',
     noResults: filtered.length === 0 ? 'true' : '',
     results: filtered,
+    searchBreadcrumbJson,
   });
   sendHtml(res, 200, html);
 }
@@ -374,6 +411,108 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
     }
   }
 
+  // === SERVER-SIDE JSON-LD GENERATION (SEO) ===
+  const severityText = severityTextMap[code.severity] || code.severity;
+  const isHigh = (code.severity === 'yüksek' || code.severity === 'high');
+  
+  // FAQ Answer — rendered server-side to avoid template syntax in JSON-LD
+  const severityAnswer = isHigh
+    ? 'Bu kod Yüksek (Kritik) ciddiyet seviyesine sahiptir. Motor bileşenlerinde veya sürüş güvenliğinde acil bir tehdit oluşturabileceğinden, aracınızı derhal yetkili bir servise çekmeniz tavsiye edilir.'
+    : `Bu kod ${severityText} ciddiyet seviyesindedir. Aracınızın performansını veya emisyon değerlerini etkileyebilir. Mümkün olan en kısa sürede kontrol ettirmeniz tavsiye edilir.`;
+
+  const solutionsText = (code.solutions || []).join(' ');
+
+  // Build JSON-LD FAQ Schema (clean, no template syntax)
+  const faqSchemaJson = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": `${code.code} arıza kodu tam olarak nedir?`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": `${code.code} (${code.name}) arıza kodu, aracınızın ${code.affectedSystem} sisteminde meydana gelen bir anormalliği işaret eder. ${code.description}`
+        }
+      },
+      {
+        "@type": "Question",
+        "name": `${code.code} kodu ne kadar ciddi, aracı sürmeye devam edebilir miyim?`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": severityAnswer
+        }
+      },
+      {
+        "@type": "Question",
+        "name": `${code.code} hatası nasıl çözülür?`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": `${code.code} arızasını çözmek için başlıca adımlar şunlardır: ${solutionsText}`
+        }
+      }
+    ]
+  });
+
+  // Build JSON-LD TechArticle Schema
+  const techArticleJson = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": `${code.code} - ${code.name}`,
+    "description": metaDescription,
+    "url": canonicalUrl,
+    "inLanguage": "tr",
+    "datePublished": "2026-01-01",
+    "dateModified": SITEMAP_LASTMOD,
+    "author": { "@type": "Organization", "name": "OBD Kodları", "url": "https://www.obdkodu.com" },
+    "publisher": {
+      "@type": "Organization",
+      "name": "OBD Kodları",
+      "url": "https://www.obdkodu.com",
+      "logo": { "@type": "ImageObject", "url": "https://www.obdkodu.com/images/logo.png" }
+    },
+    "about": { "@type": "Thing", "name": code.affectedSystem },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": canonicalUrl },
+    "proficiencyLevel": "Beginner"
+  });
+
+  // Build JSON-LD HowTo Schema (solution steps)
+  let howToSchemaJson = '';
+  if (code.solutions && code.solutions.length > 0) {
+    howToSchemaJson = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": `${code.code} Arıza Kodu Nasıl Çözülür?`,
+      "description": `${code.code} (${code.name}) arıza kodunun çözüm adımları.`,
+      "step": code.solutions.map((sol, idx) => ({
+        "@type": "HowToStep",
+        "position": idx + 1,
+        "text": sol
+      }))
+    });
+  }
+
+  // Build JSON-LD BreadcrumbList — extended for brand/model
+  const breadcrumbItems = [
+    { "@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://www.obdkodu.com/" },
+    { "@type": "ListItem", "position": 2, "name": categoryName, "item": `https://www.obdkodu.com/arama?kategori=${code.category}` }
+  ];
+  if (brandObj && modelObj) {
+    breadcrumbItems.push({ "@type": "ListItem", "position": 3, "name": code.code, "item": `https://www.obdkodu.com/kod/${code.code}` });
+    breadcrumbItems.push({ "@type": "ListItem", "position": 4, "name": brandObj.name, "item": `https://www.obdkodu.com/kod/${code.code}/${brandObj.slug}` });
+    breadcrumbItems.push({ "@type": "ListItem", "position": 5, "name": modelObj.name });
+  } else if (brandObj) {
+    breadcrumbItems.push({ "@type": "ListItem", "position": 3, "name": code.code, "item": `https://www.obdkodu.com/kod/${code.code}` });
+    breadcrumbItems.push({ "@type": "ListItem", "position": 4, "name": brandObj.name });
+  } else {
+    breadcrumbItems.push({ "@type": "ListItem", "position": 3, "name": code.code });
+  }
+  const breadcrumbJson = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": breadcrumbItems
+  });
+
   const html = render('detail', {
     pageTitle,
     metaDescription,
@@ -383,10 +522,10 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
     name: displayCodeName,
     description: displayDescription,
     categoryName: categoryName,
-    severityText: severityTextMap[code.severity] || code.severity,
+    severityText,
     severity: mappedSeverity,
-    isHighSeverity: (code.severity === 'yüksek' || code.severity === 'high') ? 'true' : '',
-    isNotHighSeverity: (code.severity !== 'yüksek' && code.severity !== 'high') ? 'true' : '',
+    isHighSeverity: isHigh ? 'true' : '',
+    isNotHighSeverity: !isHigh ? 'true' : '',
     hasDashboardLight,
     dlName,
     dlDesc,
@@ -410,7 +549,13 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
     hasComments: formattedComments.length > 0 ? 'true' : '',
     noComments: formattedComments.length === 0 ? 'true' : '',
     commentCount: formattedComments.length,
-    paginationHtml: paginationHtml
+    paginationHtml: paginationHtml,
+    // Server-side rendered JSON-LD (no template syntax leaks)
+    faqSchemaJson,
+    techArticleJson,
+    howToSchemaJson,
+    breadcrumbJson,
+    hasHowTo: howToSchemaJson ? 'true' : '',
   });
   sendHtml(res, 200, html);
 }
@@ -471,6 +616,37 @@ function handleDashboardLightDetail(req, res, id) {
 
   const paginatedComments = formattedComments.slice((page - 1) * limit, page * limit);
 
+  // === SERVER-SIDE JSON-LD FOR DASHBOARD LIGHTS ===
+  const dlBreadcrumbJson = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://www.obdkodu.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Gösterge İşaretleri", "item": "https://www.obdkodu.com/gosterge-paneli" },
+      { "@type": "ListItem", "position": 3, "name": light.name }
+    ]
+  });
+
+  const dlArticleJson = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": `${light.name} Neden Yanar?`,
+    "description": `${light.name} neden yanar? ${light.description.substring(0, 120)}`,
+    "url": `https://www.obdkodu.com/gosterge-paneli/${light.id}`,
+    "inLanguage": "tr",
+    "datePublished": "2026-01-01",
+    "dateModified": SITEMAP_LASTMOD,
+    "author": { "@type": "Organization", "name": "OBD Kodları", "url": "https://www.obdkodu.com" },
+    "publisher": {
+      "@type": "Organization",
+      "name": "OBD Kodları",
+      "url": "https://www.obdkodu.com",
+      "logo": { "@type": "ImageObject", "url": "https://www.obdkodu.com/images/logo.png" }
+    },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": `https://www.obdkodu.com/gosterge-paneli/${light.id}` },
+    "proficiencyLevel": "Beginner"
+  });
+
   const context = {
     pageTitle: `${light.name} Neden Yanar?`,
     metaDescription: `${light.name} neden yanar? ${light.description.substring(0, 120)}`,
@@ -500,11 +676,122 @@ function handleDashboardLightDetail(req, res, id) {
     hasComments: formattedComments.length > 0 ? 'true' : '',
     noComments: formattedComments.length === 0 ? 'true' : '',
     commentCount: formattedComments.length,
-    paginationHtml: paginationHtml
+    paginationHtml: paginationHtml,
+    // Server-side JSON-LD
+    dlBreadcrumbJson,
+    dlArticleJson,
   };
 
   const html = render('dashboard-light-detail', context);
   sendHtml(res, 200, html, req);
+}
+
+// =========== BRAND HUB PAGES (SEO) ===========
+
+function handleBrandHub(req, res) {
+  // Build brands with stats
+  const brandsWithStats = popularBrands.map(brand => {
+    const brandModelsList = modelsList.filter(m => m.brandSlug === brand.slug);
+    return {
+      ...brand,
+      modelCount: brandModelsList.length,
+      hasModels: brandModelsList.length > 0 ? 'true' : '',
+    };
+  });
+
+  // ItemList JSON-LD
+  const itemListJson = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Araç Markaları — OBD Arıza Kodları",
+    "numberOfItems": popularBrands.length,
+    "itemListElement": popularBrands.map((brand, idx) => ({
+      "@type": "ListItem",
+      "position": idx + 1,
+      "name": `${brand.name} Arıza Kodları`,
+      "url": `https://www.obdkodu.com/marka/${brand.slug}`
+    }))
+  });
+
+  const breadcrumbJson = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://www.obdkodu.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Markalar" }
+    ]
+  });
+
+  const html = render('brand-hub', {
+    pageTitle: 'Araç Markalarına Göre Arıza Kodları',
+    metaDescription: `${popularBrands.length} popüler araç markası için OBD-II arıza kodları. Volkswagen, Ford, Renault, Hyundai ve daha fazlası.`,
+    canonicalUrl: 'https://www.obdkodu.com/marka',
+    brands: brandsWithStats,
+    totalBrands: popularBrands.length,
+    totalCodes,
+    itemListJson,
+    breadcrumbJson,
+  });
+  sendHtml(res, 200, html);
+}
+
+function handleBrandDetail(req, res, brandSlug) {
+  const brand = popularBrands.find(b => b.slug === brandSlug);
+  if (!brand) return handle404(req, res);
+
+  const brandModels = modelsList.filter(m => m.brandSlug === brand.slug);
+  
+  // Get popular codes for this brand (first 20 P codes as they're most common)
+  const popularCodesForBrand = codes.filter(c => c.category === 'P').slice(0, 12);
+
+  // Category counts for all codes
+  const pCount = codes.filter(c => c.category === 'P').length;
+  const bCount = codes.filter(c => c.category === 'B').length;
+  const cCount = codes.filter(c => c.category === 'C').length;
+  const uCount = codes.filter(c => c.category === 'U').length;
+
+  // ItemList JSON-LD for brand codes
+  const itemListJson = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": `${brand.name} OBD-II Arıza Kodları`,
+    "numberOfItems": totalCodes,
+    "itemListElement": popularCodesForBrand.map((code, idx) => ({
+      "@type": "ListItem",
+      "position": idx + 1,
+      "name": `${brand.name} ${code.code} - ${code.name}`,
+      "url": `https://www.obdkodu.com/kod/${code.code}/${brand.slug}`
+    }))
+  });
+
+  const breadcrumbJson = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://www.obdkodu.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Markalar", "item": "https://www.obdkodu.com/marka" },
+      { "@type": "ListItem", "position": 3, "name": brand.name }
+    ]
+  });
+
+  const html = render('brand-detail', {
+    pageTitle: `${brand.name} Arıza Kodları`,
+    metaDescription: `${brand.name} araçlarda en sık karşılaşılan OBD-II arıza kodları listesi. ${totalCodes} arıza kodu detaylı açıklamalar ve çözüm önerileri ile.`,
+    canonicalUrl: `https://www.obdkodu.com/marka/${brand.slug}`,
+    brandName: brand.name,
+    brandSlug: brand.slug,
+    brandModels,
+    hasModels: brandModels.length > 0 ? 'true' : '',
+    popularCodes: popularCodesForBrand,
+    totalCodes,
+    pCount,
+    bCount,
+    cCount,
+    uCount,
+    itemListJson,
+    breadcrumbJson,
+  });
+  sendHtml(res, 200, html);
 }
 
 function handleAbout(req, res) {
@@ -576,6 +863,29 @@ function handleDashboardLights(req, res) {
   const classicLights = processedLights.filter(l => !l.id.startsWith('ev-'));
   const evLights = processedLights.filter(l => l.id.startsWith('ev-'));
 
+  // ItemList JSON-LD for dashboard lights (SEO)
+  const dlItemListJson = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Araç Gösterge Paneli İşaretleri",
+    "numberOfItems": dashboardLightsData.length,
+    "itemListElement": dashboardLightsData.map((dl, idx) => ({
+      "@type": "ListItem",
+      "position": idx + 1,
+      "name": dl.name,
+      "url": `https://www.obdkodu.com/gosterge-paneli/${dl.id}`
+    }))
+  });
+
+  const dlListBreadcrumbJson = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://www.obdkodu.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Gösterge İşaretleri" }
+    ]
+  });
+
   const html = render('dashboard-lights', {
     pageTitle: 'Gösterge Paneli İşaretleri',
     metaDescription: 'Araç gösterge panelinde yanan motor arıza, ABS, ESP, Akü, Yağ basıncı, EV batarya, şarj sistemi gibi ikaz ışıklarının anlamları ve ilgili OBD arıza kodları.',
@@ -583,7 +893,9 @@ function handleDashboardLights(req, res) {
     activeDashboard: 'active',
     lights: classicLights,
     evLights: evLights,
-    hasEvLights: evLights.length > 0 ? 'true' : ''
+    hasEvLights: evLights.length > 0 ? 'true' : '',
+    dlItemListJson,
+    dlListBreadcrumbJson,
   });
   sendHtml(res, 200, html);
 }
@@ -685,10 +997,39 @@ function handleApiComments(req, res) {
 }
 
 function handle404(req, res) {
+  // Smart code suggestion from URL
+  const pathname = url.parse(req.url).pathname || '';
+  const codeMatch = pathname.match(/([PBCU]\d{4})/i);
+  let suggestedCode = null;
+  let suggestedUrl = '';
+  
+  if (codeMatch) {
+    const searchCode = codeMatch[1].toUpperCase();
+    // Try exact match first
+    suggestedCode = codes.find(c => c.code === searchCode);
+    if (suggestedCode) {
+      suggestedUrl = `/kod/${suggestedCode.code}`;
+    } else {
+      // Try prefix match (e.g. P030 → P0300)
+      suggestedCode = codes.find(c => c.code.startsWith(searchCode.substring(0, 4)));
+      if (suggestedCode) suggestedUrl = `/kod/${suggestedCode.code}`;
+    }
+  }
+
+  // Popular codes for suggestions
+  const popularSuggestions = ['P0300', 'P0420', 'P0171', 'P0455', 'U0100'].map(c => 
+    codes.find(item => item.code === c)
+  ).filter(Boolean);
+
   const html = render('404', {
     pageTitle: 'Sayfa Bulunamadı',
     metaDescription: 'Aradığınız sayfa bulunamadı.',
     isNotFound: 'true',
+    hasSuggestion: suggestedCode ? 'true' : '',
+    suggestedCode: suggestedCode ? suggestedCode.code : '',
+    suggestedName: suggestedCode ? suggestedCode.name : '',
+    suggestedUrl,
+    popularSuggestions,
   });
   sendHtml(res, 404, html);
 }
@@ -696,7 +1037,17 @@ function handle404(req, res) {
 function handleRobotsTxt(req, res) {
   const robots = `User-agent: *
 Allow: /
-Sitemap: https://www.obdkodu.com/sitemap.xml
+Allow: /kod/
+Allow: /marka/
+Allow: /gosterge-paneli/
+Allow: /arama?kategori=
+Disallow: /api/
+Disallow: /arama?q=
+
+# Crawl-delay (be polite but not too slow)
+Crawl-delay: 1
+
+Sitemap: https://www.obdkodu.com/sitemap-index.xml
 
 # LLM/AI Crawler Information
 User-agent: GPTBot
@@ -760,122 +1111,192 @@ info@obdkodu.com`;
   res.end(llms);
 }
 
-function handleSitemap(req, res) {
-  const baseUrl = 'https://www.obdkodu.com';
-  const today = new Date().toISOString().split('T')[0];
-  
+// =========== SITEMAP INDEX SYSTEM ===========
+// Google limits: max 50,000 URLs per sitemap, max 50MB per file.
+// We split into multiple sitemaps referenced from a sitemap index.
+
+const SITEMAP_CHUNK_SIZE = 10000; // URLs per sitemap file
+const SITEMAP_BASE_URL = 'https://www.obdkodu.com';
+const SITEMAP_LASTMOD = '2026-07-09'; // Fixed date — update when content changes
+
+function sendXml(res, xml) {
+  res.writeHead(200, {
+    'Content-Type': 'application/xml; charset=utf-8',
+    'Cache-Control': 'public, max-age=86400',
+    'X-Robots-Tag': 'noindex',
+  });
+  res.end(xml);
+}
+
+// Pre-compute brand-code pairs chunked into sitemap groups
+const brandCodePairs = [];
+popularBrands.forEach(brand => {
+  codes.forEach(c => {
+    brandCodePairs.push({ code: c.code, brandSlug: brand.slug });
+  });
+});
+const brandChunkCount = Math.ceil(brandCodePairs.length / SITEMAP_CHUNK_SIZE);
+const codeChunkCount = Math.ceil(codes.length / SITEMAP_CHUNK_SIZE);
+
+function handleSitemapIndex(req, res) {
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>${SITEMAP_BASE_URL}/sitemap-static.xml</loc>
+    <lastmod>${SITEMAP_LASTMOD}</lastmod>
+  </sitemap>
+`;
+
+  // Code sitemaps
+  for (let i = 1; i <= codeChunkCount; i++) {
+    xml += `  <sitemap>
+    <loc>${SITEMAP_BASE_URL}/sitemap-codes-${i}.xml</loc>
+    <lastmod>${SITEMAP_LASTMOD}</lastmod>
+  </sitemap>
+`;
+  }
+
+  // Brand sitemaps
+  for (let i = 1; i <= brandChunkCount; i++) {
+    xml += `  <sitemap>
+    <loc>${SITEMAP_BASE_URL}/sitemap-brands-${i}.xml</loc>
+    <lastmod>${SITEMAP_LASTMOD}</lastmod>
+  </sitemap>
+`;
+  }
+
+  // Dashboard lights sitemap
+  if (dashboardLightsData.length > 0) {
+    xml += `  <sitemap>
+    <loc>${SITEMAP_BASE_URL}/sitemap-dashboard.xml</loc>
+    <lastmod>${SITEMAP_LASTMOD}</lastmod>
+  </sitemap>
+`;
+  }
+
+  xml += `</sitemapindex>`;
+  sendXml(res, xml);
+}
+
+function handleSitemapStatic(req, res) {
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>${baseUrl}/</loc>
-    <lastmod>${today}</lastmod>
+    <loc>${SITEMAP_BASE_URL}/</loc>
+    <lastmod>${SITEMAP_LASTMOD}</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>${baseUrl}/arama</loc>
-    <lastmod>${today}</lastmod>
+    <loc>${SITEMAP_BASE_URL}/arama</loc>
+    <lastmod>${SITEMAP_LASTMOD}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>${baseUrl}/arama?kategori=P</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>${baseUrl}/arama?kategori=B</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>${baseUrl}/arama?kategori=C</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>${baseUrl}/arama?kategori=U</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>${baseUrl}/gosterge-paneli</loc>
-    <lastmod>${today}</lastmod>
+    <loc>${SITEMAP_BASE_URL}/gosterge-paneli</loc>
+    <lastmod>${SITEMAP_LASTMOD}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>${baseUrl}/hakkinda</loc>
-    <lastmod>${today}</lastmod>
+    <loc>${SITEMAP_BASE_URL}/hakkinda</loc>
+    <lastmod>${SITEMAP_LASTMOD}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>${baseUrl}/iletisim</loc>
-    <lastmod>${today}</lastmod>
+    <loc>${SITEMAP_BASE_URL}/iletisim</loc>
+    <lastmod>${SITEMAP_LASTMOD}</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>${baseUrl}/gizlilik-politikasi</loc>
-    <lastmod>${today}</lastmod>
+    <loc>${SITEMAP_BASE_URL}/gizlilik-politikasi</loc>
+    <lastmod>${SITEMAP_LASTMOD}</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>${baseUrl}/kullanim-kosullari</loc>
-    <lastmod>${today}</lastmod>
+    <loc>${SITEMAP_BASE_URL}/kullanim-kosullari</loc>
+    <lastmod>${SITEMAP_LASTMOD}</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
-`;
+  <url>
+    <loc>${SITEMAP_BASE_URL}/marka</loc>
+    <lastmod>${SITEMAP_LASTMOD}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+${popularBrands.map(b => `  <url>
+    <loc>${SITEMAP_BASE_URL}/marka/${b.slug}</loc>
+    <lastmod>${SITEMAP_LASTMOD}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>`).join('\n')}
+</urlset>`;
+  sendXml(res, xml);
+}
 
-  // All OBD codes
-  codes.forEach(c => {
+function handleSitemapCodes(req, res, chunkNum) {
+  const start = (chunkNum - 1) * SITEMAP_CHUNK_SIZE;
+  const end = Math.min(start + SITEMAP_CHUNK_SIZE, codes.length);
+  if (start >= codes.length) return handle404(req, res);
+
+  let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+`;
+  for (let i = start; i < end; i++) {
     xml += `  <url>
-    <loc>${baseUrl}/kod/${c.code}</loc>
-    <lastmod>${today}</lastmod>
+    <loc>${SITEMAP_BASE_URL}/kod/${codes[i].code}</loc>
+    <lastmod>${SITEMAP_LASTMOD}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 `;
-  });
+  }
+  xml += `</urlset>`;
+  sendXml(res, xml);
+}
 
-  // Brand-specific OBD code pages (high SEO value)
-  popularBrands.forEach(brand => {
-    codes.forEach(c => {
-      xml += `  <url>
-    <loc>${baseUrl}/kod/${c.code}/${brand.slug}</loc>
-    <lastmod>${today}</lastmod>
+function handleSitemapBrands(req, res, chunkNum) {
+  const start = (chunkNum - 1) * SITEMAP_CHUNK_SIZE;
+  const end = Math.min(start + SITEMAP_CHUNK_SIZE, brandCodePairs.length);
+  if (start >= brandCodePairs.length) return handle404(req, res);
+
+  let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+`;
+  for (let i = start; i < end; i++) {
+    const pair = brandCodePairs[i];
+    xml += `  <url>
+    <loc>${SITEMAP_BASE_URL}/kod/${pair.code}/${pair.brandSlug}</loc>
+    <lastmod>${SITEMAP_LASTMOD}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 `;
-    });
-  });
+  }
+  xml += `</urlset>`;
+  sendXml(res, xml);
+}
 
-  // Dashboard lights detail pages
+function handleSitemapDashboard(req, res) {
+  let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+`;
   dashboardLightsData.forEach(l => {
     xml += `  <url>
-    <loc>${baseUrl}/gosterge-paneli/${l.id}</loc>
-    <lastmod>${today}</lastmod>
+    <loc>${SITEMAP_BASE_URL}/gosterge-paneli/${l.id}</loc>
+    <lastmod>${SITEMAP_LASTMOD}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 `;
   });
-
   xml += `</urlset>`;
-
-  res.writeHead(200, {
-    'Content-Type': 'application/xml; charset=utf-8',
-    'Cache-Control': 'public, max-age=86400',
-  });
-  res.end(xml);
+  sendXml(res, xml);
 }
 
 function handleStatic(req, res, filePath) {
@@ -939,9 +1360,17 @@ function handleStatic(req, res, filePath) {
 function sendHtml(res, statusCode, html, req) {
   const headers = {
     'Content-Type': 'text/html; charset=utf-8',
-    'Cache-Control': 'no-cache',
+    'Cache-Control': 'public, max-age=3600, s-maxage=86400',
     'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+    'X-Robots-Tag': 'index, follow',
+    'X-Content-Type-Options': 'nosniff',
   };
+
+  // 404 pages should not be cached or indexed
+  if (statusCode === 404) {
+    headers['Cache-Control'] = 'no-cache';
+    headers['X-Robots-Tag'] = 'noindex, nofollow';
+  }
 
   // Gzip compress HTML if client supports it
   const acceptEncoding = (req && req.headers && req.headers['accept-encoding']) || '';
@@ -1042,13 +1471,37 @@ const server = http.createServer((req, res) => {
     return handleDashboardLightDetail(req, res, dlMatch[1]);
   }
 
+  // Brand hub pages (SEO)
+  if ((pathname === '/marka' || pathname === '/marka/') && req.method === 'GET') {
+    return handleBrandHub(req, res);
+  }
+  const brandMatch = pathname.match(/^\/marka\/([a-zA-Z0-9-]+)$/);
+  if (brandMatch && req.method === 'GET') {
+    return handleBrandDetail(req, res, brandMatch[1]);
+  }
+
   // SEO
   if (pathname === '/robots.txt' && req.method === 'GET') {
     return handleRobotsTxt(req, res);
   }
 
-  if (pathname === '/sitemap.xml' && req.method === 'GET') {
-    return handleSitemap(req, res);
+  // Sitemap Index system — split into multiple files for Google compliance
+  if (pathname === '/sitemap.xml' || pathname === '/sitemap-index.xml') {
+    return handleSitemapIndex(req, res);
+  }
+  if (pathname === '/sitemap-static.xml') {
+    return handleSitemapStatic(req, res);
+  }
+  const sitemapCodesMatch = pathname.match(/^\/sitemap-codes-(\d+)\.xml$/);
+  if (sitemapCodesMatch) {
+    return handleSitemapCodes(req, res, parseInt(sitemapCodesMatch[1]));
+  }
+  const sitemapBrandsMatch = pathname.match(/^\/sitemap-brands-(\d+)\.xml$/);
+  if (sitemapBrandsMatch) {
+    return handleSitemapBrands(req, res, parseInt(sitemapBrandsMatch[1]));
+  }
+  if (pathname === '/sitemap-dashboard.xml') {
+    return handleSitemapDashboard(req, res);
   }
 
   if (pathname === '/llms.txt' && req.method === 'GET') {
@@ -1075,10 +1528,9 @@ const server = http.createServer((req, res) => {
     return handleStatic(req, res, pathname);
   }
 
-  // Favicon
+  // Favicon — serve the actual SVG favicon instead of 204
   if (pathname === '/favicon.ico') {
-    res.writeHead(204);
-    return res.end();
+    return handleStatic(req, res, '/images/favicon.svg');
   }
 
   // 404 for everything else
