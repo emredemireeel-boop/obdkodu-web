@@ -315,6 +315,32 @@
       </div>
     </div>
 
+    <!-- Brand-specific links for this code (CRITICAL internal linking) -->
+    {{#if showBrandsCloud}}
+    <div class="premium-related-section" style="margin-top: 32px;">
+      <h3 class="premium-section-title">{{code}} Kodunu Markaya Göre İnceleyin</h3>
+      <p style="color: var(--text-secondary); margin-bottom: 16px; font-size: 0.9rem;">
+        Aracınızın markasını seçerek {{code}} arıza kodunun markaya özel detaylarını görüntüleyin:
+      </p>
+      <div class="premium-brands-cloud" style="display: flex; flex-wrap: wrap; gap: 8px;">
+        {{#each popularBrands}}
+        <a href="/kod/{{../code}}/{{slug}}" class="brand-chip">{{name}}</a>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+
+    {{#if showModelsCloud}}
+    <div class="premium-related-section" style="margin-top: 32px;">
+      <h3 class="premium-section-title">{{code}} — {{brandName}} Model Seçin</h3>
+      <div class="premium-brands-cloud" style="display: flex; flex-wrap: wrap; gap: 8px;">
+        {{#each brandModels}}
+        <a href="/kod/{{../code}}/{{../brandSlug}}/{{slug}}" class="brand-chip">{{name}}</a>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+
   </div>
 </section>
 

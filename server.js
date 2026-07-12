@@ -8,6 +8,7 @@ const fs = require('fs');
 const path = require('path');
 const url = require('url');
 const zlib = require('zlib');
+const crypto = require('crypto');
 const { render } = require('./lib/template');
 
 const PORT = process.env.PORT || 3000;
@@ -148,15 +149,52 @@ function handleHome(req, res) {
     'P0174', 'P0455', 'P0128', 'P0700', 'U0100', 'C0035'
   ].map(c => codes.find(item => item.code === c)).filter(Boolean);
 
+  // WebSite schema — enables Google Sitelinks Search Box
+  const webSiteSchemaJson = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "OBD Kodları",
+    "alternateName": "OBD Kodu",
+    "url": "https://www.obdkodu.com",
+    "inLanguage": "tr",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://www.obdkodu.com/arama?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  });
+
+  // Organization schema — brand authority signal
+  const orgSchemaJson = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "OBD Kodları",
+    "url": "https://www.obdkodu.com",
+    "logo": "https://www.obdkodu.com/images/logo.png",
+    "description": "Türkiye'nin en kapsamlı OBD-II arıza kodu veritabanı. 3500+ arıza kodu, detaylı açıklamalar ve çözüm önerileri.",
+    "sameAs": [],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "info@obdkodu.com",
+      "contactType": "customer service",
+      "availableLanguage": "Turkish"
+    }
+  });
+
   const html = render('home', {
-    pageTitle: 'OBD-II Arıza Kodu Sorgulama',
-    metaDescription: 'OBD-II arıza kodlarını arayın ve aracınızdaki sorunları hızlıca teşhis edin. Detaylı açıklamalar, olası nedenler ve çözüm önerileri.',
+    pageTitle: 'OBD-II Arıza Kodu Sorgulama — Türkçe Veritabanı',
+    metaDescription: 'Araç arıza kodlarını anında sorgulayın. 3500+ OBD-II arıza kodu, detaylı açıklamalar, olası nedenler ve adım adım çözüm rehberleri. Ücretsiz OBD kodu arama.',
     canonicalUrl: 'https://www.obdkodu.com/',
     activeHome: 'active',
     totalCodes,
     ...counts,
     popularCodes: popular,
     popularBrands,
+    webSiteSchemaJson,
+    orgSchemaJson,
   });
   sendHtml(res, 200, html);
 }
@@ -328,22 +366,22 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
   };
   const mappedSeverity = severityClassMap[code.severity] || 'düşük';
 
-  // Shortened titles to stay under ~60 chars (layout appends " | OBD Kodları" = 14 chars)
-  let pageTitle = `${code.code} ${code.name}`;
-  let metaDescription = `${code.code} arıza kodu: ${code.name}. ${code.description.substring(0, 150)}`;
+  // SEO-optimized title tags — match Turkish search intent exactly
+  let pageTitle = `${code.code} Arıza Kodu Nedir? Nedenleri ve Çözümü`;
+  let metaDescription = `${code.code} arıza kodu nedir? ${code.name}. Belirtileri, olası nedenleri ve adım adım çözüm yöntemleri. ${code.description.substring(0, 120)}`;
   let displayCodeName = code.name;
   let canonicalUrl = `https://www.obdkodu.com/kod/${code.code}`;
   let displayDescription = code.description;
 
   if (brandObj && !modelObj) {
-    pageTitle = `${brandObj.name} ${code.code} Arıza Kodu`;
-    metaDescription = `${brandObj.name} aracınızda ${code.code} arıza kodu mu var? ${code.name} sorununun nedenleri, belirtileri ve kesin çözüm yöntemleri.`;
+    pageTitle = `${brandObj.name} ${code.code} Arıza Kodu — Nedenleri ve Çözümü`;
+    metaDescription = `${brandObj.name} aracınızda ${code.code} arıza kodu mu çıktı? ${code.name} — belirtileri, nedenleri ve kesin çözüm adımları burada.`;
     displayCodeName = `${brandObj.name} ${code.code} - ${code.name}`;
     canonicalUrl = `https://www.obdkodu.com/kod/${code.code}/${brandObj.slug}`;
     displayDescription = `Eğer ${brandObj.name} marka aracınızda ${code.code} arıza kodunu görüyorsanız, ${code.description}`;
   } else if (brandObj && modelObj) {
-    pageTitle = `${brandObj.name} ${modelObj.name} ${code.code}`;
-    metaDescription = `${brandObj.name} ${modelObj.name} model aracınızda ${code.code} arıza kodu mu var? ${code.name} sorununun nedenleri ve kesin çözümü.`;
+    pageTitle = `${brandObj.name} ${modelObj.name} ${code.code} Arıza Kodu Çözümü`;
+    metaDescription = `${brandObj.name} ${modelObj.name} aracınızda ${code.code} arıza kodu mu çıktı? ${code.name} — nedenleri ve çözüm rehberi.`;
     displayCodeName = `${brandObj.name} ${modelObj.name} ${code.code} - ${code.name}`;
     canonicalUrl = `https://www.obdkodu.com/kod/${code.code}/${brandObj.slug}/${modelObj.slug}`;
     displayDescription = `Eğer ${brandObj.name} ${modelObj.name} aracınızda ${code.code} arıza kodunu görüyorsanız, ${code.description}`;
@@ -1117,7 +1155,7 @@ info@obdkodu.com`;
 
 const SITEMAP_CHUNK_SIZE = 10000; // URLs per sitemap file
 const SITEMAP_BASE_URL = 'https://www.obdkodu.com';
-const SITEMAP_LASTMOD = '2026-07-09'; // Fixed date — update when content changes
+const SITEMAP_LASTMOD = '2026-07-12'; // Updated date — update when content changes
 
 function sendXml(res, xml) {
   res.writeHead(200, {
@@ -1358,12 +1396,17 @@ function handleStatic(req, res, filePath) {
 // =========== HELPERS ===========
 
 function sendHtml(res, statusCode, html, req) {
+  // Generate ETag from content hash for crawl efficiency (304 Not Modified)
+  const etag = '"' + crypto.createHash('md5').update(html).digest('hex').substring(0, 16) + '"';
+  
   const headers = {
     'Content-Type': 'text/html; charset=utf-8',
     'Cache-Control': 'public, max-age=3600, s-maxage=86400',
     'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
     'X-Robots-Tag': 'index, follow',
     'X-Content-Type-Options': 'nosniff',
+    'ETag': etag,
+    'Last-Modified': SITEMAP_LASTMOD + 'T00:00:00Z',
   };
 
   // 404 pages should not be cached or indexed
