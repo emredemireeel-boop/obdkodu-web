@@ -1164,8 +1164,7 @@ const SITEMAP_LASTMOD = '2026-07-12'; // Updated date — update when content ch
 function sendXml(res, xml) {
   res.writeHead(200, {
     'Content-Type': 'application/xml; charset=utf-8',
-    'Cache-Control': 'public, max-age=86400',
-    'X-Robots-Tag': 'noindex',
+    'Cache-Control': 'public, max-age=3600',
   });
   res.end(xml);
 }
