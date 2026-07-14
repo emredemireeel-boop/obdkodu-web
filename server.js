@@ -1039,12 +1039,17 @@ function handleApiComments(req, res) {
 }
 
 function handle404(req, res) {
-  // Smart code suggestion from URL
+  // If the request was for a sitemap or xml file, do not return HTML
   const pathname = url.parse(req.url).pathname || '';
+  if (pathname.toLowerCase().includes('sitemap') || pathname.endsWith('.xml')) {
+    res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+    return res.end('404 Not Found: Sitemap or XML file does not exist.');
+  }
+
+  // Smart code suggestion from URL
   const codeMatch = pathname.match(/([PBCU]\d{4})/i);
   let suggestedCode = null;
   let suggestedUrl = '';
-  
   if (codeMatch) {
     const searchCode = codeMatch[1].toUpperCase();
     // Try exact match first
@@ -1181,6 +1186,7 @@ const codeChunkCount = Math.ceil(codes.length / SITEMAP_CHUNK_SIZE);
 
 function handleSitemapIndex(req, res) {
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
     <loc>${SITEMAP_BASE_URL}/sitemap-static.xml</loc>
@@ -1221,6 +1227,7 @@ function handleSitemapIndex(req, res) {
 
 function handleSitemapStatic(req, res) {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>${SITEMAP_BASE_URL}/</loc>
@@ -1286,6 +1293,7 @@ function handleSitemapCodes(req, res, chunkNum) {
   if (start >= codes.length) return handle404(req, res);
 
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 `;
   for (let i = start; i < end; i++) {
@@ -1307,6 +1315,7 @@ function handleSitemapBrands(req, res, chunkNum) {
   if (start >= brandCodePairs.length) return handle404(req, res);
 
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 `;
   for (let i = start; i < end; i++) {
@@ -1325,6 +1334,7 @@ function handleSitemapBrands(req, res, chunkNum) {
 
 function handleSitemapDashboard(req, res) {
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 `;
   dashboardLightsData.forEach(l => {
