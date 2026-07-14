@@ -1163,7 +1163,7 @@ const SITEMAP_LASTMOD = '2026-07-12'; // Updated date — update when content ch
 
 function sendXml(res, xml) {
   res.writeHead(200, {
-    'Content-Type': 'application/xml; charset=utf-8',
+    'Content-Type': 'text/xml; charset=utf-8',
     'Cache-Control': 'public, max-age=3600',
   });
   res.end(xml);
@@ -1532,21 +1532,23 @@ const server = http.createServer((req, res) => {
   }
 
   // Sitemap Index system — split into multiple files for Google compliance
-  if (pathname === '/sitemap.xml' || pathname === '/sitemap-index.xml') {
+  const cleanPath = pathname.replace(/\/$/, '').toLowerCase();
+  
+  if (cleanPath === '/sitemap.xml' || cleanPath === '/sitemap-index.xml' || cleanPath === '/sitemap_index.xml') {
     return handleSitemapIndex(req, res);
   }
-  if (pathname === '/sitemap-static.xml') {
+  if (cleanPath === '/sitemap-static.xml') {
     return handleSitemapStatic(req, res);
   }
-  const sitemapCodesMatch = pathname.match(/^\/sitemap-codes-(\d+)\.xml$/);
+  const sitemapCodesMatch = cleanPath.match(/^\/sitemap-codes-(\d+)\.xml$/);
   if (sitemapCodesMatch) {
     return handleSitemapCodes(req, res, parseInt(sitemapCodesMatch[1]));
   }
-  const sitemapBrandsMatch = pathname.match(/^\/sitemap-brands-(\d+)\.xml$/);
+  const sitemapBrandsMatch = cleanPath.match(/^\/sitemap-brands-(\d+)\.xml$/);
   if (sitemapBrandsMatch) {
     return handleSitemapBrands(req, res, parseInt(sitemapBrandsMatch[1]));
   }
-  if (pathname === '/sitemap-dashboard.xml') {
+  if (cleanPath === '/sitemap-dashboard.xml') {
     return handleSitemapDashboard(req, res);
   }
 
