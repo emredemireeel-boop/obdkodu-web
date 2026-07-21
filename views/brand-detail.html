@@ -11,12 +11,12 @@
     </nav>
 
     <div class="search-page-header">
-      <h1 class="page-title">{{brandName}} <span class="gradient-text">Arıza Kodları</span></h1>
+      <h1 class="page-title">{{brandName}} <span class="gradient-text">OBD-II Rehberi</span></h1>
       <p class="results-count">{{totalCodes}} arıza kodu</p>
     </div>
 
     <p style="color: var(--text-secondary); max-width: 700px; margin: 0 auto 40px; text-align: center; line-height: 1.7; font-size: 0.95rem;">
-      {{brandName}} araçlarda karşılaşabileceğiniz OBD-II arıza kodlarının tam listesi. Her arıza kodu için detaylı açıklama, olası nedenler ve çözüm adımları.
+      {{brandName}} araçlarda okunabilen standart OBD-II kodlarını, temel teşhis sırasını ve model rehberlerini inceleyin. Üreticiye özel kod tanımları araç, motor ve kontrol ünitesine göre değişebileceği için servis dokümanıyla doğrulanmalıdır.
     </p>
 
     <!-- Category Stats -->
@@ -41,11 +41,11 @@
 
     <!-- Popular Codes for This Brand -->
     <div class="section-header" style="margin-bottom: 24px;">
-      <h2 class="section-title">{{brandName}} İçin En Sık <span class="gradient-text">Karşılaşılan Kodlar</span></h2>
+      <h2 class="section-title">Sık Aranan <span class="gradient-text">Standart OBD-II Kodları</span></h2>
     </div>
     <div class="codes-grid">
       {{#each popularCodes}}
-      <a href="/kod/{{code}}/{{brandSlug}}" class="code-card">
+      <a href="/kod/{{code}}" class="code-card">
         <div class="code-card-header">
           <span class="code-badge category-{{category}}">{{category}}</span>
           <span class="code-number">{{code}}</span>
@@ -67,15 +67,27 @@
     <div class="premium-related-section" style="margin-top: 40px;">
       <h2 class="premium-section-title">{{brandName}} Modelleri</h2>
       <p style="color: var(--text-secondary); margin-bottom: 24px; font-size: 0.9rem;">
-        Aracınızın modeline özel arıza kodu bilgileri için bir model seçin:
+        Modelinize uygun OBD-II okuma ve doğrulama rehberi için seçim yapın:
       </p>
       <div class="premium-brands-cloud">
         {{#each brandModels}}
-        <a href="/kod/P0300/{{brandSlug}}/{{slug}}" class="brand-chip">{{name}}</a>
+        <a href="/marka/{{brandSlug}}/{{slug}}" class="brand-chip">{{name}}</a>
         {{/each}}
       </div>
     </div>
     {{/if}}
+
+    <div class="premium-related-section" style="margin-top: 40px;">
+      <h2 class="premium-section-title">Arızayı Sisteme Göre İnceleyin</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.9rem;">
+        {{brandName}} aracınızdaki kodu parça değiştirmeden önce ilgili sistemin kontrol sırasıyla birlikte değerlendirin.
+      </p>
+      <div class="premium-brands-cloud">
+        {{#each systemGuides}}
+        <a href="/sistem/{{slug}}" class="brand-chip">{{name}}</a>
+        {{/each}}
+      </div>
+    </div>
 
     <!-- CTA -->
     <div class="section-cta" style="margin-top: 40px;">

@@ -32,6 +32,11 @@
           </svg>
           Sistem: <strong>{{affectedSystem}}</strong>
         </div>
+        {{#if hasSystemGuide}}
+        <a href="{{systemGuideUrl}}" class="brand-chip" style="display: inline-flex; margin-top: 14px;">
+          {{systemGuideName}} rehberini aç
+        </a>
+        {{/if}}
       </div>
     </div>
 
@@ -160,48 +165,24 @@
     <!-- Brands Cloud (Internal Linking for SEO) -->
     {{#if showBrandsCloud}}
     <div class="premium-related-section" style="margin-top: 20px;">
-      <h3 class="premium-section-title">Markalara Göre {{code}} Arızası</h3>
+      <h3 class="premium-section-title">Aracınıza Göre OBD Rehberleri</h3>
       <div class="premium-brands-cloud">
         {{#each popularBrands}}
-        <a href="/kod/{{code}}/{{slug}}" class="brand-chip">{{name}}</a>
+        <a href="/marka/{{slug}}" class="brand-chip">{{name}}</a>
         {{/each}}
       </div>
     </div>
     {{/if}}
 
-    <!-- Models Cloud -->
-    {{#if showModelsCloud}}
-    <div class="premium-related-section" style="margin-top: 20px;">
-      <h3 class="premium-section-title">{{brandName}} Modellerine Göre {{code}} Arızası</h3>
-      <div class="premium-brands-cloud">
-        {{#each brandModels}}
-        <a href="/kod/{{code}}/{{brandSlug}}/{{slug}}" class="brand-chip">{{name}}</a>
-        {{/each}}
-      </div>
+    <div class="premium-related-section" style="margin-top: 28px;">
+      <h3 class="premium-section-title">Kaynak ve editoryal kontrol</h3>
+      <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 10px;">
+        Kod yapısı ve standart tanım SAE J2012 ile ISO 15031-6 çerçevesinde açıklanır. Belirti, neden ve kontrol adımları genel teşhis sırasıdır; üreticiye özel ölçüm değerleri için aracın VIN numarasına uygun servis dokümanı kullanılmalıdır.
+      </p>
+      <p style="color: var(--text-muted); font-size: 0.85rem;">
+        Son güncelleme: {{dateModified}} • <a href="/kaynaklar-ve-metodoloji" class="breadcrumb-link">Kaynaklar ve editoryal yöntem</a>
+      </p>
     </div>
-    {{/if}}
-
-    <!-- Back Buttons -->
-    {{#if isBrandPage}}
-    <div class="premium-related-section" style="margin-top: 20px; text-align: center;">
-      <a href="/kod/{{code}}" class="brand-chip-active">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-        {{code}} Genel Açıklamasına Dön
-      </a>
-    </div>
-    {{/if}}
-
-    {{#if isModelPage}}
-    <div class="premium-related-section" style="margin-top: 20px; text-align: center; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
-      <a href="/kod/{{code}}/{{brandSlug}}" class="brand-chip-active">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-        {{brandName}} Marka Sayfasına Dön
-      </a>
-      <a href="/kod/{{code}}" class="brand-chip" style="display: inline-flex; align-items: center; gap: 8px;">
-        {{code}} Genel Koda Dön
-      </a>
-    </div>
-    {{/if}}
 
     <!-- Sponsor Banner -->
     <a href="https://otosoz.com" target="_blank" class="sponsor-banner">
@@ -315,32 +296,6 @@
       </div>
     </div>
 
-    <!-- Brand-specific links for this code (CRITICAL internal linking) -->
-    {{#if showBrandsCloud}}
-    <div class="premium-related-section" style="margin-top: 32px;">
-      <h3 class="premium-section-title">{{code}} Kodunu Markaya Göre İnceleyin</h3>
-      <p style="color: var(--text-secondary); margin-bottom: 16px; font-size: 0.9rem;">
-        Aracınızın markasını seçerek {{code}} arıza kodunun markaya özel detaylarını görüntüleyin:
-      </p>
-      <div class="premium-brands-cloud" style="display: flex; flex-wrap: wrap; gap: 8px;">
-        {{#each popularBrands}}
-        <a href="/kod/{{../code}}/{{slug}}" class="brand-chip">{{name}}</a>
-        {{/each}}
-      </div>
-    </div>
-    {{/if}}
-
-    {{#if showModelsCloud}}
-    <div class="premium-related-section" style="margin-top: 32px;">
-      <h3 class="premium-section-title">{{code}} — {{brandName}} Model Seçin</h3>
-      <div class="premium-brands-cloud" style="display: flex; flex-wrap: wrap; gap: 8px;">
-        {{#each brandModels}}
-        <a href="/kod/{{../code}}/{{../brandSlug}}/{{slug}}" class="brand-chip">{{name}}</a>
-        {{/each}}
-      </div>
-    </div>
-    {{/if}}
-
   </div>
 </section>
 
@@ -351,6 +306,3 @@
 <script type="application/ld+json">{{{howToSchemaJson}}}</script>
 {{/if}}
 <script type="application/ld+json">{{{breadcrumbJson}}}</script>
-
-
-

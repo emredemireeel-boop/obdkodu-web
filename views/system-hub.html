@@ -1,0 +1,31 @@
+<section class="search-page" id="systemHubPage">
+  <div class="container">
+    <nav class="breadcrumb premium-breadcrumb" aria-label="Sayfa yolu" style="margin-bottom: 16px;">
+      <a href="/" class="breadcrumb-link">Ana Sayfa</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">Sistem Rehberleri</span>
+    </nav>
+
+    <div class="search-page-header">
+      <h1 class="page-title">Araç Sistemlerine Göre <span class="gradient-text">OBD-II Kodları</span></h1>
+      <p class="results-count">{{totalSystems}} ayrı teşhis rehberi</p>
+    </div>
+
+    <p style="color: var(--text-secondary); max-width: 780px; margin: 0 auto 40px; text-align: center; line-height: 1.8;">
+      Arıza kodunu yalnızca parça adı olarak değil, bağlı olduğu sistemle birlikte değerlendirin. Her rehberde ilgili kodları, kontrol sırasını ve güvenlik uyarılarını bulabilirsiniz.
+    </p>
+
+    <div class="categories-grid" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px;">
+      {{#each systemGuides}}
+      <a href="/sistem/{{slug}}" class="category-card" style="padding: 24px;">
+        <span class="category-count" style="display: inline-flex; margin-bottom: 12px;">{{codeCount}} ilgili kod</span>
+        <h2 class="category-name" style="font-size: 1.05rem; line-height: 1.4;">{{name}}</h2>
+        <p class="category-desc">{{shortDescription}}</p>
+      </a>
+      {{/each}}
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json">{{{itemListJson}}}</script>
+<script type="application/ld+json">{{{breadcrumbJson}}}</script>

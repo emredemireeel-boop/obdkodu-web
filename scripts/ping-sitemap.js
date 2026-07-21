@@ -5,12 +5,15 @@
 // (Google /ping endpoint'i 2024'te kaldırıldı)
 // =====================================================
 
+console.error('Bu komut devre dışı: sitemap ping uçları güvenilir indeksleme yöntemi değildir. sitemap.xml dosyasını arama motorlarının webmaster araçlarından gönderin.');
+process.exit(1);
+
 const https = require('https');
 const http = require('http');
 const crypto = require('crypto');
 
 const DOMAIN = 'www.obdkodu.com';
-const SITEMAP_URL = 'https://www.obdkodu.com/sitemap-index.xml';
+const SITEMAP_URL = 'https://www.obdkodu.com/sitemap.xml';
 
 const c = {
   green: (t) => `\x1b[32m${t}\x1b[0m`,

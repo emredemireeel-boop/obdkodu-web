@@ -1,0 +1,68 @@
+<section class="search-page" id="systemDetailPage">
+  <div class="container">
+    <nav class="breadcrumb premium-breadcrumb" aria-label="Sayfa yolu" style="margin-bottom: 16px;">
+      <a href="/" class="breadcrumb-link">Ana Sayfa</a>
+      <span class="breadcrumb-sep">/</span>
+      <a href="/sistem" class="breadcrumb-link">Sistem Rehberleri</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">{{name}}</span>
+    </nav>
+
+    <div class="search-page-header">
+      <h1 class="page-title">{{name}}</h1>
+      <p class="results-count">{{codeCount}} ilgili OBD-II arıza kodu</p>
+    </div>
+
+    <div class="premium-related-section" style="margin-bottom: 32px;">
+      <h2 class="premium-section-title">Bu sistem neyi ifade eder?</h2>
+      <p style="color: var(--text-secondary); line-height: 1.85;">{{description}}</p>
+    </div>
+
+    <div class="premium-related-section" style="margin-bottom: 40px;">
+      <h2 class="premium-section-title">Kontrol sırası</h2>
+      <ol style="color: var(--text-secondary); line-height: 1.9; padding-left: 22px;">
+        {{#each checks}}
+        <li style="margin-bottom: 8px;">{{this}}</li>
+        {{/each}}
+      </ol>
+      <p style="color: var(--text-muted); margin-top: 18px; font-size: 0.88rem; line-height: 1.7;">
+        Bir DTC arızalı parçayı tek başına kanıtlamaz. Ölçüm değerleri ve prosedürler motor, model yılı ve kontrol ünitesi yazılımına göre değişir.
+      </p>
+    </div>
+
+    <div class="section-header" style="margin-bottom: 24px;">
+      <h2 class="section-title">İlgili <span class="gradient-text">Arıza Kodları</span></h2>
+      <p class="section-subtitle">Kodu açarak belirtileri, olası nedenleri ve doğrulama adımlarını inceleyin.</p>
+    </div>
+    <div class="codes-grid">
+      {{#each codes}}
+      <a href="/kod/{{code}}" class="code-card">
+        <div class="code-card-header">
+          <span class="code-badge category-{{category}}">{{category}}</span>
+          <span class="code-number">{{code}}</span>
+          <span class="severity-dot severity-{{severity}}"></span>
+        </div>
+        <h3 class="code-card-title">{{name}}</h3>
+        <p class="code-card-system">{{affectedSystem}}</p>
+      </a>
+      {{/each}}
+    </div>
+
+    {{#if hasMoreCodes}}
+    <div class="section-cta" style="margin-top: 32px;">
+      <a href="/arama" class="btn-secondary premium-btn">Kalan {{hiddenCodeCount}} kodu veritabanında ara</a>
+    </div>
+    {{/if}}
+
+    <div class="premium-related-section" style="margin-top: 40px;">
+      <h2 class="premium-section-title">Kaynak ve güvenlik</h2>
+      <p style="color: var(--text-secondary); line-height: 1.8;">
+        Kod yapısı SAE J2012 ve ISO 15031-6 tanımları temelinde açıklanır. Onarıma geçmeden önce aracınıza ait üretici servis dokümanını kullanın. <a href="/kaynaklar-ve-metodoloji" class="breadcrumb-link">Kaynaklar ve editoryal yöntemi inceleyin</a>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json">{{{collectionJson}}}</script>
+<script type="application/ld+json">{{{itemListJson}}}</script>
+<script type="application/ld+json">{{{breadcrumbJson}}}</script>

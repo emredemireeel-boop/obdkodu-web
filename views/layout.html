@@ -4,15 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="{{metaDescription}}">
-  {{#if isNotFound}}
-  <meta name="robots" content="noindex, nofollow">
-  {{else}}
-  {{#if isNoIndex}}
-  <meta name="robots" content="noindex, follow">
-  {{else}}
-  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
-  {{/if}}
-  {{/if}}
+  <meta name="robots" content="{{robotsDirective}}">
   <meta name="theme-color" content="#059669">
   <meta name="author" content="OBD Kodları">
   <meta name="format-detection" content="telephone=no">
@@ -28,62 +20,22 @@
   <meta property="og:site_name" content="OBD Kodları">
   <meta property="og:locale" content="tr_TR">
   <meta property="og:url" content="{{canonicalUrl}}">
-  <meta property="og:image" content="https://www.obdkodu.com/images/logo.png">
+  <meta property="og:image" content="https://www.obdkodu.com/images/obd-kodlari-social-card.png">
+  <meta property="og:image:width" content="1730">
+  <meta property="og:image:height" content="909">
+  <meta property="og:image:alt" content="OBD Kodları — Türkçe arıza kodu ve teşhis rehberi">
   <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{{pageTitle}} | OBD Kodları">
   <meta name="twitter:description" content="{{metaDescription}}">
-  <meta name="twitter:image" content="https://www.obdkodu.com/images/logo.png">
+  <meta name="twitter:image" content="https://www.obdkodu.com/images/obd-kodlari-social-card.png">
   <title>{{pageTitle}} | OBD Kodları</title>
-  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="/css/style.css?v=7" as="style">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css?v=7">
+  <link rel="preload" href="/css/style.min.css?v=8" as="style">
+  <link rel="stylesheet" href="/css/style.min.css?v=8">
   <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
   <link rel="icon" type="image/png" href="/images/logo.png">
   <link rel="apple-touch-icon" href="/images/logo.png">
   <link rel="mask-icon" href="/images/favicon.svg" color="#059669">
-  <!-- WebSite Schema -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "OBD Kodları",
-    "alternateName": ["OBD Kodu", "obdkodu.com", "OBD-II Arıza Kodları"],
-    "url": "https://www.obdkodu.com",
-    "description": "Türkiye'nin en kapsamlı OBD-II arıza kodu veritabanı. 3500+ arıza kodu, detaylı açıklamalar ve çözüm rehberleri.",
-    "inLanguage": "tr",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": {
-        "@type": "EntryPoint",
-        "urlTemplate": "https://www.obdkodu.com/arama?q={search_term_string}"
-      },
-      "query-input": "required name=search_term_string"
-    }
-  }
-  </script>
-  <!-- Organization Schema -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "OBD Kodları",
-    "url": "https://www.obdkodu.com",
-    "logo": "https://www.obdkodu.com/images/logo.png",
-    "description": "Türkiye'nin en kapsamlı OBD-II arıza kodu veritabanı. 3500+ arıza kodu, detaylı açıklamalar ve çözüm önerileri.",
-    "email": "info@obdkodu.com",
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "email": "info@obdkodu.com",
-      "contactType": "customer service",
-      "availableLanguage": "Turkish"
-    }
-  }
-  </script>
   <script>
     // Prevent flash of wrong theme (FOUC) — runs before body renders.
     // Default is LIGHT mode; dark mode is opt-in via the topbar toggle.
@@ -109,6 +61,7 @@
       <div class="nav-links" id="navLinks">
         <a href="/" class="nav-link {{activeHome}}" id="navHome">Ana Sayfa</a>
         <a href="/arama" class="nav-link {{activeSearch}}" id="navSearch">Kodları Ara</a>
+        <a href="/sistem" class="nav-link {{activeSystems}}" id="navSystems">Sistem Rehberleri</a>
         <a href="/gosterge-paneli" class="nav-link {{activeDashboard}}" id="navDashboard">Gösterge İşaretleri</a>
         <a href="/hakkinda" class="nav-link {{activeAbout}}" id="navAbout">Hakkında</a>
         <a href="https://otosoz.com" target="_blank" class="nav-sponsor-link">🚗 Otosöz Forum</a>
@@ -182,13 +135,15 @@
           <h4 class="footer-title">Hızlı Erişim</h4>
           <a href="/" class="footer-link">Ana Sayfa</a>
           <a href="/arama" class="footer-link">Tüm Kodlar</a>
-          <a href="/marka" class="footer-link">Marka Arızaları</a>
+          <a href="/sistem" class="footer-link">Sistem Rehberleri</a>
+          <a href="/marka" class="footer-link">Marka ve Model Rehberleri</a>
           <a href="/gosterge-paneli" class="footer-link">Gösterge İşaretleri</a>
           <a href="/hakkinda" class="footer-link">OBD-II Nedir?</a>
         </nav>
 
         <nav class="footer-section" aria-label="Yasal bilgiler">
           <h4 class="footer-title">Kurumsal &amp; Yasal</h4>
+          <a href="/kaynaklar-ve-metodoloji" class="footer-link">Kaynaklar ve Yöntem</a>
           <a href="/iletisim" class="footer-link">İletişim</a>
           <a href="/gizlilik-politikasi" class="footer-link">Gizlilik Politikası</a>
           <a href="/kullanim-kosullari" class="footer-link">Kullanım Koşulları</a>
@@ -201,6 +156,6 @@
     </div>
   </footer>
 
-  <script src="/js/main.js" defer></script>
+  <script src="/js/main.min.js?v=8" defer></script>
 </body>
 </html>

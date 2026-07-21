@@ -4,6 +4,9 @@
 // Her çalıştırmada 200 URL (günlük Google limiti) gönderir
 // =====================================================
 
+console.error('Bu komut devre dışı: Google Indexing API normal OBD sayfaları için kullanılamaz. sitemap.xml dosyasını Search Console üzerinden gönderin.');
+process.exit(1);
+
 const fs = require('fs');
 const path = require('path');
 const { google } = require('googleapis');
@@ -62,7 +65,15 @@ const popularBrands = [
 ];
 
 function createSlug(str) {
-  return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  const transliterationMap = {
+    ç: 'c', ğ: 'g', ı: 'i', ö: 'o', ş: 's', ü: 'u',
+    Ç: 'c', Ğ: 'g', İ: 'i', Ö: 'o', Ş: 's', Ü: 'u'
+  };
+  return String(str)
+    .replace(/[çğıöşüÇĞİÖŞÜ]/g, char => transliterationMap[char])
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
 }
 
 function sleep(ms) {
@@ -132,10 +143,15 @@ async function main() {
     dashboardLights = JSON.parse(fs.readFileSync(DL_FILE, 'utf-8'));
   }
 
-  const modelsList = vehiclesData.map(v => ({
-    brandSlug: createSlug(v.brand),
-    slug: createSlug(v.model)
-  }));
+  const modelMap = new Map();
+  for (const vehicle of vehiclesData) {
+    if (!vehicle.brand || !vehicle.model || vehicle.brand.includes('/')) continue;
+    const brandName = vehicle.brand === 'Mercedes-Benz' ? 'Mercedes' : vehicle.brand;
+    const model = { brandSlug: createSlug(brandName), slug: createSlug(vehicle.model) };
+    modelMap.set(`${model.brandSlug}/${model.slug}`, model);
+  }
+  const modelsList = Array.from(modelMap.values());
+  const brandSlugs = Array.from(new Set(modelsList.map(model => model.brandSlug)));
 
   const allUrls = new Set();
 
@@ -157,25 +173,17 @@ async function main() {
 
   // Brand hub pages (SEO)
   allUrls.add(`${DOMAIN}/marka`);
-  for (const brand of popularBrands) {
-    allUrls.add(`${DOMAIN}/marka/${brand.slug}`);
+  for (const brandSlug of brandSlugs) {
+    allUrls.add(`${DOMAIN}/marka/${brandSlug}`);
+  }
+  for (const model of modelsList) {
+    allUrls.add(`${DOMAIN}/marka/${model.brandSlug}/${model.slug}`);
   }
 
   // OBD Kod sayfaları (Seviye 1: Genel)
   for (const code of uniqueCodes) {
     const codeId = code.code.toUpperCase();
     allUrls.add(`${DOMAIN}/kod/${codeId}`);
-
-    // Seviye 2: Marka sayfaları
-    for (const brand of popularBrands) {
-      allUrls.add(`${DOMAIN}/kod/${codeId}/${brand.slug}`);
-      
-      // Seviye 3: Model sayfaları
-      const brandModels = modelsList.filter(m => m.brandSlug === brand.slug);
-      for (const model of brandModels) {
-        allUrls.add(`${DOMAIN}/kod/${codeId}/${brand.slug}/${model.slug}`);
-      }
-    }
   }
 
   const urlArray = Array.from(allUrls);
@@ -188,6 +196,12 @@ async function main() {
 
   // 3. Kuyruğu yükle ve yeni URL'leri ekle
   const queue = loadQueue();
+
+  // Keep only canonical URLs; discard old generated brand/code variants.
+  const canonicalUrls = new Set(urlArray);
+  queue.pending = (queue.pending || []).filter(item => canonicalUrls.has(item));
+  queue.completed = (queue.completed || []).filter(item => canonicalUrls.has(item));
+  queue.failed = (queue.failed || []).filter(item => canonicalUrls.has(item));
   
   // failed URL'leri tekrar pending'e al (retry)
   if (queue.failed && queue.failed.length > 0) {

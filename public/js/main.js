@@ -77,6 +77,8 @@ function initNavbar() {
 function initParticles() {
   const container = document.getElementById('bgParticles');
   if (!container) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia('(max-width: 640px)').matches) return;
 
   const theme = document.documentElement.getAttribute('data-theme');
   const darkColors = ['#3b82f6', '#8b5cf6', '#06b6d4', '#a855f7'];
@@ -295,4 +297,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
-

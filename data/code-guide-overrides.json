@@ -1,0 +1,182 @@
+[
+  {
+    "code": "P0172",
+    "name": "Sistem Çok Zengin (Bank 1)",
+    "description": "Motor kontrol ünitesi, Bank 1 hava-yakıt karışımının düzeltme sınırına rağmen gereğinden zengin kaldığını algıladı. Kod tek başına hangi parçanın arızalı olduğunu söylemez; yakıt düzeltmeleri, hava ölçümü ve yakıt basıncı birlikte kontrol edilmelidir.",
+    "affectedSystem": "Hava-Yakıt Karışımı (Bank 1)",
+    "symptoms": ["Motor arıza lambasının yanması", "Yakıt tüketiminde ve egzoz kokusunda artış", "Düzensiz rölanti veya zor çalışma", "Bujilerde kurum oluşması"],
+    "causes": ["Kirli veya hatalı MAF/MAP sensörü", "Yüksek yakıt basıncı ya da kaçıran enjektör", "EVAP tahliye valfinin açık kalması", "Oksijen sensörü veya kablo tesisatı sorunu", "Tıkalı hava filtresi ya da hava giriş kısıtlaması"],
+    "solutions": ["Donma karesi ve kısa/uzun dönem yakıt düzeltmelerini kaydedin", "Hava filtresi, emme hattı ve MAF/MAP değerlerini kontrol edin", "Yakıt basıncını teknik değerle karşılaştırın ve enjektör kaçak testi yapın", "Oksijen sensörü tepkisini ve EVAP tahliye valfini test edin", "Onarım sonrası kodu silip farklı çalışma koşullarında yol testi yapın"]
+  },
+  {
+    "code": "P0175",
+    "name": "Sistem Çok Zengin (Bank 2)",
+    "description": "Motor kontrol ünitesi, Bank 2 hava-yakıt karışımının izin verilen düzeltmeye rağmen zengin kaldığını belirledi. Yalnız Bank 2 etkileniyorsa o sıraya özgü enjektör, sensör ve egzoz kaçakları; iki banka birden kod düşüyorsa ortak hava ve yakıt kaynakları önceliklidir.",
+    "affectedSystem": "Hava-Yakıt Karışımı (Bank 2)",
+    "symptoms": ["Motor arıza lambasının yanması", "Yakıt tüketiminde artış", "Rölantide dalgalanma veya tekleme", "Egzozda yoğun yakıt kokusu"],
+    "causes": ["Bank 2 enjektörlerinden birinin kaçırması", "MAF/MAP ölçüm hatası", "Yüksek yakıt basıncı", "Bank 2 oksijen sensörü ya da tesisat sorunu", "Emme veya egzoz hattında ölçümü etkileyen kaçak"],
+    "solutions": ["Yakıt düzeltmelerini iki banka göre karşılaştırın", "Bank 2 oksijen sensörü sinyalini canlı veride izleyin", "Enjektör denge/kaçak ve yakıt basıncı testlerini yapın", "MAF/MAP ile emme-egzoz hattını kontrol edin", "Arızayı giderdikten sonra yol testiyle monitörlerin tamamlanmasını bekleyin"]
+  },
+  {
+    "code": "P0106",
+    "name": "MAP/Barometrik Basınç Devresi Menzil veya Performans Arızası",
+    "description": "ECU, manifold mutlak basınç sensörü sinyalinin motor devri, gaz kelebeği konumu veya barometrik basınçla beklenen uyumu göstermediğini algıladı. Sensör değiştirilmeden önce vakum hattı, emme kaçağı ve referans gerilimi kontrol edilmelidir.",
+    "affectedSystem": "MAP Sensörü ve Emme Basıncı",
+    "symptoms": ["Çekiş düşüklüğü veya gaz tepkisinde gecikme", "Rölantide dalgalanma", "Yakıt tüketiminde artış", "Motor arıza lambasının yanması"],
+    "causes": ["Kirlenmiş veya hatalı MAP sensörü", "Sensör vakum kanalında tıkanma", "Emme manifoldunda kaçak", "5 volt referans, şase veya sinyal hattı sorunu", "Nadiren ECU yazılımı ya da kontrol ünitesi arızası"],
+    "solutions": ["Donma karesi ve MAP canlı verisini barometrik basınçla karşılaştırın", "Kontak açık motor kapalıyken MAP değerinin ortam basıncına yakınlığını kontrol edin", "Emme hattına duman testi uygulayın", "Referans gerilimi, şase ve sinyal kablosunu yük altında ölçün", "Gerekirse sensörü doğrulanmış parça ile değiştirip adaptasyon/yol testi yapın"]
+  },
+  {
+    "code": "P0107",
+    "name": "MAP/Barometrik Basınç Devresi Düşük Giriş",
+    "description": "MAP sensörü sinyali ECU'nun kabul ettiği alt sınırın altında kaldı. Kısa devre, düşük referans gerilimi veya sensör iç arızası olasıdır; ölçüm yapmadan sensör değişimi doğru teşhis sağlamaz.",
+    "affectedSystem": "MAP Sensörü Elektrik Devresi",
+    "symptoms": ["Zor çalışma veya stop etme", "Güç kaybı", "Düzensiz rölanti", "Motor arıza lambasının yanması"],
+    "causes": ["Sinyal hattının şaseye kısa devresi", "5 volt referans hattının düşük olması", "Konnektörde korozyon ya da gevşek pin", "Arızalı MAP sensörü", "Ortak referans hattını etkileyen başka bir sensör"],
+    "solutions": ["MAP, referans ve şase gerilimlerini bağlantı şemasına göre ölçün", "Konnektör ve kablo demetini hareket testine tabi tutun", "Aynı 5 volt hattını kullanan sensörleri kontrol edin", "Devre sağlamsa MAP sensörünü test edin veya değiştirin", "Onarım sonrası canlı veriyi ve kodun geri dönmediğini doğrulayın"]
+  },
+  {
+    "code": "P0108",
+    "name": "MAP/Barometrik Basınç Devresi Yüksek Giriş",
+    "description": "MAP sensörü sinyali ECU'nun üst sınırını aştı. Sinyal hattının beslemeye kısa devresi, zayıf şase veya sensör arızası araştırılmalı; motorun gerçek vakum durumu da göz ardı edilmemelidir.",
+    "affectedSystem": "MAP Sensörü Elektrik Devresi",
+    "symptoms": ["Yoğun veya zengin çalışma", "Rölantide bozulma", "Yakıt tüketiminde artış", "Motor arıza lambasının yanması"],
+    "causes": ["Sinyal hattının 5 volt/beslemeye kısa devresi", "Sensör şasesinde yüksek direnç", "MAP sensörü iç arızası", "Konnektörde su veya korozyon", "Çok düşük motor vakumu oluşturan mekanik sorun"],
+    "solutions": ["Kontak açık ve motor çalışırken MAP canlı verisini karşılaştırın", "Sensör şasesinde gerilim düşümü testi yapın", "Sinyal hattında beslemeye kısa devre kontrolü yapın", "Motor vakumunu mekanik ölçümle doğrulayın", "Arızayı giderip kod silme ve yol testiyle sonucu kontrol edin"]
+  },
+  {
+    "code": "P0110",
+    "name": "Emme Havası Sıcaklık Sensörü Devre Arızası",
+    "description": "ECU, emme havası sıcaklık sensörü devresinde beklenmeyen veya kesintili bir sinyal algıladı. Sensör bazı araçlarda MAF gövdesine entegredir; ortam sıcaklığıyla canlı veri karşılaştırması hızlı bir ilk kontroldür.",
+    "affectedSystem": "Emme Havası Sıcaklık Sensörü (IAT)",
+    "symptoms": ["Soğuk veya sıcak ilk çalıştırmada zorlanma", "Yakıt tüketiminde artış", "Gaz tepkisinde düzensizlik", "Motor arıza lambasının yanması"],
+    "causes": ["IAT sensörü iç arızası", "Açık/kısa devre olmuş kablo", "Konnektörde korozyon veya gevşeklik", "MAF içine entegre sensörde kirlenme", "Referans ya da sensör şasesi sorunu"],
+    "solutions": ["Soğuk motorda IAT ile dış ortam sıcaklığını karşılaştırın", "Konnektörü, kabloyu ve pin sıkılığını kontrol edin", "Sensör direncini üretici sıcaklık tablosuyla karşılaştırın", "Entegre tipse MAF/IAT sinyallerini birlikte değerlendirin", "Onarım sonrası canlı veri ve yol testiyle doğrulayın"]
+  },
+  {
+    "code": "P0120",
+    "name": "Gaz Kelebeği/Pedal Konum Sensörü A Devre Arızası",
+    "description": "ECU, gaz kelebeği veya pedal konum sensörü A devresinde beklenmeyen bir sinyal algıladı. Elektronik gaz sistemlerinde güvenlik nedeniyle güç kısıtlanabilir; iki konum kanalı canlı veride birbiriyle uyumlu ilerlemelidir.",
+    "affectedSystem": "Elektronik Gaz Kelebeği ve Pedal Sensörü",
+    "symptoms": ["Gaz tepkisinin azalması veya koruma modu", "Düzensiz rölanti", "Hızlanmada kesinti", "Motor arıza lambasının yanması"],
+    "causes": ["Gaz kelebeği konum sensörü arızası", "Pedal sensörü arızası", "Konnektör/kablo hasarı", "Kirli veya sıkışan gaz kelebeği", "Referans gerilimi ya da şase sorunu"],
+    "solutions": ["Gaz pedalı ve kelebek kanallarını canlı veride karşılaştırın", "5 volt referans, şase ve sinyal devrelerini ölçün", "Kelebek gövdesini mekanik sıkışma ve kir açısından kontrol edin", "Konnektör ve kablo demetini hareket testinden geçirin", "Gerekli onarım sonrası üretici prosedürüne göre adaptasyon yapın"]
+  },
+  {
+    "code": "P0130",
+    "name": "Oksijen Sensörü Devre Arızası (Bank 1 Sensör 1)",
+    "description": "Katalizör öncesindeki Bank 1 oksijen/lambda sensörü devresi beklenen sinyal davranışını göstermedi. Karışım veya egzoz kaçağı sensör arızasını taklit edebileceği için sinyal, ısıtıcı devresi ve yakıt düzeltmeleri birlikte incelenmelidir.",
+    "affectedSystem": "Ön Oksijen/Lambda Sensörü (B1S1)",
+    "symptoms": ["Yakıt tüketiminde artış", "Rölantide dalgalanma", "Emisyon değerlerinde bozulma", "Motor arıza lambasının yanması"],
+    "causes": ["Yaşlanmış veya kirlenmiş oksijen sensörü", "Egzoz ya da emme kaçağı", "Sensör kablosunda ısı hasarı", "Konnektörde temas sorunu", "Yakıt basıncı veya enjektör kaynaklı karışım arızası"],
+    "solutions": ["Donma karesi ile yakıt düzeltmelerini inceleyin", "Egzoz ve emme hattında kaçak kontrolü yapın", "Sensör sinyali ve ısıtıcı devresini şemaya göre ölçün", "Kabloyu egzoz ısısı ve sürtünme hasarı açısından kontrol edin", "Sensör değişecekse önce karışım sorununu giderip sonra yol testi yapın"]
+  },
+  {
+    "code": "P0136",
+    "name": "Oksijen Sensörü Devre Arızası (Bank 1 Sensör 2)",
+    "description": "Katalizör sonrasındaki Bank 1 oksijen sensörü devresi beklenen sinyali üretmedi. Bu sensör esas olarak katalizör performansını izler; kablo, ısıtıcı ve egzoz kaçağı kontrol edilmeden parça değişimi yapılmamalıdır.",
+    "affectedSystem": "Arka Oksijen Sensörü (B1S2)",
+    "symptoms": ["Motor arıza lambasının yanması", "Emisyon testinde başarısızlık", "Bazı araçlarda yakıt tüketiminde artış"],
+    "causes": ["Arka oksijen sensörü arızası", "Kablo tesisatında ısı veya sürtünme hasarı", "Sensör yakınında egzoz kaçağı", "Konnektörde su/korozyon", "Isıtıcı devresi ya da ortak şase sorunu"],
+    "solutions": ["B1S2 sinyalini ve ısıtıcı durumunu canlı veride inceleyin", "Egzoz kaçağını ve sensör montajını kontrol edin", "Besleme, şase ve sinyal hattını elektrik şemasına göre ölçün", "Katalizör öncesi/sonrası sinyalleri karşılaştırın", "Onarım sonrası monitör tamamlanana kadar uygun yol testi yapın"]
+  },
+  {
+    "code": "P0200",
+    "name": "Yakıt Enjektörü Devresi Arızası",
+    "description": "ECU, bir veya daha fazla yakıt enjektörü kontrol devresinde elektriksel arıza algıladı. Kod genel bir devre hatasıdır; silindire özgü eşlik eden kodlar, enjektör direnci ve sürücü sinyali teşhisi daraltır.",
+    "affectedSystem": "Yakıt Enjektörleri ve Kontrol Devresi",
+    "symptoms": ["Tekleme ve sarsıntılı çalışma", "Güç kaybı", "Zor çalışma veya stop etme", "Motor arıza lambasının yanması"],
+    "causes": ["Açık ya da kısa devre olmuş enjektör bobini", "Enjektör besleme hattı/sigorta sorunu", "Kablo demeti veya konnektör hasarı", "ECU enjektör sürücü arızası", "Düşük sistem gerilimi"],
+    "solutions": ["Eşlik eden silindir kodlarını ve donma karesini kaydedin", "Enjektör beslemesini, sigortayı ve röleyi kontrol edin", "Enjektör dirençlerini birbiriyle ve teknik değerle karşılaştırın", "Kontrol sinyalini uygun ölçüm ekipmanıyla doğrulayın", "Kablolama ve enjektörler sağlamsa ECU sürücüsünü uzman serviste test ettirin"]
+  },
+  {
+    "code": "P0325",
+    "name": "Vuruntu Sensörü 1 Devre Arızası (Bank 1)",
+    "description": "ECU, Bank 1 vuruntu sensörü devresinden beklenen sinyali alamadı. Sensör torku, motor gürültüsü, kablo ekranlaması ve gerçek vuruntu koşulları sinyali etkileyebilir; rastgele parça değişimi yapılmamalıdır.",
+    "affectedSystem": "Vuruntu Sensörü ve Ateşleme Kontrolü",
+    "symptoms": ["Çekiş düşüklüğü", "Hızlanmada isteksizlik", "Yakıt tüketiminde artış", "Motor arıza lambasının yanması"],
+    "causes": ["Vuruntu sensörü arızası", "Sensör kablosunda açık/kısa devre", "Yanlış sıkma torku veya montaj yüzeyi sorunu", "Düşük oktan yakıt ya da gerçek motor vuruntusu", "Konnektörde korozyon"],
+    "solutions": ["Kodu ve eşlik eden ateşleme/karışım kodlarını kaydedin", "Sensör konnektörü ve kablo ekranlamasını kontrol edin", "Sensör montajını üretici tork değerine göre doğrulayın", "Yakıt kalitesi ve gerçek vuruntu nedenlerini değerlendirin", "Devre testleri uygunsa sensörü değiştirip yol testi yapın"]
+  },
+  {
+    "code": "P0341",
+    "name": "Eksantrik Mili Konum Sensörü A Menzil/Performans (Bank 1)",
+    "description": "ECU, eksantrik mili konum sensörü A sinyalini krank miliyle beklenen zamanlama içinde göremedi. Sorun sensör devresinden kaynaklanabileceği gibi zincir/kayış zamanlaması veya değişken supap zamanlama sistemiyle de ilişkili olabilir.",
+    "affectedSystem": "Eksantrik Sensörü ve Motor Zamanlaması",
+    "symptoms": ["Zor çalışma veya geç marş", "Tekleme ve güç kaybı", "Düzensiz rölanti", "Motor arıza lambasının yanması"],
+    "causes": ["Eksantrik sensörü ya da konnektör arızası", "Kablo tesisatında parazit/açık devre", "Zamanlama zinciri veya kayışında kayma", "VVT solenoidi ve yağ basıncı sorunu", "Relüktör/ton çarkında hasar"],
+    "solutions": ["Eksantrik ve krank sinyallerini canlı veride karşılaştırın", "Motor yağı seviyesi, viskozitesi ve VVT sistemini kontrol edin", "Sensör besleme, şase ve sinyal hatlarını ölçün", "Mekanik zamanlama işaretlerini doğrulayın", "Arıza giderildikten sonra senkronizasyon ve yol testi yapın"]
+  },
+  {
+    "code": "P0440",
+    "name": "Buharlaşma Emisyon Kontrol Sistemi (EVAP) Genel Arızası",
+    "description": "ECU, yakıt buharı kontrol sisteminin sızdırmazlık veya akış testini tamamlayamadı. Gevşek depo kapağından valf ve hortum sorunlarına kadar birçok neden mümkündür; duman testi teşhisi hızlandırır.",
+    "affectedSystem": "EVAP Yakıt Buharı Kontrolü",
+    "symptoms": ["Motor arıza lambasının yanması", "Yakıt dolumu sonrasında zor çalışma", "Araç çevresinde yakıt buharı kokusu", "Çoğu durumda belirgin sürüş şikâyeti olmaması"],
+    "causes": ["Gevşek, hasarlı veya uyumsuz yakıt depo kapağı", "EVAP hortumu ya da kanister çatlağı", "Tahliye (purge) valfinin açık/kapalı kalması", "Havalandırma valfi arızası", "Basınç/vakum sensörü veya devre sorunu"],
+    "solutions": ["Depo kapağını conta ve kilitleme açısından kontrol edin", "EVAP hortumlarını ve kanisteri gözle inceleyin", "Tahliye ve havalandırma valflerini komutla test edin", "Uygun basınçta duman testiyle kaçak arayın", "Onarım sonrası EVAP monitörünün tamamlanacağı koşullarda sürüş yapın"]
+  },
+  {
+    "code": "P0700",
+    "name": "Şanzıman Kontrol Sistemi Arıza Bildirimi",
+    "description": "Motor kontrol ünitesi, şanzıman kontrol modülünün bir arıza kaydettiğini bildiriyor. P0700 kök nedeni açıklamaz; şanzıman modülüne erişebilen bir cihazla üreticiye özgü TCM kodları okunmalıdır.",
+    "affectedSystem": "Otomatik Şanzıman Kontrol Modülü (TCM)",
+    "symptoms": ["Şanzıman veya motor arıza lambasının yanması", "Vites geçişlerinde sertlik ya da gecikme", "Şanzımanın koruma moduna geçmesi", "Bazı durumlarda belirti olmaması"],
+    "causes": ["TCM'de kayıtlı başka bir şanzıman arızası", "Düşük/kirli şanzıman yağı veya hidrolik sorun", "Hız sensörü ya da solenoid arızası", "TCM besleme, şase veya iletişim sorunu", "Şanzıman iç mekanik arızası"],
+    "solutions": ["TCM'ye erişebilen tarama cihazıyla tüm kodları ve donma verisini okuyun", "Şanzıman yağ seviyesini üretici prosedürüne göre kontrol edin", "Akü gerilimi, TCM besleme/şase ve CAN iletişimini doğrulayın", "Alt kodun işaret ettiği sensör, solenoid veya hidrolik testi uygulayın", "Kök neden giderilmeden yalnız P0700 kodunu silmekle yetinmeyin"]
+  },
+  {
+    "code": "P0305",
+    "name": "5. Silindirde Tekleme Tespit Edildi",
+    "description": "ECU, 5. silindirin yanma katkısında düzensizlik algıladı. Yanıp sönen motor arıza lambası katalizör hasarı riski anlamına gelebilir; ateşleme, yakıt, kompresyon ve hava kaçağı sistemli biçimde karşılaştırılmalıdır.",
+    "affectedSystem": "Ateşleme ve Yanma — Silindir 5",
+    "symptoms": ["Motorun sarsıntılı çalışması", "Çekiş kaybı", "Yanıp sönebilen motor arıza lambası", "Yakıt tüketimi ve egzoz kokusunda artış"],
+    "causes": ["Buji veya ateşleme bobini arızası", "5. silindir enjektörü ya da kablosu sorunu", "Kompresyon kaybı", "Emme manifoldunda silindire yakın kaçak", "Yakıt basıncı veya zamanlama problemi"],
+    "solutions": ["Donma karesi ve tekleme sayaçlarını inceleyin", "Buji/bobini sağlam silindirle değiştirerek arızanın taşınıp taşınmadığını kontrol edin", "Enjektör denge ve elektrik testlerini yapın", "Kompresyon ve gerekirse kaçak testini uygulayın", "Şiddetli teklemede aracı zorlamayın; onarım sonrası yol testi yapın"]
+  },
+  {
+    "code": "P0306",
+    "name": "6. Silindirde Tekleme Tespit Edildi",
+    "description": "ECU, 6. silindirde yanma düzensizliği algıladı. Kod yalnızca etkilenen silindiri gösterir; buji/bobin, enjektör, kompresyon ve o bölgeye özgü hava kaçağı karşılaştırmalı testlerle ayrılmalıdır.",
+    "affectedSystem": "Ateşleme ve Yanma — Silindir 6",
+    "symptoms": ["Rölantide sarsıntı", "Hızlanmada kesiklik", "Yanıp sönebilen motor arıza lambası", "Yakıt tüketiminde artış"],
+    "causes": ["Aşınmış buji veya arızalı bobin", "6. silindir enjektörü ya da tesisatı", "Düşük kompresyon", "Emme kaçağı", "Yakıt veya mekanik zamanlama sorunu"],
+    "solutions": ["Tekleme sayacı ve donma karesini kaydedin", "Ateşleme parçalarını karşılaştırmalı yer değişimiyle test edin", "Enjektör besleme ve denge testini yapın", "Kompresyon/kaçak ölçümüyle mekanik durumu doğrulayın", "Yanıp sönen arıza lambasında sürüşü sınırlayıp onarım sonrası tekrar test edin"]
+  },
+  {
+    "code": "P0335",
+    "name": "Krank Mili Konum Sensörü A Devre Arızası",
+    "description": "ECU, krank mili konum sensöründen motor devri ve ateşleme zamanlaması için güvenilir sinyal alamadı. Sensör, kablo, relüktör çarkı ve marş sırasındaki akü gerilimi birlikte değerlendirilmelidir.",
+    "affectedSystem": "Krank Sensörü ve Motor Senkronizasyonu",
+    "symptoms": ["Motorun marş alıp çalışmaması", "Sıcakken stop etme veya yeniden çalışmama", "Devir göstergesinde anlık düşme", "Motor arıza lambasının yanması"],
+    "causes": ["Krank sensörü iç arızası", "Kablo/konnektörde ısı veya sürtünme hasarı", "Relüktör çarkında hasar ya da yanlış sensör boşluğu", "Düşük marş gerilimi", "Zamanlama veya ECU giriş devresi sorunu"],
+    "solutions": ["Marş sırasında tarama cihazında motor devri görülüp görülmediğini kontrol edin", "Akü ve marş gerilimi düşümünü ölçün", "Sensör besleme/şase/sinyal devresini sensör tipine göre test edin", "Konnektör, kablo ve relüktör çarkını inceleyin", "Onarım sonrası krank-eksantrik senkronizasyonunu doğrulayın"]
+  },
+  {
+    "code": "U0100",
+    "name": "ECM/PCM A ile İletişim Kaybedildi",
+    "description": "Bir kontrol modülü, motor/güç aktarma kontrol modülüyle CAN ağı üzerinden iletişimi kaybetti. Aralıklı düşük voltaj, güç/şase kaybı veya ağ hattı arızası mümkündür; modül değişimi son adımdır.",
+    "affectedSystem": "CAN Bus ve Motor Kontrol Modülü İletişimi",
+    "symptoms": ["Motorun çalışmaması veya stop etmesi", "Birden fazla uyarı lambasının yanması", "Tarama cihazının motor modülüne bağlanamaması", "Koruma modu ve güç kaybı"],
+    "causes": ["Zayıf akü veya şarj sistemi gerilimi", "ECM/PCM sigortası, rölesi, besleme veya şase kaybı", "CAN High/Low hattında açık ya da kısa devre", "Konnektörde su, korozyon veya gevşeklik", "Nadiren ECM/PCM ya da başka bir ağ modülü arızası"],
+    "solutions": ["Tüm modülleri tarayıp hangi modüllerin iletişim kurabildiğini kaydedin", "Akü, şarj sistemi, ECM sigorta/röle ve şaselerini yük altında test edin", "Üretici ağ şemasına göre CAN hat direnci ve gerilimlerini ölçün", "Konnektörleri su ve pin hasarı açısından inceleyin", "Besleme ve ağ sağlamlığı kanıtlanmadan kontrol modülü değiştirmeyin"]
+  },
+  {
+    "code": "B0001",
+    "name": "Sürücü Ön Hava Yastığı Ateşleme Devresi Arızası",
+    "description": "SRS kontrol modülü sürücü ön hava yastığı ateşleme devresinde açık devre veya beklenmeyen direnç algıladı. Hava yastığı devreleri piroteknik eleman içerir; ölçüm ve sökme işlemleri yalnız üretici güvenlik prosedürleriyle yapılmalıdır.",
+    "affectedSystem": "SRS — Sürücü Ön Hava Yastığı",
+    "symptoms": ["Airbag/SRS uyarı lambasının yanması", "SRS sisteminin ilgili devreyi devre dışı bırakması", "Korna veya direksiyon düğmelerinde eşlik eden sorunlar"],
+    "causes": ["Direksiyon spiral kablosu arızası", "Direksiyon/kolon konnektöründe gevşeklik", "Kablo demetinde açık devre", "Hava yastığı modülü veya SRS kontrol modülü arızası", "Daha önceki onarım sonrası yanlış bağlantı"],
+    "solutions": ["SRS kodunu ve alt tip/direnç bilgisini uyumlu cihazla okuyun", "Aküyü ayırma ve bekleme süresi dahil üretici güvenlik prosedürünü izleyin", "Spiral kablo ve konnektörleri onaylı test adaptörüyle kontrol ettirin", "Piroteknik devreye doğrudan multimetre veya test lambası bağlamayın", "Onarım ve kod silme işlemini SRS konusunda yetkin servise yaptırın"]
+  },
+  {
+    "code": "B0010",
+    "name": "Yolcu Ön Hava Yastığı Ateşleme Devresi Arızası",
+    "description": "SRS kontrol modülü yolcu ön hava yastığı ateşleme devresinde açık devre veya direnç sapması algıladı. Yolcu algılama sistemi ve piroteknik devre güvenlik kritiktir; doğrudan ölçüm yapılmamalıdır.",
+    "affectedSystem": "SRS — Yolcu Ön Hava Yastığı",
+    "symptoms": ["Airbag/SRS uyarı lambasının yanması", "Yolcu hava yastığı durum göstergesinin hatalı çalışması", "SRS sisteminin ilgili kanalı devre dışı bırakması"],
+    "causes": ["Torpido veya koltuk altı konnektöründe temas sorunu", "Kablo demetinde açık devre", "Yolcu algılama/koltuk sensörü sorunu", "Hava yastığı modülü arızası", "SRS kontrol modülü veya daha önceki onarım kaynaklı sorun"],
+    "solutions": ["Uyumlu cihazla SRS alt kodunu ve direnç durumunu okuyun", "Üreticinin akü ayırma ve bekleme prosedürünü uygulayın", "Koltuk/torpido konnektörlerini onaylı yöntemle kontrol ettirin", "Hava yastığı ateşleyicisine doğrudan ölçüm cihazı bağlamayın", "Onarımı SRS eğitimli teknisyene yaptırıp sistemi cihazla doğrulayın"]
+  }
+]

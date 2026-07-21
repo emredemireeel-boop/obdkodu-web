@@ -1,0 +1,146 @@
+[
+  {
+    "slug": "atesleme-ve-tekleme",
+    "name": "Ateşleme ve Tekleme Kodları",
+    "shortDescription": "Silindir teklemesi, ateşleme bobini, buji ve yanma düzensizliği kodları.",
+    "description": "Tekleme kodları, krank mili hızındaki düzensizlikten veya ateşleme devresindeki elektriksel bir hatadan üretilir. Sorun buji ve bobin kadar enjektör, kompresyon, vakum kaçağı veya yakıt basıncından da kaynaklanabilir. Yanıp sönen motor arıza lambası katalitik konvertör için risk oluşturur; araç zorlanmamalıdır.",
+    "prefixes": ["P030", "P035"],
+    "featuredCodes": ["P0300", "P0301", "P0302", "P0303", "P0304", "P0351", "P0352"],
+    "checks": ["Kodun tek bir silindire mi yoksa birden fazla silindire mi ait olduğunu belirleyin.", "Buji, bobin ve enjektörü silindirler arasında değiştirerek arızanın taşınıp taşınmadığını izleyin.", "Yakıt düzeltme değerleri ile emme manifoldu kaçağını kontrol edin.", "Elektriksel parçalar sağlamsa kompresyon ve kaçak testi yapın."]
+  },
+  {
+    "slug": "hava-yakit-karisimi",
+    "name": "Hava-Yakıt Karışımı Kodları",
+    "shortDescription": "Fakir veya zengin karışım, MAF/MAP ve yakıt düzeltme arızaları.",
+    "description": "Karışım kodları ECU'nun yakıt miktarını normal uyarlama sınırları içinde tutamadığını gösterir. Fakir karışımda ölçülmeyen hava veya yetersiz yakıt; zengin karışımda fazla yakıt, hatalı sensör verisi ya da buhar tahliye sistemi araştırılır. Sensörü doğrulamadan parça değiştirmek sık yapılan bir hatadır.",
+    "prefixes": ["P010", "P017", "P218"],
+    "featuredCodes": ["P0171", "P0172", "P0174", "P0175", "P0101", "P0102", "P0103", "P2187", "P2188"],
+    "checks": ["Kısa ve uzun dönem yakıt düzeltmelerini rölantide ve 2500 d/d civarında karşılaştırın.", "Emme hattı, PCV ve fren servosu için duman testi uygulayın.", "MAF/MAP verisini motor hacmi, devir ve yük ile karşılaştırın.", "Yakıt basıncını ve enjektör sızdırmazlığını üretici değerlerine göre ölçün."]
+  },
+  {
+    "slug": "oksijen-sensoru-lambda",
+    "name": "Oksijen Sensörü ve Lambda Kodları",
+    "shortDescription": "O2 sensörü sinyali, ısıtıcı devresi ve tepki süresi kodları.",
+    "description": "Lambda sensörü kodları sinyal seviyesi, tepki hızı veya ısıtıcı devresiyle ilgilidir. Kodda geçen Bank ve Sensor numarası arızalı sanılan sensörün konumunu belirtir. Egzoz kaçağı, karışım bozukluğu ve kablo hasarı sensör sağlamken de aynı kodu oluşturabilir.",
+    "prefixes": ["P013", "P014", "P015", "P016"],
+    "featuredCodes": ["P0130", "P0133", "P0135", "P0141", "P0150", "P0155", "P0161"],
+    "checks": ["Bank ve sensör konumunu motor yerleşimine göre doğrulayın.", "Egzoz manifoldundan sensöre kadar kaçak kontrolü yapın.", "Isıtıcı beslemesi, sigorta, şase ve direnç değerini ölçün.", "Canlı veride sensör sinyalinin tepki hızını karşı sensörle kıyaslayın."]
+  },
+  {
+    "slug": "katalitik-konvertor",
+    "name": "Katalitik Konvertör Kodları",
+    "shortDescription": "Katalizör verimliliği, egzoz kaçağı ve emisyon izleme kodları.",
+    "description": "Katalizör verimlilik kodları, ön ve arka oksijen sensörlerinin davranışı karşılaştırılarak kaydedilir. Kod doğrudan katalitik konvertörün değiştirilmesi gerektiğini kanıtlamaz. Tekleme, yağ yakma, zengin karışım, egzoz kaçağı ve sensör hataları önce elenmelidir.",
+    "prefixes": ["P042", "P043"],
+    "featuredCodes": ["P0420", "P0421", "P0430", "P0431"],
+    "checks": ["Tekleme ve karışım kodlarını katalizörden önce çözün.", "Egzoz hattında sensör öncesi ve arası kaçak arayın.", "Ön ve arka O2 sensör dalga şekillerini tam ısınmış motorda karşılaştırın.", "Gerekirse giriş-çıkış sıcaklığı ve geri basınç testiyle konvertörü doğrulayın."]
+  },
+  {
+    "slug": "evap-yakit-buhari",
+    "name": "EVAP Yakıt Buharı Kodları",
+    "shortDescription": "Yakıt kapağı, purge/vent valfi ve buhar kaçağı kodları.",
+    "description": "EVAP sistemi yakıt buharını atmosfere bırakmadan motorda yakar. Kaçak kodları gevşek depo kapağından çatlak hortuma, purge valfinden kanister havalandırma valfine kadar farklı nedenlerle oluşabilir. Yakıt buharı nedeniyle açık alev ve kıvılcımdan uzak çalışılmalıdır.",
+    "prefixes": ["P044", "P045"],
+    "featuredCodes": ["P0440", "P0442", "P0446", "P0455", "P0456"],
+    "checks": ["Depo kapağı contasını ve dolum ağzını görsel olarak kontrol edin.", "Purge valfinin enerjisizken vakum kaçırıp kaçırmadığını test edin.", "Duman testini düşük basınçla ve uygun EVAP adaptörüyle yapın.", "Vent valfi, kanister ve depo basınç sensörü verisini birlikte değerlendirin."]
+  },
+  {
+    "slug": "egr-egzoz-gazi",
+    "name": "EGR Sistemi Kodları",
+    "shortDescription": "Egzoz gazı devridaimi akışı, valf ve konum sensörü kodları.",
+    "description": "EGR sistemi belirli yük koşullarında egzoz gazını emmeye yönlendirerek yanma sıcaklığını ve NOx emisyonunu azaltır. Yetersiz veya aşırı akış; kurumla tıkanmış kanallar, sıkışan valf, vakum kontrolü ya da konum sensörü hatasından kaynaklanabilir.",
+    "prefixes": ["P040"],
+    "featuredCodes": ["P0400", "P0401", "P0402", "P0403", "P0404"],
+    "checks": ["Komut verilen ve gerçek EGR konumunu canlı veride karşılaştırın.", "Vakumlu sistemlerde hortum ve selenoid kontrolü yapın.", "EGR geçişlerinde kurum birikimini ve emme manifoldu tıkanıklığını inceleyin.", "Temizlik veya onarımdan sonra adaptasyon ve yol testi uygulayın."]
+  },
+  {
+    "slug": "turbo-ve-basincli-besleme",
+    "name": "Turbo ve Basınçlı Besleme Kodları",
+    "shortDescription": "Düşük/yüksek turbo basıncı, wastegate ve boost kontrol kodları.",
+    "description": "Turbo kodları hedeflenen ve ölçülen emme basıncı arasındaki farktan veya kontrol devresi arızasından oluşur. Intercooler hortumu kaçağı, vakum problemi, wastegate/VGT mekanizması, MAP sensörü ve egzoz tıkanıklığı turbo değişiminden önce kontrol edilmelidir.",
+    "prefixes": ["P023", "P024", "P029"],
+    "featuredCodes": ["P0234", "P0235", "P0236", "P0299", "P2263"],
+    "checks": ["Basınç hattını kaçak ve yağ izleri için kontrol edin.", "MAP/barometrik basınç verisini kontak açıkken karşılaştırın.", "Wastegate veya VGT aktüatörünün komuta verdiği tepkiyi izleyin.", "Tam yük testini yalnızca güvenli koşullarda, hedef ve gerçek boost kaydı alarak yapın."]
+  },
+  {
+    "slug": "motor-sogutma-ve-termostat",
+    "name": "Motor Soğutma ve Termostat Kodları",
+    "shortDescription": "Soğutma suyu sıcaklığı, termostat ve hararet kodları.",
+    "description": "Soğutma sistemi kodları motorun beklenen sürede ısınmaması, aşırı ısınması veya sıcaklık sensörü devresindeki tutarsızlıkla ilgilidir. Hararet uyarısı varsa motor durdurulmalı; sıcak sistemin kapağı kesinlikle açılmamalıdır.",
+    "prefixes": ["P0115", "P0116", "P0117", "P0118", "P0119", "P0125", "P0126", "P0127", "P0128", "P0217"],
+    "featuredCodes": ["P0115", "P0116", "P0117", "P0118", "P0128", "P0217"],
+    "checks": ["Soğuk motorda ECT ve emme havası sıcaklığını ortam sıcaklığıyla kıyaslayın.", "Soğutma sıvısı seviyesini yalnızca motor soğukken kontrol edin.", "Termostat açılma davranışını ve radyatör fan komutunu izleyin.", "Sensör beslemesi, şase ve sinyal devresini ölçün."]
+  },
+  {
+    "slug": "yakit-enjektorleri",
+    "name": "Yakıt Enjektörü Kodları",
+    "shortDescription": "Enjektör devresi, silindir katkısı ve yakıt besleme kodları.",
+    "description": "Enjektör kodları elektrik devresi, enjektör akışı veya silindir katkı dengesizliğiyle ilgilidir. Açık/kısa devre kodunda önce tesisat; performans kodunda yakıt basıncı, enjektör debisi ve mekanik kompresyon birlikte incelenmelidir.",
+    "prefixes": ["P020", "P026", "P027"],
+    "featuredCodes": ["P0200", "P0201", "P0202", "P0203", "P0204", "P0261", "P0262", "P0263"],
+    "checks": ["Enjektör soketi ve kablo demetinde ısı/yağ kaynaklı hasar arayın.", "Enjektör direnci ve akım rampasını aynı motordaki diğer silindirlerle kıyaslayın.", "Yakıt basıncı ve basınç düşüm testini uygulayın.", "Elektrik ve yakıt tarafı sağlamsa silindir katkısı ile kompresyonu doğrulayın."]
+  },
+  {
+    "slug": "otomatik-sanziman",
+    "name": "Otomatik Şanzıman Kodları",
+    "shortDescription": "TCM, vites oranı, selenoid, tork konvertörü ve hız sensörü kodları.",
+    "description": "P07xx kodları şanzıman kontrol sistemi, giriş/çık hız sensörleri, basınç kontrolü, selenoidler ve tork konvertörüyle ilgilidir. P0700 tek başına arızanın parçasını söylemez; TCM içindeki ayrıntılı kodlar okunmalıdır.",
+    "prefixes": ["P070", "P071", "P072", "P073", "P074", "P075", "P076", "P077", "P078", "P079"],
+    "featuredCodes": ["P0700", "P0715", "P0720", "P0730", "P0740", "P0750"],
+    "checks": ["Motor ECU'su yanında TCM'yi de üretici uyumlu cihazla tarayın.", "Yağ seviyesini doğru sıcaklık ve prosedürle kontrol edin.", "Giriş/çık hızı, istenen vites ve gerçek vites verilerini kaydedin.", "Elektriksel testlerden önce akü ve şarj sistemi voltajını doğrulayın."]
+  },
+  {
+    "slug": "can-bus-ve-modul-iletisimi",
+    "name": "CAN Bus ve Modül İletişim Kodları",
+    "shortDescription": "ECU, TCM, ABS ve gövde modülleri arası iletişim kaybı kodları.",
+    "description": "U kodları modüller arasında eksik, geçersiz veya kesilmiş veri iletişimini bildirir. Zayıf akü, ortak şase noktası, su alan soket, sigorta veya CAN hattı arızası birçok modülü aynı anda etkileyebilir. Listede hangi modüllerin erişilebildiği teşhisin en önemli ipucudur.",
+    "prefixes": ["U"],
+    "featuredCodes": ["U0073", "U0100", "U0101", "U0121", "U0140", "U0401", "U1000"],
+    "checks": ["Tam araç taraması yaparak erişilemeyen modülleri ve ortak kodları kaydedin.", "Akü dinlenme voltajını, marş anı voltaj düşümünü ve alternatör çıkışını kontrol edin.", "Ortak sigorta, besleme ve şase noktalarını yük altında ölçün.", "CAN hattı direnç ve dalga şekli testini uygun ekipman ve elektrik şemasıyla yapın."]
+  },
+  {
+    "slug": "abs-fren-ve-tekerlek-sensoru",
+    "name": "ABS, Fren ve Tekerlek Sensörü Kodları",
+    "shortDescription": "Tekerlek hız sensörü, ABS/ESP ve fren kontrol sistemi kodları.",
+    "description": "C kodlarının önemli bir bölümü tekerlek hız sensörü, sensör halkası, kablo tesisatı ve ABS hidrolik modülüyle ilgilidir. ABS veya kırmızı fren uyarısı sürüş güvenliğini etkileyebilir; fren hissi bozuksa araç kullanılmamalıdır.",
+    "prefixes": ["C003", "C004", "C005", "C006", "C007", "C008"],
+    "featuredCodes": ["C0035", "C0040", "C0045", "C0050"],
+    "checks": ["Dört tekerlek hızını düşük hızda canlı veriden karşılaştırın.", "Sensör kablosunu direksiyon ve süspansiyon hareketi boyunca inceleyin.", "Manyetik/dişli sensör halkasında çatlak, pas ve rulman boşluğu kontrolü yapın.", "Fren hidroliği seviyesi ve temel mekanik fren durumunu elektronik teşhisten önce doğrulayın."]
+  },
+  {
+    "slug": "airbag-ve-srs",
+    "name": "Airbag ve SRS Kodları",
+    "shortDescription": "Hava yastığı, kemer gergisi, darbe sensörü ve SRS devresi kodları.",
+    "description": "SRS kodları hava yastığı ateşleyicileri, emniyet kemeri gergileri, darbe sensörleri ve kontrol modülüyle ilgilidir. Airbag devrelerinde multimetre veya test lambasıyla doğrudan ateşleyici ölçümü tehlikelidir. Üretici prosedürü ve uygun simülatör olmadan devreye müdahale edilmemelidir.",
+    "prefixes": ["B000", "B001", "B002"],
+    "featuredCodes": ["B0001", "B0010", "B0020"],
+    "checks": ["Aküyü ayırmadan önce üreticinin bekleme süresini ve prosedürünü uygulayın.", "Koltuk altı ve direksiyon kolonundaki soketleri hareket/oksitlenme açısından görsel olarak inceleyin.", "Ateşleyici devresine test lambası veya standart ohmmetre bağlamayın.", "Kaza geçmişi ve SRS modülü crash-data durumunu uygun cihazla kontrol edin."]
+  },
+  {
+    "slug": "dizel-dpf-ve-adblue",
+    "name": "Dizel, DPF ve AdBlue Kodları",
+    "shortDescription": "Partikül filtresi, diferansiyel basınç, SCR/AdBlue ve NOx kodları.",
+    "description": "Dizel emisyon kodları DPF kurum yükü, diferansiyel basınç sensörü, egzoz sıcaklığı, EGR, SCR/AdBlue ve NOx sensörleriyle birlikte değerlendirilmelidir. Zorunlu rejenerasyon, yağ seviyesi ve motor durumu kontrol edilmeden uygulanırsa turbo veya motor hasarına yol açabilir.",
+    "prefixes": ["P20", "P24"],
+    "featuredCodes": ["P2002", "P242F", "P2452", "P2453", "P2463", "P20EE", "P204F"],
+    "checks": ["DPF kurum/kül yükü ile rejenerasyon geçmişini okuyun.", "Diferansiyel basınç hortumlarını tıkanma, erime ve yoğuşma için kontrol edin.", "Egzoz sıcaklık ve NOx sensör verilerini motor ısınma evresinde karşılaştırın.", "AdBlue kalitesi/seviyesi ve SCR dozaj testini üretici prosedürüyle doğrulayın."]
+  },
+  {
+    "slug": "hibrit-ve-elektrikli-arac",
+    "name": "Hibrit ve Elektrikli Araç Kodları",
+    "shortDescription": "Yüksek voltaj bataryası, invertör, izolasyon ve hibrit kontrol kodları.",
+    "description": "P0A ve P1A ailesindeki kodlar hibrit/elektrikli tahrik, yüksek voltaj bataryası, invertör, soğutma ve izolasyon izleme sistemleriyle ilişkili olabilir. Turuncu yüksek voltaj kablolarına ve batarya muhafazasına yalnızca yetkili, uygun kişisel koruyucu ekipmana sahip teknisyenler müdahale etmelidir.",
+    "prefixes": ["P0A", "P1A"],
+    "featuredCodes": ["P0A0F", "P0A80", "P0A7F", "P0AA6", "P0A93"],
+    "checks": ["12 V yardımcı akü durumunu yüksek voltaj teşhisinden önce doğrulayın.", "Batarya blok voltajları ve sıcaklık farklarını uygun tarama cihazıyla inceleyin.", "Soğutma pompası, fan ve akış devresini kontrol edin.", "Yüksek voltaj izolasyon testi ve servis fişi işlemlerini yalnızca yetkili prosedürle yapın."]
+  },
+  {
+    "slug": "krank-eksantrik-ve-zamanlama",
+    "name": "Krank, Eksantrik ve Motor Zamanlama Kodları",
+    "shortDescription": "CKP/CMP sensörü, VVT ve krank-eksantrik korelasyon kodları.",
+    "description": "Krank ve eksantrik sensörleri ECU'ya motor devrini, silindir konumunu ve supap zamanlamasını bildirir. Devre kodları sensör/tesisatı; korelasyon ve zamanlama kodları ise yağ basıncı, VVT selenoidi, tetik dişlisi veya mekanik zamanlamayı işaret edebilir.",
+    "prefixes": ["P001", "P002", "P033", "P034"],
+    "featuredCodes": ["P0011", "P0016", "P0017", "P0335", "P0336", "P0340", "P0341"],
+    "checks": ["Motor yağı seviyesini, viskozitesini ve bakım geçmişini kontrol edin.", "Sensör besleme, şase ve sinyal devresini yük altında ölçün.", "Marş sırasında motor devri verisini ve CKP/CMP senkronizasyonunu izleyin.", "Korelasyon kodunda osiloskop dalga şekli ve mekanik zamanlama işaretlerini doğrulayın."]
+  }
+]

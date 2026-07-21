@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="2.0" 
+<xsl:stylesheet version="1.0"
                 xmlns:html="http://www.w3.org/TR/REC-html40"
                 xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
                 xmlns:sitemap="http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -26,17 +26,17 @@
       </head>
       <body>
         <div class="container">
-          <h1>XML Sitemap</h1>
-          <p>This is the XML Sitemap for <strong>obdkodu.com</strong>, meant to be consumed by search engines like Google and Bing.</p>
-          <p>You can find more information about XML sitemaps at <a href="https://sitemaps.org">sitemaps.org</a>.</p>
+          <h1>OBD Kodları XML Site Haritası</h1>
+          <p>Bu XML site haritası, <strong>obdkodu.com</strong> sayfalarının arama motorları tarafından keşfedilmesini kolaylaştırır.</p>
+          <p>XML site haritaları hakkında ayrıntılı bilgi için <a href="https://sitemaps.org">sitemaps.org</a> adresini inceleyebilirsiniz.</p>
           
           <xsl:if test="count(sitemap:sitemapindex/sitemap:sitemap) &gt; 0">
-            <p>This sitemap index contains <span class="badge"><xsl:value-of select="count(sitemap:sitemapindex/sitemap:sitemap)"/></span> sitemaps.</p>
+            <p>Bu dizinde <span class="badge"><xsl:value-of select="count(sitemap:sitemapindex/sitemap:sitemap)"/></span> alt site haritası bulunuyor.</p>
             <table>
               <thead>
                 <tr>
-                  <th>Sitemap URL</th>
-                  <th>Last Modified</th>
+                  <th>Site Haritası URL'si</th>
+                  <th>Son Güncelleme</th>
                 </tr>
               </thead>
               <tbody>
@@ -51,14 +51,14 @@
           </xsl:if>
           
           <xsl:if test="count(sitemap:urlset/sitemap:url) &gt; 0">
-            <p>This sitemap contains <span class="badge"><xsl:value-of select="count(sitemap:urlset/sitemap:url)"/></span> URLs.</p>
+            <p>Bu site haritasında <span class="badge"><xsl:value-of select="count(sitemap:urlset/sitemap:url)"/></span> URL bulunuyor.</p>
             <table>
               <thead>
                 <tr>
                   <th>URL</th>
-                  <th>Last Modified</th>
-                  <th>Change Frequency</th>
-                  <th>Priority</th>
+                  <th>Son Güncelleme</th>
+                  <th>Değişim Sıklığı</th>
+                  <th>Öncelik</th>
                 </tr>
               </thead>
               <tbody>

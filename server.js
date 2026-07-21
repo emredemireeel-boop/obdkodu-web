@@ -18,6 +18,18 @@ let codesData = JSON.parse(
   fs.readFileSync(path.join(__dirname, 'data', 'obd-codes.json'), 'utf-8')
 );
 
+// Editorial improvements for high-intent codes are kept separate from the
+// imported database so future data refreshes do not overwrite reviewed copy.
+try {
+  const codeGuideOverrides = JSON.parse(
+    fs.readFileSync(path.join(__dirname, 'data', 'code-guide-overrides.json'), 'utf-8')
+  );
+  const overridesByCode = new Map(codeGuideOverrides.map(item => [item.code, item]));
+  codesData = codesData.map(code => ({ ...code, ...(overridesByCode.get(code.code) || {}) }));
+} catch (e) {
+  console.error('code-guide-overrides.json not found.');
+}
+
 const severityGlobalMap = {
   'low': 'düşük',
   'medium': 'orta',
@@ -56,16 +68,42 @@ try {
   console.error('dashboard-lights.json not found.');
 }
 
-function createSlug(str) {
-  return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+let systemGuidesData = [];
+try {
+  systemGuidesData = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'system-guides.json'), 'utf-8'));
+} catch (e) {
+  console.error('system-guides.json not found.');
 }
 
-const modelsList = vehiclesData.map(v => ({
-  brandName: v.brand,
-  brandSlug: createSlug(v.brand),
-  name: v.model,
-  slug: createSlug(v.model)
-}));
+function createSlug(str) {
+  const transliterationMap = {
+    ç: 'c', ğ: 'g', ı: 'i', ö: 'o', ş: 's', ü: 'u',
+    Ç: 'c', Ğ: 'g', İ: 'i', Ö: 'o', Ş: 's', Ü: 'u'
+  };
+  return String(str)
+    .replace(/[çğıöşüÇĞİÖŞÜ]/g, char => transliterationMap[char])
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+}
+
+// Mixed-brand rows describe shared platforms, not a real model landing page.
+// Mercedes-Benz is normalized to the public-facing Mercedes brand hub.
+const brandAliases = { 'Mercedes-Benz': 'Mercedes' };
+const modelsMap = new Map();
+vehiclesData.forEach(vehicle => {
+  if (!vehicle.brand || !vehicle.model || vehicle.brand.includes('/')) return;
+  const brandName = brandAliases[vehicle.brand] || vehicle.brand;
+  const model = {
+    brandName,
+    brandSlug: createSlug(brandName),
+    name: vehicle.model,
+    slug: createSlug(vehicle.model)
+  };
+  const key = `${model.brandSlug}/${model.slug}`;
+  if (!modelsMap.has(key)) modelsMap.set(key, model);
+});
+const modelsList = Array.from(modelsMap.values());
 
 // Deduplicate codes (keep first occurrence of each code)
 const codesMap = new Map();
@@ -77,29 +115,47 @@ codesData.forEach(code => {
 const codes = Array.from(codesMap.values());
 
 const popularBrands = [
+  { name: 'Abarth', slug: 'abarth' },
+  { name: 'Alfa Romeo', slug: 'alfa-romeo' },
   { name: 'Audi', slug: 'audi' },
   { name: 'BMW', slug: 'bmw' },
   { name: 'BYD', slug: 'byd' },
   { name: 'Chery', slug: 'chery' },
   { name: 'Chevrolet', slug: 'chevrolet' },
   { name: 'Citroen', slug: 'citroen' },
+  { name: 'Cupra', slug: 'cupra' },
   { name: 'Dacia', slug: 'dacia' },
   { name: 'DS Automobiles', slug: 'ds-automobiles' },
   { name: 'Fiat', slug: 'fiat' },
   { name: 'Ford', slug: 'ford' },
   { name: 'Honda', slug: 'honda' },
   { name: 'Hyundai', slug: 'hyundai' },
+  { name: 'Isuzu', slug: 'isuzu' },
+  { name: 'Jaecoo', slug: 'jaecoo' },
+  { name: 'Jaguar', slug: 'jaguar' },
   { name: 'Jeep', slug: 'jeep' },
+  { name: 'KGM', slug: 'kgm' },
   { name: 'Kia', slug: 'kia' },
+  { name: 'Land Rover', slug: 'land-rover' },
+  { name: 'Lexus', slug: 'lexus' },
+  { name: 'Maserati', slug: 'maserati' },
   { name: 'Mazda', slug: 'mazda' },
   { name: 'Mercedes', slug: 'mercedes' },
+  { name: 'MG', slug: 'mg' },
+  { name: 'MINI', slug: 'mini' },
   { name: 'Mitsubishi', slug: 'mitsubishi' },
   { name: 'Nissan', slug: 'nissan' },
   { name: 'Opel', slug: 'opel' },
+  { name: 'Omoda', slug: 'omoda' },
   { name: 'Peugeot', slug: 'peugeot' },
+  { name: 'Porsche', slug: 'porsche' },
   { name: 'Renault', slug: 'renault' },
+  { name: 'Saab', slug: 'saab' },
   { name: 'Seat', slug: 'seat' },
   { name: 'Skoda', slug: 'skoda' },
+  { name: 'Smart', slug: 'smart' },
+  { name: 'SsangYong', slug: 'ssangyong' },
+  { name: 'Subaru', slug: 'subaru' },
   { name: 'Suzuki', slug: 'suzuki' },
   { name: 'Tesla', slug: 'tesla' },
   { name: 'TOGG', slug: 'togg' },
@@ -128,12 +184,37 @@ function getCategoryCounts(codesList) {
 const counts = getCategoryCounts(codes);
 const totalCodes = codes.length;
 
+function codeMatchesSystemGuide(code, guide) {
+  return (guide.prefixes || []).some(prefix => code.code.startsWith(prefix));
+}
+
+function getCodesForSystemGuide(guide) {
+  const featuredOrder = new Map((guide.featuredCodes || []).map((codeId, index) => [codeId, index]));
+  return codes
+    .filter(code => codeMatchesSystemGuide(code, guide))
+    .sort((a, b) => {
+      const aOrder = featuredOrder.has(a.code) ? featuredOrder.get(a.code) : Number.MAX_SAFE_INTEGER;
+      const bOrder = featuredOrder.has(b.code) ? featuredOrder.get(b.code) : Number.MAX_SAFE_INTEGER;
+      return aOrder - bOrder || a.code.localeCompare(b.code);
+    });
+}
+
+const systemGuides = systemGuidesData.map(guide => ({
+  ...guide,
+  codeCount: getCodesForSystemGuide(guide).length
+}));
+
+function getSystemGuideForCode(code) {
+  return systemGuides.find(guide => codeMatchesSystemGuide(code, guide)) || null;
+}
+
 // MIME types for static files
 const mimeTypes = {
   '.html': 'text/html; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
   '.js': 'application/javascript; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
+  '.xsl': 'application/xml; charset=utf-8',
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
@@ -178,7 +259,7 @@ function handleHome(req, res) {
     "name": "OBD Kodları",
     "url": "https://www.obdkodu.com",
     "logo": "https://www.obdkodu.com/images/logo.png",
-    "description": "Türkiye'nin en kapsamlı OBD-II arıza kodu veritabanı. 3500+ arıza kodu, detaylı açıklamalar ve çözüm önerileri.",
+    "description": "Türkçe OBD-II arıza kodu veritabanı. 3500+ kod, belirtiler, olası nedenler ve doğrulama adımları.",
     "sameAs": [],
     "contactPoint": {
       "@type": "ContactPoint",
@@ -197,6 +278,7 @@ function handleHome(req, res) {
     ...counts,
     popularCodes: popular,
     popularBrands,
+    systemGuides: systemGuides.slice(0, 8),
     webSiteSchemaJson,
     orgSchemaJson,
   });
@@ -256,7 +338,7 @@ function handleSearch(req, res, query) {
   };
   const metaDesc = q
     ? `"${q}" araması için ${filtered.length} OBD-II arıza kodu bulundu.`
-    : (kategori ? categoryMetaMap[kategori] : `Türkiye'nin en kapsamlı OBD-II arıza kodları veritabanı. ${totalCount} arıza kodu detaylı açıklamalar ve çözüm önerileri ile.`);
+    : (kategori ? categoryMetaMap[kategori] : `${totalCount} OBD-II arıza kodunu Türkçe açıklamalar, belirtiler, olası nedenler ve doğrulama adımlarıyla inceleyin.`);
 
   // BreadcrumbList JSON-LD for search/category pages
   const searchBreadcrumbItems = [
@@ -453,6 +535,8 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
     }
   }
 
+  const relatedSystemGuide = getSystemGuideForCode(code);
+
   // === SERVER-SIDE JSON-LD GENERATION (SEO) ===
   const severityText = severityTextMap[code.severity] || code.severity;
   const isHigh = (code.severity === 'yüksek' || code.severity === 'high');
@@ -504,9 +588,9 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
     "description": metaDescription,
     "url": canonicalUrl,
     "inLanguage": "tr",
-    "datePublished": "2026-01-01",
+    "datePublished": "2026-06-12",
     "dateModified": SITEMAP_LASTMOD,
-    "author": { "@type": "Organization", "name": "OBD Kodları", "url": "https://www.obdkodu.com" },
+    "author": { "@type": "Organization", "name": "OBD Kodları Editoryal Ekibi", "url": "https://www.obdkodu.com/kaynaklar-ve-metodoloji" },
     "publisher": {
       "@type": "Organization",
       "name": "OBD Kodları",
@@ -515,6 +599,11 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
     },
     "about": { "@type": "Thing", "name": code.affectedSystem },
     "mainEntityOfPage": { "@type": "WebPage", "@id": canonicalUrl },
+    "citation": [
+      "https://saemobilus.sae.org/standards/j2012_199903-recommended-practice-diagnostic-trouble-code-definitions",
+      "https://www.iso.org/standard/66369.html"
+    ],
+    "keywords": [code.code, `${code.code} arıza kodu`, code.affectedSystem, "OBD-II"],
     "proficiencyLevel": "Beginner"
   });
 
@@ -576,6 +665,10 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
     dlIsEV,
     dlNoImage,
     dlGlowClass,
+    hasSystemGuide: relatedSystemGuide ? 'true' : '',
+    systemGuideName: relatedSystemGuide ? relatedSystemGuide.name : '',
+    systemGuideUrl: relatedSystemGuide ? `/sistem/${relatedSystemGuide.slug}` : '',
+    dateModified: SITEMAP_LASTMOD,
     hasRelated: related.length > 0 ? 'true' : '',
     relatedCodes: related,
     brandName: brandObj ? brandObj.name : '',
@@ -765,8 +858,8 @@ function handleBrandHub(req, res) {
   });
 
   const html = render('brand-hub', {
-    pageTitle: 'Araç Markalarına Göre Arıza Kodları',
-    metaDescription: `${popularBrands.length} popüler araç markası için OBD-II arıza kodları. Volkswagen, Ford, Renault, Hyundai ve daha fazlası.`,
+    pageTitle: 'Araç Markası ve Modeline Göre OBD-II Rehberleri',
+    metaDescription: `${popularBrands.length} araç markası ve yüzlerce model için OBD-II kod okuma, doğrulama ve güvenli teşhis rehberleri.`,
     canonicalUrl: 'https://www.obdkodu.com/marka',
     brands: brandsWithStats,
     totalBrands: popularBrands.length,
@@ -801,8 +894,8 @@ function handleBrandDetail(req, res, brandSlug) {
     "itemListElement": popularCodesForBrand.map((code, idx) => ({
       "@type": "ListItem",
       "position": idx + 1,
-      "name": `${brand.name} ${code.code} - ${code.name}`,
-      "url": `https://www.obdkodu.com/kod/${code.code}/${brand.slug}`
+      "name": `${code.code} - ${code.name}`,
+      "url": `https://www.obdkodu.com/kod/${code.code}`
     }))
   });
 
@@ -817,14 +910,15 @@ function handleBrandDetail(req, res, brandSlug) {
   });
 
   const html = render('brand-detail', {
-    pageTitle: `${brand.name} Arıza Kodları`,
-    metaDescription: `${brand.name} araçlarda en sık karşılaşılan OBD-II arıza kodları listesi. ${totalCodes} arıza kodu detaylı açıklamalar ve çözüm önerileri ile.`,
+    pageTitle: `${brand.name} OBD-II Rehberi ve Arıza Kodları`,
+    metaDescription: `${brand.name} araçlarda standart OBD-II kodlarını okuma, doğrulama, model seçimi ve güvenli teşhis adımları.`,
     canonicalUrl: `https://www.obdkodu.com/marka/${brand.slug}`,
     brandName: brand.name,
     brandSlug: brand.slug,
     brandModels,
     hasModels: brandModels.length > 0 ? 'true' : '',
     popularCodes: popularCodesForBrand,
+    systemGuides: systemGuides.slice(0, 8),
     totalCodes,
     pCount,
     bCount,
@@ -832,6 +926,174 @@ function handleBrandDetail(req, res, brandSlug) {
     uCount,
     itemListJson,
     breadcrumbJson,
+  });
+  sendHtml(res, 200, html);
+}
+
+function handleBrandModel(req, res, brandSlug, modelSlug) {
+  const brand = popularBrands.find(item => item.slug === brandSlug);
+  if (!brand) return handle404(req, res);
+
+  const model = modelsList.find(item => item.brandSlug === brand.slug && item.slug === modelSlug);
+  if (!model) return handle404(req, res);
+
+  const commonCodeIds = [
+    'P0171', 'P0420', 'P0300', 'P0301', 'P0335', 'P0011',
+    'P0455', 'P0128', 'P0700', 'U0100', 'C0035', 'B0001'
+  ];
+  const commonCodes = commonCodeIds
+    .map(codeId => codes.find(code => code.code === codeId))
+    .filter(Boolean);
+  const siblingModels = modelsList
+    .filter(item => item.brandSlug === brand.slug && item.slug !== model.slug)
+    .slice(0, 18);
+  const canonicalUrl = `${SITEMAP_BASE_URL}/marka/${brand.slug}/${model.slug}`;
+
+  const itemListJson = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    'name': `${brand.name} ${model.name} için sık karşılaşılan OBD-II kodları`,
+    'numberOfItems': commonCodes.length,
+    'itemListElement': commonCodes.map((code, index) => ({
+      '@type': 'ListItem',
+      'position': index + 1,
+      'name': `${code.code} - ${code.name}`,
+      'url': `${SITEMAP_BASE_URL}/kod/${code.code}`
+    }))
+  });
+
+  const breadcrumbJson = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      { '@type': 'ListItem', 'position': 1, 'name': 'Ana Sayfa', 'item': `${SITEMAP_BASE_URL}/` },
+      { '@type': 'ListItem', 'position': 2, 'name': 'Markalar', 'item': `${SITEMAP_BASE_URL}/marka` },
+      { '@type': 'ListItem', 'position': 3, 'name': brand.name, 'item': `${SITEMAP_BASE_URL}/marka/${brand.slug}` },
+      { '@type': 'ListItem', 'position': 4, 'name': model.name }
+    ]
+  });
+
+  const html = render('brand-model', {
+    pageTitle: `${brand.name} ${model.name} Arıza Kodları ve OBD-II Rehberi`,
+    metaDescription: `${brand.name} ${model.name} arıza kodlarını nasıl okuyacağınızı, OBD-II cihazıyla doğrulama adımlarını ve sık görülen kodları inceleyin.`,
+    canonicalUrl,
+    brandName: brand.name,
+    brandSlug: brand.slug,
+    modelName: model.name,
+    commonCodes,
+    systemGuides: systemGuides.slice(0, 8),
+    siblingModels,
+    hasSiblingModels: siblingModels.length > 0 ? 'true' : '',
+    itemListJson,
+    breadcrumbJson
+  });
+  sendHtml(res, 200, html);
+}
+
+function handleSystemHub(req, res) {
+  const itemListJson = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    'name': 'Araç Sistemlerine Göre OBD-II Arıza Kodları',
+    'numberOfItems': systemGuides.length,
+    'itemListElement': systemGuides.map((guide, index) => ({
+      '@type': 'ListItem',
+      'position': index + 1,
+      'name': guide.name,
+      'url': `${SITEMAP_BASE_URL}/sistem/${guide.slug}`
+    }))
+  });
+  const breadcrumbJson = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      { '@type': 'ListItem', 'position': 1, 'name': 'Ana Sayfa', 'item': `${SITEMAP_BASE_URL}/` },
+      { '@type': 'ListItem', 'position': 2, 'name': 'Sistem Rehberleri' }
+    ]
+  });
+
+  const html = render('system-hub', {
+    pageTitle: 'Araç Sistemlerine Göre OBD-II Arıza Kodları',
+    metaDescription: 'Ateşleme, yakıt, turbo, EGR, DPF, şanzıman, ABS, airbag ve CAN Bus arıza kodlarını sistem bazında inceleyin.',
+    canonicalUrl: `${SITEMAP_BASE_URL}/sistem`,
+    activeSystems: 'active',
+    systemGuides,
+    totalSystems: systemGuides.length,
+    itemListJson,
+    breadcrumbJson
+  });
+  sendHtml(res, 200, html);
+}
+
+function handleSystemDetail(req, res, systemSlug) {
+  const guide = systemGuides.find(item => item.slug === systemSlug);
+  if (!guide) return handle404(req, res);
+
+  const matchingCodes = getCodesForSystemGuide(guide);
+  const visibleCodes = matchingCodes.slice(0, 72);
+  const canonicalUrl = `${SITEMAP_BASE_URL}/sistem/${guide.slug}`;
+  const itemListJson = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    'name': guide.name,
+    'numberOfItems': visibleCodes.length,
+    'itemListElement': visibleCodes.map((code, index) => ({
+      '@type': 'ListItem',
+      'position': index + 1,
+      'name': `${code.code} - ${code.name}`,
+      'url': `${SITEMAP_BASE_URL}/kod/${code.code}`
+    }))
+  });
+  const breadcrumbJson = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      { '@type': 'ListItem', 'position': 1, 'name': 'Ana Sayfa', 'item': `${SITEMAP_BASE_URL}/` },
+      { '@type': 'ListItem', 'position': 2, 'name': 'Sistem Rehberleri', 'item': `${SITEMAP_BASE_URL}/sistem` },
+      { '@type': 'ListItem', 'position': 3, 'name': guide.name }
+    ]
+  });
+  const collectionJson = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    'name': guide.name,
+    'description': guide.description,
+    'url': canonicalUrl,
+    'inLanguage': 'tr',
+    'isPartOf': { '@type': 'WebSite', 'name': 'OBD Kodları', 'url': SITEMAP_BASE_URL }
+  });
+
+  const html = render('system-detail', {
+    pageTitle: `${guide.name}: Belirtiler, Kontroller ve Kod Listesi`,
+    metaDescription: `${guide.name} için belirtiler, güvenli teşhis sırası ve ${guide.codeCount} ilgili OBD-II kodu.`,
+    canonicalUrl,
+    activeSystems: 'active',
+    ...guide,
+    codes: visibleCodes,
+    hasMoreCodes: matchingCodes.length > visibleCodes.length ? 'true' : '',
+    hiddenCodeCount: Math.max(0, matchingCodes.length - visibleCodes.length),
+    itemListJson,
+    breadcrumbJson,
+    collectionJson
+  });
+  sendHtml(res, 200, html);
+}
+
+function handleMethodology(req, res) {
+  const breadcrumbJson = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      { '@type': 'ListItem', 'position': 1, 'name': 'Ana Sayfa', 'item': `${SITEMAP_BASE_URL}/` },
+      { '@type': 'ListItem', 'position': 2, 'name': 'Kaynaklar ve Editoryal Yöntem' }
+    ]
+  });
+  const html = render('methodology', {
+    pageTitle: 'Kaynaklar ve Editoryal Yöntem',
+    metaDescription: 'OBD Kodları içeriklerinin hangi standartlara dayandığını, nasıl kontrol edildiğini ve teknik sınırlarını inceleyin.',
+    canonicalUrl: `${SITEMAP_BASE_URL}/kaynaklar-ve-metodoloji`,
+    breadcrumbJson,
+    lastModified: SITEMAP_LASTMOD
   });
   sendHtml(res, 200, html);
 }
@@ -1086,15 +1348,13 @@ function handleRobotsTxt(req, res) {
 Allow: /
 Allow: /kod/
 Allow: /marka/
+Allow: /sistem/
 Allow: /gosterge-paneli/
 Allow: /arama?kategori=
 Disallow: /api/
 Disallow: /arama?q=
 
-# Crawl-delay (be polite but not too slow)
-Crawl-delay: 1
-
-Sitemap: https://www.obdkodu.com/sitemap-index.xml
+Sitemap: https://www.obdkodu.com/sitemap.xml
 
 # LLM/AI Crawler Information
 User-agent: GPTBot
@@ -1115,21 +1375,25 @@ Allow: /`;
 function handleLlmsTxt(req, res) {
   const llms = `# OBD Kodları - obdkodu.com
 
-> Türkiye'nin en kapsamlı OBD-II araç arıza kodları veritabanı.
+> Türkçe OBD-II araç arıza kodları, sistem rehberleri ve güvenli doğrulama adımları.
 
 ## Site Hakkında
-OBD Kodları (obdkodu.com), OBD-II (On-Board Diagnostics II) standart araç arıza kodlarını Türkçe olarak açıklayan bir referans veritabanıdır. ${totalCodes} adet arıza kodu detaylı açıklamalar, olası nedenler, belirtiler ve çözüm önerileri ile birlikte sunulmaktadır.
+OBD Kodları (obdkodu.com), OBD-II (On-Board Diagnostics II) standart araç arıza kodlarını Türkçe olarak açıklayan bir referans veritabanıdır. ${totalCodes} adet arıza kodu açıklamalar, olası nedenler, belirtiler ve doğrulama adımlarıyla sunulmaktadır.
 
 ## İçerik Yapısı
 - **Arıza Kodları**: P (Motor & Şanzıman), B (Gövde), C (Şasi), U (İletişim) kategorilerinde ${totalCodes} kod
 - **Gösterge Paneli İşaretleri**: Araç gösterge panelindeki uyarı lambalarının anlamları ve ilişkili OBD kodları
-- **Marka Özel Sayfalar**: ${popularBrands.length} popüler marka için arıza kodu sayfaları
+- **Sistem Rehberleri**: Ateşleme, yakıt, emisyon, şanzıman, CAN Bus, fren, SRS ve hibrit/elektrikli araçlar için ${systemGuides.length} rehber
+- **Marka ve Model Rehberleri**: ${popularBrands.length} marka ve ${modelsList.length} benzersiz model için OBD-II okuma ve doğrulama sayfaları
 
 ## Ana Sayfalar
 - Ana Sayfa: https://www.obdkodu.com/
 - Kod Arama: https://www.obdkodu.com/arama
+- Sistem Rehberleri: https://www.obdkodu.com/sistem
+- Marka ve Model Rehberleri: https://www.obdkodu.com/marka
 - Gösterge Paneli: https://www.obdkodu.com/gosterge-paneli
 - OBD-II Hakkında: https://www.obdkodu.com/hakkinda
+- Kaynaklar ve Editoryal Yöntem: https://www.obdkodu.com/kaynaklar-ve-metodoloji
 - İletişim: https://www.obdkodu.com/iletisim
 
 ## Kod Kategorileri
@@ -1140,8 +1404,9 @@ OBD Kodları (obdkodu.com), OBD-II (On-Board Diagnostics II) standart araç arı
 
 ## URL Yapısı
 - Kod detay: /kod/{KOD} (örn: /kod/P0300)
-- Marka özel: /kod/{KOD}/{marka} (örn: /kod/P0300/hyundai)
-- Model özel: /kod/{KOD}/{marka}/{model} (örn: /kod/P0300/hyundai/i20)
+- Sistem rehberi: /sistem/{sistem} (örn: /sistem/atesleme-ve-tekleme)
+- Marka rehberi: /marka/{marka} (örn: /marka/hyundai)
+- Model rehberi: /marka/{marka}/{model} (örn: /marka/hyundai/i20)
 - Gösterge detay: /gosterge-paneli/{id}
 
 ## Dil
@@ -1164,24 +1429,17 @@ info@obdkodu.com`;
 
 const SITEMAP_CHUNK_SIZE = 10000; // URLs per sitemap file
 const SITEMAP_BASE_URL = 'https://www.obdkodu.com';
-const SITEMAP_LASTMOD = '2026-07-12'; // Updated date — update when content changes
+const SITEMAP_LASTMOD = '2026-07-21';
 
 function sendXml(res, xml) {
   res.writeHead(200, {
-    'Content-Type': 'text/xml; charset=utf-8',
+    'Content-Type': 'application/xml; charset=utf-8',
     'Cache-Control': 'public, max-age=3600',
+    'X-Content-Type-Options': 'nosniff',
   });
   res.end(xml);
 }
 
-// Pre-compute brand-code pairs chunked into sitemap groups
-const brandCodePairs = [];
-popularBrands.forEach(brand => {
-  codes.forEach(c => {
-    brandCodePairs.push({ code: c.code, brandSlug: brand.slug });
-  });
-});
-const brandChunkCount = Math.ceil(brandCodePairs.length / SITEMAP_CHUNK_SIZE);
 const codeChunkCount = Math.ceil(codes.length / SITEMAP_CHUNK_SIZE);
 
 function handleSitemapIndex(req, res) {
@@ -1203,14 +1461,19 @@ function handleSitemapIndex(req, res) {
 `;
   }
 
-  // Brand sitemaps
-  for (let i = 1; i <= brandChunkCount; i++) {
-    xml += `  <sitemap>
-    <loc>${SITEMAP_BASE_URL}/sitemap-brands-${i}.xml</loc>
+  // Brand and model landing pages
+  xml += `  <sitemap>
+    <loc>${SITEMAP_BASE_URL}/sitemap-vehicles.xml</loc>
     <lastmod>${SITEMAP_LASTMOD}</lastmod>
   </sitemap>
 `;
-  }
+
+  // Curated diagnostic system guides
+  xml += `  <sitemap>
+    <loc>${SITEMAP_BASE_URL}/sitemap-systems.xml</loc>
+    <lastmod>${SITEMAP_LASTMOD}</lastmod>
+  </sitemap>
+`;
 
   // Dashboard lights sitemap
   if (dashboardLightsData.length > 0) {
@@ -1241,6 +1504,12 @@ function handleSitemapStatic(req, res) {
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
+${['P', 'B', 'C', 'U'].map(category => `  <url>
+    <loc>${SITEMAP_BASE_URL}/arama?kategori=${category}</loc>
+    <lastmod>${SITEMAP_LASTMOD}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>`).join('\n')}
   <url>
     <loc>${SITEMAP_BASE_URL}/gosterge-paneli</loc>
     <lastmod>${SITEMAP_LASTMOD}</lastmod>
@@ -1277,12 +1546,12 @@ function handleSitemapStatic(req, res) {
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-${popularBrands.map(b => `  <url>
-    <loc>${SITEMAP_BASE_URL}/marka/${b.slug}</loc>
+  <url>
+    <loc>${SITEMAP_BASE_URL}/kaynaklar-ve-metodoloji</loc>
     <lastmod>${SITEMAP_LASTMOD}</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>`).join('\n')}
+    <priority>0.6</priority>
+  </url>
 </urlset>`;
   sendXml(res, xml);
 }
@@ -1309,27 +1578,64 @@ function handleSitemapCodes(req, res, chunkNum) {
   sendXml(res, xml);
 }
 
-function handleSitemapBrands(req, res, chunkNum) {
-  const start = (chunkNum - 1) * SITEMAP_CHUNK_SIZE;
-  const end = Math.min(start + SITEMAP_CHUNK_SIZE, brandCodePairs.length);
-  if (start >= brandCodePairs.length) return handle404(req, res);
-
+function handleSitemapVehicles(req, res) {
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 `;
-  for (let i = start; i < end; i++) {
-    const pair = brandCodePairs[i];
+  popularBrands.forEach(brand => {
     xml += `  <url>
-    <loc>${SITEMAP_BASE_URL}/kod/${pair.code}/${pair.brandSlug}</loc>
+    <loc>${SITEMAP_BASE_URL}/marka/${brand.slug}</loc>
     <lastmod>${SITEMAP_LASTMOD}</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
 `;
-  }
+  });
+  modelsList.forEach(model => {
+    xml += `  <url>
+    <loc>${SITEMAP_BASE_URL}/marka/${model.brandSlug}/${model.slug}</loc>
+    <lastmod>${SITEMAP_LASTMOD}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+`;
+  });
   xml += `</urlset>`;
   sendXml(res, xml);
+}
+
+function handleSitemapSystems(req, res) {
+  let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>${SITEMAP_BASE_URL}/sistem</loc>
+    <lastmod>${SITEMAP_LASTMOD}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+`;
+  systemGuides.forEach(guide => {
+    xml += `  <url>
+    <loc>${SITEMAP_BASE_URL}/sistem/${guide.slug}</loc>
+    <lastmod>${SITEMAP_LASTMOD}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+`;
+  });
+  xml += `</urlset>`;
+  sendXml(res, xml);
+}
+
+function handleLegacyBrandSitemap(req, res) {
+  res.writeHead(410, {
+    'Content-Type': 'text/plain; charset=utf-8',
+    'Cache-Control': 'public, max-age=86400',
+    'X-Robots-Tag': 'noindex'
+  });
+  res.end('Gone: use /sitemap-vehicles.xml');
 }
 
 function handleSitemapDashboard(req, res) {
@@ -1385,7 +1691,7 @@ function handleStatic(req, res, filePath) {
     };
 
     // Gzip compress text-based files
-    const isCompressible = ['.css', '.js', '.json', '.svg'].includes(ext);
+    const isCompressible = ['.css', '.js', '.json', '.svg', '.xsl'].includes(ext);
     const acceptEncoding = req.headers['accept-encoding'] || '';
 
     if (isCompressible && acceptEncoding.includes('gzip')) {
@@ -1419,7 +1725,7 @@ function sendHtml(res, statusCode, html, req) {
     'X-Robots-Tag': 'index, follow',
     'X-Content-Type-Options': 'nosniff',
     'ETag': etag,
-    'Last-Modified': SITEMAP_LASTMOD + 'T00:00:00Z',
+    'Last-Modified': new Date(`${SITEMAP_LASTMOD}T00:00:00Z`).toUTCString(),
   };
 
   // 404 pages should not be cached or indexed
@@ -1473,6 +1779,14 @@ function sendJson(res, statusCode, data, req) {
   }
 }
 
+function sendRedirect(res, statusCode, location) {
+  res.writeHead(statusCode, {
+    'Location': location,
+    'Cache-Control': 'public, max-age=86400'
+  });
+  res.end();
+}
+
 function parseQuery(queryString) {
   const params = {};
   if (!queryString) return params;
@@ -1491,6 +1805,11 @@ const server = http.createServer((req, res) => {
   const parsedUrl = url.parse(req.url);
   const pathname = parsedUrl.pathname;
   const query = parseQuery(parsedUrl.query);
+
+  // One URL shape per page: remove trailing slashes (except the homepage).
+  if (pathname.length > 1 && pathname.endsWith('/')) {
+    return sendRedirect(res, 301, `${pathname.slice(0, -1)}${parsedUrl.search || ''}`);
+  }
 
   // Route matching
   if (pathname === '/' && req.method === 'GET') {
@@ -1527,9 +1846,25 @@ const server = http.createServer((req, res) => {
     return handleDashboardLightDetail(req, res, dlMatch[1]);
   }
 
+  if ((pathname === '/sistem' || pathname === '/sistem/') && req.method === 'GET') {
+    return handleSystemHub(req, res);
+  }
+  const systemMatch = pathname.match(/^\/sistem\/([a-zA-Z0-9-]+)$/);
+  if (systemMatch && req.method === 'GET') {
+    return handleSystemDetail(req, res, systemMatch[1]);
+  }
+
+  if ((pathname === '/kaynaklar-ve-metodoloji' || pathname === '/kaynaklar-ve-metodoloji/') && req.method === 'GET') {
+    return handleMethodology(req, res);
+  }
+
   // Brand hub pages (SEO)
   if ((pathname === '/marka' || pathname === '/marka/') && req.method === 'GET') {
     return handleBrandHub(req, res);
+  }
+  const brandModelMatch = pathname.match(/^\/marka\/([a-zA-Z0-9-]+)\/([a-zA-Z0-9-]+)$/);
+  if (brandModelMatch && req.method === 'GET') {
+    return handleBrandModel(req, res, brandModelMatch[1], brandModelMatch[2]);
   }
   const brandMatch = pathname.match(/^\/marka\/([a-zA-Z0-9-]+)$/);
   if (brandMatch && req.method === 'GET') {
@@ -1544,11 +1879,23 @@ const server = http.createServer((req, res) => {
   // Sitemap Index system — split into multiple files for Google compliance
   const cleanPath = pathname.replace(/\/$/, '').toLowerCase();
   
-  if (cleanPath === '/sitemap.xml' || cleanPath === '/sitemap-index.xml' || cleanPath === '/sitemap_index.xml') {
+  if (cleanPath === '/sitemap-index.xml' || cleanPath === '/sitemap_index.xml') {
+    return sendRedirect(res, 301, '/sitemap.xml');
+  }
+  if (cleanPath === '/sitemap.xml') {
     return handleSitemapIndex(req, res);
+  }
+  if (cleanPath === '/sitemap.xsl') {
+    return handleStatic(req, res, '/sitemap.xsl');
   }
   if (cleanPath === '/sitemap-static.xml') {
     return handleSitemapStatic(req, res);
+  }
+  if (cleanPath === '/sitemap-vehicles.xml') {
+    return handleSitemapVehicles(req, res);
+  }
+  if (cleanPath === '/sitemap-systems.xml') {
+    return handleSitemapSystems(req, res);
   }
   const sitemapCodesMatch = cleanPath.match(/^\/sitemap-codes-(\d+)\.xml$/);
   if (sitemapCodesMatch) {
@@ -1556,7 +1903,7 @@ const server = http.createServer((req, res) => {
   }
   const sitemapBrandsMatch = cleanPath.match(/^\/sitemap-brands-(\d+)\.xml$/);
   if (sitemapBrandsMatch) {
-    return handleSitemapBrands(req, res, parseInt(sitemapBrandsMatch[1]));
+    return handleLegacyBrandSitemap(req, res);
   }
   if (cleanPath === '/sitemap-dashboard.xml') {
     return handleSitemapDashboard(req, res);
@@ -1569,6 +1916,11 @@ const server = http.createServer((req, res) => {
   // Code detail: /kod/P0300 or /kod/P0300/hyundai or /kod/P0300/hyundai/i20
   const codeMatch = pathname.match(/^\/kod\/([A-Za-z0-9]+)(?:\/([A-Za-z0-9-]+))?(?:\/([A-Za-z0-9-]+))?$/);
   if (codeMatch && req.method === 'GET') {
+    // Old brand/model-code URLs were generated without compatibility data.
+    // Consolidate them into the verified, unique OBD code page.
+    if (codeMatch[2] || codeMatch[1] !== codeMatch[1].toUpperCase()) {
+      return sendRedirect(res, 301, `/kod/${codeMatch[1].toUpperCase()}`);
+    }
     return handleDetail(req, res, codeMatch[1], codeMatch[2], codeMatch[3]);
   }
 

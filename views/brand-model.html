@@ -1,0 +1,86 @@
+<section class="search-page" id="brandModelPage">
+  <div class="container">
+    <nav class="breadcrumb premium-breadcrumb" aria-label="Sayfa yolu" style="margin-bottom: 16px;">
+      <a href="/" class="breadcrumb-link">Ana Sayfa</a>
+      <span class="breadcrumb-sep">/</span>
+      <a href="/marka" class="breadcrumb-link">Markalar</a>
+      <span class="breadcrumb-sep">/</span>
+      <a href="/marka/{{brandSlug}}" class="breadcrumb-link">{{brandName}}</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">{{modelName}}</span>
+    </nav>
+
+    <div class="search-page-header">
+      <h1 class="page-title">{{brandName}} {{modelName}} <span class="gradient-text">Arıza Kodları</span></h1>
+      <p class="results-count">OBD-II okuma, yorumlama ve doğrulama rehberi</p>
+    </div>
+
+    <div class="premium-related-section" style="margin-bottom: 40px;">
+      <h2 class="premium-section-title">{{brandName}} {{modelName}} arıza kodu nasıl okunur?</h2>
+      <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 16px;">
+        Aracın OBD-II soketine bağlanan cihazda görünen beş karakterli kodu not edin. P kodları motor ve şanzımanı, B kodları gövde sistemlerini, C kodları şasiyi, U kodları ise elektronik iletişimi belirtir. Kodu aşağıdaki veritabanında açarak anlamını, belirtilerini ve kontrol adımlarını inceleyebilirsiniz.
+      </p>
+      <p style="color: var(--text-secondary); line-height: 1.8;">
+        Aynı kod farklı motor ve donanımlarda farklı bir temel nedene işaret edebilir. Parça değiştirmeden önce donmuş kare verisini, kablo ve soketleri, akü voltajını ve üreticiye özel servis bilgisini birlikte doğrulayın.
+      </p>
+    </div>
+
+    <div class="section-header" style="margin-bottom: 24px;">
+      <h2 class="section-title">Sık Aranan <span class="gradient-text">OBD-II Kodları</span></h2>
+      <p class="section-subtitle">Bu liste genel OBD-II başvuru listesidir; her kodun bu modelde mutlaka bulunduğu anlamına gelmez.</p>
+    </div>
+    <div class="codes-grid">
+      {{#each commonCodes}}
+      <a href="/kod/{{code}}" class="code-card">
+        <div class="code-card-header">
+          <span class="code-badge category-{{category}}">{{category}}</span>
+          <span class="code-number">{{code}}</span>
+          <span class="severity-dot severity-{{severity}}"></span>
+        </div>
+        <h3 class="code-card-title">{{name}}</h3>
+        <p class="code-card-system">{{affectedSystem}}</p>
+      </a>
+      {{/each}}
+    </div>
+
+    <div class="premium-related-section" style="margin-top: 40px;">
+      <h2 class="premium-section-title">Doğru teşhis için 4 adım</h2>
+      <ol style="color: var(--text-secondary); line-height: 1.9; padding-left: 22px;">
+        <li>Aktif, bekleyen ve kalıcı kodları silmeden kaydedin.</li>
+        <li>Donmuş kare verisindeki devir, sıcaklık, hız ve voltaj değerlerini not edin.</li>
+        <li>İlgili sigorta, soket, şase bağlantısı ve kablo tesisatını kontrol edin.</li>
+        <li>Onarımdan sonra kodu silip uygun bir yol testiyle tekrar tarama yapın.</li>
+      </ol>
+    </div>
+
+    {{#if hasSiblingModels}}
+    <div class="premium-related-section" style="margin-top: 40px;">
+      <h2 class="premium-section-title">Diğer {{brandName}} Modelleri</h2>
+      <div class="premium-brands-cloud">
+        {{#each siblingModels}}
+        <a href="/marka/{{brandSlug}}/{{slug}}" class="brand-chip">{{name}}</a>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+
+    <div class="premium-related-section" style="margin-top: 40px;">
+      <h2 class="premium-section-title">Sistem Bazlı Teşhis Rehberleri</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.9rem;">
+        {{brandName}} {{modelName}} aracınızda okuduğunuz kodu ilgili sistemin güvenli kontrol sırasıyla birlikte inceleyin.
+      </p>
+      <div class="premium-brands-cloud">
+        {{#each systemGuides}}
+        <a href="/sistem/{{slug}}" class="brand-chip">{{name}}</a>
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="section-cta" style="margin-top: 40px;">
+      <a href="/arama" class="btn-primary"><span>Arıza Kodunu Ara</span></a>
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json">{{{itemListJson}}}</script>
+<script type="application/ld+json">{{{breadcrumbJson}}}</script>

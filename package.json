@@ -6,10 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "build": "node scripts/build.js",
-    "index": "node scripts/indexer.js",
-    "index:priority": "node scripts/index-priority.js",
-    "ping": "node scripts/ping-sitemap.js"
+    "build": "node scripts/build.js"
   },
   "keywords": [
     "obd",
@@ -19,9 +16,5 @@
     "araç"
   ],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "googleapis": "^173.0.0",
-    "jimp": "^0.22.10"
-  }
+  "license": "ISC"
 }

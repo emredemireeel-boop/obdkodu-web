@@ -4,6 +4,9 @@
 // En çok aratılan OBD kodları + popüler markalar
 // =====================================================
 
+console.error('Bu komut devre dışı: Google Indexing API normal OBD sayfaları için kullanılamaz. sitemap.xml dosyasını Search Console üzerinden gönderin.');
+process.exit(1);
+
 const fs = require('fs');
 const path = require('path');
 const { google } = require('googleapis');
@@ -111,31 +114,7 @@ async function main() {
     urls.push(`${DOMAIN}/kod/${code}`);
   }
 
-  // En popüler kod + marka kombinasyonları (Tier 1 kodlar x Top 5 marka)
-  const tier1Codes = TOP_CODES.slice(0, 24); // İlk 24 kod
-  const top5Brands = TOP_BRANDS.slice(0, 5);  // İlk 5 marka
-
-  for (const code of tier1Codes) {
-    for (const brand of top5Brands) {
-      if (urls.length >= 200) break;
-      urls.push(`${DOMAIN}/kod/${code}/${brand}`);
-    }
-    if (urls.length >= 200) break;
-  }
-
-  // Kalan slotları top markalar ile doldur (Tier 1 kodlar x sonraki markalar)
-  if (urls.length < 200) {
-    const remainingBrands = TOP_BRANDS.slice(5);
-    for (const code of tier1Codes.slice(0, 10)) {
-      for (const brand of remainingBrands) {
-        if (urls.length >= 200) break;
-        urls.push(`${DOMAIN}/kod/${code}/${brand}`);
-      }
-      if (urls.length >= 200) break;
-    }
-  }
-
-  // Tam 200'e kes
+  // Only submit canonical pages. Brand/code doorway combinations were removed.
   const finalUrls = urls.slice(0, 200);
 
   console.log(c.cyan(`📋 ${finalUrls.length} adet öncelikli URL hazırlandı:`));
