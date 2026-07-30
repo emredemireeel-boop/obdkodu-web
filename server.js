@@ -1423,9 +1423,11 @@ info@obdkodu.com`;
   res.end(llms);
 }
 
-// =========== SITEMAP INDEX SYSTEM ===========
-// Google limits: max 50,000 URLs per sitemap, max 50MB per file.
-// We split into multiple sitemaps referenced from a sitemap index.
+// =========== SITEMAP SYSTEM ===========
+// Keep the public child sitemaps for backwards compatibility, but expose a
+// single canonical URL set at /sitemap.xml. The site has fewer than 50,000
+// canonical URLs, so a flat sitemap is both valid and easier for crawlers to
+// process reliably.
 
 const SITEMAP_CHUNK_SIZE = 10000; // URLs per sitemap file
 const SITEMAP_BASE_URL = 'https://www.obdkodu.com';
@@ -1442,49 +1444,51 @@ function sendXml(res, xml) {
 
 const codeChunkCount = Math.ceil(codes.length / SITEMAP_CHUNK_SIZE);
 
+function sitemapUrl(loc, changefreq = 'monthly', priority = '0.7') {
+  return `  <url>
+    <loc>${loc}</loc>
+    <lastmod>${SITEMAP_LASTMOD}</lastmod>
+    <changefreq>${changefreq}</changefreq>
+    <priority>${priority}</priority>
+  </url>`;
+}
+
 function handleSitemapIndex(req, res) {
-  let xml = `<?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <sitemap>
-    <loc>${SITEMAP_BASE_URL}/sitemap-static.xml</loc>
-    <lastmod>${SITEMAP_LASTMOD}</lastmod>
-  </sitemap>
-`;
+  const entries = [
+    sitemapUrl(`${SITEMAP_BASE_URL}/`, 'daily', '1.0'),
+    sitemapUrl(`${SITEMAP_BASE_URL}/arama`, 'weekly', '0.9'),
+    ...['P', 'B', 'C', 'U'].map(category =>
+      sitemapUrl(`${SITEMAP_BASE_URL}/arama?kategori=${category}`, 'weekly', '0.8')
+    ),
+    sitemapUrl(`${SITEMAP_BASE_URL}/gosterge-paneli`, 'weekly', '0.9'),
+    sitemapUrl(`${SITEMAP_BASE_URL}/hakkinda`, 'monthly', '0.5'),
+    sitemapUrl(`${SITEMAP_BASE_URL}/iletisim`, 'yearly', '0.4'),
+    sitemapUrl(`${SITEMAP_BASE_URL}/gizlilik-politikasi`, 'yearly', '0.3'),
+    sitemapUrl(`${SITEMAP_BASE_URL}/kullanim-kosullari`, 'yearly', '0.3'),
+    sitemapUrl(`${SITEMAP_BASE_URL}/marka`, 'monthly', '0.8'),
+    sitemapUrl(`${SITEMAP_BASE_URL}/kaynaklar-ve-metodoloji`, 'monthly', '0.6'),
+    ...codes.map(code =>
+      sitemapUrl(`${SITEMAP_BASE_URL}/kod/${code.code}`, 'monthly', '0.7')
+    ),
+    ...popularBrands.map(brand =>
+      sitemapUrl(`${SITEMAP_BASE_URL}/marka/${brand.slug}`, 'monthly', '0.8')
+    ),
+    ...modelsList.map(model =>
+      sitemapUrl(`${SITEMAP_BASE_URL}/marka/${model.brandSlug}/${model.slug}`, 'monthly', '0.7')
+    ),
+    sitemapUrl(`${SITEMAP_BASE_URL}/sistem`, 'monthly', '0.9'),
+    ...systemGuides.map(guide =>
+      sitemapUrl(`${SITEMAP_BASE_URL}/sistem/${guide.slug}`, 'monthly', '0.8')
+    ),
+    ...dashboardLightsData.map(light =>
+      sitemapUrl(`${SITEMAP_BASE_URL}/gosterge-paneli/${light.id}`, 'monthly', '0.8')
+    ),
+  ];
 
-  // Code sitemaps
-  for (let i = 1; i <= codeChunkCount; i++) {
-    xml += `  <sitemap>
-    <loc>${SITEMAP_BASE_URL}/sitemap-codes-${i}.xml</loc>
-    <lastmod>${SITEMAP_LASTMOD}</lastmod>
-  </sitemap>
-`;
-  }
-
-  // Brand and model landing pages
-  xml += `  <sitemap>
-    <loc>${SITEMAP_BASE_URL}/sitemap-vehicles.xml</loc>
-    <lastmod>${SITEMAP_LASTMOD}</lastmod>
-  </sitemap>
-`;
-
-  // Curated diagnostic system guides
-  xml += `  <sitemap>
-    <loc>${SITEMAP_BASE_URL}/sitemap-systems.xml</loc>
-    <lastmod>${SITEMAP_LASTMOD}</lastmod>
-  </sitemap>
-`;
-
-  // Dashboard lights sitemap
-  if (dashboardLightsData.length > 0) {
-    xml += `  <sitemap>
-    <loc>${SITEMAP_BASE_URL}/sitemap-dashboard.xml</loc>
-    <lastmod>${SITEMAP_LASTMOD}</lastmod>
-  </sitemap>
-`;
-  }
-
-  xml += `</sitemapindex>`;
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${entries.join('\n')}
+</urlset>`;
   sendXml(res, xml);
 }
 

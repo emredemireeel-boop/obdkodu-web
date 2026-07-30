@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "build": "node scripts/build.js"
+    "build": "node scripts/build.js",
+    "verify:sitemap": "node scripts/verify-sitemap.js"
   },
   "keywords": [
     "obd",
