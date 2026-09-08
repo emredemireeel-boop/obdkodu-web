@@ -15,6 +15,7 @@ const {
   buildSeverityAssessment,
   classifySystem,
   createFallbackCode,
+  enrichPriorityCode,
 } = require('./lib/obd-content');
 
 const PORT = process.env.PORT || 3000;
@@ -86,6 +87,18 @@ try {
   console.error('code-guide-overrides.json not found.');
 }
 
+let seoPriorityPCodeList = [];
+let seoPriorityPCodes = new Set();
+try {
+  const priorityData = JSON.parse(
+    fs.readFileSync(path.join(__dirname, 'data', 'seo-priority-p-codes.json'), 'utf-8')
+  );
+  seoPriorityPCodeList = Array.isArray(priorityData.codes) ? priorityData.codes : [];
+  seoPriorityPCodes = new Set(seoPriorityPCodeList);
+} catch (e) {
+  console.error('seo-priority-p-codes.json not found.');
+}
+
 const severityGlobalMap = {
   'low': 'düşük',
   'medium': 'orta',
@@ -94,11 +107,14 @@ const severityGlobalMap = {
 };
 
 codesData = codesData.map(c => {
-  const normalized = {
+  let normalized = {
     ...c,
     category: c.code ? c.code.charAt(0).toUpperCase() : 'P',
     severity: severityGlobalMap[c.severity] || c.severity
   };
+  if (normalized.category === 'P' && seoPriorityPCodes.has(normalized.code)) {
+    normalized = enrichPriorityCode(normalized);
+  }
   const system = classifySystem(normalized);
   const assessment = buildSeverityAssessment(normalized);
   return {
@@ -175,7 +191,7 @@ const codes = Array.from(codesMap.values());
 // The full database stays available to visitors, but short/generated entries
 // must not dilute the crawl budget or recreate the old doorway-page footprint.
 function isIndexableCode(code) {
-  if (code.sourceQuality === 'reference-only') return false;
+  if (code.sourceQuality === 'reference-only' && (!code.seoPriority || /standart OBD-II kod tanımı/i.test(code.name))) return false;
   const hasDetailedDescription = String(code.description || '').trim().length >= 180;
   const hasCompleteGuidance = ['symptoms', 'causes', 'solutions'].every(field =>
     Array.isArray(code[field]) && code[field].filter(Boolean).length >= 3
@@ -184,6 +200,11 @@ function isIndexableCode(code) {
 }
 
 const indexableCodes = codes.filter(isIndexableCode);
+const indexablePowertrainCodes = indexableCodes.filter(code => code.category === 'P');
+const indexableOtherCodes = indexableCodes.filter(code => code.category !== 'P');
+const priorityPowertrainCodes = seoPriorityPCodeList
+  .map(codeId => codes.find(code => code.code === codeId))
+  .filter(code => code && isIndexableCode(code));
 
 const popularBrands = [
   { name: 'Abarth', slug: 'abarth' },
@@ -237,10 +258,10 @@ const popularBrands = [
 
 // Precompute category counts
 const categoryNames = {
-  P: 'Powertrain (Motor & Şanzıman)',
-  B: 'Body (Gövde)',
-  C: 'Chassis (Şasi)',
-  U: 'Network (İletişim)'
+  P: 'Motor & Şanzıman',
+  B: 'Gövde',
+  C: 'Şasi',
+  U: 'İletişim'
 };
 
 function getCategoryCounts(codesList) {
@@ -301,8 +322,8 @@ const mimeTypes = {
 function handleHome(req, res) {
   // Pick popular codes (The 12 most searched codes — reduced for faster page load)
   const popular = [
-    'P0171', 'P0420', 'P0300', 'P0301', 'P0335', 'P0011',
-    'P0174', 'P0455', 'P0128', 'P0700', 'U0100', 'C0035'
+    'P0420', 'P0300', 'P0171', 'P0101', 'P0335', 'P0340',
+    'P0401', 'P0299', 'P0700', 'P0455', 'P0128', 'P0016'
   ].map(c => codes.find(item => item.code === c)).filter(Boolean);
 
   // WebSite schema — enables Google Sitelinks Search Box
@@ -467,6 +488,25 @@ function handleSearch(req, res, query) {
     '@type': 'BreadcrumbList',
     itemListElement: searchBreadcrumbItems
   });
+  const isPowertrainCategory = !q && kategori === 'P' && !validSystem && page === 1;
+  const powertrainFeaturedCodes = isPowertrainCategory ? priorityPowertrainCodes.slice(0, 24) : [];
+  const powertrainCollectionJson = isPowertrainCategory ? serializeJsonLd({
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Motor ve Şanzıman OBD-II Arıza Kodları',
+    description: `${counts.pCount} P kodu içinden arama talebi yüksek ve ayrıntılı teşhis rehberi bulunan güç aktarma kodları.`,
+    url: 'https://www.obdkodu.com/arama?kategori=P',
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: powertrainFeaturedCodes.length,
+      itemListElement: powertrainFeaturedCodes.map((code, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: `${code.code} ${code.name}`,
+        url: `https://www.obdkodu.com/kod/${code.code}`,
+      })),
+    },
+  }) : '';
 
   const html = render('search', {
     pageTitle: q ? `“${rawQuery}” Arama Sonuçları` : selectedSystem ? `${selectedSystem.name} OBD Kodları` : kategori ? `${categoryNames[kategori] || kategori} Kodları` : 'Tüm Arıza Kodları',
@@ -505,6 +545,10 @@ function handleSearch(req, res, query) {
     page,
     totalPages,
     searchBreadcrumbJson,
+    isPowertrainCategory: isPowertrainCategory ? 'true' : '',
+    powertrainFeaturedCodes,
+    powertrainIndexedCount: indexablePowertrainCodes.length,
+    powertrainCollectionJson,
   });
   sendHtml(res, 200, html);
 }
@@ -1368,6 +1412,7 @@ Disallow: /arama?q=
 
 Sitemap: https://www.obdkodu.com/sitemap.xml
 Sitemap: https://www.obdkodu.com/sitemap-index.xml
+Sitemap: https://www.obdkodu.com/sitemap-motor-sanziman.xml
 
 # LLM/AI Crawler Information
 User-agent: GPTBot
@@ -1443,7 +1488,7 @@ info@obdkodu.com`;
 
 const SITEMAP_CHUNK_SIZE = 10000; // URLs per sitemap file
 const SITEMAP_BASE_URL = 'https://www.obdkodu.com';
-const SITEMAP_LASTMOD = '2026-09-07';
+const SITEMAP_LASTMOD = '2026-09-08';
 
 function sendXml(res, xml) {
   res.writeHead(200, {
@@ -1466,7 +1511,8 @@ function sitemapUrl(loc, changefreq = 'monthly', priority = '0.7') {
 function handleSitemapMasterIndex(req, res) {
   const childSitemaps = [
     '/sitemap-static.xml',
-    ...Array.from({ length: Math.ceil(indexableCodes.length / SITEMAP_CHUNK_SIZE) }, (_, index) => `/sitemap-codes-${index + 1}.xml`),
+    '/sitemap-motor-sanziman.xml',
+    ...Array.from({ length: Math.ceil(indexableOtherCodes.length / SITEMAP_CHUNK_SIZE) }, (_, index) => `/sitemap-codes-${index + 1}.xml`),
     '/sitemap-vehicles.xml',
     '/sitemap-systems.xml',
     '/sitemap-dashboard.xml',
@@ -1586,8 +1632,8 @@ ${['P', 'B', 'C', 'U'].map(category => `  <url>
 
 function handleSitemapCodes(req, res, chunkNum) {
   const start = (chunkNum - 1) * SITEMAP_CHUNK_SIZE;
-  const end = Math.min(start + SITEMAP_CHUNK_SIZE, indexableCodes.length);
-  if (start >= indexableCodes.length) return handle404(req, res);
+  const end = Math.min(start + SITEMAP_CHUNK_SIZE, indexableOtherCodes.length);
+  if (start >= indexableOtherCodes.length) return handle404(req, res);
 
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
@@ -1595,7 +1641,7 @@ function handleSitemapCodes(req, res, chunkNum) {
 `;
   for (let i = start; i < end; i++) {
     xml += `  <url>
-    <loc>${SITEMAP_BASE_URL}/kod/${indexableCodes[i].code}</loc>
+    <loc>${SITEMAP_BASE_URL}/kod/${indexableOtherCodes[i].code}</loc>
     <lastmod>${SITEMAP_LASTMOD}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1603,6 +1649,21 @@ function handleSitemapCodes(req, res, chunkNum) {
 `;
   }
   xml += `</urlset>`;
+  sendXml(res, xml);
+}
+
+function handleSitemapPowertrain(req, res) {
+  const entries = [
+    sitemapUrl(`${SITEMAP_BASE_URL}/arama?kategori=P`, 'weekly', '0.9'),
+    ...indexablePowertrainCodes.map(code =>
+      sitemapUrl(`${SITEMAP_BASE_URL}/kod/${code.code}`, code.seoPriority ? 'weekly' : 'monthly', code.seoPriority ? '0.8' : '0.7')
+    ),
+  ];
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${entries.join('\n')}
+</urlset>`;
   sendXml(res, xml);
 }
 
@@ -1899,6 +1960,9 @@ const server = http.createServer((req, res) => {
   }
   if (cleanPath === '/sitemap-static.xml') {
     return handleSitemapStatic(req, res);
+  }
+  if (cleanPath === '/sitemap-motor-sanziman.xml') {
+    return handleSitemapPowertrain(req, res);
   }
   if (cleanPath === '/sitemap-vehicles.xml') {
     return handleSitemapVehicles(req, res);

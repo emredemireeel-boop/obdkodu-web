@@ -91,6 +91,38 @@
       </a>
     </div>
 
+    {{#if isPowertrainCategory}}
+    <section class="powertrain-hub" aria-labelledby="powertrainHubTitle">
+      <div class="powertrain-hub-copy">
+        <span class="powertrain-kicker">P kodları bilgi merkezi</span>
+        <h2 id="powertrainHubTitle">Motor ve şanzıman arıza kodunu doğru yorumlayın</h2>
+        <p>P kodları; motor yönetimi, yakıt-hava karışımı, ateşleme, emisyon, turbo ve otomatik şanzıman sistemlerini kapsar. Önce kodu ve donma karesini kaydedin, sonra eşlik eden kodları okuyun. Yalnızca kod adına bakarak parça değiştirmeyin.</p>
+      </div>
+      <div class="powertrain-hub-stats" aria-label="Motor ve şanzıman kodu istatistikleri">
+        <div><strong>{{pFilterCount}}</strong><span>aranabilir P kodu</span></div>
+        <div><strong>{{powertrainIndexedCount}}</strong><span>ayrıntılı ve dizine açık rehber</span></div>
+      </div>
+      <div class="powertrain-families">
+        <article><strong>P0xxx</strong><span>Standart motor ve şanzıman kodları</span></article>
+        <article><strong>P1xxx</strong><span>Üreticiye göre anlamı değişebilen kodlar</span></article>
+        <article><strong>P2xxx</strong><span>Standart emisyon ve güç aktarma kodları</span></article>
+        <article><strong>P3xxx</strong><span>Standart veya üreticiye ayrılmış kodlar</span></article>
+      </div>
+      <div class="powertrain-featured">
+        <div class="powertrain-featured-heading">
+          <h3>Öncelikli Motor &amp; Şanzıman rehberleri</h3>
+          <span>Arama talebi ve sürücü ihtiyacına göre seçildi</span>
+        </div>
+        <div class="powertrain-code-links">
+          {{#each powertrainFeaturedCodes}}
+          <a href="/kod/{{code}}"><strong>{{code}}</strong><span>{{name}}</span></a>
+          {{/each}}
+        </div>
+      </div>
+      <p class="powertrain-caution"><strong>Önemli:</strong> P1 ve bazı P3 kodlarının tanımı marka, model, motor, şanzıman ve yazılım sürümüne göre değişebilir. Kesin anlam için VIN uyumlu üretici servis bilgisi kullanılmalıdır.</p>
+    </section>
+    {{/if}}
+
     <!-- Results -->
     {{#if hasResults}}
     <div class="results-grid" id="resultsGrid">
@@ -138,4 +170,7 @@
 <!-- BreadcrumbList JSON-LD (SEO) -->
 {{#if searchBreadcrumbJson}}
 <script type="application/ld+json">{{{searchBreadcrumbJson}}}</script>
+{{/if}}
+{{#if powertrainCollectionJson}}
+<script type="application/ld+json">{{{powertrainCollectionJson}}}</script>
 {{/if}}

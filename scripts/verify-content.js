@@ -30,11 +30,15 @@ function count(body, pattern) {
 
 async function verify() {
   await new Promise(resolve => setTimeout(resolve, 2500));
-  const [home, search, pageTwo, keyword, p0420, p0524, reference, alias, api] = await Promise.all([
+  const [home, search, pageTwo, keyword, powertrainHub, priorityCode, powertrainSitemap, sitemapMaster, p0420, p0524, reference, alias, api] = await Promise.all([
     request('/'),
     request('/arama'),
     request('/arama?page=2'),
     request('/arama?q=oksijen+sens%C3%B6r%C3%BC'),
+    request('/arama?kategori=P'),
+    request('/kod/P0016'),
+    request('/sitemap-motor-sanziman.xml'),
+    request('/sitemap-index.xml'),
     request('/kod/P0420'),
     request('/kod/P0524'),
     request('/kod/U3576'),
@@ -48,6 +52,12 @@ async function verify() {
   assert((search.headers['x-robots-tag'] || '').startsWith('index'), 'First search listing should be indexable');
   assert((pageTwo.headers['x-robots-tag'] || '').startsWith('noindex'), 'Paginated listings should be noindex');
   assert(count(keyword.body, /class="result-card"/g) > 0, 'Plus-separated keyword search returned no results');
+  assert(powertrainHub.body.includes('class="powertrain-hub"'), 'Powertrain category hub is missing');
+  assert(count(powertrainHub.body, /<a href="\/kod\/P[0-9A-F]{4}"><strong>/g) === 24, 'Powertrain hub must expose 24 priority guides');
+  assert(powertrainHub.body.includes('Motor ve Şanzıman OBD-II Arıza Kodları'), 'Powertrain CollectionPage schema is missing');
+  assert((priorityCode.headers['x-robots-tag'] || '').startsWith('index'), 'P0016 priority guide should be indexable');
+  assert(count(powertrainSitemap.body, /<url>/g) > 100, 'Powertrain sitemap should contain the quality-filtered P guide set');
+  assert(sitemapMaster.body.includes('/sitemap-motor-sanziman.xml'), 'Master sitemap must reference the powertrain sitemap');
 
   assert((p0420.headers['x-robots-tag'] || '').startsWith('index'), 'P0420 should remain indexable');
   assert(count(p0420.body, /class="risk-fact"/g) === 6, 'Risk panel must contain six decision fields');
@@ -73,6 +83,8 @@ async function verify() {
     codes: 12181,
     searchResultsPerPage: 60,
     keywordResults: count(keyword.body, /class="result-card"/g),
+    powertrainSitemapUrls: count(powertrainSitemap.body, /<url>/g),
+    powertrainFeaturedGuides: count(powertrainHub.body, /<a href="\/kod\/P[0-9A-F]{4}"><strong>/g),
     riskFields: 6,
     faqs: 10,
     jsonLdBlocks: jsonLdBlocks.length,
