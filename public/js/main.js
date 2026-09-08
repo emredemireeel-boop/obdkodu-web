@@ -20,17 +20,47 @@ function initThemeToggle() {
   const toggle = document.getElementById('themeToggle');
   if (!toggle) return;
 
+  const html = document.documentElement;
+  const systemTheme = typeof window.matchMedia === 'function'
+    ? window.matchMedia('(prefers-color-scheme: dark)')
+    : null;
+
+  const applyTheme = (theme, persist = false) => {
+    const safeTheme = theme === 'dark' ? 'dark' : 'light';
+    html.setAttribute('data-theme', safeTheme);
+    toggle.setAttribute('aria-label', safeTheme === 'dark' ? 'Açık temaya geç' : 'Koyu temaya geç');
+    toggle.setAttribute('title', safeTheme === 'dark' ? 'Açık temaya geç' : 'Koyu temaya geç');
+    if (persist) {
+      try { localStorage.setItem('obd-theme-preference', safeTheme); } catch (_) {}
+    }
+    updateParticleColors(safeTheme);
+  };
+
+  let hasUserPreference = false;
+  try {
+    const preference = localStorage.getItem('obd-theme-preference');
+    hasUserPreference = preference === 'light' || preference === 'dark';
+  } catch (_) {}
+
+  applyTheme(html.getAttribute('data-theme'));
+
   toggle.addEventListener('click', () => {
-    const html = document.documentElement;
-    const current = html.getAttribute('data-theme');
-    const next = current === 'light' ? 'dark' : 'light';
-
-    html.setAttribute('data-theme', next);
-    localStorage.setItem('obd-theme', next);
-
-    // Update particles colors for the new theme
-    updateParticleColors(next);
+    hasUserPreference = true;
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    applyTheme(next, true);
   });
+
+  const followSystemTheme = event => {
+    if (!hasUserPreference) applyTheme(event.matches ? 'dark' : 'light');
+  };
+
+  if (systemTheme) {
+    if (typeof systemTheme.addEventListener === 'function') {
+      systemTheme.addEventListener('change', followSystemTheme);
+    } else if (typeof systemTheme.addListener === 'function') {
+      systemTheme.addListener(followSystemTheme);
+    }
+  }
 }
 
 function updateParticleColors(theme) {
