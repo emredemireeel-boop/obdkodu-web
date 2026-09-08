@@ -8,7 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
   initParticles();
   initCounters();
   initSearch();
+  initAutoSubmitFilters();
+  initDashboardCards();
   initAnimations();
+  initDetailTools();
+  initBackToTop();
 });
 
 // =========== THEME TOGGLE ===========
@@ -194,22 +198,40 @@ function fetchSuggestions(query, input) {
 
 function showSuggestions(results, input) {
   const form = input.closest('form');
-  let box = form.querySelector('.search-suggestions');
-  
+  const box = form && form.querySelector('.search-suggestions');
+
   if (!box) return;
-  if (!results.length) {
+  box.replaceChildren();
+  if (!Array.isArray(results) || !results.length) {
     box.classList.remove('active');
     return;
   }
 
-  box.innerHTML = results.map(item => `
-    <a href="/kod/${item.code}" class="suggestion-item">
-      <span class="code-badge category-${item.category}">${item.category}</span>
-      <span class="suggestion-code">${item.code}</span>
-      <span class="suggestion-name">${item.name}</span>
-    </a>
-  `).join('');
+  const fragment = document.createDocumentFragment();
+  results.forEach(item => {
+    const category = /^[PBCU]$/.test(String(item.category || '')) ? item.category : 'P';
+    const code = String(item.code || '').toUpperCase();
+    const link = document.createElement('a');
+    link.href = '/kod/' + encodeURIComponent(code);
+    link.className = 'suggestion-item';
 
+    const badge = document.createElement('span');
+    badge.className = 'code-badge category-' + category;
+    badge.textContent = category;
+
+    const codeLabel = document.createElement('span');
+    codeLabel.className = 'suggestion-code';
+    codeLabel.textContent = code;
+
+    const name = document.createElement('span');
+    name.className = 'suggestion-name';
+    name.textContent = String(item.name || '');
+
+    link.append(badge, codeLabel, name);
+    fragment.appendChild(link);
+  });
+
+  box.appendChild(fragment);
   box.classList.add('active');
 }
 
@@ -244,56 +266,85 @@ function initAnimations() {
   });
 }
 
-// =========== COMMENTS FORM ===========
-document.addEventListener('DOMContentLoaded', () => {
-  const commentForm = document.getElementById('commentForm');
-  if (commentForm) {
-    commentForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      
-      const codeId = document.getElementById('codeId').value;
-      const website = document.getElementById('website').value;
-      const name = document.getElementById('commentName').value.trim();
-      const comment = document.getElementById('commentText').value.trim();
-      const statusDiv = document.getElementById('commentStatus');
-      const submitBtn = document.getElementById('submitCommentBtn');
-      
-      if (!name || !comment) {
-        statusDiv.textContent = 'Lütfen adınızı ve yorumunuzu girin.';
-        statusDiv.style.color = '#ef4444';
-        return;
+// =========== CSP-SAFE UI ACTIONS ===========
+function initAutoSubmitFilters() {
+  document.querySelectorAll('[data-auto-submit]').forEach(control => {
+    control.addEventListener('change', () => {
+      if (control.form) control.form.requestSubmit();
+    });
+  });
+}
+
+function initDashboardCards() {
+  document.querySelectorAll('[data-dashboard-url]').forEach(card => {
+    const openCard = () => {
+      const target = card.getAttribute('data-dashboard-url');
+      if (target && target.startsWith('/gosterge-paneli/')) window.location.assign(target);
+    };
+
+    card.addEventListener('click', event => {
+      if (!event.target.closest('a')) openCard();
+    });
+    card.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openCard();
       }
-      
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Gönderiliyor...';
-      statusDiv.textContent = '';
-      
-      fetch('/api/comments', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code: codeId, name, comment, website })
-      })
-      .then(res => res.json().then(data => ({ status: res.status, body: data })))
-      .then(res => {
-        if (res.status === 200) {
-          statusDiv.textContent = 'Yorumunuz başarıyla gönderildi!';
-          statusDiv.style.color = '#10b981';
-          commentForm.reset();
-          // Optional: Reload the page to show the new comment
-          setTimeout(() => window.location.reload(), 1500);
-        } else {
-          statusDiv.textContent = res.body.error || 'Bir hata oluştu.';
-          statusDiv.style.color = '#ef4444';
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Yorumu Gönder';
-        }
-      })
-      .catch(() => {
-        statusDiv.textContent = 'Bağlantı hatası oluştu.';
-        statusDiv.style.color = '#ef4444';
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Yorumu Gönder';
-      });
+    });
+  });
+}
+
+// =========== DETAIL PAGE TOOLS ===========
+function showSiteToast(message) {
+  const toast = document.getElementById('siteToast');
+  if (!toast) return;
+  toast.textContent = message;
+  toast.classList.add('visible');
+  window.clearTimeout(showSiteToast.timer);
+  showSiteToast.timer = window.setTimeout(() => toast.classList.remove('visible'), 2200);
+}
+
+function initDetailTools() {
+  const copyButton = document.querySelector('[data-copy-code]');
+  const shareButton = document.querySelector('[data-share-code]');
+
+  if (copyButton) {
+    copyButton.addEventListener('click', async () => {
+      const code = copyButton.getAttribute('data-copy-code');
+      try {
+        await navigator.clipboard.writeText(code);
+        showSiteToast(code + ' panoya kopyalandı');
+      } catch (_) {
+        showSiteToast('Kod kopyalanamadı');
+      }
     });
   }
-});
+
+  if (shareButton) {
+    shareButton.addEventListener('click', async () => {
+      const shareData = {
+        title: shareButton.getAttribute('data-share-title') || document.title,
+        text: shareButton.getAttribute('data-share-code') + ' OBD-II arıza kodu',
+        url: window.location.href,
+      };
+      try {
+        if (navigator.share) await navigator.share(shareData);
+        else {
+          await navigator.clipboard.writeText(window.location.href);
+          showSiteToast('Sayfa bağlantısı kopyalandı');
+        }
+      } catch (error) {
+        if (error && error.name !== 'AbortError') showSiteToast('Paylaşım başlatılamadı');
+      }
+    });
+  }
+}
+
+function initBackToTop() {
+  const button = document.getElementById('backToTop');
+  if (!button) return;
+  const update = () => button.classList.toggle('visible', window.scrollY > 700);
+  window.addEventListener('scroll', update, { passive: true });
+  button.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  update();
+}

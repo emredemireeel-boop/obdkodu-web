@@ -7,7 +7,9 @@
     "start": "node server.js",
     "dev": "node --watch server.js",
     "build": "node scripts/build.js",
-    "verify:sitemap": "node scripts/verify-sitemap.js"
+    "verify:sitemap": "node scripts/verify-sitemap.js",
+    "verify:content": "node scripts/verify-content.js",
+    "verify:all": "npm run build && npm run verify:sitemap && npm run verify:content"
   },
   "keywords": [
     "obd",

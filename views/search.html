@@ -22,6 +22,9 @@
         {{#if isActiveCategory}}
         <span class="gradient-text">{{categoryName}}</span> Kodları
         {{/if}}
+        {{#if isSystemFilter}}
+        <span class="gradient-text">{{selectedSystemName}}</span> Kodları
+        {{/if}}
         {{#if isAllCodes}}
         Tüm <span class="gradient-text">Arıza Kodları</span>
         {{/if}}
@@ -51,6 +54,16 @@
             <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
         </button>
+      </div>
+      <div class="search-controls">
+        {{#if hasSelectedCategory}}<input type="hidden" name="kategori" value="{{selectedCategory}}">{{/if}}
+        <label for="systemFilter">Sisteme göre filtrele</label>
+        <select name="sistem" id="systemFilter" data-auto-submit>
+          <option value="">Tüm sistemler</option>
+          {{#each systemOptions}}
+          <option value="{{key}}" {{selected}}>{{name}}</option>
+          {{/each}}
+        </select>
       </div>
     </form>
 
@@ -100,6 +113,9 @@
       </a>
       {{/each}}
     </div>
+    {{#if hasPagination}}
+    {{{paginationHtml}}}
+    {{/if}}
     {{/if}}
     {{#if noResults}}
     <div class="no-results" id="noResults">

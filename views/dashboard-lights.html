@@ -23,7 +23,7 @@
 
     <div class="dl-grid">
       {{#each lights}}
-      <div class="dl-card" onclick="window.location.href='/gosterge-paneli/{{id}}'">
+      <div class="dl-card" role="link" tabindex="0" data-dashboard-url="/gosterge-paneli/{{id}}">
         {{#if isHigh}}
         <div class="dl-severity-badge dl-severity-acil">
           <span class="pulse-dot"></span> Acil
@@ -83,7 +83,7 @@
 
     <div class="dl-grid">
       {{#each evLights}}
-      <div class="dl-card dl-card-ev" onclick="window.location.href='/gosterge-paneli/{{id}}'">
+      <div class="dl-card dl-card-ev" role="link" tabindex="0" data-dashboard-url="/gosterge-paneli/{{id}}">
         {{#if isHigh}}
         <div class="dl-severity-badge dl-severity-acil">
           <span class="pulse-dot"></span> Acil

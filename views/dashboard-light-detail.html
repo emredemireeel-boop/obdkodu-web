@@ -100,50 +100,19 @@
       </div>
     </div>
 
-    <!-- User Comments Section -->
-    <div class="premium-comments-section" id="yorumlar" style="margin-bottom: 40px;">
-      <h3 class="premium-section-title">Kullanıcı Yorumları ({{commentCount}})</h3>
-      
-      <div class="comments-list">
-        {{#if hasComments}}
-          {{#each comments}}
-          <div class="comment-card">
-            <div class="comment-header">
-              <span class="comment-author">{{name}}</span>
-              <span class="comment-date">{{formattedDate}}</span>
-            </div>
-            <p class="comment-text">{{comment}}</p>
-          </div>
-          {{/each}}
-          
-          {{{paginationHtml}}}
-        {{/if}}
-        {{#if noComments}}
-          <p class="no-comments-msg">Bu gösterge işareti için henüz yorum yapılmamış. Neden yandığını ve nasıl çözdüğünüzü biliyorsanız ilk yorumu siz yapın!</p>
-        {{/if}}
+    <!-- Community discussions live on Otosöz; local comments are disabled. -->
+    <section class="community-redirect" id="yorumlar" aria-labelledby="community-title">
+      <div class="community-redirect-icon" aria-hidden="true">💬</div>
+      <div class="community-redirect-content">
+        <span class="community-redirect-kicker">Yorumlar Otosöz'de</span>
+        <h2 id="community-title">{{name}} deneyiminizi otomobil topluluğuyla paylaşın</h2>
+        <p>OBD Kodları üzerinde kullanıcı yorumu yayınlanmıyor. Sorunuzu, aracınızın marka-model ve motor bilgileriyle Otosöz topluluğuna taşıyabilirsiniz.</p>
       </div>
+      <a href="https://otosoz.com" target="_blank" rel="noopener noreferrer" class="community-redirect-button">
+        Otosöz.com'u incele <span aria-hidden="true">↗</span>
+      </a>
+    </section>
 
-      <div class="comment-form-card">
-        <h4 class="form-title">Deneyiminizi Paylaşın</h4>
-        <form id="commentForm">
-          <input type="hidden" id="codeId" value="{{id}}">
-          <!-- Honeypot Bot Trap -->
-          <div style="display:none;">
-            <label>Website</label>
-            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
-          </div>
-          <div class="form-group">
-            <input type="text" id="commentName" placeholder="Adınız" required maxlength="50" class="premium-input">
-          </div>
-          <div class="form-group">
-            <textarea id="commentText" placeholder="Bu gösterge yandığında ne yaptınız? Nasıl çözdünüz? Deneyiminizi buraya yazın..." required rows="4" maxlength="500" class="premium-input"></textarea>
-          </div>
-          <button type="submit" class="btn-primary premium-btn" id="submitCommentBtn">Yorumu Gönder</button>
-          <div id="commentStatus" class="form-status"></div>
-        </form>
-      </div>
-    </div>
-    
     <!-- Back Button -->
     <div class="premium-actions" style="margin-top: 40px; text-align: center;">
       <a href="/gosterge-paneli" class="btn-secondary premium-btn">

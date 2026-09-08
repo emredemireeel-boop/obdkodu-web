@@ -6,17 +6,73 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-const url = require('url');
 const zlib = require('zlib');
 const crypto = require('crypto');
 const { render } = require('./lib/template');
+const {
+  buildDiagnosticSteps,
+  buildFaqs,
+  buildSeverityAssessment,
+  classifySystem,
+  createFallbackCode,
+} = require('./lib/obd-content');
 
 const PORT = process.env.PORT || 3000;
+
+const SECURITY_HEADERS = Object.freeze({
+  'Content-Security-Policy': "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; connect-src 'self'; upgrade-insecure-requests",
+  'Cross-Origin-Opener-Policy': 'same-origin',
+  'Cross-Origin-Resource-Policy': 'same-origin',
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY',
+});
+
+function serializeJsonLd(value) {
+  return JSON.stringify(value)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026')
+    .replace(/\u2028/g, '\\u2028')
+    .replace(/\u2029/g, '\\u2029');
+}
 
 // Load OBD codes data
 let codesData = JSON.parse(
   fs.readFileSync(path.join(__dirname, 'data', 'obd-codes.json'), 'utf-8')
 );
+
+// Expand the public lookup database with the audited CC0 OBDex registry.
+// Existing Turkish editorial records always win. Reference-only fallbacks are
+// useful to visitors but stay out of the SEO index until editorial review.
+let obdexMeta = null;
+try {
+  const obdex = JSON.parse(
+    fs.readFileSync(path.join(__dirname, 'data', 'obdex-generic.json'), 'utf-8')
+  );
+  obdexMeta = obdex.meta || null;
+  const existingByCode = new Map(codesData.map(item => [item.code, item]));
+  for (const record of obdex.records || []) {
+    const existing = existingByCode.get(record.code);
+    if (existing) {
+      existing.titleEn = record.titleEn;
+      existing.descriptionEn = record.descriptionEn;
+      existing.affectedComponents = record.affectedComponents || [];
+      existing.flags = record.flags || {};
+      existing.relatedCodes = record.relatedCodes || [];
+      existing.sourceLinks = record.sources || [];
+      existing.sourceDataset = 'OBDex';
+      continue;
+    }
+    const fallback = createFallbackCode(record);
+    codesData.push(fallback);
+    existingByCode.set(fallback.code, fallback);
+  }
+} catch (e) {
+  console.error('obdex-generic.json could not be loaded:', e.message);
+}
 
 // Editorial improvements for high-intent codes are kept separate from the
 // imported database so future data refreshes do not overwrite reviewed copy.
@@ -33,14 +89,25 @@ try {
 const severityGlobalMap = {
   'low': 'düşük',
   'medium': 'orta',
-  'high': 'yüksek'
+  'high': 'yüksek',
+  'critical': 'kritik'
 };
 
-codesData = codesData.map(c => ({
-  ...c,
-  category: c.code ? c.code.charAt(0).toUpperCase() : 'P',
-  severity: severityGlobalMap[c.severity] || c.severity
-}));
+codesData = codesData.map(c => {
+  const normalized = {
+    ...c,
+    category: c.code ? c.code.charAt(0).toUpperCase() : 'P',
+    severity: severityGlobalMap[c.severity] || c.severity
+  };
+  const system = classifySystem(normalized);
+  const assessment = buildSeverityAssessment(normalized);
+  return {
+    ...normalized,
+    affectedSystem: normalized.affectedSystem || system.name,
+    systemKey: system.key,
+    severity: severityGlobalMap[assessment.level] || assessment.level,
+  };
+});
 
 // Load Models
 let vehiclesData = [];
@@ -49,16 +116,6 @@ try {
 } catch (e) {
   console.log('vehicles.json not found, continuing without models.');
 }
-
-// Load Comments
-const commentsFile = path.join(__dirname, 'data', 'comments.json');
-let commentsData = [];
-try {
-  commentsData = JSON.parse(fs.readFileSync(commentsFile, 'utf-8'));
-} catch (e) {
-  commentsData = [];
-}
-const commentRateLimit = {};
 
 // Load Dashboard Lights
 let dashboardLightsData = [];
@@ -113,6 +170,20 @@ codesData.forEach(code => {
   }
 });
 const codes = Array.from(codesMap.values());
+
+// Only expose genuinely useful, editorially complete code guides to Search.
+// The full database stays available to visitors, but short/generated entries
+// must not dilute the crawl budget or recreate the old doorway-page footprint.
+function isIndexableCode(code) {
+  if (code.sourceQuality === 'reference-only') return false;
+  const hasDetailedDescription = String(code.description || '').trim().length >= 180;
+  const hasCompleteGuidance = ['symptoms', 'causes', 'solutions'].every(field =>
+    Array.isArray(code[field]) && code[field].filter(Boolean).length >= 3
+  );
+  return hasDetailedDescription && hasCompleteGuidance;
+}
+
+const indexableCodes = codes.filter(isIndexableCode);
 
 const popularBrands = [
   { name: 'Abarth', slug: 'abarth' },
@@ -235,7 +306,7 @@ function handleHome(req, res) {
   ].map(c => codes.find(item => item.code === c)).filter(Boolean);
 
   // WebSite schema — enables Google Sitelinks Search Box
-  const webSiteSchemaJson = JSON.stringify({
+  const webSiteSchemaJson = serializeJsonLd({
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "OBD Kodları",
@@ -253,13 +324,13 @@ function handleHome(req, res) {
   });
 
   // Organization schema — brand authority signal
-  const orgSchemaJson = JSON.stringify({
+  const orgSchemaJson = serializeJsonLd({
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "OBD Kodları",
     "url": "https://www.obdkodu.com",
     "logo": "https://www.obdkodu.com/images/logo.png",
-    "description": "Türkçe OBD-II arıza kodu veritabanı. 3500+ kod, belirtiler, olası nedenler ve doğrulama adımları.",
+    "description": `Türkçe OBD-II arıza kodu veritabanı. ${totalCodes.toLocaleString('tr-TR')} kod, ciddiyet değerlendirmesi ve güvenli doğrulama adımları.`,
     "sameAs": [],
     "contactPoint": {
       "@type": "ContactPoint",
@@ -271,7 +342,7 @@ function handleHome(req, res) {
 
   const html = render('home', {
     pageTitle: 'OBD-II Arıza Kodu Sorgulama — Türkçe Veritabanı',
-    metaDescription: 'Araç arıza kodlarını anında sorgulayın. 3500+ OBD-II arıza kodu, detaylı açıklamalar, olası nedenler ve adım adım çözüm rehberleri. Ücretsiz OBD kodu arama.',
+    metaDescription: `Araç arıza kodlarını anında sorgulayın. ${totalCodes.toLocaleString('tr-TR')} OBD-II kodu, ciddiyet seviyesi, belirtiler ve güvenli teşhis adımları.`,
     canonicalUrl: 'https://www.obdkodu.com/',
     activeHome: 'active',
     totalCodes,
@@ -286,108 +357,153 @@ function handleHome(req, res) {
 }
 
 function handleSearch(req, res, query) {
-  const q = (query.q || '').trim().toUpperCase();
+  const rawQuery = (query.q || '').trim();
+  const q = rawQuery.toLowerCase();
   const kategori = (query.kategori || '').trim().toUpperCase();
+  const sistem = (query.sistem || '').trim().toLowerCase();
+  const requestedPage = Math.max(1, parseInt(query.page, 10) || 1);
 
   let filtered = codes;
-
-  // Filter by search query
   if (q) {
-    const qLower = q.toLowerCase();
-    filtered = filtered.filter(c =>
-      c.code.toLowerCase().includes(qLower) ||
-      c.name.toLowerCase().includes(qLower) ||
-      c.description.toLowerCase().includes(qLower) ||
-      c.affectedSystem.toLowerCase().includes(qLower)
-    );
+    const tokens = q.split(/\s+/).filter(Boolean);
+    filtered = filtered.filter(code => {
+      const haystack = [code.code, code.name, code.description, code.affectedSystem, code.systemKey, code.titleEn]
+        .join(' ')
+        .toLowerCase();
+      return tokens.every(token => haystack.includes(token));
+    });
   }
 
-  // Compute counts for filtered results (before category filter)
+  const availableSystems = Array.from(new Map(codes.map(code => [
+    code.systemKey,
+    { key: code.systemKey, name: code.affectedSystem }
+  ])).values()).filter(option => option.key).sort((a, b) => a.name.localeCompare(b.name, 'tr'));
+  const validSystem = availableSystems.some(option => option.key === sistem) ? sistem : '';
+  if (validSystem) filtered = filtered.filter(code => code.systemKey === validSystem);
+
   const filteredCounts = {
-    pFilterCount: filtered.filter(c => c.category === 'P').length,
-    bFilterCount: filtered.filter(c => c.category === 'B').length,
-    cFilterCount: filtered.filter(c => c.category === 'C').length,
-    uFilterCount: filtered.filter(c => c.category === 'U').length,
+    pFilterCount: filtered.filter(code => code.category === 'P').length,
+    bFilterCount: filtered.filter(code => code.category === 'B').length,
+    cFilterCount: filtered.filter(code => code.category === 'C').length,
+    uFilterCount: filtered.filter(code => code.category === 'U').length,
   };
   const totalCount = filtered.length;
 
-  // Filter by category
   if (kategori && ['P', 'B', 'C', 'U'].includes(kategori)) {
-    filtered = filtered.filter(c => c.category === kategori);
+    filtered = filtered.filter(code => code.category === kategori);
   }
 
-  const queryParam = q ? `&q=${encodeURIComponent(q)}` : '';
-  const searchOnlyParam = q ? `?q=${encodeURIComponent(q)}` : '';
+  const resultCount = filtered.length;
+  const pageSize = 60;
+  const totalPages = Math.max(1, Math.ceil(resultCount / pageSize));
+  const page = Math.min(requestedPage, totalPages);
+  const results = filtered.slice((page - 1) * pageSize, page * pageSize);
 
-  // Build canonical URL for search page
-  let searchCanonical = 'https://www.obdkodu.com/arama';
-  if (kategori && !q) searchCanonical += `?kategori=${kategori}`;
-
-  // SEO: noindex for user search queries (thin/duplicate content)
-  const isNoIndex = q ? 'true' : '';
-
-  // isAllCodes: when there's no query and no category filter
-  const isAllCodes = (!q && !kategori) ? 'true' : '';
-
-  // Category-specific meta descriptions for better SEO
-  const categoryMetaMap = {
-    P: `OBD-II P (Powertrain) kategorisi arıza kodları listesi. Motor ve şanzıman ile ilgili ${filteredCounts.pFilterCount} adet arıza kodu.`,
-    B: `OBD-II B (Body) kategorisi arıza kodları listesi. Hava yastığı, klima ve gövde sistemleri ile ilgili ${filteredCounts.bFilterCount} adet arıza kodu.`,
-    C: `OBD-II C (Chassis) kategorisi arıza kodları listesi. ABS, direksiyon ve şasi ile ilgili ${filteredCounts.cFilterCount} adet arıza kodu.`,
-    U: `OBD-II U (Network) kategorisi arıza kodları listesi. CAN bus ve modüller arası iletişim ile ilgili ${filteredCounts.uFilterCount} adet arıza kodu.`,
+  const buildSearchUrl = (overrides = {}) => {
+    const params = new URLSearchParams();
+    const values = { q: rawQuery, kategori, sistem: validSystem, page, ...overrides };
+    if (values.q) params.set('q', values.q);
+    if (values.kategori) params.set('kategori', values.kategori);
+    if (values.sistem) params.set('sistem', values.sistem);
+    if (values.page && values.page > 1) params.set('page', String(values.page));
+    const suffix = params.toString();
+    return suffix ? `/arama?${suffix}` : '/arama';
   };
-  const metaDesc = q
-    ? `"${q}" araması için ${filtered.length} OBD-II arıza kodu bulundu.`
-    : (kategori ? categoryMetaMap[kategori] : `${totalCount} OBD-II arıza kodunu Türkçe açıklamalar, belirtiler, olası nedenler ve doğrulama adımlarıyla inceleyin.`);
 
-  // BreadcrumbList JSON-LD for search/category pages
+  let paginationHtml = '';
+  if (totalPages > 1) {
+    const visiblePages = new Set([1, totalPages]);
+    for (let number = Math.max(1, page - 2); number <= Math.min(totalPages, page + 2); number++) {
+      visiblePages.add(number);
+    }
+    let previousNumber = 0;
+    paginationHtml = '<nav class="search-pagination" aria-label="Arama sonucu sayfaları">';
+    if (page > 1) paginationHtml += `<a href="${buildSearchUrl({ page: page - 1 })}" rel="prev">← Önceki</a>`;
+    for (const number of [...visiblePages].sort((a, b) => a - b)) {
+      if (number - previousNumber > 1) paginationHtml += '<span aria-hidden="true">…</span>';
+      paginationHtml += `<a href="${buildSearchUrl({ page: number })}"${number === page ? ' class="active" aria-current="page"' : ''}>${number}</a>`;
+      previousNumber = number;
+    }
+    if (page < totalPages) paginationHtml += `<a href="${buildSearchUrl({ page: page + 1 })}" rel="next">Sonraki →</a>`;
+    paginationHtml += '</nav>';
+  }
+
+  const categorySuffix = `${rawQuery ? `&q=${encodeURIComponent(rawQuery)}` : ''}${validSystem ? `&sistem=${encodeURIComponent(validSystem)}` : ''}`;
+  const allParams = new URLSearchParams();
+  if (rawQuery) allParams.set('q', rawQuery);
+  if (validSystem) allParams.set('sistem', validSystem);
+  const allSuffix = allParams.toString();
+
+  let searchCanonical = 'https://www.obdkodu.com/arama';
+  if (kategori && !q && !validSystem && page === 1) searchCanonical += `?kategori=${kategori}`;
+  const isNoIndex = (q || validSystem || page > 1) ? 'true' : '';
+  const isAllCodes = (!q && !kategori && !validSystem) ? 'true' : '';
+
+  const categoryMetaMap = {
+    P: `OBD-II P kategorisindeki ${filteredCounts.pFilterCount} motor ve şanzıman arıza kodunu inceleyin.`,
+    B: `OBD-II B kategorisindeki ${filteredCounts.bFilterCount} gövde ve SRS arıza kodunu inceleyin.`,
+    C: `OBD-II C kategorisindeki ${filteredCounts.cFilterCount} ABS, direksiyon ve şasi kodunu inceleyin.`,
+    U: `OBD-II U kategorisindeki ${filteredCounts.uFilterCount} CAN bus ve iletişim kodunu inceleyin.`,
+  };
+  const selectedSystem = availableSystems.find(option => option.key === validSystem);
+  const metaDesc = q
+    ? `“${rawQuery}” araması için ${resultCount} OBD-II arıza kodu bulundu.`
+    : selectedSystem
+      ? `${selectedSystem.name} ile ilgili ${resultCount} OBD-II kodunu ciddiyet ve teşhis bilgileriyle inceleyin.`
+      : kategori
+        ? categoryMetaMap[kategori]
+        : `${totalCount} OBD-II arıza kodunu ciddiyet, belirtiler, olası nedenler ve doğrulama adımlarıyla inceleyin.`;
+
   const searchBreadcrumbItems = [
-    { "@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://www.obdkodu.com/" }
+    { '@type': 'ListItem', position: 1, name: 'Ana Sayfa', item: 'https://www.obdkodu.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Arıza Kodları' }
   ];
   if (kategori && !q) {
-    searchBreadcrumbItems.push({ "@type": "ListItem", "position": 2, "name": "Arıza Kodları", "item": "https://www.obdkodu.com/arama" });
-    searchBreadcrumbItems.push({ "@type": "ListItem", "position": 3, "name": categoryNames[kategori] || kategori });
-  } else {
-    searchBreadcrumbItems.push({ "@type": "ListItem", "position": 2, "name": "Arıza Kodları" });
+    searchBreadcrumbItems[1].item = 'https://www.obdkodu.com/arama';
+    searchBreadcrumbItems.push({ '@type': 'ListItem', position: 3, name: categoryNames[kategori] || kategori });
   }
-  const searchBreadcrumbJson = JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": searchBreadcrumbItems
+  const searchBreadcrumbJson = serializeJsonLd({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: searchBreadcrumbItems
   });
 
   const html = render('search', {
-    pageTitle: q ? `"${q}" Arama Sonuçları` : (kategori ? `${categoryNames[kategori] || kategori} Kodları` : 'Tüm Arıza Kodları'),
+    pageTitle: q ? `“${rawQuery}” Arama Sonuçları` : selectedSystem ? `${selectedSystem.name} OBD Kodları` : kategori ? `${categoryNames[kategori] || kategori} Kodları` : 'Tüm Arıza Kodları',
     metaDescription: metaDesc,
     canonicalUrl: searchCanonical,
     activeSearch: 'active',
-    searchQuery: query.q || '',
+    searchQuery: rawQuery,
     isSearchQuery: q ? 'true' : '',
     isNoIndex,
     isAllCodes,
-    activeCategory: kategori,
-    isActiveCategory: (!q && kategori) ? 'true' : '',
+    isActiveCategory: (!q && kategori && !validSystem) ? 'true' : '',
+    isSystemFilter: selectedSystem ? 'true' : '',
     categoryName: categoryNames[kategori] || '',
-    
-    // Simplified filter variables for template
-    urlAll: `/arama${searchOnlyParam}`,
-    urlP: `/arama?kategori=P${queryParam}`,
-    urlB: `/arama?kategori=B${queryParam}`,
-    urlC: `/arama?kategori=C${queryParam}`,
-    urlU: `/arama?kategori=U${queryParam}`,
-    
+    selectedSystemName: selectedSystem ? selectedSystem.name : '',
+    systemOptions: availableSystems.map(option => ({ ...option, selected: option.key === validSystem ? 'selected' : '' })),
+    selectedCategory: kategori,
+    hasSelectedCategory: kategori ? 'true' : '',
+    urlAll: allSuffix ? `/arama?${allSuffix}` : '/arama',
+    urlP: `/arama?kategori=P${categorySuffix}`,
+    urlB: `/arama?kategori=B${categorySuffix}`,
+    urlC: `/arama?kategori=C${categorySuffix}`,
+    urlU: `/arama?kategori=U${categorySuffix}`,
     activeAll: !kategori ? 'active' : '',
     activeP: kategori === 'P' ? 'active' : '',
     activeB: kategori === 'B' ? 'active' : '',
     activeC: kategori === 'C' ? 'active' : '',
     activeU: kategori === 'U' ? 'active' : '',
-
-    resultCount: filtered.length,
+    resultCount,
     totalCount,
     ...filteredCounts,
-    hasResults: filtered.length > 0 ? 'true' : '',
-    noResults: filtered.length === 0 ? 'true' : '',
-    results: filtered,
+    hasResults: resultCount > 0 ? 'true' : '',
+    noResults: resultCount === 0 ? 'true' : '',
+    results,
+    hasPagination: totalPages > 1 ? 'true' : '',
+    paginationHtml,
+    page,
+    totalPages,
     searchBreadcrumbJson,
   });
   sendHtml(res, 200, html);
@@ -440,6 +556,8 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
     'orta': 'Orta Ciddiyet',
     'high': 'Yüksek Ciddiyet',
     'yüksek': 'Yüksek Ciddiyet',
+    'critical': 'Kritik Ciddiyet',
+    'kritik': 'Kritik Ciddiyet',
   };
 
   const severityClassMap = {
@@ -448,13 +566,16 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
     'medium': 'orta',
     'orta': 'orta',
     'high': 'yüksek',
-    'yüksek': 'yüksek'
+    'yüksek': 'yüksek',
+    'critical': 'kritik',
+    'kritik': 'kritik'
   };
-  const mappedSeverity = severityClassMap[code.severity] || 'düşük';
+  const severityAssessment = buildSeverityAssessment(code);
+  const mappedSeverity = severityClassMap[severityAssessment.level] || severityClassMap[code.severity] || 'düşük';
 
   // SEO-optimized title tags — match Turkish search intent exactly
   let pageTitle = `${code.code} Arıza Kodu Nedir? Nedenleri ve Çözümü`;
-  let metaDescription = `${code.code} arıza kodu nedir? ${code.name}. Belirtileri, olası nedenleri ve adım adım çözüm yöntemleri. ${code.description.substring(0, 120)}`;
+  let metaDescription = `${code.code} arıza kodu nedir? ${code.name}. ${severityAssessment.label} ciddiyet; araç kullanımı, muayene etkisi, belirtiler, nedenler ve teşhis adımları.`;
   let displayCodeName = code.name;
   let canonicalUrl = `https://www.obdkodu.com/kod/${code.code}`;
   let displayDescription = code.description;
@@ -472,35 +593,6 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
     canonicalUrl = `https://www.obdkodu.com/kod/${code.code}/${brandObj.slug}/${modelObj.slug}`;
     displayDescription = `Eğer ${brandObj.name} ${modelObj.name} aracınızda ${code.code} arıza kodunu görüyorsanız, ${code.description}`;
   }
-
-  const codeComments = commentsData.filter(c => c.code === code.code).reverse();
-  const formattedComments = codeComments.map(c => {
-    const d = new Date(c.date);
-    return {
-      ...c,
-      formattedDate: `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`
-    };
-  });
-
-  const urlParts = req.url.split('?');
-  const pathname = urlParts[0];
-  const queryStr = urlParts[1] || '';
-  const pageMatch = queryStr.match(/(?:^|&)page=(\d+)/);
-  const page = pageMatch ? parseInt(pageMatch[1]) : 1;
-  const limit = 10;
-  const totalPages = Math.ceil(formattedComments.length / limit);
-  
-  let paginationHtml = '';
-  if (totalPages > 1) {
-    paginationHtml = '<div class="pagination">';
-    for (let i = 1; i <= totalPages; i++) {
-      const activeClass = i === page ? 'active' : '';
-      paginationHtml += `<a href="${pathname}?page=${i}#yorumlar" class="page-link ${activeClass}">${i}</a>`;
-    }
-    paginationHtml += '</div>';
-  }
-
-  const paginatedComments = formattedComments.slice((page - 1) * limit, page * limit);
 
   // Find related dashboard light
   let relatedLight = dashboardLightsData.find(l => l.exampleCodes.includes(code.code));
@@ -538,56 +630,28 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
   const relatedSystemGuide = getSystemGuideForCode(code);
 
   // === SERVER-SIDE JSON-LD GENERATION (SEO) ===
-  const severityText = severityTextMap[code.severity] || code.severity;
-  const isHigh = (code.severity === 'yüksek' || code.severity === 'high');
-  
-  // FAQ Answer — rendered server-side to avoid template syntax in JSON-LD
-  const severityAnswer = isHigh
-    ? 'Bu kod Yüksek (Kritik) ciddiyet seviyesine sahiptir. Motor bileşenlerinde veya sürüş güvenliğinde acil bir tehdit oluşturabileceğinden, aracınızı derhal yetkili bir servise çekmeniz tavsiye edilir.'
-    : `Bu kod ${severityText} ciddiyet seviyesindedir. Aracınızın performansını veya emisyon değerlerini etkileyebilir. Mümkün olan en kısa sürede kontrol ettirmeniz tavsiye edilir.`;
+  const severityText = `${severityAssessment.label} Ciddiyet`;
+  const isHigh = ['high', 'critical'].includes(severityAssessment.level);
+  const diagnosticSteps = buildDiagnosticSteps(code);
+  const faqs = buildFaqs(code, severityAssessment);
 
-  const solutionsText = (code.solutions || []).join(' ');
-
-  // Build JSON-LD FAQ Schema (clean, no template syntax)
-  const faqSchemaJson = JSON.stringify({
+  const faqSchemaJson = serializeJsonLd({
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": `${code.code} arıza kodu tam olarak nedir?`,
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": `${code.code} (${code.name}) arıza kodu, aracınızın ${code.affectedSystem} sisteminde meydana gelen bir anormalliği işaret eder. ${code.description}`
-        }
-      },
-      {
-        "@type": "Question",
-        "name": `${code.code} kodu ne kadar ciddi, aracı sürmeye devam edebilir miyim?`,
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": severityAnswer
-        }
-      },
-      {
-        "@type": "Question",
-        "name": `${code.code} hatası nasıl çözülür?`,
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": `${code.code} arızasını çözmek için başlıca adımlar şunlardır: ${solutionsText}`
-        }
-      }
-    ]
+    "mainEntity": faqs.map(item => ({
+      "@type": "Question",
+      "name": item.question,
+      "acceptedAnswer": { "@type": "Answer", "text": item.answer }
+    }))
   });
 
-  // Build JSON-LD TechArticle Schema
-  const techArticleJson = JSON.stringify({
+  const techArticleJson = serializeJsonLd({
     "@context": "https://schema.org",
     "@type": "TechArticle",
     "headline": `${code.code} - ${code.name}`,
     "description": metaDescription,
     "url": canonicalUrl,
-    "inLanguage": "tr",
+    "inLanguage": "tr-TR",
     "datePublished": "2026-06-12",
     "dateModified": SITEMAP_LASTMOD,
     "author": { "@type": "Organization", "name": "OBD Kodları Editoryal Ekibi", "url": "https://www.obdkodu.com/kaynaklar-ve-metodoloji" },
@@ -597,31 +661,29 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
       "url": "https://www.obdkodu.com",
       "logo": { "@type": "ImageObject", "url": "https://www.obdkodu.com/images/logo.png" }
     },
-    "about": { "@type": "Thing", "name": code.affectedSystem },
+    "about": { "@type": "DefinedTerm", "name": code.code, "description": code.name },
     "mainEntityOfPage": { "@type": "WebPage", "@id": canonicalUrl },
     "citation": [
-      "https://saemobilus.sae.org/standards/j2012_199903-recommended-practice-diagnostic-trouble-code-definitions",
-      "https://www.iso.org/standard/66369.html"
+      "https://saemobilus.sae.org/standards/j2012_199203-diagnostic-trouble-code-definitions",
+      "https://www.iso.org/standard/66369.html",
+      ...(code.sourceLinks || []).slice(0, 3)
     ],
-    "keywords": [code.code, `${code.code} arıza kodu`, code.affectedSystem, "OBD-II"],
+    "keywords": [code.code, `${code.code} arıza kodu`, code.affectedSystem, "OBD-II", `${severityAssessment.label} ciddiyet`],
     "proficiencyLevel": "Beginner"
   });
 
-  // Build JSON-LD HowTo Schema (solution steps)
-  let howToSchemaJson = '';
-  if (code.solutions && code.solutions.length > 0) {
-    howToSchemaJson = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "HowTo",
-      "name": `${code.code} Arıza Kodu Nasıl Çözülür?`,
-      "description": `${code.code} (${code.name}) arıza kodunun çözüm adımları.`,
-      "step": code.solutions.map((sol, idx) => ({
-        "@type": "HowToStep",
-        "position": idx + 1,
-        "text": sol
-      }))
-    });
-  }
+  const howToSchemaJson = serializeJsonLd({
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": `${code.code} Arıza Kodu Nasıl Teşhis Edilir?`,
+    "description": `${code.code} (${code.name}) için güvenli ve ölçüme dayalı teşhis sırası.`,
+    "step": diagnosticSteps.map((step, idx) => ({
+      "@type": "HowToStep",
+      "position": idx + 1,
+      "name": step.title,
+      "text": step.text
+    }))
+  });
 
   // Build JSON-LD BreadcrumbList — extended for brand/model
   const breadcrumbItems = [
@@ -638,16 +700,41 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
   } else {
     breadcrumbItems.push({ "@type": "ListItem", "position": 3, "name": code.code });
   }
-  const breadcrumbJson = JSON.stringify({
+  const breadcrumbJson = serializeJsonLd({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": breadcrumbItems
   });
 
+  const definedTermJson = serializeJsonLd({
+    "@context": "https://schema.org",
+    "@type": "DefinedTerm",
+    "name": code.code,
+    "description": code.name,
+    "inDefinedTermSet": {
+      "@type": "DefinedTermSet",
+      "name": "OBD-II Arıza Kodları",
+      "url": "https://www.obdkodu.com/arama"
+    },
+    "url": canonicalUrl
+  });
+  const webPageJson = serializeJsonLd({
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": pageTitle,
+    "url": canonicalUrl,
+    "inLanguage": "tr-TR",
+    "dateModified": SITEMAP_LASTMOD,
+    "isPartOf": { "@type": "WebSite", "name": "OBD Kodları", "url": "https://www.obdkodu.com" },
+    "mainEntity": { "@type": "DefinedTerm", "name": code.code }
+  });
+  const isReferenceOnly = code.sourceQuality === 'reference-only';
+
   const html = render('detail', {
     pageTitle,
     metaDescription,
     canonicalUrl,
+    isNoIndex: isIndexableCode(code) ? '' : 'true',
     activeSearch: 'active',
     ...code,
     name: displayCodeName,
@@ -655,8 +742,25 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
     categoryName: categoryName,
     severityText,
     severity: mappedSeverity,
+    riskLevel: severityAssessment.level,
+    riskEmoji: severityAssessment.emoji,
+    riskHeadline: severityAssessment.headline,
+    riskAction: severityAssessment.action,
+    vehicleUsable: severityAssessment.drivable,
+    continueRisk: severityAssessment.continueRisk,
+    inspectionImpact: severityAssessment.inspection,
+    fuelImpact: severityAssessment.fuelImpact,
+    damageRisk: severityAssessment.damageRisk,
+    riskMethodologyNote: severityAssessment.methodologyNote,
+    diagnosticSteps,
+    faqs,
     isHighSeverity: isHigh ? 'true' : '',
     isNotHighSeverity: !isHigh ? 'true' : '',
+    isReferenceOnly: isReferenceOnly ? 'true' : '',
+    isEditorialGuide: isReferenceOnly ? '' : 'true',
+    contentStatus: isReferenceOnly ? 'Referans kayıt — ayrıntılı teşhis üretici verisiyle doğrulanmalı' : 'Türkçe editoryal rehber',
+    hasSourceTitle: code.titleEn ? 'true' : '',
+    hasSourceLinks: Array.isArray(code.sourceLinks) && code.sourceLinks.length ? 'true' : '',
     hasDashboardLight,
     dlName,
     dlDesc,
@@ -680,16 +784,13 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
     isBrandPage: (brandObj && !modelObj) ? 'true' : '',
     isModelPage: (brandObj && modelObj) ? 'true' : '',
     brandSlug: brandObj ? brandObj.slug : '',
-    comments: paginatedComments,
-    hasComments: formattedComments.length > 0 ? 'true' : '',
-    noComments: formattedComments.length === 0 ? 'true' : '',
-    commentCount: formattedComments.length,
-    paginationHtml: paginationHtml,
     // Server-side rendered JSON-LD (no template syntax leaks)
     faqSchemaJson,
     techArticleJson,
     howToSchemaJson,
     breadcrumbJson,
+    definedTermJson,
+    webPageJson,
     hasHowTo: howToSchemaJson ? 'true' : '',
   });
   sendHtml(res, 200, html);
@@ -721,38 +822,8 @@ function handleDashboardLightDetail(req, res, id) {
   const imgPath = path.join(__dirname, 'public', 'images', 'dashboard-lights', `${light.id}.png`);
   const hasImage = fs.existsSync(imgPath);
 
-  // --- Comments Logic ---
-  const codeComments = commentsData.filter(c => c.code === light.id).reverse();
-  const formattedComments = codeComments.map(c => {
-    const d = new Date(c.date);
-    return {
-      ...c,
-      formattedDate: `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`
-    };
-  });
-
-  const urlParts = req.url.split('?');
-  const pathname = urlParts[0];
-  const queryStr = urlParts[1] || '';
-  const pageMatch = queryStr.match(/(?:^|&)page=(\d+)/);
-  const page = pageMatch ? parseInt(pageMatch[1]) : 1;
-  const limit = 10;
-  const totalPages = Math.ceil(formattedComments.length / limit);
-  
-  let paginationHtml = '';
-  if (totalPages > 1) {
-    paginationHtml = '<div class="pagination">';
-    for (let i = 1; i <= totalPages; i++) {
-      const activeClass = i === page ? 'active' : '';
-      paginationHtml += `<a href="${pathname}?page=${i}#yorumlar" class="page-link ${activeClass}">${i}</a>`;
-    }
-    paginationHtml += '</div>';
-  }
-
-  const paginatedComments = formattedComments.slice((page - 1) * limit, page * limit);
-
   // === SERVER-SIDE JSON-LD FOR DASHBOARD LIGHTS ===
-  const dlBreadcrumbJson = JSON.stringify({
+  const dlBreadcrumbJson = serializeJsonLd({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
@@ -762,7 +833,7 @@ function handleDashboardLightDetail(req, res, id) {
     ]
   });
 
-  const dlArticleJson = JSON.stringify({
+  const dlArticleJson = serializeJsonLd({
     "@context": "https://schema.org",
     "@type": "TechArticle",
     "headline": `${light.name} Neden Yanar?`,
@@ -807,11 +878,6 @@ function handleDashboardLightDetail(req, res, id) {
       return { ...c, severity: mappedSeverity };
     }),
     noRelatedCodes: relatedCodesList.length === 0 ? 'true' : '',
-    comments: paginatedComments,
-    hasComments: formattedComments.length > 0 ? 'true' : '',
-    noComments: formattedComments.length === 0 ? 'true' : '',
-    commentCount: formattedComments.length,
-    paginationHtml: paginationHtml,
     // Server-side JSON-LD
     dlBreadcrumbJson,
     dlArticleJson,
@@ -835,7 +901,7 @@ function handleBrandHub(req, res) {
   });
 
   // ItemList JSON-LD
-  const itemListJson = JSON.stringify({
+  const itemListJson = serializeJsonLd({
     "@context": "https://schema.org",
     "@type": "ItemList",
     "name": "Araç Markaları — OBD Arıza Kodları",
@@ -848,7 +914,7 @@ function handleBrandHub(req, res) {
     }))
   });
 
-  const breadcrumbJson = JSON.stringify({
+  const breadcrumbJson = serializeJsonLd({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
@@ -886,7 +952,7 @@ function handleBrandDetail(req, res, brandSlug) {
   const uCount = codes.filter(c => c.category === 'U').length;
 
   // ItemList JSON-LD for brand codes
-  const itemListJson = JSON.stringify({
+  const itemListJson = serializeJsonLd({
     "@context": "https://schema.org",
     "@type": "ItemList",
     "name": `${brand.name} OBD-II Arıza Kodları`,
@@ -899,7 +965,7 @@ function handleBrandDetail(req, res, brandSlug) {
     }))
   });
 
-  const breadcrumbJson = JSON.stringify({
+  const breadcrumbJson = serializeJsonLd({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
@@ -913,6 +979,7 @@ function handleBrandDetail(req, res, brandSlug) {
     pageTitle: `${brand.name} OBD-II Rehberi ve Arıza Kodları`,
     metaDescription: `${brand.name} araçlarda standart OBD-II kodlarını okuma, doğrulama, model seçimi ve güvenli teşhis adımları.`,
     canonicalUrl: `https://www.obdkodu.com/marka/${brand.slug}`,
+    isNoIndex: 'true',
     brandName: brand.name,
     brandSlug: brand.slug,
     brandModels,
@@ -949,7 +1016,7 @@ function handleBrandModel(req, res, brandSlug, modelSlug) {
     .slice(0, 18);
   const canonicalUrl = `${SITEMAP_BASE_URL}/marka/${brand.slug}/${model.slug}`;
 
-  const itemListJson = JSON.stringify({
+  const itemListJson = serializeJsonLd({
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     'name': `${brand.name} ${model.name} için sık karşılaşılan OBD-II kodları`,
@@ -962,7 +1029,7 @@ function handleBrandModel(req, res, brandSlug, modelSlug) {
     }))
   });
 
-  const breadcrumbJson = JSON.stringify({
+  const breadcrumbJson = serializeJsonLd({
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     'itemListElement': [
@@ -977,6 +1044,7 @@ function handleBrandModel(req, res, brandSlug, modelSlug) {
     pageTitle: `${brand.name} ${model.name} Arıza Kodları ve OBD-II Rehberi`,
     metaDescription: `${brand.name} ${model.name} arıza kodlarını nasıl okuyacağınızı, OBD-II cihazıyla doğrulama adımlarını ve sık görülen kodları inceleyin.`,
     canonicalUrl,
+    isNoIndex: 'true',
     brandName: brand.name,
     brandSlug: brand.slug,
     modelName: model.name,
@@ -991,7 +1059,7 @@ function handleBrandModel(req, res, brandSlug, modelSlug) {
 }
 
 function handleSystemHub(req, res) {
-  const itemListJson = JSON.stringify({
+  const itemListJson = serializeJsonLd({
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     'name': 'Araç Sistemlerine Göre OBD-II Arıza Kodları',
@@ -1003,7 +1071,7 @@ function handleSystemHub(req, res) {
       'url': `${SITEMAP_BASE_URL}/sistem/${guide.slug}`
     }))
   });
-  const breadcrumbJson = JSON.stringify({
+  const breadcrumbJson = serializeJsonLd({
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     'itemListElement': [
@@ -1032,7 +1100,7 @@ function handleSystemDetail(req, res, systemSlug) {
   const matchingCodes = getCodesForSystemGuide(guide);
   const visibleCodes = matchingCodes.slice(0, 72);
   const canonicalUrl = `${SITEMAP_BASE_URL}/sistem/${guide.slug}`;
-  const itemListJson = JSON.stringify({
+  const itemListJson = serializeJsonLd({
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     'name': guide.name,
@@ -1044,7 +1112,7 @@ function handleSystemDetail(req, res, systemSlug) {
       'url': `${SITEMAP_BASE_URL}/kod/${code.code}`
     }))
   });
-  const breadcrumbJson = JSON.stringify({
+  const breadcrumbJson = serializeJsonLd({
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     'itemListElement': [
@@ -1053,7 +1121,7 @@ function handleSystemDetail(req, res, systemSlug) {
       { '@type': 'ListItem', 'position': 3, 'name': guide.name }
     ]
   });
-  const collectionJson = JSON.stringify({
+  const collectionJson = serializeJsonLd({
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     'name': guide.name,
@@ -1080,7 +1148,7 @@ function handleSystemDetail(req, res, systemSlug) {
 }
 
 function handleMethodology(req, res) {
-  const breadcrumbJson = JSON.stringify({
+  const breadcrumbJson = serializeJsonLd({
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     'itemListElement': [
@@ -1168,7 +1236,7 @@ function handleDashboardLights(req, res) {
   const evLights = processedLights.filter(l => l.id.startsWith('ev-'));
 
   // ItemList JSON-LD for dashboard lights (SEO)
-  const dlItemListJson = JSON.stringify({
+  const dlItemListJson = serializeJsonLd({
     "@context": "https://schema.org",
     "@type": "ItemList",
     "name": "Araç Gösterge Paneli İşaretleri",
@@ -1181,7 +1249,7 @@ function handleDashboardLights(req, res) {
     }))
   });
 
-  const dlListBreadcrumbJson = JSON.stringify({
+  const dlListBreadcrumbJson = serializeJsonLd({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
@@ -1205,106 +1273,51 @@ function handleDashboardLights(req, res) {
 }
 
 function handleApiSearch(req, res, query) {
-  const q = (query.q || '').trim();
-  const limit = parseInt(query.limit) || 10;
+  const q = (query.q || '').trim().toLowerCase();
+  const limit = Math.min(12, Math.max(1, parseInt(query.limit, 10) || 10));
 
-  if (!q || q.length < 2) {
-    return sendJson(res, 200, []);
-  }
+  if (!q || q.length < 2) return sendJson(res, 200, []);
+  const tokens = q.split(/\s+/).filter(Boolean);
+  const results = codes
+    .map(code => {
+      const codeValue = code.code.toLowerCase();
+      const nameValue = code.name.toLowerCase();
+      const haystack = [code.code, code.name, code.description, code.affectedSystem, code.titleEn].join(' ').toLowerCase();
+      if (!tokens.every(token => haystack.includes(token))) return null;
+      let score = 0;
+      if (codeValue === q || codeValue === `p${q}`) score += 100;
+      else if (codeValue.startsWith(q) || codeValue.endsWith(q)) score += 70;
+      if (nameValue.startsWith(q)) score += 40;
+      else if (nameValue.includes(q)) score += 20;
+      if (code.sourceQuality !== 'reference-only') score += 10;
+      return { code, score };
+    })
+    .filter(Boolean)
+    .sort((a, b) => b.score - a.score || a.code.code.localeCompare(b.code.code))
+    .slice(0, limit)
+    .map(({ code }) => ({
+      code: code.code,
+      category: code.category,
+      name: code.name,
+      severity: code.severity,
+      system: code.affectedSystem,
+    }));
 
-  const qLower = q.toLowerCase();
-  const results = codes.filter(c =>
-    c.code.toLowerCase().includes(qLower) ||
-    c.name.toLowerCase().includes(qLower)
-  ).slice(0, limit);
-
-  sendJson(res, 200, results.map(c => ({
-    code: c.code,
-    category: c.category,
-    name: c.name,
-    severity: c.severity,
-  })));
-}
-
-function escapeHtml(str) {
-  const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
-  return str.replace(/[&<>"']/g, c => map[c]);
+  sendJson(res, 200, results);
 }
 
 function handleApiComments(req, res) {
-  let body = '';
-  req.on('data', chunk => {
-    body += chunk.toString();
-    if (body.length > 10000) req.connection.destroy();
-  });
-  req.on('end', () => {
-    try {
-      const data = JSON.parse(body);
-      const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-
-      const now = Date.now();
-      if (!commentRateLimit[ip]) commentRateLimit[ip] = [];
-      commentRateLimit[ip] = commentRateLimit[ip].filter(t => now - t < 3600000);
-      if (commentRateLimit[ip].length >= 2) {
-        return sendJson(res, 429, { error: 'Çok fazla yorum gönderdiniz. Lütfen 1 saat bekleyin.' });
-      }
-
-      if (data.website && data.website.trim() !== '') {
-        return sendJson(res, 200, { success: true }); // Honeypot trap
-      }
-
-      if (!data.name || !data.comment || !data.code) {
-        return sendJson(res, 400, { error: 'Lütfen tüm alanları doldurun.' });
-      }
-
-      const text = data.comment.toLowerCase();
-      const nameText = data.name.toLowerCase();
-
-      // Spam Link Check
-      if (text.includes('http') || text.includes('www.') || text.includes('.com') || text.includes('<a ')) {
-        return sendJson(res, 400, { error: 'Spam koruması: Yorumlarda link paylaşımına izin verilmemektedir.' });
-      }
-
-      // Profanity Filter (Küfür/Argo Filtresi)
-      const badWords = [
-        'amk', 'aq', 'oç', 'orospu', 'piç', 'yarrak', 'yarak', 'göt', 'amcık', 
-        'siktir', 'pezevenk', 'kahpe', 'fahişe', 'fuck', 'shit', 'bitch', 'asshole',
-        'sik', 'sikiş', 'am', 'yavşak', 'ibne', 'puşt', 'pic', 'amk', 'sikik'
-      ];
-      const profanityRegex = new RegExp('(^|\\s|\\W)(' + badWords.join('|') + ')(\\s|\\W|$)', 'i');
-      
-      if (profanityRegex.test(text) || profanityRegex.test(nameText)) {
-        return sendJson(res, 400, { error: 'Topluluk kurallarına aykırı (argo/küfür) kelimeler içerdiği için yorumunuz reddedildi.' });
-      }
-
-      const cleanComment = escapeHtml(data.comment.trim());
-      const cleanName = escapeHtml(data.name.trim().substring(0, 50));
-      const codeId = escapeHtml(data.code.trim().toUpperCase());
-
-      const newComment = {
-        id: Date.now().toString(),
-        code: codeId,
-        name: cleanName,
-        comment: cleanComment,
-        date: new Date().toISOString()
-      };
-
-      commentsData.push(newComment);
-      fs.writeFileSync(commentsFile, JSON.stringify(commentsData, null, 2));
-
-      commentRateLimit[ip].push(now);
-      sendJson(res, 200, { success: true, comment: newComment });
-    } catch (e) {
-      sendJson(res, 400, { error: 'Geçersiz veri.' });
-    }
-  });
+  sendJson(res, 410, {
+    error: 'OBD Kodları üzerindeki kullanıcı yorumları kapatıldı.',
+    communityUrl: 'https://otosoz.com'
+  }, req);
 }
 
 function handle404(req, res) {
   // If the request was for a sitemap or xml file, do not return HTML
-  const pathname = url.parse(req.url).pathname || '';
+  const pathname = new URL(req.url, 'http://localhost').pathname;
   if (pathname.toLowerCase().includes('sitemap') || pathname.endsWith('.xml')) {
-    res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+    res.writeHead(404, { ...SECURITY_HEADERS, 'Content-Type': 'text/plain; charset=utf-8', 'X-Robots-Tag': 'noindex' });
     return res.end('404 Not Found: Sitemap or XML file does not exist.');
   }
 
@@ -1355,6 +1368,7 @@ Disallow: /api/
 Disallow: /arama?q=
 
 Sitemap: https://www.obdkodu.com/sitemap.xml
+Sitemap: https://www.obdkodu.com/sitemap-index.xml
 
 # LLM/AI Crawler Information
 User-agent: GPTBot
@@ -1367,7 +1381,7 @@ Allow: /`;
   res.writeHead(200, {
     'Content-Type': 'text/plain; charset=utf-8',
     'Cache-Control': 'public, max-age=86400',
-    'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+    ...SECURITY_HEADERS,
   });
   res.end(robots);
 }
@@ -1418,31 +1432,28 @@ info@obdkodu.com`;
   res.writeHead(200, {
     'Content-Type': 'text/plain; charset=utf-8',
     'Cache-Control': 'public, max-age=86400',
-    'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+    ...SECURITY_HEADERS,
   });
   res.end(llms);
 }
 
 // =========== SITEMAP SYSTEM ===========
-// Keep the public child sitemaps for backwards compatibility, but expose a
-// single canonical URL set at /sitemap.xml. The site has fewer than 50,000
-// canonical URLs, so a flat sitemap is both valid and easier for crawlers to
-// process reliably.
+// Keep the public child sitemaps for backwards compatibility, but expose one
+// quality-filtered canonical URL set at /sitemap.xml. Search engines should
+// only receive pages that are intended to rank, never every database record.
 
 const SITEMAP_CHUNK_SIZE = 10000; // URLs per sitemap file
 const SITEMAP_BASE_URL = 'https://www.obdkodu.com';
-const SITEMAP_LASTMOD = '2026-07-21';
+const SITEMAP_LASTMOD = '2026-09-07';
 
 function sendXml(res, xml) {
   res.writeHead(200, {
+    ...SECURITY_HEADERS,
     'Content-Type': 'application/xml; charset=utf-8',
     'Cache-Control': 'public, max-age=3600',
-    'X-Content-Type-Options': 'nosniff',
   });
   res.end(xml);
 }
-
-const codeChunkCount = Math.ceil(codes.length / SITEMAP_CHUNK_SIZE);
 
 function sitemapUrl(loc, changefreq = 'monthly', priority = '0.7') {
   return `  <url>
@@ -1451,6 +1462,25 @@ function sitemapUrl(loc, changefreq = 'monthly', priority = '0.7') {
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
   </url>`;
+}
+
+function handleSitemapMasterIndex(req, res) {
+  const childSitemaps = [
+    '/sitemap-static.xml',
+    ...Array.from({ length: Math.ceil(indexableCodes.length / SITEMAP_CHUNK_SIZE) }, (_, index) => `/sitemap-codes-${index + 1}.xml`),
+    '/sitemap-vehicles.xml',
+    '/sitemap-systems.xml',
+    '/sitemap-dashboard.xml',
+  ];
+  const entries = childSitemaps.map(item => `  <sitemap>
+    <loc>${SITEMAP_BASE_URL}${item}</loc>
+    <lastmod>${SITEMAP_LASTMOD}</lastmod>
+  </sitemap>`).join('\n');
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${entries}
+</sitemapindex>`;
+  sendXml(res, xml);
 }
 
 function handleSitemapIndex(req, res) {
@@ -1467,15 +1497,10 @@ function handleSitemapIndex(req, res) {
     sitemapUrl(`${SITEMAP_BASE_URL}/kullanim-kosullari`, 'yearly', '0.3'),
     sitemapUrl(`${SITEMAP_BASE_URL}/marka`, 'monthly', '0.8'),
     sitemapUrl(`${SITEMAP_BASE_URL}/kaynaklar-ve-metodoloji`, 'monthly', '0.6'),
-    ...codes.map(code =>
+    ...indexableCodes.map(code =>
       sitemapUrl(`${SITEMAP_BASE_URL}/kod/${code.code}`, 'monthly', '0.7')
     ),
-    ...popularBrands.map(brand =>
-      sitemapUrl(`${SITEMAP_BASE_URL}/marka/${brand.slug}`, 'monthly', '0.8')
-    ),
-    ...modelsList.map(model =>
-      sitemapUrl(`${SITEMAP_BASE_URL}/marka/${model.brandSlug}/${model.slug}`, 'monthly', '0.7')
-    ),
+
     sitemapUrl(`${SITEMAP_BASE_URL}/sistem`, 'monthly', '0.9'),
     ...systemGuides.map(guide =>
       sitemapUrl(`${SITEMAP_BASE_URL}/sistem/${guide.slug}`, 'monthly', '0.8')
@@ -1562,8 +1587,8 @@ ${['P', 'B', 'C', 'U'].map(category => `  <url>
 
 function handleSitemapCodes(req, res, chunkNum) {
   const start = (chunkNum - 1) * SITEMAP_CHUNK_SIZE;
-  const end = Math.min(start + SITEMAP_CHUNK_SIZE, codes.length);
-  if (start >= codes.length) return handle404(req, res);
+  const end = Math.min(start + SITEMAP_CHUNK_SIZE, indexableCodes.length);
+  if (start >= indexableCodes.length) return handle404(req, res);
 
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
@@ -1571,7 +1596,7 @@ function handleSitemapCodes(req, res, chunkNum) {
 `;
   for (let i = start; i < end; i++) {
     xml += `  <url>
-    <loc>${SITEMAP_BASE_URL}/kod/${codes[i].code}</loc>
+    <loc>${SITEMAP_BASE_URL}/kod/${indexableCodes[i].code}</loc>
     <lastmod>${SITEMAP_LASTMOD}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1583,29 +1608,16 @@ function handleSitemapCodes(req, res, chunkNum) {
 }
 
 function handleSitemapVehicles(req, res) {
-  let xml = `<?xml version="1.0" encoding="UTF-8"?>
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-`;
-  popularBrands.forEach(brand => {
-    xml += `  <url>
-    <loc>${SITEMAP_BASE_URL}/marka/${brand.slug}</loc>
+  <url>
+    <loc>${SITEMAP_BASE_URL}/marka</loc>
     <lastmod>${SITEMAP_LASTMOD}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-`;
-  });
-  modelsList.forEach(model => {
-    xml += `  <url>
-    <loc>${SITEMAP_BASE_URL}/marka/${model.brandSlug}/${model.slug}</loc>
-    <lastmod>${SITEMAP_LASTMOD}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-`;
-  });
-  xml += `</urlset>`;
+</urlset>`;
   sendXml(res, xml);
 }
 
@@ -1635,6 +1647,7 @@ function handleSitemapSystems(req, res) {
 
 function handleLegacyBrandSitemap(req, res) {
   res.writeHead(410, {
+    ...SECURITY_HEADERS,
     'Content-Type': 'text/plain; charset=utf-8',
     'Cache-Control': 'public, max-age=86400',
     'X-Robots-Tag': 'noindex'
@@ -1665,8 +1678,9 @@ function handleStatic(req, res, filePath) {
   const safePath = path.resolve(fullPath);
   const publicDir = path.resolve(path.join(__dirname, 'public'));
 
-  // Security: prevent directory traversal
-  if (!safePath.startsWith(publicDir)) {
+  // Security: prevent directory traversal and sibling-prefix bypasses.
+  const relativePath = path.relative(publicDir, safePath);
+  if (relativePath.startsWith('..') || path.isAbsolute(relativePath)) {
     return handle404(req, res);
   }
 
@@ -1691,7 +1705,7 @@ function handleStatic(req, res, filePath) {
     const headers = {
       'Content-Type': contentType,
       'Cache-Control': 'public, max-age=2592000, immutable',
-      'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+      ...SECURITY_HEADERS,
     };
 
     // Gzip compress text-based files
@@ -1721,12 +1735,15 @@ function handleStatic(req, res, filePath) {
 function sendHtml(res, statusCode, html, req) {
   // Generate ETag from content hash for crawl efficiency (304 Not Modified)
   const etag = '"' + crypto.createHash('md5').update(html).digest('hex').substring(0, 16) + '"';
+
+  const robotsMeta = html.match(/<meta\s+name=["']robots["']\s+content=["']([^"']+)["']/i);
+  const robotsDirective = robotsMeta ? robotsMeta[1] : 'index, follow';
   
   const headers = {
     'Content-Type': 'text/html; charset=utf-8',
     'Cache-Control': 'public, max-age=3600, s-maxage=86400',
-    'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
-    'X-Robots-Tag': 'index, follow',
+    ...SECURITY_HEADERS,
+    'X-Robots-Tag': robotsDirective,
     'X-Content-Type-Options': 'nosniff',
     'ETag': etag,
     'Last-Modified': new Date(`${SITEMAP_LASTMOD}T00:00:00Z`).toUTCString(),
@@ -1762,7 +1779,7 @@ function sendJson(res, statusCode, data, req) {
   const headers = {
     'Content-Type': 'application/json; charset=utf-8',
     'Cache-Control': 'no-cache',
-    'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+    ...SECURITY_HEADERS,
   };
 
   const acceptEncoding = (req && req.headers && req.headers['accept-encoding']) || '';
@@ -1785,30 +1802,19 @@ function sendJson(res, statusCode, data, req) {
 
 function sendRedirect(res, statusCode, location) {
   res.writeHead(statusCode, {
+    ...SECURITY_HEADERS,
     'Location': location,
     'Cache-Control': 'public, max-age=86400'
   });
   res.end();
 }
 
-function parseQuery(queryString) {
-  const params = {};
-  if (!queryString) return params;
-  queryString.split('&').forEach(pair => {
-    const [key, value] = pair.split('=');
-    if (key) {
-      params[decodeURIComponent(key)] = decodeURIComponent(value || '');
-    }
-  });
-  return params;
-}
-
 // =========== SERVER ===========
 
 const server = http.createServer((req, res) => {
-  const parsedUrl = url.parse(req.url);
+  const parsedUrl = new URL(req.url, 'http://localhost');
   const pathname = parsedUrl.pathname;
-  const query = parseQuery(parsedUrl.query);
+  const query = Object.fromEntries(parsedUrl.searchParams.entries());
 
   // One URL shape per page: remove trailing slashes (except the homepage).
   if (pathname.length > 1 && pathname.endsWith('/')) {
@@ -1884,7 +1890,7 @@ const server = http.createServer((req, res) => {
   const cleanPath = pathname.replace(/\/$/, '').toLowerCase();
   
   if (cleanPath === '/sitemap-index.xml' || cleanPath === '/sitemap_index.xml') {
-    return sendRedirect(res, 301, '/sitemap.xml');
+    return handleSitemapMasterIndex(req, res);
   }
   if (cleanPath === '/sitemap.xml') {
     return handleSitemapIndex(req, res);
@@ -1917,6 +1923,16 @@ const server = http.createServer((req, res) => {
     return handleLlmsTxt(req, res);
   }
 
+  // Friendly keyword URL aliases consolidate into the established canonical routes.
+  const friendlyCodeMatch = pathname.match(/^\/([PBCU][0-3][0-9A-F]{3})-ariza-kodu$/i);
+  if (friendlyCodeMatch && req.method === 'GET') {
+    return sendRedirect(res, 301, `/kod/${friendlyCodeMatch[1].toUpperCase()}`);
+  }
+  const friendlyBrandMatch = pathname.match(/^\/([a-z0-9-]+)-obd-ariza-kodlari$/i);
+  if (friendlyBrandMatch && popularBrands.some(brand => brand.slug === friendlyBrandMatch[1].toLowerCase())) {
+    return sendRedirect(res, 301, `/marka/${friendlyBrandMatch[1].toLowerCase()}`);
+  }
+
   // Code detail: /kod/P0300 or /kod/P0300/hyundai or /kod/P0300/hyundai/i20
   const codeMatch = pathname.match(/^\/kod\/([A-Za-z0-9]+)(?:\/([A-Za-z0-9-]+))?(?:\/([A-Za-z0-9-]+))?$/);
   if (codeMatch && req.method === 'GET') {
@@ -1933,7 +1949,7 @@ const server = http.createServer((req, res) => {
     return handleApiSearch(req, res, query);
   }
 
-  if (pathname === '/api/comments' && req.method === 'POST') {
+  if (pathname === '/api/comments') {
     return handleApiComments(req, res);
   }
 

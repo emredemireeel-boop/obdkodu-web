@@ -43,4 +43,4 @@ setTimeout(() => {
     console.error(error);
     stop(1);
   });
-}, 800);
+}, 2500);
