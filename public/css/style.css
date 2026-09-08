@@ -3774,3 +3774,91 @@ img {
     width: 100%;
   }
 }
+
+
+/* Wide, readable detail canvas and upgraded community handoff. */
+.detail-page-premium > .container {
+  width: 100%;
+  max-width: 1600px;
+  padding-inline: clamp(16px, 3vw, 52px);
+}
+
+.editorial-source-note {
+  margin: 16px 0;
+  padding: 18px 20px;
+  border: 1px solid var(--border-subtle);
+  border-left: 4px solid var(--accent-blue);
+  border-radius: 14px;
+  background: var(--bg-secondary);
+}
+
+.editorial-source-note strong { color: var(--text-primary); }
+.editorial-source-note p { margin: 6px 0 8px; color: var(--text-secondary); line-height: 1.65; }
+.editorial-source-note a { color: var(--accent-blue); font-weight: 800; text-decoration: none; }
+
+.community-redirect-full {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  min-height: 230px;
+  padding: clamp(26px, 4vw, 52px);
+  border-color: rgba(5, 150, 105, 0.42);
+  background:
+    radial-gradient(circle at 8% 20%, rgba(16, 185, 129, 0.22), transparent 30%),
+    radial-gradient(circle at 92% 80%, rgba(59, 130, 246, 0.18), transparent 34%),
+    linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+  overflow: hidden;
+}
+
+.community-redirect-full::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+}
+
+.community-redirect-full .community-redirect-icon {
+  width: 72px;
+  height: 72px;
+  border: 1px solid rgba(16, 185, 129, .35);
+  border-radius: 22px;
+  color: #10b981;
+  font-size: 1.15rem;
+  font-weight: 950;
+  letter-spacing: -.04em;
+}
+
+.community-redirect-full h2 { max-width: 780px; font-size: clamp(1.35rem, 2.4vw, 2.1rem); }
+.community-redirect-full p { max-width: 840px; font-size: 1rem; }
+
+.community-redirect-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.community-redirect-tags span {
+  padding: 7px 10px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  background: rgba(255,255,255,.04);
+  color: var(--text-secondary);
+  font-size: .78rem;
+  font-weight: 750;
+}
+
+.community-redirect-full .community-redirect-button {
+  min-height: 52px;
+  padding-inline: 24px;
+  background: linear-gradient(135deg, #059669, #0f766e);
+  box-shadow: 0 14px 34px rgba(5, 150, 105, .22);
+}
+
+@media (max-width: 900px) {
+  .community-redirect-full { grid-template-columns: auto minmax(0, 1fr); }
+  .community-redirect-full .community-redirect-button { grid-column: 1 / -1; width: 100%; }
+}

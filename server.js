@@ -666,7 +666,7 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
     "citation": [
       "https://saemobilus.sae.org/standards/j2012_199203-diagnostic-trouble-code-definitions",
       "https://www.iso.org/standard/66369.html",
-      ...(code.sourceLinks || []).slice(0, 3)
+      "https://github.com/foerbsnavi/obdex"
     ],
     "keywords": [code.code, `${code.code} arıza kodu`, code.affectedSystem, "OBD-II", `${severityAssessment.label} ciddiyet`],
     "proficiencyLevel": "Beginner"
@@ -760,7 +760,6 @@ function handleDetail(req, res, codeId, brandSlug = null, modelSlug = null) {
     isEditorialGuide: isReferenceOnly ? '' : 'true',
     contentStatus: isReferenceOnly ? 'Referans kayıt — ayrıntılı teşhis üretici verisiyle doğrulanmalı' : 'Türkçe editoryal rehber',
     hasSourceTitle: code.titleEn ? 'true' : '',
-    hasSourceLinks: Array.isArray(code.sourceLinks) && code.sourceLinks.length ? 'true' : '',
     hasDashboardLight,
     dlName,
     dlDesc,
