@@ -16,9 +16,10 @@ const stop = (code) => {
 const timer = setTimeout(() => {
   console.error('Sitemap verification timed out.');
   stop(1);
-}, 10000);
+}, 90000);
 
-setTimeout(() => {
+const startedAt = Date.now();
+function verifySitemapWhenReady() {
   http.get(`http://127.0.0.1:${port}/sitemap.xml`, (response) => {
     let body = '';
     response.setEncoding('utf8');
@@ -39,8 +40,13 @@ setTimeout(() => {
       stop(response.statusCode === 200 && isUrlSet && urlCount > 0 ? 0 : 1);
     });
   }).on('error', (error) => {
+    if (Date.now() - startedAt < 60000) {
+      setTimeout(verifySitemapWhenReady, 500);
+      return;
+    }
     clearTimeout(timer);
     console.error(error);
     stop(1);
   });
-}, 2500);
+}
+setTimeout(verifySitemapWhenReady, 500);

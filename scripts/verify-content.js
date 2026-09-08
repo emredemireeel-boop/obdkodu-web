@@ -20,6 +20,24 @@ function request(pathname) {
   });
 }
 
+function delay(milliseconds) {
+  return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
+
+async function waitForServer(timeoutMilliseconds = 60000) {
+  const deadline = Date.now() + timeoutMilliseconds;
+  while (Date.now() < deadline) {
+    try {
+      const response = await request('/robots.txt');
+      if (response.status === 200) return;
+    } catch (error) {
+      // The full OBD dataset is still loading; retry until the deadline.
+    }
+    await delay(500);
+  }
+  throw new Error('Test server did not become ready in time');
+}
+
 function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
@@ -29,7 +47,7 @@ function count(body, pattern) {
 }
 
 async function verify() {
-  await new Promise(resolve => setTimeout(resolve, 2500));
+  await waitForServer();
   const [home, search, pageTwo, keyword, powertrainHub, priorityCode, powertrainSitemap, sitemapMaster, p0420, p0524, reference, alias, api] = await Promise.all([
     request('/'),
     request('/arama'),
@@ -96,7 +114,7 @@ const timer = setTimeout(() => {
   console.error('Content verification timed out.');
   child.kill();
   process.exit(1);
-}, 20000);
+}, 90000);
 
 verify()
   .then(() => {
