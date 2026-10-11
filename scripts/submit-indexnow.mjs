@@ -1,5 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import https from 'node:https';
+import { isIP } from 'node:net';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -16,9 +18,30 @@ for (const url of urlList) {
 }
 
 const keyUrl = `https://www.obdkodu.com/${key}.txt`;
-const keyResponse = await fetch(keyUrl);
-if (!keyResponse.ok || (await keyResponse.text()).trim() !== key) {
-  throw new Error(`Canlı IndexNow anahtar dosyası doğrulanamadı: HTTP ${keyResponse.status}`);
+const originIp = process.env.OBDKODU_ORIGIN_IP;
+if (originIp && !isIP(originIp)) throw new Error('OBDKODU_ORIGIN_IP geçerli bir IP adresi olmalı');
+let keyStatus;
+let keyBody;
+try {
+  if (originIp) {
+    ({ status: keyStatus, body: keyBody } = await new Promise((resolve, reject) => {
+      https.get(keyUrl, { lookup: (_host, options, callback) => options.all ? callback(null, [{ address: originIp, family: isIP(originIp) }]) : callback(null, originIp, isIP(originIp)) }, response => {
+        let body = '';
+        response.setEncoding('utf8');
+        response.on('data', chunk => { body += chunk; });
+        response.on('end', () => resolve({ status: response.statusCode, body }));
+      }).on('error', reject);
+    }));
+  } else {
+    const response = await fetch(keyUrl);
+    keyStatus = response.status;
+    keyBody = await response.text();
+  }
+} catch {
+  throw new Error('Canlı anahtar dosyasına güvenli HTTPS bağlantısı kurulamadı; alan adının DNS kaydını kontrol edin. Geçiş sırasında OBDKODU_ORIGIN_IP kullanabilirsiniz.');
+}
+if (keyStatus !== 200 || keyBody.trim() !== key) {
+  throw new Error(`Canlı IndexNow anahtar dosyası doğrulanamadı: HTTP ${keyStatus}`);
 }
 
 const response = await fetch('https://api.indexnow.org/indexnow', {

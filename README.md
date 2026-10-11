@@ -34,6 +34,8 @@ Yeni kod rehberi eklemek için `data/curated-guides.mjs` içine dikkatle doğrul
 
 Google Indexing API, OBD rehberleri için uygun değildir; yalnız `JobPosting` veya `VideoObject` içindeki `BroadcastEvent` sayfalarında kullanılabilir. Bu sitede Google keşfi için sitemap, robots.txt ve iç bağlantılar kullanılır. `npm run indexnow` canlı anahtar dosyasını doğruladıktan sonra sitemap'teki kanonik URL'leri IndexNow'a bildirir; bu Bing, Yandex ve katılımcı arama motorları içindir, Google'a gönderim değildir. Yalnız yeni veya anlamlı biçimde güncellenmiş sayfalar için `npm run indexnow -- https://www.obdkodu.com/ariza-kodlari/p0420/` komutunu kullanın. Bildirim dizine eklenme garantisi vermez.
 
+DNS geçişi sırasında yerel çözümleyici eski sunucuyu gösteriyorsa, yalnız anahtar dosyasının HTTPS doğrulaması için `OBDKODU_ORIGIN_IP` ortam değişkeni yeni sunucu IP'sine ayarlanabilir. TLS sertifikası yine `www.obdkodu.com` adına doğrulanır; arama motoruna gönderilen URL'ler değişmez.
+
 `/api/guides.json` seçilmiş rehberleri makine tarafından okunabilir biçimde sunar. `/llms.txt` başlıca kaynakları ve kanonik sayfaları gösterir; AI hizmetlerinin bunu kullanması garanti değildir. Her iki dosya, siteyle aynı yayında güncellenmelidir.
 
 Eski sitenin `/kod/P0420` benzeri adreslerini, marka ve gösterge sayfalarını yayından kaldırmadan önce [geçiş notlarını](deploy/MIGRATION.md) uygulayın. Hostingden bağımsız yönlendirme tablosu `deploy/redirects.csv` içinde; Apache sunucu kuralları `deploy/apache-route-rules.conf` ve `deploy/apache-obdkodu.conf` içindedir. Nginx örneği de `deploy/nginx-code-redirects.conf` içindedir.
