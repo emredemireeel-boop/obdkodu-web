@@ -37,7 +37,7 @@ for(const file of files){
  }
  const ld=[...html.matchAll(/<script type="application\/ld\+json">([^<]+)<\/script>/g)];
  if(ld.length!==1)errors.push(`${file}: JSON-LD eksik veya fazla`);
- for(const x of ld){try{JSON.parse(x[1]);}catch{errors.push(`${file}: JSON-LD geçersiz`);}}
+ for(const x of ld){try{const schema=JSON.parse(x[1]);if(schema['@graph']?.some(node=>node['@type']==='FAQPage'))errors.push(`${file}: artık desteklenmeyen FAQPage şeması`);}catch{errors.push(`${file}: JSON-LD geçersiz`);}}
 }
 const sitemap=fs.readFileSync(path.join(root,'sitemap.xml'),'utf8');
 const urls=[...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(x=>x[1]);

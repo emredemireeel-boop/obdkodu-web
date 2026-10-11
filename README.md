@@ -18,6 +18,7 @@ Yerel önizleme `http://localhost:4173` adresindedir. Yayın için `dist/` klas�
 - `data/catalog.json`: 12.181 kodluk aranabilir dizin; 9.533 genel OBDex kodu ve önceki projeden yerel kayıtlar. 3.551 kayıt Türkçe ad taşır. Dizin kaydı, tek başına bir onarım önerisi değildir.
 - `data/guides.json`: Önceki projeden seçilmiş 57 Türkçe rehber.
 - `data/curated-guides.mjs`: Bu sürümde yeniden yazılmış 30 kod rehberi; 87 ayrıntılı sayfa üretilir.
+- `data/diagnostic-guides.mjs`: Cihazın kod göstermemesi ve readiness durumuna ilişkin kaynaklı teşhis rehberleri.
 - `data/description-overrides.mjs`: Eski rehberlerdeki kesin veya araçtan araca değişen iddiaların gözden geçirilmiş açıklamaları.
 - `data/content-overrides.mjs`: Seçilmiş eski rehberlerdeki mutlak belirti ve neden iddialarının düzeltilmiş listeleri.
 - `scripts/build.mjs`: Sayfa şablonları, editoryal düzeltmeler, bağlantılar, JSON-LD, sitemap ve robots.
@@ -30,7 +31,7 @@ Yeni kod rehberi eklemek için `data/curated-guides.mjs` içine dikkatle doğrul
 
 ## SEO ve yayın kontrolü
 
-Üretim kanonik alan adı, mevcut projenin URL geçmişini korumak için `https://www.obdkodu.com` olarak ayarlıdır. Kök alan adı ve HTTP sürümleri HTTPS `www` adresine 301 ile yönlendirilmelidir. `robots.txt`, `sitemap.xml`, canonical URL, Open Graph ve JSON-LD üretilir. Google Search Console'da alan adını doğrulayıp sitemap'i gönderin. FAQPage şeması yapısal anlam taşır; Google, Mayıs 2026'dan beri FAQ zengin sonucunu göstermiyor.
+Üretim kanonik alan adı, mevcut projenin URL geçmişini korumak için `https://www.obdkodu.com` olarak ayarlıdır. Kök alan adı ve HTTP sürümleri HTTPS `www` adresine 301 ile yönlendirilmelidir. `robots.txt`, `sitemap.xml`, canonical URL, Open Graph ve JSON-LD üretilir. Google Search Console'da alan adını doğrulayıp sitemap'i gönderin. Görünür soru-cevap içerikleri korunur; Google Mayıs 2026'da FAQ zengin sonucunu kaldırdığı için artık `FAQPage` şeması üretilmez.
 
 Google Indexing API, OBD rehberleri için uygun değildir; yalnız `JobPosting` veya `VideoObject` içindeki `BroadcastEvent` sayfalarında kullanılabilir. Bu sitede Google keşfi için sitemap, robots.txt ve iç bağlantılar kullanılır. `npm run indexnow` canlı anahtar dosyasını doğruladıktan sonra sitemap'teki kanonik URL'leri IndexNow'a bildirir; bu Bing, Yandex ve katılımcı arama motorları içindir, Google'a gönderim değildir. Yalnız yeni veya anlamlı biçimde güncellenmiş sayfalar için `npm run indexnow -- https://www.obdkodu.com/ariza-kodlari/p0420/` komutunu kullanın. Bildirim dizine eklenme garantisi vermez.
 
