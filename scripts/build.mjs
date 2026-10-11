@@ -40,6 +40,37 @@ const categories = [
   { id:'U', label:'Ağ & iletişim', count:'U kodları', icon:'↗', text:'Kontrol modülleri arasındaki veri iletişimi.', color:'mint' }
 ];
 const featured = ['P0420','P0300','P0171','P0128','P0442','P0700'];
+const relatedOverrides = {
+  B0001: ['B0010','B0020'],
+  B0010: ['B0001','B0020'],
+  B0020: ['B0001','B0010'],
+  C0035: ['C0040','U0121'],
+  C0040: ['C0035','U0121'],
+  C0176: ['C1089','U0121'],
+  C1089: ['C0176','U0121'],
+  P0087: ['P0171','P0174','P0200','P0300'],
+  P0200: ['P0087','P0171','P0300'],
+  P0299: ['P0101','P0102','P0171'],
+  P0325: ['P0300','P0335','P0340'],
+  P0335: ['P0340','P0016','P0300'],
+  P0131: ['P0130','P0135','P0137','P0171'],
+  P0137: ['P0136','P0138','P0141','P0131'],
+  P0402: ['P0401','P0171','P0101','P0420'],
+  P2002: ['P2452','P2453','P2459','P2463'],
+  P204F: ['P2002','P2452','P2096'],
+  P2096: ['P0171','P0420','P0137'],
+  P2503: ['U0100','U0073','U0101'],
+  P0717: ['P0722','P0730','P0700'],
+  P0722: ['P0717','P0730','P0700'],
+  P0730: ['P0717','P0722','P0740'],
+  P0750: ['P0700','P0730','P0740'],
+  P2106: ['P2135','P2138','P0120'],
+  P2181: ['P0115','P0128','P011A'],
+  P2463: ['P2452','P2453','P2459','P2002'],
+  U0121: ['C0035','C0040','U0100','U0073'],
+  U0073: ['U0100','U0101','U0121'],
+  U0167: ['U0100','U0101','U0073']
+};
 const key = c => guideMap.get(c);
 const icon = (name, size = 20) => {
   const shapes = {
@@ -182,9 +213,10 @@ function detail(d) {
  const caution=ed?.caution || d.caution || (d.code.startsWith('P03') ? 'Aktif tekleme ve yanıp sönen motor lambasında aracı zorlamayın.' : 'Kesin karar için araç üreticisinin servis prosedürünü uygulayın.');
  const faqs=codeFaqs(d);
  const scopeLabel=catalogMap.get(d.code)?.scope==='generic'?'Genel OBD-II kodu':'Markaya göre değişebilir';
- const related=guides.filter(x=>x.code!==d.code && (x.affectedSystem===d.affectedSystem || x.code.slice(0,3)===d.code.slice(0,3))).slice(0,4);
+ const related=(relatedOverrides[d.code] ? relatedOverrides[d.code].map(code=>guideMap.get(code)).filter(Boolean) : guides.filter(x=>x.code!==d.code && (x.affectedSystem===d.affectedSystem || x.code.slice(0,4)===d.code.slice(0,4)))).slice(0,4);
+ const relatedMarkup=related.length ? `<section class="detail-section related-section"><span class="section-nr">İLGİLİ KODLAR</span><h2>Birlikte bakılabilecek kodlar</h2><div class="related-grid">${related.map(x=>`<a href="/ariza-kodlari/${x.code.toLowerCase()}/"><strong>${x.code}</strong><span>${e(x.name)}</span><b>↗</b></a>`).join('')}</div></section>` : '';
  const path=`/ariza-kodlari/${d.code.toLowerCase()}/`;
- const body=`<article class="detail-page"><div class="detail-hero"><div class="wrap detail-hero-grid"><div><span class="eyebrow">OBD-II ARIZA KODU · ${e(d.category)} AİLESİ</span><div class="detail-code-line"><h1>${e(d.code)}</h1><button class="copy-code" type="button" data-copy="${e(d.code)}" aria-label="${e(d.code)} kodunu kopyala">${icon('copy',17)} <span>Kopyala</span></button></div><h2>${e(d.name)}</h2><p>${e(summary)}</p><div class="detail-tags"><span>${e(d.affectedSystem || 'OBD-II sistemi')}</span><span>${e(scopeLabel)}</span><span>${e(severityLabel(d))}</span></div></div><aside class="first-card"><span class="first-card-kicker">İLK BAKIŞTA</span><div class="first-card-icon">${icon('spark',25)}</div><h3>İlk kontrol</h3><p>${e(first)}</p><a href="#teshis">Adımları gör ↓</a></aside></div></div><nav class="detail-jump wrap" aria-label="Bu kodda hızlı gezinme"><a href="#anlami">Anlamı</a><a href="#belirtiler">Belirtiler</a><a href="#nedenler">Nedenler</a><a href="#teshis">Teşhis</a><a href="#sorular">Sorular</a></nav><div class="wrap detail-layout"><div class="detail-main"><section class="detail-section" id="anlami"><span class="section-nr">01 / ANLAMI</span><h2>${e(d.code)} ne demek?</h2><p>${e(descriptionOverrides[d.code] || d.description || summary)}</p><p>Kodun kaydedildiği çalışma koşulları, eşlik eden diğer kodlar ve araç modeli sonucu etkiler. Bu nedenle aşağıdaki nedenleri ölçümle ayırmak gerekir.</p><div class="info-strip"><span>i</span><p>Arıza kodu bir başlangıç noktasıdır; kesin parça teşhisi değildir.</p></div></section><section class="detail-section" id="belirtiler"><span class="section-nr">02 / BELİRTİLER</span><h2>Görülebilen belirtiler</h2>${list((d.symptoms || []).slice(0,6),'check-list')}</section><section class="detail-section" id="nedenler"><span class="section-nr">03 / OLASI NEDENLER</span><h2>Hangi ihtimaller araştırılır?</h2><div class="cause-grid">${(d.causes || []).slice(0,6).map((x,i)=>`<div class="cause-item"><span>${String(i+1).padStart(2,'0')}</span><p>${e(x)}</p></div>`).join('')}</div></section><section class="detail-section" id="teshis"><span class="section-nr">04 / TEŞHİS SIRASI</span><h2>Nereden başlanmalı?</h2><p class="section-lead">Parça değiştirmeden önce ölçülebilen nedenleri daraltan pratik sıra:</p><ol class="step-list">${steps.map((x,i)=>`<li><span>${String(i+1).padStart(2,'0')}</span><p>${e(x)}</p></li>`).join('')}</ol><div class="caution-box"><strong>Dikkat</strong><p>${e(caution)}</p></div></section><section class="detail-section" id="sorular"><span class="section-nr">05 / SIK SORULANLAR</span><h2>${e(d.code)} hakkında sorular</h2>${faqHtml(faqs)}</section><section class="detail-section related-section"><span class="section-nr">İLGİLİ KODLAR</span><h2>Birlikte bakılabilecek kodlar</h2><div class="related-grid">${(related.length ? related : guides.filter(x=>x.code!==d.code).slice(0,4)).map(x=>`<a href="/ariza-kodlari/${x.code.toLowerCase()}/"><strong>${x.code}</strong><span>${e(x.name)}</span><b>↗</b></a>`).join('')}</div></section></div><aside class="detail-sidebar"><div class="toc-card"><strong>Bu sayfada</strong><a href="#anlami">Kodun anlamı</a><a href="#belirtiler">Belirtiler</a><a href="#nedenler">Olası nedenler</a><a href="#teshis">Teşhis sırası</a><a href="#sorular">Sık sorulanlar</a></div><div class="sidebar-note"><span>?</span><strong>Birden fazla kod mu var?</strong><p>Önce hepsini kaydet. Bir kod diğerinin sonucu olabilir.</p><a href="/rehber/kod-okunduktan-sonra/">Nasıl ilerlemeli? ↗</a></div></aside></div></article>`;
+ const body=`<article class="detail-page"><div class="detail-hero"><div class="wrap detail-hero-grid"><div><span class="eyebrow">OBD-II ARIZA KODU · ${e(d.category)} AİLESİ</span><div class="detail-code-line"><h1>${e(d.code)}</h1><button class="copy-code" type="button" data-copy="${e(d.code)}" aria-label="${e(d.code)} kodunu kopyala">${icon('copy',17)} <span>Kopyala</span></button></div><h2>${e(d.name)}</h2><p>${e(summary)}</p><div class="detail-tags"><span>${e(d.affectedSystem || 'OBD-II sistemi')}</span><span>${e(scopeLabel)}</span><span>${e(severityLabel(d))}</span></div></div><aside class="first-card"><span class="first-card-kicker">İLK BAKIŞTA</span><div class="first-card-icon">${icon('spark',25)}</div><h3>İlk kontrol</h3><p>${e(first)}</p><a href="#teshis">Adımları gör ↓</a></aside></div></div><nav class="detail-jump wrap" aria-label="Bu kodda hızlı gezinme"><a href="#anlami">Anlamı</a><a href="#belirtiler">Belirtiler</a><a href="#nedenler">Nedenler</a><a href="#teshis">Teşhis</a><a href="#sorular">Sorular</a></nav><div class="wrap detail-layout"><div class="detail-main"><section class="detail-section" id="anlami"><span class="section-nr">01 / ANLAMI</span><h2>${e(d.code)} ne demek?</h2><p>${e(descriptionOverrides[d.code] || d.description || summary)}</p><p>Kodun kaydedildiği çalışma koşulları, eşlik eden diğer kodlar ve araç modeli sonucu etkiler. Bu nedenle aşağıdaki nedenleri ölçümle ayırmak gerekir.</p><div class="info-strip"><span>i</span><p>Arıza kodu bir başlangıç noktasıdır; kesin parça teşhisi değildir.</p></div></section><section class="detail-section" id="belirtiler"><span class="section-nr">02 / BELİRTİLER</span><h2>Görülebilen belirtiler</h2>${list((d.symptoms || []).slice(0,6),'check-list')}</section><section class="detail-section" id="nedenler"><span class="section-nr">03 / OLASI NEDENLER</span><h2>Hangi ihtimaller araştırılır?</h2><div class="cause-grid">${(d.causes || []).slice(0,6).map((x,i)=>`<div class="cause-item"><span>${String(i+1).padStart(2,'0')}</span><p>${e(x)}</p></div>`).join('')}</div></section><section class="detail-section" id="teshis"><span class="section-nr">04 / TEŞHİS SIRASI</span><h2>Nereden başlanmalı?</h2><p class="section-lead">Parça değiştirmeden önce ölçülebilen nedenleri daraltan pratik sıra:</p><ol class="step-list">${steps.map((x,i)=>`<li><span>${String(i+1).padStart(2,'0')}</span><p>${e(x)}</p></li>`).join('')}</ol><div class="caution-box"><strong>Dikkat</strong><p>${e(caution)}</p></div></section><section class="detail-section" id="sorular"><span class="section-nr">05 / SIK SORULANLAR</span><h2>${e(d.code)} hakkında sorular</h2>${faqHtml(faqs)}</section>${relatedMarkup}</div><aside class="detail-sidebar"><div class="toc-card"><strong>Bu sayfada</strong><a href="#anlami">Kodun anlamı</a><a href="#belirtiler">Belirtiler</a><a href="#nedenler">Olası nedenler</a><a href="#teshis">Teşhis sırası</a><a href="#sorular">Sık sorulanlar</a></div><div class="sidebar-note"><span>?</span><strong>Birden fazla kod mu var?</strong><p>Önce hepsini kaydet. Bir kod diğerinin sonucu olabilir.</p><a href="/rehber/kod-okunduktan-sonra/">Nasıl ilerlemeli? ↗</a></div></aside></div></article>`;
  const title=`${d.code} Arıza Kodu: ${short(d.name,45)} | OBDKODU`;
  const desc=short(`${d.code} ne demek? ${summary} Belirtileri, olası nedenleri ve teşhis adımlarını Türkçe öğrenin.`,160);
  const graph=[{'@type':'TechArticle',headline:`${d.code}: ${d.name}`,description:desc,inLanguage:'tr-TR',mainEntityOfPage:url(path),publisher:{'@type':'Organization',name:'OBDKODU',url:url('/')},about:{'@type':'Thing',name:`${d.code} OBD-II arıza kodu`}},faqSchema(faqs)];
