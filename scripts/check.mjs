@@ -49,6 +49,9 @@ for(const file of files.filter(x=>path.basename(x)!=='404.html')){
  if(!urls.includes(expected))errors.push(`${file}: sitemap içinde yok`);
 }
 if(!fs.existsSync(path.join(root,'assets/og.png')))errors.push('Sosyal paylaşım görseli eksik');
+for(const icon of ['favicon.png','favicon.ico','apple-touch-icon.png'])if(!fs.existsSync(path.join(root,icon)))errors.push(`Marka simgesi eksik: ${icon}`);
+const favicon=fs.readFileSync(path.join(root,'favicon.png'));
+if(favicon.toString('hex',0,8)!=='89504e470d0a1a0a' || favicon.readUInt32BE(16)!==64 || favicon.readUInt32BE(20)!==64)errors.push('Favicon PNG 64x64 değil');
 for(const u of urls)if(!u.startsWith('https://www.obdkodu.com/'))errors.push(`Sitemap URL: ${u}`);
 const guideFeed=JSON.parse(fs.readFileSync(path.join(root,'api/guides.json'),'utf8'));
 if(!guideFeed.guides.length || guideFeed.count!==guideFeed.guides.length)errors.push('Makine okunabilir rehber sayısı uyuşmuyor');

@@ -24,6 +24,7 @@ Yerel önizleme `http://localhost:4173` adresindedir. Yayın için `dist/` klas�
 - `scripts/build.mjs`: Sayfa şablonları, editoryal düzeltmeler, bağlantılar, JSON-LD, sitemap ve robots.
 - `assets/site.css`, `assets/site.js` ve `assets/multi-code.js`: Görsel tasarım, arama ve çoklu kod yorumlama aracı.
 - `assets/fonts/`: Yerel DM Sans ve Manrope fontları; OFL lisans metinleri aynı klasörde.
+- `assets/favicon.svg`: Menüdeki dört parçalı marka işaretinin vektör kaynağı. `favicon.png`, `favicon.ico` ve `apple-touch-icon.png` aynı işaretten türetilir; tarayıcılar ve Google için kök dizine kopyalanır.
 
 Yeni kod rehberi eklemek için `data/curated-guides.mjs` içine dikkatle doğrulanmış bir kayıt ekleyip `npm run build` çalıştırın. `data/catalog.json` içindeki kodlar aranabilir; yalnızca seçilmiş rehberlerin ayrı sayfası oluşturulur. Bu, otomatik üretilmiş zayıf sayfaların dizine girmesini önler. `scripts/expand-data.mjs` yalnızca aynı masaüstündeki eski projeden yeniden içe aktarma gerektiğinde kullanılmalıdır; normal build için eski proje gerekmez.
 
