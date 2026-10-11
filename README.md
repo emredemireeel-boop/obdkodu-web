@@ -19,16 +19,19 @@ Yerel önizleme `http://localhost:4173` adresindedir. Yayın için `dist/` klas�
 - `data/guides.json`: Önceki projeden seçilmiş 57 Türkçe rehber.
 - `data/curated-guides.mjs`: Bu sürümde yeniden yazılmış 30 kod rehberi; 87 ayrıntılı sayfa üretilir.
 - `data/diagnostic-guides.mjs`: Cihazın kod göstermemesi ve readiness durumuna ilişkin kaynaklı teşhis rehberleri.
+- `data/live-pids.mjs`: OBDex CC0 Mode 01 listesinden seçilmiş 13 PID ve özgün Türkçe okuma notları.
 - `data/description-overrides.mjs`: Eski rehberlerdeki kesin veya araçtan araca değişen iddiaların gözden geçirilmiş açıklamaları.
 - `data/content-overrides.mjs`: Seçilmiş eski rehberlerdeki mutlak belirti ve neden iddialarının düzeltilmiş listeleri.
 - `scripts/build.mjs`: Sayfa şablonları, editoryal düzeltmeler, bağlantılar, JSON-LD, sitemap ve robots.
-- `assets/site.css`, `assets/site.js` ve `assets/multi-code.js`: Görsel tasarım, arama ve çoklu kod yorumlama aracı.
+- `assets/site.css`, `assets/site.js`, `assets/multi-code.js` ve `assets/live-data.js`: Görsel tasarım, arama, çoklu kod yorumlama ve yakıt düzeltmesi karşılaştırma aracı.
 - `assets/fonts/`: Yerel DM Sans ve Manrope fontları; OFL lisans metinleri aynı klasörde.
 - `assets/favicon.svg`: Menüdeki dört parçalı marka işaretinin vektör kaynağı. `favicon.png`, `favicon.ico` ve `apple-touch-icon.png` aynı işaretten türetilir; tarayıcılar ve Google için kök dizine kopyalanır.
 
 Yeni kod rehberi eklemek için `data/curated-guides.mjs` içine dikkatle doğrulanmış bir kayıt ekleyip `npm run build` çalıştırın. `data/catalog.json` içindeki kodlar aranabilir; yalnızca seçilmiş rehberlerin ayrı sayfası oluşturulur. Bu, otomatik üretilmiş zayıf sayfaların dizine girmesini önler. `scripts/expand-data.mjs` yalnızca aynı masaüstündeki eski projeden yeniden içe aktarma gerektiğinde kullanılmalıdır; normal build için eski proje gerekmez.
 
 `/kodlari-birlikte-yorumla/` sayfası, kullanıcıların birkaç kodu birlikte değerlendirmesine yardımcı olur. Kuralları `assets/multi-code.js` içinde sınırlı ve açık biçimde tanımlıdır; otomatik teşhis iddiası taşımaz. Kod verisi yalnızca arama ve bu araç kullanıldığında indirilir.
+
+`/canli-veri/` seçilmiş Mode 01 PID'lerini açıklar ve Bank 1 STFT/LTFT değerlerini iki koşulda karşılaştırır. Araç veriyi sunucuya göndermez, evrensel arıza eşiği veya parça teşhisi üretmez. Aynı veri `/api/pids.json` üzerinden kaynak ve lisans bilgisiyle sunulur.
 
 ## SEO ve yayın kontrolü
 
@@ -38,7 +41,7 @@ Google Indexing API, OBD rehberleri için uygun değildir; yalnız `JobPosting` 
 
 DNS geçişi sırasında yerel çözümleyici eski sunucuyu gösteriyorsa, yalnız anahtar dosyasının HTTPS doğrulaması için `OBDKODU_ORIGIN_IP` ortam değişkeni yeni sunucu IP'sine ayarlanabilir. TLS sertifikası yine `www.obdkodu.com` adına doğrulanır; arama motoruna gönderilen URL'ler değişmez.
 
-`/api/guides.json` seçilmiş rehberleri makine tarafından okunabilir biçimde sunar. `/llms.txt` başlıca kaynakları ve kanonik sayfaları gösterir; AI hizmetlerinin bunu kullanması garanti değildir. Her iki dosya, siteyle aynı yayında güncellenmelidir.
+`/api/guides.json` seçilmiş rehberleri, `/api/pids.json` canlı veri PID özetlerini makine tarafından okunabilir biçimde sunar. `/llms.txt` başlıca kaynakları ve kanonik sayfaları gösterir; AI hizmetlerinin bunu kullanması garanti değildir. Bu dosyalar siteyle aynı yayında güncellenmelidir.
 
 Eski sitenin `/kod/P0420` benzeri adreslerini, marka ve gösterge sayfalarını yayından kaldırmadan önce [geçiş notlarını](deploy/MIGRATION.md) uygulayın. Hostingden bağımsız yönlendirme tablosu `deploy/redirects.csv` içinde; Apache sunucu kuralları `deploy/apache-route-rules.conf` ve `deploy/apache-obdkodu.conf` içindedir. Nginx örneği de `deploy/nginx-code-redirects.conf` içindedir.
 
