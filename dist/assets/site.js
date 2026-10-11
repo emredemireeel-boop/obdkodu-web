@@ -18,6 +18,14 @@
   });
 
   const norm = s => String(s || '').toLocaleLowerCase('tr-TR').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ı/g, 'i');
+  const modelIndex = [
+    {match:/\bi20\b/i,name:'Hyundai i20',path:'/araclar/hyundai/i20/'},
+    {match:/\bclio\b/i,name:'Renault Clio',path:'/araclar/renault/clio/'},
+    {match:/\begea\b/i,name:'Fiat Egea',path:'/araclar/fiat/egea/'},
+    {match:/\bcorolla\b/i,name:'Toyota Corolla',path:'/araclar/toyota/corolla/'}
+  ];
+  const findModel = query => modelIndex.find(item => item.match.test(norm(query)));
+  const findCode = query => String(query || '').toUpperCase().match(/(?:^|[^A-Z0-9])([PBCU][0-9A-F]{1,4})(?![A-Z0-9])/)?.[1] || null;
   const featuredOrder = new Map(['P0420','P0300','P0171','P0128','P0442','P0700'].map((code,index)=>[code,index]));
   const familyOrder = { P:0, B:1, C:2, U:3 };
   let dataPromise;
@@ -34,7 +42,18 @@
     const hide = () => { suggestions.hidden = true; suggestions.replaceChildren(); };
     const show = () => {
       const q = norm(input.value.trim());
-      if (!data || q.length < 2) return hide();
+      if (q.length < 2) return hide();
+      const model = findModel(q);
+      if (model) {
+        suggestions.replaceChildren();
+        const link=document.createElement('a');
+        link.href=`/araclar/?q=${encodeURIComponent(input.value.trim())}`;
+        const strong=document.createElement('strong');strong.textContent=model.name;
+        const span=document.createElement('span');span.textContent='Model ve kodu birlikte yorumla';
+        link.append(strong,span);suggestions.append(link);suggestions.hidden=false;
+        return;
+      }
+      if (!data) return hide();
       const matches = data.catalog.filter(item => norm(item.code).includes(q) || norm(item.name).includes(q)).sort((a,b) => Number(b.code.toLowerCase()===q) - Number(a.code.toLowerCase()===q)).slice(0,5);
       suggestions.replaceChildren();
       for (const item of matches) {
@@ -54,13 +73,78 @@
       event.preventDefault();
       const q = input.value.trim();
       if (!q) { input.focus(); return; }
+      const extracted = findCode(q);
+      if (findModel(q) || (extracted && extracted.length < 5) || /\bD[0-9A-F]{2,4}\b/i.test(q)) {
+        location.href = `/araclar/?q=${encodeURIComponent(q)}`; return;
+      }
       try {
         const { codes } = await getData();
-        const code = q.toUpperCase();
+        const code = extracted || q.toUpperCase();
         if (codes.has(code)) { location.href = `/ariza-kodlari/${code.toLowerCase()}/`; return; }
       } catch { /* Directory remains reachable. */ }
-      location.href = `/ariza-kodlari/?q=${encodeURIComponent(q)}`;
+      location.href = `/ariza-kodlari/?q=${encodeURIComponent(extracted || q)}`;
     });
+  }
+
+  const vehicleForm=document.querySelector('[data-vehicle-search]');
+  if (vehicleForm) {
+    const input=vehicleForm.querySelector('input');
+    const result=document.querySelector('#vehicle-result');
+    const addLink=(label,href,secondary=false)=>{
+      const a=document.createElement('a');a.href=href;a.textContent=label;
+      a.className=secondary?'vehicle-result-secondary':'vehicle-result-primary';
+      return a;
+    };
+    const renderVehicle=async query=>{
+      const q=query.trim();
+      if(!q){result.hidden=true;result.replaceChildren();return;}
+      const model=findModel(q);
+      const code=findCode(q);
+      const invalid=/\bD[0-9A-F]{2,4}\b/i.test(q);
+      result.replaceChildren();
+      const kicker=document.createElement('span');kicker.className='eyebrow';kicker.textContent='ARAMA SONUCU';
+      const heading=document.createElement('h2');
+      const desc=document.createElement('p');
+      const actions=document.createElement('div');actions.className='vehicle-result-actions';
+      if(code && code.length===5){
+        heading.textContent=`${model ? model.name+' · ' : ''}${code}`;
+        desc.textContent='Tam kod bulundu. Genel kod açıklamasını oku; sonra araç yılı, motor ve eşlik eden uyarılarla sonucu doğrula.';
+        try {
+          const data=await getData();
+          const match=data.catalog.find(item=>item.code===code);
+          if(match){
+            const note=document.createElement('p');note.className='vehicle-code-name';note.textContent=match.name;result.append(kicker,heading,note,desc);
+            actions.append(addLink(data.codes.has(code)?'Ayrıntılı kod rehberini aç':'Kod dizini kaydını aç',data.codes.has(code)?`/ariza-kodlari/${code.toLowerCase()}/`:`/ariza-kodlari/?q=${code}`));
+          } else {
+            result.append(kicker,heading,desc);
+            actions.append(addLink('Kodu dizinde ara',`/ariza-kodlari/?q=${code}`));
+          }
+        } catch {
+          result.append(kicker,heading,desc);
+          actions.append(addLink('Kodu dizinde ara',`/ariza-kodlari/?q=${code}`));
+        }
+      } else if ((code && code.length<5) || invalid) {
+        heading.textContent=`${model ? model.name+' · ' : ''}${code || q.toUpperCase()}`;
+        desc.textContent='Bu ifade tam bir standart OBD kodu olarak yorumlanamaz. Eksik karakterleri tahmin etmeden cihazdaki tam kaydı yeniden okuyun.';
+        result.append(kicker,heading,desc);
+        actions.append(addLink('Eksik kodu nasıl doğrularım?','/rehber/eksik-obd-kodu/'));
+      } else if(model){
+        heading.textContent=`${model.name} için kod okuma`;
+        desc.textContent='Gösterge mesajını, tam DTC’yi, model yılını ve motor bilgisini birlikte değerlendirin.';
+        result.append(kicker,heading,desc);
+      } else {
+        heading.textContent='Tam OBD kodunu yazın';
+        desc.textContent='Her marka için P0420 gibi beş karakterli kodu arayabilirsiniz. Model rehberi henüz yoksa kodun genel açıklaması yine dizinde bulunur.';
+        result.append(kicker,heading,desc);
+        actions.append(addLink('Kod dizinini aç','/ariza-kodlari/'));
+      }
+      if(model)actions.append(addLink(`${model.name} model rehberi`,model.path,true));
+      result.append(actions);result.hidden=false;
+      const next=new URL(location.href);next.searchParams.set('q',q);history.replaceState(null,'',next.pathname+next.search);
+    };
+    vehicleForm.addEventListener('submit',event=>{event.preventDefault();renderVehicle(input.value);});
+    const initial=new URLSearchParams(location.search).get('q');
+    if(initial){input.value=initial;renderVehicle(initial);}
   }
 
   const catalogInput = document.querySelector('[data-catalog-search]');
