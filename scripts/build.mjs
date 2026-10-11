@@ -264,6 +264,7 @@ const apacheRules=[
  'RewriteRule ^/kaynaklar-ve-metodoloji/?$ /yontem-ve-kaynaklar/ [R=301,L,NC]',
  'RewriteRule ^/gizlilik-politikasi/?$ /gizlilik/ [R=301,L,NC]',
  'RewriteRule ^/sistem/?$ /sistemler/ [R=301,L,NC]',
+ 'RewriteRule ^/api/search/?$ http://127.0.0.1:3000/api/search [P,L,NC]',
  'RewriteRule ^/(marka|gosterge-paneli|sistem|kullanim-kosullari|css|js|images)(/.*)?$ http://127.0.0.1:3000%{REQUEST_URI} [P,L,NC]',
  ''
 ];
