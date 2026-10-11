@@ -6,13 +6,15 @@ Eski `obdkodu-web` projesi `https://www.obdkodu.com` alan adını canonical olar
 
 `npm run build`, hostingden bağımsız `deploy/redirects.csv` tablosunu üretir. Tabloyu kullandığınız sağlayıcının yönlendirme paneline 301 kuralları olarak aktarın. Ayrıntılı rehberi bulunan eski `/kod/P0420` adresleri doğrudan yeni `/ariza-kodlari/p0420/` sayfalarına taşınır. `deploy/nginx-code-redirects.conf` yalnızca Nginx kullanan kurulumlar için ek bir örnektir.
 
-Rehberi olmayan eski kod adresleri için sağlayıcınızda `/kod/{KOD}` → `/ariza-kodlari/?q={KOD}` yönlendirmesi kurulabilir. Bu ikinci grubun eski sıralamalarının korunacağı garanti edilemez; eski sayfalar ile yeni arama görünümü aynı içerik değildir. Sağlayıcı joker karakterli kuralları desteklemiyorsa, yalnızca tabloyu uygulayın ve kalan eski kod yollarını eski uygulamada sunmaya devam edin.
+Apache dışındaki hostinglerde rehberi olmayan eski kod adresleri için `/kod/{KOD}` → `/ariza-kodlari/?q={KOD}` yönlendirmesi kurulabilir. Bu ikinci grubun eski sıralamalarının korunacağı garanti edilemez; eski sayfalar ile yeni arama görünümü aynı içerik değildir. Mümkünse kalan eski kod yollarını eski uygulamada sunmaya devam edin.
 
 Eski `/arama`, `/hakkinda`, `/kaynaklar-ve-metodoloji`, `/gizlilik-politikasi` ve `/sistem` adresleri de yakın yeni sayfalara yönlendirilir. CSV ve Nginx örneği her build sonrası yeni rehber sayfalarını kapsayacak şekilde yeniden üretilir.
 
 ## Kaldırılmaması gereken eski içerik
 
-Eski projede `/marka/…`, `/gosterge-paneli/…`, `/sistem/…` ve `/kod/P0420/hyundai` gibi marka özel sayfalar bulunuyor. Yeni sürüm bunların eşdeğerini henüz üretmiyor. Bunları 404'e düşürmek veya ilgisiz sayfalara topluca yönlendirmek organik trafik ve ziyaretçi deneyimi açısından risklidir. Geçiş sırasında bu yolları eski Node uygulamasından sunmaya devam edin veya eşdeğer sayfalarını oluşturup birebir yönlendirin. `/kullanim-kosullari` için de mevcut sayfayı koruyun; yeni sürümde bu sayfanın eşdeğeri yok.
+Eski projede `/marka/…`, `/gosterge-paneli/…`, `/sistem/…` ve `/kod/P0420/hyundai` gibi marka özel sayfalar bulunuyor. Yeni sürüm bunların eşdeğerini henüz üretmiyor. Bunları 404'e düşürmek veya ilgisiz sayfalara topluca yönlendirmek organik trafik ve ziyaretçi deneyimi açısından risklidir. Apache kurulumunda `deploy/apache-route-rules.conf` eski ana dalın Node sunucusuna (yalnızca 127.0.0.1:3000) vekil sunucu olarak yönlendirir. Seçilmiş kodlar yeni rehbere 301 ile geçer; kalan eski kod detayları eski uygulamada kalır. `/kullanim-kosullari` da eski uygulamada sunulur.
+
+Apache ile yayın için `deploy/apache-obdkodu.conf` dosyası örnek sanal sunucu yapılandırmasıdır. `rewrite`, `proxy`, `proxy_http`, `headers` ve `deflate` modülleri etkin olmalıdır. HTTPS ve kanonik alan adı yönlendirmesi sertifika kurulduktan sonra ayrıca doğrulanmalıdır.
 
 ## Statik yayın
 

@@ -30,7 +30,7 @@ Yeni kod rehberi eklemek için `data/curated-guides.mjs` içine dikkatle doğrul
 
 Üretim kanonik alan adı, mevcut projenin URL geçmişini korumak için `https://www.obdkodu.com` olarak ayarlıdır. Kök alan adı ve HTTP sürümleri HTTPS `www` adresine 301 ile yönlendirilmelidir. `robots.txt`, `sitemap.xml`, canonical URL, Open Graph ve JSON-LD üretilir. Google Search Console'da alan adını doğrulayıp sitemap'i gönderin. FAQPage şeması yapısal anlam taşır; Google, Mayıs 2026'dan beri FAQ zengin sonucunu göstermiyor.
 
-Eski sitenin `/kod/P0420` benzeri adreslerini, marka ve gösterge sayfalarını yayından kaldırmadan önce [geçiş notlarını](deploy/MIGRATION.md) uygulayın. Hostingden bağımsız yönlendirme tablosu `deploy/redirects.csv` içinde; Nginx örneği `deploy/nginx-code-redirects.conf` içindedir.
+Eski sitenin `/kod/P0420` benzeri adreslerini, marka ve gösterge sayfalarını yayından kaldırmadan önce [geçiş notlarını](deploy/MIGRATION.md) uygulayın. Hostingden bağımsız yönlendirme tablosu `deploy/redirects.csv` içinde; Apache sunucu kuralları `deploy/apache-route-rules.conf` ve `deploy/apache-obdkodu.conf` içindedir. Nginx örneği de `deploy/nginx-code-redirects.conf` içindedir.
 
 İletişim sayfasında site sahibinin verdiği `birakiyoruziletisim@gmail.com` adresi kullanılır. Kurumsal kimlik bilgilerini yayın öncesi kendi bilgilerinizle tamamlayın. Sitede uydurma uzman, müşteri yorumu veya fiyat iddiası bulunmaz.
 

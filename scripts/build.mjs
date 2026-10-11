@@ -253,5 +253,19 @@ const redirectRows=[
  ['/sistem','/sistemler/',301]
 ];
 fs.writeFileSync(path.join(deployDir,'redirects.csv'),redirectRows.map(row=>row.join(',')).join('\n')+'\n');
+const apacheRules=[
+ '# Apache server-context rules. Include after RewriteEngine On.',
+ ...guides.map(g=>`RewriteRule ^/kod/${g.code}/?$ /ariza-kodlari/${g.code.toLowerCase()}/ [R=301,L,NC]`),
+ 'RewriteRule ^/kod/([PBCU][0-9A-F]{4})/.+$ /kod/$1 [R=301,L,NC]',
+ 'RewriteRule ^/kod/([PBCU][0-9A-F]{4})/?$ http://127.0.0.1:3000/kod/$1 [P,L,NC]',
+ 'RewriteRule ^/arama/?$ /ariza-kodlari/ [R=301,L,NC]',
+ 'RewriteRule ^/hakkinda/?$ /hakkimizda/ [R=301,L,NC]',
+ 'RewriteRule ^/kaynaklar-ve-metodoloji/?$ /yontem-ve-kaynaklar/ [R=301,L,NC]',
+ 'RewriteRule ^/gizlilik-politikasi/?$ /gizlilik/ [R=301,L,NC]',
+ 'RewriteRule ^/sistem/?$ /sistemler/ [R=301,L,NC]',
+ 'RewriteRule ^/(marka|gosterge-paneli|sistem|kullanim-kosullari|css|js|images)(/.*)?$ http://127.0.0.1:3000%{REQUEST_URI} [P,L,NC]',
+ ''
+];
+fs.writeFileSync(path.join(deployDir,'apache-route-rules.conf'),apacheRules.join('\n'));
 fs.writeFileSync(path.join(out,'404.html'),page({title:'Sayfa bulunamadı | OBDKODU',description:'Aradığınız sayfa bulunamadı. OBD arıza kodu dizinine dönün.',route:'/404/',noindex:true,body:`<section class="notfound wrap"><span class="eyebrow">404 / SAYFA BULUNAMADI</span><h1>Bu yol bir yere<br><em>çıkmıyor.</em></h1><p>Kodda küçük bir yazım hatası olabilir. Dizinden yeniden aramayı deneyin.</p>${cta('Kod dizinine dön','/ariza-kodlari/')}</section>`}));
 console.log(`Built ${routes.length} indexable pages and 1 error page in ${out}`);
