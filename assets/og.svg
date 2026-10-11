@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f4f5ed"/>
+  <circle cx="1100" cy="50" r="340" fill="#e4eee4"/>
+  <circle cx="1025" cy="285" r="245" fill="none" stroke="#c9ddcb" stroke-width="2"/>
+  <circle cx="1025" cy="285" r="170" fill="none" stroke="#c9ddcb" stroke-width="2"/>
+  <rect x="750" y="158" width="350" height="360" rx="24" fill="#fff" stroke="#d9e5dd" stroke-width="2" transform="rotate(-4 925 338)"/>
+  <text x="789" y="255" fill="#789388" font-family="Arial,sans-serif" font-size="17" font-weight="700" letter-spacing="3">ÖRNEK TEŞHİS</text>
+  <text x="788" y="345" fill="#15352f" font-family="Arial,sans-serif" font-size="76" font-weight="800">P0420</text>
+  <text x="789" y="390" fill="#526e5f" font-family="Arial,sans-serif" font-size="22">Anla → Kontrol et → Doğrula</text>
+  <g transform="translate(74 70) rotate(-13 22 22)"><rect width="19" height="19" rx="4" fill="#075d52"/><rect x="23" width="19" height="19" rx="4" fill="#8fc8a8"/><rect y="23" width="19" height="19" rx="4" fill="#ff844f"/><rect x="23" y="23" width="19" height="19" rx="4" fill="#d6e8cf"/></g>
+  <text x="135" y="105" fill="#15352f" font-family="Arial,sans-serif" font-size="39" font-weight="800">obd<tspan fill="#0f7567">kodu</tspan><tspan font-size="21">.com</tspan></text>
+  <text x="74" y="236" fill="#15352f" font-family="Arial,sans-serif" font-size="58" font-weight="800">Arıza kodu göründü.</text>
+  <text x="74" y="311" fill="#0f7567" font-family="Arial,sans-serif" font-size="61" font-weight="800">Şimdi neye</text>
+  <text x="74" y="380" fill="#0f7567" font-family="Arial,sans-serif" font-size="61" font-weight="800">bakacağını bil.</text>
+  <text x="77" y="438" fill="#60786b" font-family="Arial,sans-serif" font-size="25">Türkçe OBD arıza kodu ve teşhis rehberi</text>
+  <rect x="75" y="505" width="244" height="58" rx="10" fill="#075d52"/>
+  <text x="103" y="542" fill="#fff" font-family="Arial,sans-serif" font-size="22" font-weight="700">obdkodu.com →</text>
+</svg>
