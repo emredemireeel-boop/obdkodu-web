@@ -5,6 +5,7 @@ Türkçe OBD-II arıza kodu dizini ve seçilmiş kodlar için teşhis rehberleri
 ## Başlangıç
 - Ana sayfa: https://www.obdkodu.com/
 - Kod dizini: https://www.obdkodu.com/ariza-kodlari/
+- Ayrıntılı kod rehberleri: https://www.obdkodu.com/ariza-kodlari/rehberler/
 - Canlı veri ve PID rehberi: https://www.obdkodu.com/canli-veri/
 - Araç modeline göre okuma: https://www.obdkodu.com/araclar/
 - Eksik kod doğrulama: https://www.obdkodu.com/rehber/eksik-obd-kodu/

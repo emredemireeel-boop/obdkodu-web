@@ -20,6 +20,7 @@ Yerel önizleme `http://localhost:4173` adresindedir. Yayın için `dist/` klas�
 - `data/curated-guides.mjs`: Bu sürümde yeniden yazılmış 30 kod rehberi; 87 ayrıntılı sayfa üretilir.
 - `data/diagnostic-guides.mjs`: Cihazın kod göstermemesi ve readiness durumuna ilişkin kaynaklı teşhis rehberleri.
 - `data/live-pids.mjs`: OBDex CC0 Mode 01 listesinden seçilmiş 13 PID ve özgün Türkçe okuma notları.
+- `data/code-sections.mjs`: Seçilmiş kod rehberlerinin editoryal konu grupları; yeni rehber eklendiğinde her kodun tam bir gruba girmesi build sırasında doğrulanır.
 - `data/description-overrides.mjs`: Eski rehberlerdeki kesin veya araçtan araca değişen iddiaların gözden geçirilmiş açıklamaları.
 - `data/content-overrides.mjs`: Seçilmiş eski rehberlerdeki mutlak belirti ve neden iddialarının düzeltilmiş listeleri.
 - `scripts/build.mjs`: Sayfa şablonları, editoryal düzeltmeler, bağlantılar, JSON-LD, sitemap ve robots.
@@ -32,6 +33,8 @@ Yeni kod rehberi eklemek için `data/curated-guides.mjs` içine dikkatle doğrul
 `/kodlari-birlikte-yorumla/` sayfası, kullanıcıların birkaç kodu birlikte değerlendirmesine yardımcı olur. Kuralları `assets/multi-code.js` içinde sınırlı ve açık biçimde tanımlıdır; otomatik teşhis iddiası taşımaz. Kod verisi yalnızca arama ve bu araç kullanıldığında indirilir.
 
 `/canli-veri/` seçilmiş Mode 01 PID'lerini açıklar ve Bank 1 STFT/LTFT değerlerini iki koşulda karşılaştırır. Araç veriyi sunucuya göndermez, evrensel arıza eşiği veya parça teşhisi üretmez. Aynı veri `/api/pids.json` üzerinden kaynak ve lisans bilgisiyle sunulur.
+
+`/ariza-kodlari/` tüm dizinde arama içindir. `/ariza-kodlari/rehberler/` seçilmiş 87 ayrıntılı rehberi sistemlere göre statik HTML bağlantılarıyla listeler; arama motorları ve JavaScript kullanmayan ziyaretçiler bütün rehberlere ulaşabilir.
 
 ## SEO ve yayın kontrolü
 

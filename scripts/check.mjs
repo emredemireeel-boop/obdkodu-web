@@ -8,6 +8,7 @@ const files=[];
 function walk(dir){for(const entry of fs.readdirSync(dir,{withFileTypes:true})){const full=path.join(dir,entry.name);if(entry.isDirectory())walk(full);else if(entry.name.endsWith('.html'))files.push(full);}}
 walk(root);
 const errors=[];
+const escapeHtml=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const titles=new Map();
 const descriptions=new Map();
 for(const file of files){
@@ -56,6 +57,17 @@ for(const u of urls)if(!u.startsWith('https://www.obdkodu.com/'))errors.push(`Si
 const guideFeed=JSON.parse(fs.readFileSync(path.join(root,'api/guides.json'),'utf8'));
 if(!guideFeed.guides.length || guideFeed.count!==guideFeed.guides.length)errors.push('Makine okunabilir rehber sayısı uyuşmuyor');
 for(const guide of guideFeed.guides)if(!urls.includes(guide.url))errors.push(`JSON rehber URL sitemap dışında: ${guide.url}`);
+const guideHub=fs.readFileSync(path.join(root,'ariza-kodlari/rehberler/index.html'),'utf8');
+const hubLinks=[...guideHub.matchAll(/href="(\/ariza-kodlari\/[a-z0-9]{5}\/)">/g)].map(x=>x[1]);
+if(hubLinks.length!==guideFeed.count || new Set(hubLinks).size!==guideFeed.count)errors.push('Ayrıntılı rehber dizini tüm kodlara birer kez bağlanmıyor');
+for(const guide of guideFeed.guides){
+ const route=new URL(guide.url).pathname;
+ if(!hubLinks.includes(route))errors.push(`Rehber dizininde eksik kod: ${guide.code}`);
+ const codePage=fs.readFileSync(path.join(root,route,'index.html'),'utf8');
+ const h1=codePage.match(/<h1>(.*?)<\/h1>/s)?.[1] || '';
+ if(!h1.includes(guide.code) || !h1.includes(escapeHtml(guide.title)))errors.push(`${guide.code}: görünür H1 kod adını içermiyor`);
+}
+if(!fs.readFileSync(path.join(root,'ariza-kodlari/index.html'),'utf8').includes('href="/ariza-kodlari/rehberler/"'))errors.push('Kod dizininden ayrıntılı rehberlere bağlantı yok');
 const indexNowKey=fs.readFileSync(path.join(root,'../data/indexnow-key.txt'),'utf8').trim();
 if(fs.readFileSync(path.join(root,`${indexNowKey}.txt`),'utf8').trim()!==indexNowKey)errors.push('IndexNow anahtar dosyası uyuşmuyor');
 if(errors.length){console.error(errors.join('\n'));process.exit(1);}
