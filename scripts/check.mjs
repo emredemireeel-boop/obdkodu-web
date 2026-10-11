@@ -50,5 +50,10 @@ for(const file of files.filter(x=>path.basename(x)!=='404.html')){
 }
 if(!fs.existsSync(path.join(root,'assets/og.png')))errors.push('Sosyal paylaşım görseli eksik');
 for(const u of urls)if(!u.startsWith('https://www.obdkodu.com/'))errors.push(`Sitemap URL: ${u}`);
+const guideFeed=JSON.parse(fs.readFileSync(path.join(root,'api/guides.json'),'utf8'));
+if(!guideFeed.guides.length || guideFeed.count!==guideFeed.guides.length)errors.push('Makine okunabilir rehber sayısı uyuşmuyor');
+for(const guide of guideFeed.guides)if(!urls.includes(guide.url))errors.push(`JSON rehber URL sitemap dışında: ${guide.url}`);
+const indexNowKey=fs.readFileSync(path.join(root,'../data/indexnow-key.txt'),'utf8').trim();
+if(fs.readFileSync(path.join(root,`${indexNowKey}.txt`),'utf8').trim()!==indexNowKey)errors.push('IndexNow anahtar dosyası uyuşmuyor');
 if(errors.length){console.error(errors.join('\n'));process.exit(1);}
 console.log(`OK: ${files.length-1} indexable sayfa, ${urls.length} sitemap URL, iç bağlantılar ve JSON-LD doğrulandı.`);

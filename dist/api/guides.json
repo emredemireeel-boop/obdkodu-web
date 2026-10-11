@@ -1,0 +1,1899 @@
+{
+  "name": "OBDKODU ayrıntılı arıza kodu rehberleri",
+  "language": "tr-TR",
+  "count": 87,
+  "methodology": "https://www.obdkodu.com/yontem-ve-kaynaklar/",
+  "notice": "Kod tek başına kesin parça teşhisi değildir. Araç üreticisinin servis prosedürü esastır.",
+  "guides": [
+    {
+      "code": "B0001",
+      "title": "Sürücü Ön Hava Yastığı Ateşleme Devresi Arızası",
+      "url": "https://www.obdkodu.com/ariza-kodlari/b0001/",
+      "category": "B",
+      "affectedSystem": "SRS — Sürücü Ön Hava Yastığı",
+      "summary": "Sürücü ön hava yastığı kontrol devresinde sorun algılandı. SRS sisteminin çalışması etkilenebilir.",
+      "explanation": "SRS kontrol modülü sürücü ön hava yastığı ateşleme devresinde açık devre veya beklenmeyen direnç algıladı. Hava yastığı devreleri piroteknik eleman içerir; ölçüm ve sökme işlemleri yalnız üretici güvenlik prosedürleriyle yapılmalıdır.",
+      "firstCheck": "SRS modülündeki diğer kodları ve üretici devre şemasını incele; bu devredeki işlemleri eğitimli teknisyene bırak.",
+      "symptoms": [
+        "Airbag/SRS uyarı lambasının yanması",
+        "SRS sisteminin ilgili devreyi devre dışı bırakması",
+        "Korna veya direksiyon düğmelerinde eşlik eden sorunlar"
+      ],
+      "possibleCauses": [
+        "Direksiyon spiral kablosu arızası",
+        "Direksiyon/kolon konnektöründe gevşeklik",
+        "Kablo demetinde açık devre",
+        "Hava yastığı modülü veya SRS kontrol modülü arızası",
+        "Daha önceki onarım sonrası yanlış bağlantı"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "B0010",
+      "title": "Yolcu Ön Hava Yastığı Ateşleme Devresi Arızası",
+      "url": "https://www.obdkodu.com/ariza-kodlari/b0010/",
+      "category": "B",
+      "affectedSystem": "SRS — Yolcu Ön Hava Yastığı",
+      "summary": "Yolcu ön hava yastığı kontrol devresinde sorun algılandı. Kaza anındaki koruma etkilenebilir.",
+      "explanation": "SRS kontrol modülü yolcu ön hava yastığı ateşleme devresinde açık devre veya direnç sapması algıladı. Yolcu algılama sistemi ve piroteknik devre güvenlik kritiktir; doğrudan ölçüm yapılmamalıdır.",
+      "firstCheck": "SRS kodlarını, bağlantı geçmişini ve üretici teşhis prosedürünü birlikte değerlendir.",
+      "symptoms": [
+        "Airbag/SRS uyarı lambasının yanması",
+        "Yolcu hava yastığı durum göstergesinin hatalı çalışması",
+        "SRS sisteminin ilgili kanalı devre dışı bırakması"
+      ],
+      "possibleCauses": [
+        "Torpido veya koltuk altı konnektöründe temas sorunu",
+        "Kablo demetinde açık devre",
+        "Yolcu algılama/koltuk sensörü sorunu",
+        "Hava yastığı modülü arızası",
+        "SRS kontrol modülü veya daha önceki onarım kaynaklı sorun"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "C0035",
+      "title": "Sol Ön Tekerlek Hız Sensörü Devresi",
+      "url": "https://www.obdkodu.com/ariza-kodlari/c0035/",
+      "category": "C",
+      "affectedSystem": "Şasi Dinamikleri",
+      "summary": "Sol ön tekerlek hız sensörü devresinden beklenen sinyal alınamıyor. ABS ve denge kontrolü işlevleri etkilenebilir.",
+      "explanation": "Sol ön tekerlek hız sensörü devresinde beklenen sinyal alınamıyor. ABS ve denge kontrolü işlevleri etkilenebilir; sensörün kendisi kadar kablo, konnektör ve manyetik halka da kontrol edilmelidir.",
+      "firstCheck": "Sol ön tekerlek hızını diğer tekerleklerin canlı verisiyle karşılaştır; sensör, kablo ve manyetik halkayı kontrol et.",
+      "symptoms": [
+        "ABS'nin devreden çıkması",
+        "Fren pedalındaki sarsıntılı (titreşimli) ABS geri bildiriminin kaybolması",
+        "ESP lambası uyarısı"
+      ],
+      "possibleCauses": [
+        "Poryadaki sensörün manyetik sinyal üretememesi",
+        "Fren hattı boyunca kopan kablolar",
+        "Dönen manyetik halkanın (tone ring) kirlenmesi veya kırılması"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "C0176",
+      "title": "Direksiyon Açı Sensörü Devresi Hatası",
+      "url": "https://www.obdkodu.com/ariza-kodlari/c0176/",
+      "affectedSystem": "Direksiyon ve ESP Sistemi",
+      "summary": "Direksiyon açı sensörü devresinde elektriksel veya sinyal sorunu kaydedildi.",
+      "explanation": "Direksiyon açı bilgisi ilgili kontrol modülünün beklediği biçimde iletilmiyor. Kodun alt tanımı üreticiye göre değişebilir; canlı açı verisi, besleme ve kalibrasyon durumu birlikte değerlendirilmelidir.",
+      "firstCheck": "Direksiyon açı canlı verisini, besleme ve bağlantıları üretici test sırasına göre kontrol et.",
+      "symptoms": [
+        "Direksiyon arıza lambasının (kırmızı veya sarı direksiyon simgesi) yanması",
+        "ESP/Kayma önleyici sistem lambasının yanması",
+        "Direksiyonun aniden çok sertleşmesi veya toparlamaması"
+      ],
+      "possibleCauses": [
+        "Direksiyon sargısının (clockspring) kopması",
+        "Açı sensörünün kalibrasyonunu kaybetmesi (Örn: Rot ayarı sonrası veya akü değişimi sonrası)",
+        "Sensörde donanımsal arıza"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "C1089",
+      "title": "EPS (Elektrikli Direksiyon) Motor Hızı Sensörü Hatası",
+      "url": "https://www.obdkodu.com/ariza-kodlari/c1089/",
+      "affectedSystem": "Direksiyon Sistemi (EPS)",
+      "summary": "Elektrikli direksiyon sistemi motor hızı sinyalinde hata algılandı.",
+      "explanation": "Direksiyon destek sistemiyle ilgili motor hızı veya geri bildirim sinyalinde sorun kaydedildi. Kesin alt tanım ve test sınırları araç üreticisine göre doğrulanmalıdır.",
+      "firstCheck": "EPS modülündeki diğer kodları ve sistem gerilimini incele; direksiyon desteği değişimini not et.",
+      "symptoms": [
+        "Direksiyonun ağırlaşması",
+        "Manevra yaparken direksiyonun kesik kesik destek vermesi",
+        "Kırmızı direksiyon ikaz lambası"
+      ],
+      "possibleCauses": [
+        "EPS motoru veya entegre sensörünün bozulması",
+        "EPS kontrol ünitesine su girmesi veya oksitlenme",
+        "Zayıf akü veya alternatör problemi"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0011",
+      "title": "Eksantrik Mili Pozisyonu - Zamanlama Aşırı İleride (Bank 1)",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0011/",
+      "category": "P",
+      "affectedSystem": "Motor Zamanlaması (VVT)",
+      "summary": "Bank 1 eksantrik mili zamanlaması beklenenden ileri konumda algılandı.",
+      "explanation": "Bank 1 eksantrik mili zamanlaması kontrol ünitesinin beklediğinden ileri konumda algılandı. Yağ koşulları, değişken supap zamanlama kumandası ve mekanik zamanlama ayrı ayrı incelenmelidir.",
+      "firstCheck": "Yağ seviyesi ve özelliklerini, VVT komut/gerçek açı verilerini ve mekanik zamanlamayı kontrol et.",
+      "symptoms": [
+        "Emme supapları ile pistonlar arasında fiziksel çarpışmalar (interference) ve mekanik yıkım",
+        "Motorda ciddi güç kaybı ve rölanti bozukluğu"
+      ],
+      "possibleCauses": [
+        "Yağ değişimlerinin aksatılması (Kirli yağ ve çamur)",
+        "Arızalı veya tıkanmış Yağ Kontrol Valfi (OCV / VVT Selenoidi)",
+        "Triger zincirinde uzama veya gergide boşluk",
+        "Yanlış sente ayarı (Özellikle triger değişiminden hemen sonra veriyorsa)"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0016",
+      "title": "Krank ve eksantrik mili konumu uyumsuzluğu (Bank 1 Sensör A)",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0016/",
+      "category": "P",
+      "affectedSystem": "Krank (CKP)",
+      "summary": "Krank ve eksantrik mili konum sinyalleri arasında beklenen zamanlama uyuşmuyor.",
+      "explanation": "Krank mili ve Bank 1 eksantrik mili konumları arasındaki ilişki beklenen aralığın dışında. Sensör devresi kadar mekanik zamanlama ve değişken supap sistemi de olası nedenler arasındadır.",
+      "firstCheck": "Mekanik zamanlamayı, yağ seviyesi/kalitesini ve sensör sinyallerini sırayla kontrol et.",
+      "symptoms": [
+        "Arıza lambası (MIL) yanar"
+      ],
+      "possibleCauses": [
+        "Tesisat",
+        "Sensör",
+        "Mekanik Hata"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0101",
+      "title": "MAF sensörü devresi aralık veya performans sorunu",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0101/",
+      "category": "P",
+      "affectedSystem": "Hava ve Yakıt Karışım Sistemi",
+      "summary": "MAF hava akış ölçümü, motorun beklenen çalışma aralığıyla uyuşmuyor.",
+      "explanation": "MAF sensörünün ölçtüğü hava akışı motorun çalışma koşullarıyla beklenen uyumu göstermiyor. Hava kaçağı, kirlenme, tesisat ve motorun gerçek hava akışı sensör değişiminden önce ayrılmalıdır.",
+      "firstCheck": "Hava filtresi, emme hattı ve MAF canlı verisini kontrol et; sensörü ancak testle doğruladıktan sonra değiştir.",
+      "symptoms": [
+        "Motor arıza lambasının yanması",
+        "Ani gaza basmalarda vuruntu, rölantide dalgalanma veya aracın stop etmesi",
+        "Düşük yakıt ekonomisi ve egzozdan siyah duman çıkması",
+        "Motor gücünde belirgin bir azalma ve isteksiz devirlenme"
+      ],
+      "possibleCauses": [
+        "MAF sensörünün içindeki ölçüm tellerinin toz, yağ veya kir ile kaplanması",
+        "Açık hava filtresi (performans filtresi) yağının sensöre kaçarak bozması",
+        "MAF sensörü ile gaz kelebeği arasındaki yırtık bir hava hortumundan (vakum kaçağı) ölçülmemiş hava girmesi",
+        "MAF sensörünün donanımsal olarak bozulması"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0102",
+      "title": "MAF sensörü devresi düşük giriş",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0102/",
+      "category": "P",
+      "affectedSystem": "Hava ve Yakıt Karışım Sistemi",
+      "summary": "MAF sensörü devresinde beklenenden düşük giriş sinyali algılandı. Sorun sensör kadar besleme veya kablodan da kaynaklanabilir.",
+      "explanation": "MAF sensörü devresinden düşük giriş sinyali algılandı. Kod, belirli bir evrensel voltaj değerini veya arızalı parçayı tek başına belirlemez; besleme, şase, sinyal ve emme hattı araç şemasına göre ölçülmelidir.",
+      "firstCheck": "Emme hattı ve MAF bağlantısını gözden geçir; besleme, şase ve sinyal değerlerini araç şemasına göre ölç.",
+      "symptoms": [
+        "Motor arıza lambası yanabilir.",
+        "Zor çalışma, stop etme veya düzensiz rölanti görülebilir.",
+        "Gaz tepkisi ve çekiş azalabilir."
+      ],
+      "possibleCauses": [
+        "MAF konnektöründe çıkma veya temas sorunu",
+        "Sensör beslemesi, şase veya sinyal hattında arıza",
+        "Emme hattında kısıt veya sensörün kendisinde sorun"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0106",
+      "title": "MAP/Barometrik Basınç Devresi Menzil veya Performans Arızası",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0106/",
+      "category": "P",
+      "affectedSystem": "MAP Sensörü ve Emme Basıncı",
+      "summary": "ECU, manifold mutlak basınç sensörü sinyalinin motor devri, gaz kelebeği konumu veya barometrik basınçla beklenen uyumu göstermediğini algıladı. Sensör değiştirilmeden önce vakum hattı, emme kaçağı ve referans gerilimi kontrol edilmelidir.",
+      "explanation": "ECU, manifold mutlak basınç sensörü sinyalinin motor devri, gaz kelebeği konumu veya barometrik basınçla beklenen uyumu göstermediğini algıladı. Sensör değiştirilmeden önce vakum hattı, emme kaçağı ve referans gerilimi kontrol edilmelidir.",
+      "firstCheck": null,
+      "symptoms": [
+        "Çekiş düşüklüğü veya gaz tepkisinde gecikme",
+        "Rölantide dalgalanma",
+        "Yakıt tüketiminde artış",
+        "Motor arıza lambasının yanması"
+      ],
+      "possibleCauses": [
+        "Kirlenmiş veya hatalı MAP sensörü",
+        "Sensör vakum kanalında tıkanma",
+        "Emme manifoldunda kaçak",
+        "5 volt referans, şase veya sinyal hattı sorunu",
+        "Nadiren ECU yazılımı ya da kontrol ünitesi arızası"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0107",
+      "title": "MAP/Barometrik Basınç Devresi Düşük Giriş",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0107/",
+      "category": "P",
+      "affectedSystem": "MAP Sensörü Elektrik Devresi",
+      "summary": "MAP sensörü sinyali ECU'nun kabul ettiği alt sınırın altında kaldı. Kısa devre, düşük referans gerilimi veya sensör iç arızası olasıdır; ölçüm yapmadan sensör değişimi doğru teşhis sağlamaz.",
+      "explanation": "MAP sensörü sinyali ECU'nun kabul ettiği alt sınırın altında kaldı. Kısa devre, düşük referans gerilimi veya sensör iç arızası olasıdır; ölçüm yapmadan sensör değişimi doğru teşhis sağlamaz.",
+      "firstCheck": null,
+      "symptoms": [
+        "Zor çalışma veya stop etme",
+        "Güç kaybı",
+        "Düzensiz rölanti",
+        "Motor arıza lambasının yanması"
+      ],
+      "possibleCauses": [
+        "Sinyal hattının şaseye kısa devresi",
+        "5 volt referans hattının düşük olması",
+        "Konnektörde korozyon ya da gevşek pin",
+        "Arızalı MAP sensörü",
+        "Ortak referans hattını etkileyen başka bir sensör"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0108",
+      "title": "MAP/Barometrik Basınç Devresi Yüksek Giriş",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0108/",
+      "category": "P",
+      "affectedSystem": "MAP Sensörü Elektrik Devresi",
+      "summary": "MAP sensörü sinyali ECU'nun üst sınırını aştı. Sinyal hattının beslemeye kısa devresi, zayıf şase veya sensör arızası araştırılmalı; motorun gerçek vakum durumu da göz ardı edilmemelidir.",
+      "explanation": "MAP sensörü sinyali ECU'nun üst sınırını aştı. Sinyal hattının beslemeye kısa devresi, zayıf şase veya sensör arızası araştırılmalı; motorun gerçek vakum durumu da göz ardı edilmemelidir.",
+      "firstCheck": null,
+      "symptoms": [
+        "Yoğun veya zengin çalışma",
+        "Rölantide bozulma",
+        "Yakıt tüketiminde artış",
+        "Motor arıza lambasının yanması"
+      ],
+      "possibleCauses": [
+        "Sinyal hattının 5 volt/beslemeye kısa devresi",
+        "Sensör şasesinde yüksek direnç",
+        "MAP sensörü iç arızası",
+        "Konnektörde su veya korozyon",
+        "Çok düşük motor vakumu oluşturan mekanik sorun"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0110",
+      "title": "Emme Havası Sıcaklık Sensörü Devre Arızası",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0110/",
+      "category": "P",
+      "affectedSystem": "Emme Havası Sıcaklık Sensörü (IAT)",
+      "summary": "ECU, emme havası sıcaklık sensörü devresinde beklenmeyen veya kesintili bir sinyal algıladı. Sensör bazı araçlarda MAF gövdesine entegredir; ortam sıcaklığıyla canlı veri karşılaştırması hızlı bir ilk kontroldür.",
+      "explanation": "ECU, emme havası sıcaklık sensörü devresinde beklenmeyen veya kesintili bir sinyal algıladı. Sensör bazı araçlarda MAF gövdesine entegredir; ortam sıcaklığıyla canlı veri karşılaştırması hızlı bir ilk kontroldür.",
+      "firstCheck": null,
+      "symptoms": [
+        "Soğuk veya sıcak ilk çalıştırmada zorlanma",
+        "Yakıt tüketiminde artış",
+        "Gaz tepkisinde düzensizlik",
+        "Motor arıza lambasının yanması"
+      ],
+      "possibleCauses": [
+        "IAT sensörü iç arızası",
+        "Açık/kısa devre olmuş kablo",
+        "Konnektörde korozyon veya gevşeklik",
+        "MAF içine entegre sensörde kirlenme",
+        "Referans ya da sensör şasesi sorunu"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0113",
+      "title": "Emme Havası Sıcaklık (IAT) Sensörü Devresi Yüksek Voltaj",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0113/",
+      "category": "P",
+      "affectedSystem": "Hava ve Yakıt Karışım Sistemi",
+      "summary": "Emme havası sıcaklık sensörü devresinde yüksek giriş sinyali algılandı.",
+      "explanation": "Emme havası sıcaklık sensörü devresinde yüksek giriş sinyali kaydedildi. Açık devre, konnektör ve sensörün sıcaklıkla değişen tepkisi üretici verileriyle kontrol edilmelidir.",
+      "firstCheck": "Soğuk motorda IAT değerini ortam sıcaklığıyla karşılaştır; açık devre ve konnektör sorunlarını kontrol et.",
+      "symptoms": [
+        "Motor arıza lambasının yanması",
+        "Zengin karışıma bağlı olarak artan yakıt tüketimi",
+        "Motor sıcakken ilk marşta zor çalışma (Zengin karışım nedeniyle boğulma)",
+        "Egzozdan siyah duman atması",
+        "Rölanti dalgalanması"
+      ],
+      "possibleCauses": [
+        "IAT sensörü soketinin çıkmış veya kablosunun kopmuş olması (Devre açıklığı)",
+        "IAT sensörünün iç direncinin tamamen yanması (Sensör arızası)",
+        "Sensör toprak (şasi) veya sinyal hattında kısa devre",
+        "Nadir durumlarda Motor Kontrol Ünitesi (ECU) arızası"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0115",
+      "title": "Motor Soğutma Sıvısı Sıcaklık Sensörü 1 Devresi",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0115/",
+      "category": "P",
+      "affectedSystem": "Termal Yönetim",
+      "summary": "Motor soğutma suyu sıcaklık sensörü devresi beklenen elektriksel aralıkta çalışmıyor.",
+      "explanation": "Motor soğutma suyu sıcaklık sensörü devresinden beklenen elektriksel bilgi alınmıyor. Sensör, bağlantı ve kablo olasılıkları canlı sıcaklık verisiyle karşılaştırılarak ayrılır.",
+      "firstCheck": "Soğuk motorda ECT değerini ortam sıcaklığıyla karşılaştır, ardından besleme ve bağlantıları ölç.",
+      "symptoms": [
+        "Radyatör fanlarının acil durum olarak en yüksek kademede sürekli çalışması",
+        "Enjeksiyon stratejisinin bozulması",
+        "Aracın motoru aşırı ısınmış farz etmesi"
+      ],
+      "possibleCauses": [
+        "Sensör fişinin kopması veya çıkması",
+        "Sensör termistörünün elektriksel iç arızası",
+        "Tesisatta yüksek direnç/oksitlenme"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0120",
+      "title": "Gaz Kelebeği/Pedal Konum Sensörü A Devre Arızası",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0120/",
+      "category": "P",
+      "affectedSystem": "Elektronik Gaz Kelebeği ve Pedal Sensörü",
+      "summary": "ECU, gaz kelebeği veya pedal konum sensörü A devresinde beklenmeyen bir sinyal algıladı. Elektronik gaz sistemlerinde güvenlik nedeniyle güç kısıtlanabilir; iki konum kanalı canlı veride birbiriyle uyumlu ilerlemelidir.",
+      "explanation": "ECU, gaz kelebeği veya pedal konum sensörü A devresinde beklenmeyen bir sinyal algıladı. Elektronik gaz sistemlerinde güvenlik nedeniyle güç kısıtlanabilir; iki konum kanalı canlı veride birbiriyle uyumlu ilerlemelidir.",
+      "firstCheck": null,
+      "symptoms": [
+        "Gaz tepkisinin azalması veya koruma modu",
+        "Düzensiz rölanti",
+        "Hızlanmada kesinti",
+        "Motor arıza lambasının yanması"
+      ],
+      "possibleCauses": [
+        "Gaz kelebeği konum sensörü arızası",
+        "Pedal sensörü arızası",
+        "Konnektör/kablo hasarı",
+        "Kirli veya sıkışan gaz kelebeği",
+        "Referans gerilimi ya da şase sorunu"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0128",
+      "title": "Soğutma suyu sıcaklığı termostat eşiğinin altında",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0128/",
+      "category": "P",
+      "affectedSystem": "Motor Soğutma Sistemi",
+      "summary": "Motor, beklenen sürede hedef soğutma suyu sıcaklığına ulaşmadı.",
+      "explanation": "Motor beklenen sürede hedef soğutma suyu sıcaklığına ulaşmadı. Termostat kararı verilmeden önce seviye, sensör doğruluğu ve ısınma eğrisi araç özellikleriyle karşılaştırılmalıdır.",
+      "firstCheck": "Canlı sıcaklık verisini gerçek motor sıcaklığıyla karşılaştır; termostatı doğrulamadan değiştirme.",
+      "symptoms": [
+        "Motor arıza ışığının (MIL) yanması",
+        "Hararet göstergesinin çok yavaş yükselmesi veya uzun yolda sürat yapıldığında çeyrek seviyesine hatta sıfıra kadar düşmesi",
+        "Kaloriferin içeriye sıcak hava yerine ılık veya soğuk hava üflemesi",
+        "Motor soğuk çalıştığı için (Closed Loop rejimine geçemediğinden) yakıt tüketiminin ciddi oranda artması"
+      ],
+      "possibleCauses": [
+        "Soğutma sıvısı termostatının açık pozisyonda (veya erken açacak şekilde) bozulması (En yaygın sebep)",
+        "Motor Soğutma Sıvısı Sıcaklık (ECT) sensörünün yanlış, düşük değer ölçmesi",
+        "Soğutma fanının sürekli, yüksek devirde aralıksız çalışması",
+        "Radyatör suyunun bitmesi (nadiren de olsa bu kodu tetikleyebilir)"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0130",
+      "title": "Oksijen Sensörü Devre Arızası (Bank 1 Sensör 1)",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0130/",
+      "category": "P",
+      "affectedSystem": "Ön Oksijen/Lambda Sensörü (B1S1)",
+      "summary": "Katalizör öncesindeki Bank 1 oksijen/lambda sensörü devresi beklenen sinyal davranışını göstermedi. Karışım veya egzoz kaçağı sensör arızasını taklit edebileceği için sinyal, ısıtıcı devresi ve yakıt düzeltmeleri birlikte incelenmelidir.",
+      "explanation": "Katalizör öncesindeki Bank 1 oksijen/lambda sensörü devresi beklenen sinyal davranışını göstermedi. Karışım veya egzoz kaçağı sensör arızasını taklit edebileceği için sinyal, ısıtıcı devresi ve yakıt düzeltmeleri birlikte incelenmelidir.",
+      "firstCheck": null,
+      "symptoms": [
+        "Yakıt tüketiminde artış",
+        "Rölantide dalgalanma",
+        "Emisyon değerlerinde bozulma",
+        "Motor arıza lambasının yanması"
+      ],
+      "possibleCauses": [
+        "Yaşlanmış veya kirlenmiş oksijen sensörü",
+        "Egzoz ya da emme kaçağı",
+        "Sensör kablosunda ısı hasarı",
+        "Konnektörde temas sorunu",
+        "Yakıt basıncı veya enjektör kaynaklı karışım arızası"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0135",
+      "title": "O2 Sensörü Isıtıcı Devresi Bank 1, Sensör 1",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0135/",
+      "category": "P",
+      "affectedSystem": "Egzoz ve Emisyon Sistemi",
+      "summary": "Bank 1 sensör 1 oksijen sensörünün ısıtıcı devresinde elektriksel hata algılandı.",
+      "explanation": "Bank 1 Sensör 1 oksijen sensörünün ısıtıcı devresinde hata algılandı. Sigorta, besleme, şase ve kablo kontrol edilmeden sensörün arızalı olduğu kesinleştirilemez.",
+      "firstCheck": "Sensör öncesinde sigorta, besleme, şase ve kablo tesisatını kontrol et.",
+      "symptoms": [
+        "Motor arıza lambasının yanması",
+        "Soğuk motor ilk çalıştırıldığında (motor tam ısınana kadar) rölantide düzensizlik veya zengin karışım belirtileri",
+        "Yakıt tüketiminde çok ufak miktarda artış",
+        "Emisyon muayenesinden geçememe"
+      ],
+      "possibleCauses": [
+        "Oksijen sensörü içindeki ısıtıcı elemanın (rezistans) kopması veya yanması",
+        "Oksijen sensörüne giden kablolarda (özellikle egzoz sıcağından dolayı) erime veya kopukluk",
+        "O2 ısıtıcı devresine ait sigortanın atması veya ısıtıcı rölesinin bozulması",
+        "Sensör soketine su/nem girmesi sonucu oksitlenme"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0136",
+      "title": "Oksijen Sensörü Devre Arızası (Bank 1 Sensör 2)",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0136/",
+      "category": "P",
+      "affectedSystem": "Arka Oksijen Sensörü (B1S2)",
+      "summary": "Katalizör sonrasındaki Bank 1 oksijen sensörü devresi beklenen sinyali üretmedi. Bu sensör esas olarak katalizör performansını izler; kablo, ısıtıcı ve egzoz kaçağı kontrol edilmeden parça değişimi yapılmamalıdır.",
+      "explanation": "Katalizör sonrasındaki Bank 1 oksijen sensörü devresi beklenen sinyali üretmedi. Bu sensör esas olarak katalizör performansını izler; kablo, ısıtıcı ve egzoz kaçağı kontrol edilmeden parça değişimi yapılmamalıdır.",
+      "firstCheck": null,
+      "symptoms": [
+        "Motor arıza lambasının yanması",
+        "Emisyon testinde başarısızlık",
+        "Bazı araçlarda yakıt tüketiminde artış"
+      ],
+      "possibleCauses": [
+        "Arka oksijen sensörü arızası",
+        "Kablo tesisatında ısı veya sürtünme hasarı",
+        "Sensör yakınında egzoz kaçağı",
+        "Konnektörde su/korozyon",
+        "Isıtıcı devresi ya da ortak şase sorunu"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0138",
+      "title": "O2 Sensörü Devresi Yüksek Voltaj Bank 1, Sensör 2",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0138/",
+      "category": "P",
+      "affectedSystem": "Egzoz Emisyon Sistemleri",
+      "summary": "Bank 1 sensör 2 oksijen sensörü sinyali beklenen aralığın üstünde algılandı.",
+      "explanation": "Bank 1 Sensör 2 oksijen sensörü sinyali beklenen üst sınırın üzerinde algılandı. Evrensel voltaj eşiği varsaymak yerine sinyal, tesisat ve çalışma koşulları üretici verisiyle değerlendirilmelidir.",
+      "firstCheck": "Arka sensörün canlı verisini, egzoz koşullarını ve kablo bağlantılarını birlikte kontrol et.",
+      "symptoms": [
+        "Katalitik konvertör peteklerinin çiğ yakıt sebebiyle erimesi (uzun vadede)",
+        "Sürekli yüksek sensör voltajı (1.1V üstü)"
+      ],
+      "possibleCauses": [
+        "Motorun aşırı zengin bir hava-yakıt karışımıyla boğulması",
+        "Sensör kablolarının sıcak egzoz borularına temas ederek erimesi ve voltaj kısa devresi oluşturması",
+        "Egzozda hiç oksijen kalmaması"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0141",
+      "title": "Oksijen sensörü ısıtıcı devresi arızası (Bank 1 Sensör 2)",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0141/",
+      "category": "P",
+      "affectedSystem": "Egzoz ve Emisyon Sistemi",
+      "summary": "Bank 1 sensör 2 oksijen sensörü ısıtıcı devresinde hata algılandı.",
+      "explanation": "Bank 1 Sensör 2 oksijen sensörünün ısıtıcı devresinde hata algılandı. Sensör konumu doğrulanmalı; besleme, şase ve ısıtıcı direnci araç şemasına göre ölçülmelidir.",
+      "firstCheck": "Sensörün konumunu doğrula; sigorta, besleme, şase ve ısıtıcı direncini ölç.",
+      "symptoms": [
+        "Sadece Motor arıza lambasının yanması",
+        "Sürüş performansında, çekişte veya rölantide hiçbir değişiklik olmaması",
+        "Araç emisyon (egzoz) muayenesinden sistem hazır olmadığı için geçememe"
+      ],
+      "possibleCauses": [
+        "Sensör 2 içindeki ısıtıcı rezistansının ömrünü doldurup kopması",
+        "Aracın altındaki sensöre giden kabloların taş sekmesi, su girmesi veya kasis sürtmesi sonucu kopması/hasar görmesi",
+        "Isıtıcı devresi sigortasının (genellikle Heater Fuse) atması"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0171",
+      "title": "Hava yakıt karışımı çok fakir (Bank 1)",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0171/",
+      "category": "P",
+      "affectedSystem": "Hava ve Yakıt Karışım Sistemi",
+      "summary": "Bank 1 tarafındaki karışım, kontrol ünitesinin düzeltmesine rağmen fakir kalıyor.",
+      "explanation": "Bank 1 hava-yakıt karışımı, kontrol ünitesinin düzeltmesine rağmen fakir yönde kalıyor. Emme kaçağı, hava ölçümü, yakıt beslemesi ve egzoz kaçağı gibi nedenler verilerle ayrılmalıdır.",
+      "firstCheck": "Rölanti ve yük altında kısa/uzun dönem yakıt düzeltmelerini karşılaştır. Hava kaçağı ve yakıt beslemesini ölçmeden oksijen sensörü değiştirme.",
+      "symptoms": [
+        "Motor arıza lambasının (MIL) yanması",
+        "Rölantide titreme, dalgalanma veya motorun stop etmesi",
+        "Araç hızlanırken tekleme veya güç kaybı yaşanması",
+        "Motorun ilk çalıştırılmasında (soğuk marş) zorlanma",
+        "Fakir karışımdan dolayı yanma odasının aşırı ısınması ve supap vuruntusu"
+      ],
+      "possibleCauses": [
+        "Emme manifoldunda, vakum hortumlarında veya PCV valfinde hava kaçağı (Vakum kaçağı)",
+        "Kirlenmiş veya arızalanmış Kütle Hava Akış (MAF) sensörü",
+        "Tıkanmış yakıt filtresi veya zayıf yakıt pompası nedeniyle düşük yakıt basıncı",
+        "Kirli veya tıkanmış yakıt enjektörleri",
+        "Egzost manifoldu veya O2 sensörü çevresinde egzoz kaçağı"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0172",
+      "title": "Sistem Çok Zengin (Bank 1)",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0172/",
+      "category": "P",
+      "affectedSystem": "Hava-Yakıt Karışımı (Bank 1)",
+      "summary": "Motor kontrol ünitesi, Bank 1 hava-yakıt karışımının düzeltme sınırına rağmen gereğinden zengin kaldığını algıladı. Kod tek başına hangi parçanın arızalı olduğunu söylemez; yakıt düzeltmeleri, hava ölçümü ve yakıt basıncı birlikte kontrol edilmelidir.",
+      "explanation": "Motor kontrol ünitesi, Bank 1 hava-yakıt karışımının düzeltme sınırına rağmen gereğinden zengin kaldığını algıladı. Kod tek başına hangi parçanın arızalı olduğunu söylemez; yakıt düzeltmeleri, hava ölçümü ve yakıt basıncı birlikte kontrol edilmelidir.",
+      "firstCheck": null,
+      "symptoms": [
+        "Motor arıza lambasının yanması",
+        "Yakıt tüketiminde ve egzoz kokusunda artış",
+        "Düzensiz rölanti veya zor çalışma",
+        "Bujilerde kurum oluşması"
+      ],
+      "possibleCauses": [
+        "Kirli veya hatalı MAF/MAP sensörü",
+        "Yüksek yakıt basıncı ya da kaçıran enjektör",
+        "EVAP tahliye valfinin açık kalması",
+        "Oksijen sensörü veya kablo tesisatı sorunu",
+        "Tıkalı hava filtresi ya da hava giriş kısıtlaması"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0174",
+      "title": "Sistem Çok Fakir (Bank 2)",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0174/",
+      "category": "P",
+      "affectedSystem": "Hava ve Yakıt Karışım Sistemi",
+      "summary": "Bank 2 hava-yakıt karışımı, kontrol ünitesinin düzeltmesine rağmen fakir kalıyor.",
+      "explanation": "Bank 2 hava-yakıt karışımı fakir yönde düzeltme sınırına ulaştı. İki bankanın yakıt düzeltmelerini karşılaştırmak ortak ve bankaya özgü nedenleri ayırmaya yardımcı olur.",
+      "firstCheck": "Bank 1 ve Bank 2 yakıt düzeltmelerini karşılaştır; ortak hava/yakıt sorunu ile Bank 2 özel nedenleri ayır.",
+      "symptoms": [
+        "Motor arıza ışığının yanması",
+        "Motorun sarsıntılı çalışması ve tekleme yapması",
+        "Ani gaza basışlarda aracın boğulması ve ivmelenmeme",
+        "Egzozdan çiğ yakıt kokusu gelmemesi, aksine aracın aşırı ısınma eğilimi göstermesi",
+        "Rölanti devrinin sürekli inip çıkması (dalgalanma)"
+      ],
+      "possibleCauses": [
+        "Sıra 2 tarafındaki emme manifold contası kaçağı veya vakum hortumu yırtığı",
+        "Arızalı veya kirlenmiş Kütle Hava Akış (MAF) sensörü (bu durumda genellikle P0171 ile birlikte görülür)",
+        "Zayıf yakıt pompası veya tıkalı yakıt filtresi",
+        "Sıra 2 tarafındaki yakıt enjektörlerinde tıkanıklık veya arıza",
+        "Egzozda veya ön Oksijen sensörü (Sıra 2 Sensör 1) bağlantısında hava kaçağı"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0175",
+      "title": "Sistem Çok Zengin (Bank 2)",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0175/",
+      "category": "P",
+      "affectedSystem": "Hava-Yakıt Karışımı (Bank 2)",
+      "summary": "Motor kontrol ünitesi, Bank 2 hava-yakıt karışımının izin verilen düzeltmeye rağmen zengin kaldığını belirledi. Yalnız Bank 2 etkileniyorsa o sıraya özgü enjektör, sensör ve egzoz kaçakları; iki banka birden kod düşüyorsa ortak hava ve yakıt kaynakları önceliklidir.",
+      "explanation": "Motor kontrol ünitesi, Bank 2 hava-yakıt karışımının izin verilen düzeltmeye rağmen zengin kaldığını belirledi. Yalnız Bank 2 etkileniyorsa o sıraya özgü enjektör, sensör ve egzoz kaçakları; iki banka birden kod düşüyorsa ortak hava ve yakıt kaynakları önceliklidir.",
+      "firstCheck": null,
+      "symptoms": [
+        "Motor arıza lambasının yanması",
+        "Yakıt tüketiminde artış",
+        "Rölantide dalgalanma veya tekleme",
+        "Egzozda yoğun yakıt kokusu"
+      ],
+      "possibleCauses": [
+        "Bank 2 enjektörlerinden birinin kaçırması",
+        "MAF/MAP ölçüm hatası",
+        "Yüksek yakıt basıncı",
+        "Bank 2 oksijen sensörü ya da tesisat sorunu",
+        "Emme veya egzoz hattında ölçümü etkileyen kaçak"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0200",
+      "title": "Yakıt Enjektörü Devresi Arızası",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0200/",
+      "category": "P",
+      "affectedSystem": "Yakıt Enjektörleri ve Kontrol Devresi",
+      "summary": "ECU, bir veya daha fazla yakıt enjektörü kontrol devresinde elektriksel arıza algıladı. Kod genel bir devre hatasıdır; silindire özgü eşlik eden kodlar, enjektör direnci ve sürücü sinyali teşhisi daraltır.",
+      "explanation": "ECU, bir veya daha fazla yakıt enjektörü kontrol devresinde elektriksel arıza algıladı. Kod genel bir devre hatasıdır; silindire özgü eşlik eden kodlar, enjektör direnci ve sürücü sinyali teşhisi daraltır.",
+      "firstCheck": null,
+      "symptoms": [
+        "Tekleme ve sarsıntılı çalışma",
+        "Güç kaybı",
+        "Zor çalışma veya stop etme",
+        "Motor arıza lambasının yanması"
+      ],
+      "possibleCauses": [
+        "Açık ya da kısa devre olmuş enjektör bobini",
+        "Enjektör besleme hattı/sigorta sorunu",
+        "Kablo demeti veya konnektör hasarı",
+        "ECU enjektör sürücü arızası",
+        "Düşük sistem gerilimi"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0299",
+      "title": "Turboşarj basıncı beklenen düzeyin altında",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0299/",
+      "category": "P",
+      "affectedSystem": "Performans Destek Sistemleri (Turbo)",
+      "summary": "Turboşarj veya süperşarj basıncı istenen düzeye ulaşmıyor.",
+      "explanation": "Turboşarj veya süperşarj basıncı hedeflenen düzeye ulaşmıyor. Hava hattı kaçağı, kumanda ve sensör verileri test edilmeden turbo arızası sonucuna gidilmemelidir.",
+      "firstCheck": "İstenen ve gerçek basıncı karşılaştır; hava kaçağı, vakum kumandası ve turbo kontrolünü test et.",
+      "symptoms": [
+        "Sistemin aracı korumak için çekişten düşürmesi (limp mode) ve ivmelenme izni vermemesi",
+        "Dış basınç sızıntılarına bağlı ıslık (whining) veya tıslama sesi"
+      ],
+      "possibleCauses": [
+        "Turbo çıkış hortumlarındaki kelepçe gevşemeleri veya intercooler sızıntıları (boost leak)",
+        "Atık kapakçığının (wastegate) yay bozukluğu nedeniyle tam kapanamaması",
+        "Turbo pervanesinin kırılması veya kompresör aşınması"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0300",
+      "title": "Rastgele veya çoklu silindir teklemesi",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0300/",
+      "category": "P",
+      "affectedSystem": "Ateşleme Sistemi",
+      "summary": "Kontrol ünitesi birden fazla silindirde veya rastgele tekleme algıladı. Tek bir parçaya işaret etmez.",
+      "explanation": "Birden fazla silindirde veya belirli bir silindire bağlanamayan tekleme algılandı. Eşlik eden kodlar ve tekleme sayaçları, ateşleme, yakıt, hava ve mekanik nedenleri ayırmada kullanılır.",
+      "firstCheck": "Lamba yanıp sönüyorsa aracı güvenli yerde durdur. Kodların hangi devir ve yükte oluştuğunu inceleyip ateşleme, yakıt ve emme tarafını sırayla kontrol et.",
+      "symptoms": [
+        "Motor arıza lambasının yanması (Eğer tekleme şiddetliyse arıza lambası yanıp söner / flaş yapar)",
+        "Motorda şiddetli sarsıntı ve titreme (Özellikle rölantide)",
+        "Hızlanma sırasında silkelenme, güç kaybı ve gaz yememe",
+        "Egzozdan patlama (backfire) sesi gelmesi veya çiğ yakıt kokusu",
+        "Araç çalışmasında zorlanma veya stop etme"
+      ],
+      "possibleCauses": [
+        "Bozuk, kirli veya yanlış aralıklı bujiler",
+        "Zayıf ateşleme bobinleri veya kopuk buji kabloları",
+        "Düşük yakıt basıncı (Arızalı yakıt pompası veya tıkalı yakıt filtresi)",
+        "Büyük vakum kaçakları veya EGR valfinin açık kalması",
+        "Kötü veya sulu yakıt alınması"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0301",
+      "title": "1. Silindirde Tekleme Tespit Edildi",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0301/",
+      "category": "P",
+      "affectedSystem": "Ateşleme Sistemi",
+      "summary": "1. silindirde tekleme algılandı. Ateşleme, yakıt ve mekanik nedenler ayrı ayrı test edilmelidir.",
+      "explanation": "1. silindirde tekleme algılandı. Silindir numarası etkilenen bölgeyi gösterir; buji, bobin, enjektör ve kompresyon gibi ihtimaller testle ayrılır.",
+      "firstCheck": "Silindire özgü tekleme sayacını kontrol et; uygun araçlarda buji/bobin yer değişimi ile arızanın taşınıp taşınmadığını izle.",
+      "symptoms": [
+        "Motor arıza lambasının yanıp sönmesi (Flaş yapması, katalizör hasarı tehlikesi)",
+        "Araçta belirgin bir çekiş düşüklüğü ve güç kaybı",
+        "Rölantide beklerken motorun beşik gibi sallanması",
+        "Egzoz sesinde patırtı veya ritim bozukluğu duyulması",
+        "Yakıt tüketiminde aşırı artış"
+      ],
+      "possibleCauses": [
+        "1. Silindirdeki bujinin ömrünü tamamlaması, yağlanması veya kırılması",
+        "1. Silindirdeki ateşleme bobininin zayıflaması veya tamamen bozulması",
+        "1. Silindire giden buji kablosunda kopukluk veya elektrik atlaması (şelale yapması)",
+        "1. Silindir yakıt enjektörünün tıkanması veya arızalanması",
+        "1. Silindirde düşük kompresyon (Supap yanması, segman kırılması veya kapak contası hasarı)"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0302",
+      "title": "2. Silindirde Tekleme Tespit Edildi",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0302/",
+      "category": "P",
+      "affectedSystem": "Ateşleme Sistemi",
+      "summary": "2. silindirde tekleme algılandı. Ateşleme, yakıt ve mekanik nedenler ayrı ayrı test edilmelidir.",
+      "explanation": "2. silindirde tekleme algılandı. Eşlik eden kodlar ve tekleme sayacı kaydedildikten sonra ateşleme, yakıt ve mekanik durum karşılaştırılmalıdır.",
+      "firstCheck": "Silindire özgü tekleme sayacını kontrol et; uygun araçlarda buji/bobin yer değişimi ile arızanın taşınıp taşınmadığını izle.",
+      "symptoms": [
+        "Check Engine (Motor Arıza) ışığının yanması veya yanıp sönmesi",
+        "Motorda gözle görülür titreme ve rölanti dalgalanması",
+        "Hızlanma taleplerinde aracın tepkisiz kalması",
+        "Araçta sarsıntılı ve konforsuz sürüş",
+        "Egzozda sülfür/benzin kokusu"
+      ],
+      "possibleCauses": [
+        "2. silindir bujisinin veya ateşleme bobininin arızalı olması",
+        "2. silindir enjektörünün yakıt püskürtmemesi",
+        "Emme manifoldunun sadece 2. silindire yakın kısmında oluşan bir vakum kaçağı",
+        "Mekanik sorunlar (Subap ayarı bozukluğu, yanık subap, erimiş piston veya düşük kompresyon)"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0303",
+      "title": "3. Silindirde Tekleme Tespit Edildi",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0303/",
+      "category": "P",
+      "affectedSystem": "Ateşleme Sistemi",
+      "summary": "3. silindirde tekleme algılandı. Ateşleme, yakıt ve mekanik nedenler test edilmelidir.",
+      "explanation": "3. silindirde tekleme algılandı. Kod tek başına bobin veya enjektör arızası demek değildir; silindire özgü veriler ve temel mekanik durum kontrol edilir.",
+      "firstCheck": "3. silindirin tekleme sayacını oku; buji/bobin, enjektör ve kompresyonu sırayla kontrol et.",
+      "symptoms": [
+        "Motor arıza lambasının yanıp sönmesi (Tehlike işareti)",
+        "Özellikle düşük devirlerde ve rölantide aşırı titreme",
+        "Hızlanma esnasında aracın kesiklik yapması (sirkeleme)",
+        "Zengin karışıma bağlı olarak artan emisyon ve yakıt tüketimi"
+      ],
+      "possibleCauses": [
+        "3. silindir ateşleme bobini, bujisi veya buji kablosu arızası",
+        "3. silindire giden yakıt enjektöründe tıkanma veya elektriksel devre açıklığı",
+        "Sadece 3. silindiri etkileyen bir manifold kaçağı",
+        "Silindir kapağı contası yanığı veya supap deformasyonu"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0304",
+      "title": "4. Silindirde Tekleme Tespit Edildi",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0304/",
+      "category": "P",
+      "affectedSystem": "Ateşleme Sistemi",
+      "summary": "4. silindirde tekleme algılandı. Tek kod, arızalı parçayı kesinleştirmez.",
+      "explanation": "4. silindirde tekleme algılandı. Silindirin fiziksel konumu araç tasarımına göre değişir; ateşleme, yakıt ve kompresyon kontrolleri buna göre yapılmalıdır.",
+      "firstCheck": "4. silindirin tekleme sayacını oku; ateşleme, enjektör ve kompresyon bulgularını karşılaştır.",
+      "symptoms": [
+        "Motor kontrol ışığının aralıklı yanıp sönmesi veya sürekli yanması",
+        "Çok belirgin güç eksikliği (araba gitmez, yokuş çıkamaz)",
+        "Motor rölantisinin çok dalgalı ve sarsıntılı olması",
+        "Egzozdan patlama benzeri (Misfire) seslerin duyulması"
+      ],
+      "possibleCauses": [
+        "4 numaralı buji veya bobinin arızalanması (En yaygın neden)",
+        "4 numaralı enjektörün kirlenmesi, tıkanması veya soketinin çıkması",
+        "Emme manifold contası kaçağı",
+        "Düşük silindir kompresyonu (Eksantrik profili aşınması, subap yanması vb.)"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0305",
+      "title": "5. Silindirde Tekleme Tespit Edildi",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0305/",
+      "category": "P",
+      "affectedSystem": "Ateşleme ve Yanma — Silindir 5",
+      "summary": "ECU, 5. silindirin yanma katkısında düzensizlik algıladı. Yanıp sönen motor arıza lambası katalizör hasarı riski anlamına gelebilir; ateşleme, yakıt, kompresyon ve hava kaçağı sistemli biçimde karşılaştırılmalıdır.",
+      "explanation": "ECU, 5. silindirin yanma katkısında düzensizlik algıladı. Yanıp sönen motor arıza lambası katalizör hasarı riski anlamına gelebilir; ateşleme, yakıt, kompresyon ve hava kaçağı sistemli biçimde karşılaştırılmalıdır.",
+      "firstCheck": null,
+      "symptoms": [
+        "Motorun sarsıntılı çalışması",
+        "Çekiş kaybı",
+        "Yanıp sönebilen motor arıza lambası",
+        "Yakıt tüketimi ve egzoz kokusunda artış"
+      ],
+      "possibleCauses": [
+        "Buji veya ateşleme bobini arızası",
+        "5. silindir enjektörü ya da kablosu sorunu",
+        "Kompresyon kaybı",
+        "Emme manifoldunda silindire yakın kaçak",
+        "Yakıt basıncı veya zamanlama problemi"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0306",
+      "title": "6. Silindirde Tekleme Tespit Edildi",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0306/",
+      "category": "P",
+      "affectedSystem": "Ateşleme ve Yanma — Silindir 6",
+      "summary": "ECU, 6. silindirde yanma düzensizliği algıladı. Kod yalnızca etkilenen silindiri gösterir; buji/bobin, enjektör, kompresyon ve o bölgeye özgü hava kaçağı karşılaştırmalı testlerle ayrılmalıdır.",
+      "explanation": "ECU, 6. silindirde yanma düzensizliği algıladı. Kod yalnızca etkilenen silindiri gösterir; buji/bobin, enjektör, kompresyon ve o bölgeye özgü hava kaçağı karşılaştırmalı testlerle ayrılmalıdır.",
+      "firstCheck": null,
+      "symptoms": [
+        "Rölantide sarsıntı",
+        "Hızlanmada kesiklik",
+        "Yanıp sönebilen motor arıza lambası",
+        "Yakıt tüketiminde artış"
+      ],
+      "possibleCauses": [
+        "Aşınmış buji veya arızalı bobin",
+        "6. silindir enjektörü ya da tesisatı",
+        "Düşük kompresyon",
+        "Emme kaçağı",
+        "Yakıt veya mekanik zamanlama sorunu"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0325",
+      "title": "Vuruntu Sensörü 1 Devre Arızası (Bank 1)",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0325/",
+      "category": "P",
+      "affectedSystem": "Vuruntu Sensörü ve Ateşleme Kontrolü",
+      "summary": "ECU, Bank 1 vuruntu sensörü devresinden beklenen sinyali alamadı. Sensör torku, motor gürültüsü, kablo ekranlaması ve gerçek vuruntu koşulları sinyali etkileyebilir; rastgele parça değişimi yapılmamalıdır.",
+      "explanation": "ECU, Bank 1 vuruntu sensörü devresinden beklenen sinyali alamadı. Sensör torku, motor gürültüsü, kablo ekranlaması ve gerçek vuruntu koşulları sinyali etkileyebilir; rastgele parça değişimi yapılmamalıdır.",
+      "firstCheck": null,
+      "symptoms": [
+        "Çekiş düşüklüğü",
+        "Hızlanmada isteksizlik",
+        "Yakıt tüketiminde artış",
+        "Motor arıza lambasının yanması"
+      ],
+      "possibleCauses": [
+        "Vuruntu sensörü arızası",
+        "Sensör kablosunda açık/kısa devre",
+        "Yanlış sıkma torku veya montaj yüzeyi sorunu",
+        "Düşük oktan yakıt ya da gerçek motor vuruntusu",
+        "Konnektörde korozyon"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0335",
+      "title": "Krank Mili Konum Sensörü A Devre Arızası",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0335/",
+      "category": "P",
+      "affectedSystem": "Krank Sensörü ve Motor Senkronizasyonu",
+      "summary": "ECU, krank mili konum sensöründen motor devri ve ateşleme zamanlaması için güvenilir sinyal alamadı. Sensör, kablo, relüktör çarkı ve marş sırasındaki akü gerilimi birlikte değerlendirilmelidir.",
+      "explanation": "ECU, krank mili konum sensöründen motor devri ve ateşleme zamanlaması için güvenilir sinyal alamadı. Sensör, kablo, relüktör çarkı ve marş sırasındaki akü gerilimi birlikte değerlendirilmelidir.",
+      "firstCheck": null,
+      "symptoms": [
+        "Motorun marş alıp çalışmaması",
+        "Sıcakken stop etme veya yeniden çalışmama",
+        "Devir göstergesinde anlık düşme",
+        "Motor arıza lambasının yanması"
+      ],
+      "possibleCauses": [
+        "Krank sensörü iç arızası",
+        "Kablo/konnektörde ısı veya sürtünme hasarı",
+        "Relüktör çarkında hasar ya da yanlış sensör boşluğu",
+        "Düşük marş gerilimi",
+        "Zamanlama veya ECU giriş devresi sorunu"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0340",
+      "title": "Eksantrik Mili Pozisyon Sensörü 'A' Devre Arızası (Bank 1)",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0340/",
+      "category": "P",
+      "affectedSystem": "Ateşleme ve Zamanlama Sistemi",
+      "summary": "Eksantrik mili konum sensörü A devresinden beklenen sinyal alınamıyor.",
+      "explanation": "Eksantrik mili konum sensörü A devresinde beklenen sinyal alınamıyor. Besleme ve tesisat yanında mekanik zamanlama da uygun testlerle değerlendirilmelidir.",
+      "firstCheck": "Sensör sinyali ve beslemesini, kabloyu ve mekanik zamanlama ihtimalini birlikte değerlendir.",
+      "symptoms": [
+        "Motor arıza lambası yanabilir.",
+        "Marş uzayabilir veya motor çalışmayabilir.",
+        "Çalışırken durma ya da düzensiz güç üretimi görülebilir."
+      ],
+      "possibleCauses": [
+        "Eksantrik mili konum sensörü devresinde bağlantı sorunu",
+        "Sensör sinyalinde kesinti",
+        "Mekanik zamanlama veya ilgili kumanda sorunu"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0341",
+      "title": "Eksantrik Mili Konum Sensörü A Menzil/Performans (Bank 1)",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0341/",
+      "category": "P",
+      "affectedSystem": "Eksantrik Sensörü ve Motor Zamanlaması",
+      "summary": "ECU, eksantrik mili konum sensörü A sinyalini krank miliyle beklenen zamanlama içinde göremedi. Sorun sensör devresinden kaynaklanabileceği gibi zincir/kayış zamanlaması veya değişken supap zamanlama sistemiyle de ilişkili olabilir.",
+      "explanation": "ECU, eksantrik mili konum sensörü A sinyalini krank miliyle beklenen zamanlama içinde göremedi. Sorun sensör devresinden kaynaklanabileceği gibi zincir/kayış zamanlaması veya değişken supap zamanlama sistemiyle de ilişkili olabilir.",
+      "firstCheck": null,
+      "symptoms": [
+        "Zor çalışma veya geç marş",
+        "Tekleme ve güç kaybı",
+        "Düzensiz rölanti",
+        "Motor arıza lambasının yanması"
+      ],
+      "possibleCauses": [
+        "Eksantrik sensörü ya da konnektör arızası",
+        "Kablo tesisatında parazit/açık devre",
+        "Zamanlama zinciri veya kayışında kayma",
+        "VVT solenoidi ve yağ basıncı sorunu",
+        "Relüktör/ton çarkında hasar"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0401",
+      "title": "Egzoz Gazı Devridaimi (EGR) Akışı Yetersiz",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0401/",
+      "category": "P",
+      "affectedSystem": "Egzoz ve Emisyon Sistemi",
+      "summary": "EGR akışı, kontrol ünitesinin beklediğinden düşük ölçüldü.",
+      "explanation": "EGR akışı kontrol ünitesinin beklediğinden düşük algılandı. EGR valfi kadar tıkalı geçişler, kumanda devresi ve sensör geri bildirimi de olası nedenlerdir.",
+      "firstCheck": "EGR komutu ve gerçek tepkiyi karşılaştır; kurumla tıkalı geçiş, valf ve kumanda devresini ayır.",
+      "symptoms": [
+        "Motor arıza lambası yanabilir.",
+        "Bazı araçlarda performans veya yakıt tüketimi etkilenebilir.",
+        "Belirgin sürüş belirtisi görülmeyebilir."
+      ],
+      "possibleCauses": [
+        "EGR geçişlerinde kurum birikimi",
+        "EGR valfi veya kumanda devresinde sorun",
+        "Akış geri bildiriminde yanlış ölçüm"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0420",
+      "title": "Katalizör sistemi verimliliği eşik altında (Bank 1)",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0420/",
+      "category": "P",
+      "affectedSystem": "Egzoz ve Emisyon Sistemi",
+      "summary": "Katalizör verimliliği beklenen eşiğin altında ölçüldü. Bu, konvertörün tek başına arızalı olduğunu kanıtlamaz.",
+      "explanation": "Bank 1 katalizör sistemi verimliliği beklenen eşiğin altında algılandı. Tekleme, yakıt karışımı, egzoz kaçağı ve sensör verileri çözülmeden katalizör değişimine karar verilmemelidir.",
+      "firstCheck": "Önce tekleme, yakıt karışımı ve egzoz kaçağı sorunlarını ele. Ardından ön ve arka oksijen sensörü sinyallerini üretici prosedürüne göre karşılaştır.",
+      "symptoms": [
+        "Motor arıza lambasının (Check Engine) sürekli yanması",
+        "Araçta yakıt tüketiminin belirgin şekilde artması",
+        "Egzozdan çürük yumurta veya kükürt kokusu gelmesi",
+        "Hızlanma esnasında çekiş düşüklüğü ve isteksizlik",
+        "Motorun rölantide düzensiz veya sarsıntılı çalışması"
+      ],
+      "possibleCauses": [
+        "Katalitik konvertörün ömrünü tamamlaması veya hasar görmesi",
+        "Katalitik konvertör öncesi veya sonrası oksijen (O2) sensörünün arızalanması",
+        "Egzoz manifoldlarında veya egzoz borularında kaçak olması",
+        "Motorun zengin veya fakir karışımla çalışıp konvertöre zarar vermesi",
+        "Kötü kalitede yakıt kullanılması"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0430",
+      "title": "Katalizör sistemi verimliliği eşik altında (Bank 2)",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0430/",
+      "category": "P",
+      "affectedSystem": "Egzoz ve Emisyon Sistemi",
+      "summary": "Bank 2 katalizör verimliliği beklenen eşiğin altında ölçüldü.",
+      "explanation": "Bank 2 katalizör sistemi verimliliği beklenen eşiğin altında algılandı. Bank 2 konumu araç üreticisinin tanımından doğrulanmalı; önce karışım, tekleme ve egzoz hattı kontrol edilmelidir.",
+      "firstCheck": "P0420 ile benzer teşhis yolu izlenir; fakat Bank 2 sensörleri ve egzoz hattı değerlendirilir.",
+      "symptoms": [
+        "Motor arıza lambasının (MIL) yanması",
+        "Araç emisyon testlerinden (TÜVTÜRK egzoz muayenesi vb.) geçememesi",
+        "Yakıt tüketiminde gözle görülür bir artış",
+        "Özellikle yokuşlarda veya yüklüyken motor performansında düşüş",
+        "Egzozdan rahatsız edici kükürt veya çürük yumurta kokusu"
+      ],
+      "possibleCauses": [
+        "Sıra 2 tarafındaki katalitik konvertörün hasar görmesi veya içinin dağılması",
+        "Sıra 2'deki alt oksijen sensörünün (Sensör 2) arızalanması veya yavaş yanıt vermesi",
+        "Oksijen sensörü öncesinde egzoz borusunda kaçak/çatlak olması",
+        "Motorun sürekli zengin karışım veya tekleme ile çalışıp konvertörü bozması"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0440",
+      "title": "Buharlaşma Emisyon Kontrol Sistemi (EVAP) Genel Arızası",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0440/",
+      "category": "P",
+      "affectedSystem": "EVAP Yakıt Buharı Kontrolü",
+      "summary": "ECU, yakıt buharı kontrol sisteminin sızdırmazlık veya akış testini tamamlayamadı. Gevşek depo kapağından valf ve hortum sorunlarına kadar birçok neden mümkündür; duman testi teşhisi hızlandırır.",
+      "explanation": "ECU, yakıt buharı kontrol sisteminin sızdırmazlık veya akış testini tamamlayamadı. Gevşek depo kapağından valf ve hortum sorunlarına kadar birçok neden mümkündür; duman testi teşhisi hızlandırır.",
+      "firstCheck": null,
+      "symptoms": [
+        "Motor arıza lambasının yanması",
+        "Yakıt dolumu sonrasında zor çalışma",
+        "Araç çevresinde yakıt buharı kokusu",
+        "Çoğu durumda belirgin sürüş şikâyeti olmaması"
+      ],
+      "possibleCauses": [
+        "Gevşek, hasarlı veya uyumsuz yakıt depo kapağı",
+        "EVAP hortumu ya da kanister çatlağı",
+        "Tahliye (purge) valfinin açık/kapalı kalması",
+        "Havalandırma valfi arızası",
+        "Basınç/vakum sensörü veya devre sorunu"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0442",
+      "title": "EVAP sisteminde küçük kaçak",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0442/",
+      "category": "P",
+      "affectedSystem": "EVAP Sistemi",
+      "summary": "EVAP yakıt buharı sisteminde küçük bir kaçak algılandı.",
+      "explanation": "EVAP yakıt buharı sisteminde küçük kaçak algılandı. Depo kapağı, hortumlar ve valfler gözle kontrol edilir; kaçağın yeri uygun testle doğrulanır.",
+      "firstCheck": "Depo kapağı ve contasını gözle kontrol et. Kod tekrar ediyorsa EVAP hatlarını ve valflerini uygun ekipmanla test et.",
+      "symptoms": [
+        "Motor arıza lambası yanabilir.",
+        "Sürüşte belirgin bir fark olmayabilir.",
+        "Yakıt buharı kokusu varsa kaçak güvenli biçimde araştırılmalıdır."
+      ],
+      "possibleCauses": [
+        "Depo kapağı veya contasında sızdırmazlık sorunu",
+        "EVAP hortumu ve bağlantılarında küçük kaçak",
+        "Purge veya vent valfinin tam kapanmaması"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0446",
+      "title": "Buharlaşma Emisyon Kontrol Sistemi (EVAP) Havalandırma Valfi Devresi Arızası",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0446/",
+      "category": "P",
+      "affectedSystem": "EVAP Sistemi",
+      "summary": "EVAP havalandırma kontrolünde beklenen çalışma gerçekleşmiyor.",
+      "explanation": "EVAP havalandırma kontrolünde beklenen sonuç alınmadı. Sorun valfin elektrik devresinden, hava hattındaki tıkanıklıktan veya mekanik çalışmasından kaynaklanabilir.",
+      "firstCheck": "Vent valfi komutuna verilen tepkiyi, elektrik devresini ve hava hattındaki tıkanıklığı kontrol et.",
+      "symptoms": [
+        "Motor arıza lambasının yanması",
+        "Bazen akaryakıt istasyonunda depoyu doldururken zorlanma veya pompanın sürekli atması",
+        "Araç sürüş dinamiklerinde hiçbir değişiklik hissedilmemesi"
+      ],
+      "possibleCauses": [
+        "Havalandırma (Vent) solenoid valfinin bobininin yanması veya sıkışması",
+        "Vent valfi soketine su veya çamur dolması (Valf genellikle aracın altında veya arka çamurluk davlumbazında yer aldığı için suya maruz kalır)",
+        "Havalandırma filtresinin veya valfinin örümcek ağları, böcekler veya toz ile tıkanması",
+        "Kablo demetinde kopukluk"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0455",
+      "title": "EVAP sisteminde büyük kaçak",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0455/",
+      "category": "P",
+      "affectedSystem": "EVAP Sistemi",
+      "summary": "EVAP sisteminde büyük kaçak veya sistemin sızdırmazlık testini tamamlayamaması algılandı.",
+      "explanation": "EVAP sisteminde büyük kaçak veya sistemin beklenen sızdırmazlığı kuramaması algılandı. Depo kapağı ve görünür bağlantılar ilk kontroldür; kaçak testiyle yer doğrulanır.",
+      "firstCheck": "Önce depo kapağı ve görünür hortum bağlantılarını kontrol et. Ardından valfler ve sistem bütünlüğünü test et.",
+      "symptoms": [
+        "Motor arıza lambasının (MIL) sürekli yanması",
+        "Aracın özellikle arka kısmında veya yakıt deposu bölgesinde güçlü benzin buharı kokusu",
+        "Aracın performansına veya çalışmasına etki eden görünür bir belirti olmaması (Motor sorunsuz çalışmaya devam eder)"
+      ],
+      "possibleCauses": [
+        "Yakıt depo kapağının açık unutulması veya takılmamış olması",
+        "EVAP karbon kutusu (Charcoal Canister) veya hortumlarında büyük bir yırtık/kırık",
+        "EVAP Havalandırma (Vent) valfinin açık pozisyonda sıkışıp kalması",
+        "Yakıt doldurma boğazında çürük, delik veya büyük çatlaklar"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0456",
+      "title": "Buharlaşmalı Emisyon Sistemi Sızıntı Tespit Edildi - Çok Küçük Sızıntı",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0456/",
+      "category": "P",
+      "affectedSystem": "Buharlaşmalı Emisyon (EVAP)",
+      "summary": "EVAP sisteminde çok küçük kaçak algılandı.",
+      "explanation": "EVAP sisteminde çok küçük kaçak algılandı. Kaçağın büyüklüğü üreticinin test yöntemine bağlıdır; sabit bir delik çapı varsayılmamalıdır.",
+      "firstCheck": "Depo kapağını ve buhar hattını kontrol et; küçük kaçağı uygun EVAP duman testiyle doğrula.",
+      "symptoms": [
+        "Motor arıza lambası yanabilir.",
+        "Araç normal sürülebilir; belirti olmaması kaçağı dışlamaz."
+      ],
+      "possibleCauses": [
+        "Depo kapağı veya dolum ağzında sızdırmazlık sorunu",
+        "EVAP hortumu veya bağlantısında küçük kaçak",
+        "Purge veya vent valfinde sızdırma"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0500",
+      "title": "Araç Hız Sensörü (VSS) 'A' Arızası",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0500/",
+      "category": "P",
+      "affectedSystem": "Hız ve Şanzıman İletişimi",
+      "summary": "Araç hızı sinyali beklenen biçimde alınamıyor.",
+      "explanation": "Araç hızı bilgisi motor veya şanzıman kontrolüne beklenen biçimde ulaşmıyor. Hız sinyalinin hangi modülden geldiği araç şemasına göre belirlenerek sensör ve ağ bağlantıları test edilir.",
+      "firstCheck": "Hız verisinin hangi modülden geldiğini araç şemasında belirle; sensör, kablo ve ABS kaynaklarını ayır.",
+      "symptoms": [
+        "Kilometre saatinin çalışmayı durdurması",
+        "Otomatik şanzıman vites değiştirme algoritmalarının kaybıyla vuruntulu atışlar",
+        "Hız sabitleme (Cruise Control) iptali"
+      ],
+      "possibleCauses": [
+        "Şanzıman üzerindeki VSS sensörü arızası",
+        "ABS beyni ile iletişim kopukluğu",
+        "Kopmuş VSS kabloları veya sıyırmış okuyucu dişli"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0671",
+      "title": "Silindir 1 Kızdırma Bujisi Devresi Hatası",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0671/",
+      "affectedSystem": "Motor / Ateşleme (Dizel)",
+      "summary": "1. silindir kızdırma bujisi devresinde elektriksel hata algılandı.",
+      "explanation": "Motor kontrol ünitesinin (ECU), 1 numaralı silindire ait kızdırma (ısıtma) bujisi devresinde elektriksel bir sorun tespit ettiğini belirtir.",
+      "firstCheck": "Bujinin direncini, beslemeyi, röleyi ve tesisatı üretici değerleriyle karşılaştır.",
+      "symptoms": [
+        "Kızdırma bujisi uyarı lambasının yanıp sönmesi veya sönmemesi",
+        "Motor soğukken (özellikle kış aylarında) zor çalışma",
+        "İlk çalıştırmada beyaz/gri duman atma",
+        "Soğuk motorda sarsıntılı rölanti"
+      ],
+      "possibleCauses": [
+        "1 numaralı kızdırma bujisinin patlaması/yanması",
+        "Bujiye giden kabloda veya pipoda kopukluk/temassızlık",
+        "Kızdırma bujisi rölesi veya modülü arızası",
+        "Sigorta atması"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0672",
+      "title": "Silindir 2 Kızdırma Bujisi Devresi Hatası",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0672/",
+      "affectedSystem": "Motor / Ateşleme (Dizel)",
+      "summary": "2. silindir kızdırma bujisi devresinde elektriksel hata algılandı.",
+      "explanation": "2. silindir kızdırma bujisi devresinde elektriksel hata algılandı. Bujinin kendisi, besleme, röle ve kablo bağlantıları diğer silindirlerle karşılaştırılmalıdır.",
+      "firstCheck": "2. silindirin buji ve tesisat ölçümlerini diğer silindirlerle karşılaştır.",
+      "symptoms": [
+        "Kızdırma bujisi uyarı lambasının yanıp sönmesi",
+        "Soğuk havalarda motorun zor çalışması veya sarsıntılı çalışması",
+        "İlk çalıştırmada artan egzoz emisyonu (beyaz duman)"
+      ],
+      "possibleCauses": [
+        "2 numaralı kızdırma bujisinin arızalanması",
+        "Kablo tesisatında kopukluk",
+        "Kızdırma bujisi kontrol modülü arızası"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P0700",
+      "title": "Şanzıman kontrol sistemi arıza bildirimi",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0700/",
+      "category": "P",
+      "affectedSystem": "Otomatik Şanzıman Kontrol Modülü (TCM)",
+      "summary": "Motor kontrol ünitesi, şanzıman kontrol modülünün bir arıza kaydettiğini bildiriyor. P0700 kök nedeni açıklamaz; şanzıman modülüne erişebilen bir cihazla üreticiye özgü TCM kodları okunmalıdır.",
+      "explanation": "Motor kontrol ünitesi, şanzıman kontrol modülünün bir arıza kaydettiğini bildiriyor. P0700 kök nedeni açıklamaz; şanzıman modülüne erişebilen bir cihazla üreticiye özgü TCM kodları okunmalıdır.",
+      "firstCheck": null,
+      "symptoms": [
+        "Şanzıman veya motor arıza lambasının yanması",
+        "Vites geçişlerinde sertlik ya da gecikme",
+        "Şanzımanın koruma moduna geçmesi",
+        "Bazı durumlarda belirti olmaması"
+      ],
+      "possibleCauses": [
+        "TCM'de kayıtlı başka bir şanzıman arızası",
+        "Düşük/kirli şanzıman yağı veya hidrolik sorun",
+        "Hız sensörü ya da solenoid arızası",
+        "TCM besleme, şase veya iletişim sorunu",
+        "Şanzıman iç mekanik arızası"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P204F",
+      "title": "Redüktant (AdBlue) Sistemi Performansı Bank 1",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p204f/",
+      "affectedSystem": "Egzoz Emisyon / AdBlue",
+      "summary": "AdBlue redüktant sisteminin beklenen performansı sağlanmıyor.",
+      "explanation": "Redüktant sisteminin performansı beklenen aralıkta değil. AdBlue sıvısının durumu, basınç, dozajlama ve eşlik eden NOx sensörü kodları birlikte incelenmelidir.",
+      "firstCheck": "Redüktant seviyesi/kalitesi, basınç, dozajlama ve ilgili sensör kodlarını birlikte değerlendir.",
+      "symptoms": [
+        "AdBlue uyarı lambası",
+        "Motor arıza lambası",
+        "Egzozda beyaz kristalleşme birikintileri"
+      ],
+      "possibleCauses": [
+        "Kalitesiz, sulandırılmış veya tarihi geçmiş AdBlue kullanımı",
+        "AdBlue enjektörünün kurum veya kristalleşme ile tıkanması",
+        "NOx sensörü arızası",
+        "Katalizör arızası"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P2096",
+      "title": "Katalizör sonrası yakıt düzeltme sistemi çok fakir (Bank 1)",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p2096/",
+      "category": "P",
+      "affectedSystem": "Yakıt ve Hava Karışımı",
+      "summary": "Bank 1 katalizör sonrası yakıt düzeltmesi fakir yönde sınırı aşıyor.",
+      "explanation": "Bank 1 katalizör sonrası yakıt düzeltmesi fakir yönde sınıra ulaştı. Egzoz kaçağı, sensör verisi ve temel yakıt düzeltmeleri birlikte kontrol edilmelidir.",
+      "firstCheck": "Egzoz kaçağını, sensör verilerini ve temel yakıt düzeltmelerini karşılaştır; sensörü tek başına suçlama.",
+      "symptoms": [
+        "Motor boğulmaları",
+        "Dalgalı rölanti",
+        "Yakıt tüketiminde %15'e varan artışlar"
+      ],
+      "possibleCauses": [
+        "Katalitik konvertör ile sensör arasındaki egzoz borularında mikro çatlaklar",
+        "Oksitlenmiş veya yüksek dirence maruz kalmış sensör kablolaması",
+        "Motor beyninin iç yazılımsal kalibrasyon hatası"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P2452",
+      "title": "Dizel Partikül Filtresi (DPF) Basınç Sensörü 'A' Devresi",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p2452/",
+      "affectedSystem": "Egzoz Emisyon / DPF Sistemi",
+      "summary": "Dizel partikül filtresi basınç sensörü A devresinde elektriksel sorun algılandı.",
+      "explanation": "Dizel partikül filtresi basınç sensörü A devresinde elektriksel hata algılandı. Sensör hortumları, besleme ve sinyal verisi üretici değerleriyle karşılaştırılmalıdır.",
+      "firstCheck": "Sensör hortumları, bağlantılar ve basınç verisini üretici değerleriyle karşılaştır.",
+      "symptoms": [
+        "Motor veya DPF uyarısı yanabilir.",
+        "Güç kısıtlaması görülebilir.",
+        "Rejenerasyon davranışı etkilenebilir."
+      ],
+      "possibleCauses": [
+        "DPF basınç sensörü devresinde elektriksel hata",
+        "Sensör hortumlarında tıkanma, erime veya kaçak",
+        "Basınç geri bildirimini etkileyen bağlantı sorunu"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "P2503",
+      "title": "Şarj sistemi gerilimi düşük",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p2503/",
+      "affectedSystem": "Şarj ve Elektrik Sistemi",
+      "summary": "Şarj sisteminin gerilimi beklenen düzeyin altında kaldı.",
+      "explanation": "Alternatörden gelen şarj voltajının sistemin ihtiyacını karşılayamayacak kadar düşük olduğunu belirtir. Akü şarj olmuyor olabilir.",
+      "firstCheck": "Akü gerilimini motor kapalı ve çalışırken ölç; kayış, alternatör, kablo ve şaseyi kontrol et.",
+      "symptoms": [
+        "Akü uyarı lambasının yanması",
+        "Farların kısık yanması",
+        "Araçta elektronik sistemlerin kapanması",
+        "Marş basmama veya zor çalışma"
+      ],
+      "possibleCauses": [
+        "Arızalı alternatör (şarj dinamosu)",
+        "Gevşek veya kopuk alternatör kayışı",
+        "Ömrünü yitirmiş akü",
+        "Şarj kablosunda korozyon veya oksitlenme"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "U0100",
+      "title": "ECM/PCM A ile İletişim Kaybedildi",
+      "url": "https://www.obdkodu.com/ariza-kodlari/u0100/",
+      "category": "U",
+      "affectedSystem": "CAN Bus ve Motor Kontrol Modülü İletişimi",
+      "summary": "Bir veya daha fazla modül motor kontrol ünitesiyle iletişim kuramıyor.",
+      "explanation": "Bir kontrol modülü, motor/güç aktarma kontrol modülüyle CAN ağı üzerinden iletişimi kaybetti. Aralıklı düşük voltaj, güç/şase kaybı veya ağ hattı arızası mümkündür; modül değişimi son adımdır.",
+      "firstCheck": "Akü ve şarj gerilimini, ECM besleme ve şasesini ve ilgili ağ bağlantılarını kontrol et.",
+      "symptoms": [
+        "Motorun çalışmaması veya stop etmesi",
+        "Birden fazla uyarı lambasının yanması",
+        "Tarama cihazının motor modülüne bağlanamaması",
+        "Koruma modu ve güç kaybı"
+      ],
+      "possibleCauses": [
+        "Zayıf akü veya şarj sistemi gerilimi",
+        "ECM/PCM sigortası, rölesi, besleme veya şase kaybı",
+        "CAN High/Low hattında açık ya da kısa devre",
+        "Konnektörde su, korozyon veya gevşeklik",
+        "Nadiren ECM/PCM ya da başka bir ağ modülü arızası"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "U0167",
+      "title": "İmmobilizer Kontrol Modülü İle İletişim Kesildi",
+      "url": "https://www.obdkodu.com/ariza-kodlari/u0167/",
+      "affectedSystem": "Güvenlik / İletişim Ağı",
+      "summary": "İmmobilizer kontrol modülüyle iletişim kaybı algılandı.",
+      "explanation": "İmmobilizer kontrol modülüyle iletişim kaybı algılandı. Ağ hattı yanında modül besleme ve şasesi, akü gerilimi ve eşlik eden iletişim kodları incelenmelidir.",
+      "firstCheck": "Akü, modül besleme/şasesi ve ağdaki diğer U kodlarını birlikte incele.",
+      "symptoms": [
+        "Aracın marş basmaması veya çalışıp hemen stop etmesi",
+        "Göstergede anahtar/kilit (İmmobilizer) lambasının yanıp sönmesi",
+        "Araç kapılarının kumanda ile kilitlenememesi"
+      ],
+      "possibleCauses": [
+        "Anahtarın çipinin hasar görmesi veya hafızasını yitirmesi",
+        "Kontak çevresindeki okuyucu anten (halka) arızası",
+        "İmmobilizer modülüne giden kablolarda kopukluk",
+        "Akü voltajının aniden çökmesi (kısa devre)"
+      ],
+      "sourceGroup": "Önceki OBDKODU rehberi"
+    },
+    {
+      "code": "B0020",
+      "title": "Sol yan hava yastığı açılma kontrolü",
+      "url": "https://www.obdkodu.com/ariza-kodlari/b0020/",
+      "category": "B",
+      "affectedSystem": "SRS · yan hava yastığı",
+      "summary": "SRS modülü sol yan hava yastığının açılma kontrol devresinde beklenmeyen bir durum kaydetti. Tam konum ve devre tanımı araç üreticisine göre doğrulanmalıdır.",
+      "explanation": "SRS modülü sol yan hava yastığının açılma kontrol devresinde beklenmeyen bir durum kaydetti. Tam konum ve devre tanımı araç üreticisine göre doğrulanmalıdır.",
+      "firstCheck": "SRS modülündeki tüm kodları ve araç için geçerli devre şemasını kaydet.",
+      "symptoms": [
+        "SRS veya hava yastığı uyarı lambası yanabilir.",
+        "İlgili güvenlik sistemi kaza anında beklenen şekilde çalışmayabilir."
+      ],
+      "possibleCauses": [
+        "Koltuk hareketiyle etkilenmiş tesisat veya bağlantı",
+        "Devre beslemesi ya da direnç değerinin üretici sınırı dışında olması",
+        "SRS modülü veya ilgili bileşende arıza"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "C0040",
+      "title": "Sağ ön tekerlek hız sensörü devresi",
+      "url": "https://www.obdkodu.com/ariza-kodlari/c0040/",
+      "category": "C",
+      "affectedSystem": "ABS · sağ ön tekerlek",
+      "summary": "ABS modülü sağ ön tekerlek hız sensörü devresinde sorun algıladı. Sensör, kablo, bağlantı veya tekerlek üzerindeki manyetik hedef birlikte değerlendirilir.",
+      "explanation": "ABS modülü sağ ön tekerlek hız sensörü devresinde sorun algıladı. Sensör, kablo, bağlantı veya tekerlek üzerindeki manyetik hedef birlikte değerlendirilir.",
+      "firstCheck": "ABS modülündeki diğer kodları ve dört tekerlek hızını karşılaştır.",
+      "symptoms": [
+        "ABS veya denge kontrol uyarısı yanabilir.",
+        "Canlı veride sağ ön tekerlek hızı diğerlerinden ayrılabilir."
+      ],
+      "possibleCauses": [
+        "Sensör kablosu ya da konnektör hasarı",
+        "Sensör ile manyetik halka arasındaki sorun",
+        "Sensör beslemesi veya sinyal devresi arızası"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P0103",
+      "title": "MAF hava akışı sensörü devresi yüksek giriş",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0103/",
+      "category": "P",
+      "affectedSystem": "Motor · hava ölçümü",
+      "summary": "MAF devresinin giriş sinyali kontrol ünitesinin beklediği aralığın üstünde. Yüksek giriş, doğrudan fazla hava alındığını kanıtlamaz; elektriksel nedenler de araştırılır.",
+      "explanation": "MAF devresinin giriş sinyali kontrol ünitesinin beklediği aralığın üstünde. Yüksek giriş, doğrudan fazla hava alındığını kanıtlamaz; elektriksel nedenler de araştırılır.",
+      "firstCheck": "Donma karesi ve MAF canlı verisini motor devriyle birlikte kaydet.",
+      "symptoms": [
+        "Motor arıza lambası yanabilir.",
+        "Rölanti veya gaz tepkisi bozulabilir."
+      ],
+      "possibleCauses": [
+        "Sinyal hattında beslemeye kısa devre",
+        "MAF konnektöründe temas sorunu",
+        "Sensörün iç devresinde arıza"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P011A",
+      "title": "Soğutma suyu sıcaklık sensörü 1/2 uyumsuzluğu",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p011a/",
+      "category": "P",
+      "affectedSystem": "Motor · sıcaklık ölçümü",
+      "summary": "İki soğutma suyu sıcaklığı ölçümü beklenen ilişkiyi göstermiyor. Sensörlerin yerleri ve normal farkları motor tasarımına göre değişir.",
+      "explanation": "İki soğutma suyu sıcaklığı ölçümü beklenen ilişkiyi göstermiyor. Sensörlerin yerleri ve normal farkları motor tasarımına göre değişir.",
+      "firstCheck": "Soğuk motorda iki sıcaklık değerini ortam sıcaklığıyla karşılaştır.",
+      "symptoms": [
+        "Motor arıza lambası yanabilir.",
+        "Isınma, fan çalışma veya yakıt tüketimi etkilenebilir."
+      ],
+      "possibleCauses": [
+        "Sensörlerden birinde hatalı okuma",
+        "Soğutma suyu seviyesi veya dolaşım sorunu",
+        "Kablo ya da bağlantı arızası"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P0122",
+      "title": "Gaz kelebeği/pedal konum sensörü A düşük giriş",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0122/",
+      "category": "P",
+      "affectedSystem": "Motor · gaz konumu",
+      "summary": "Gaz kelebeği veya pedal konum sensörü A devresindeki giriş beklenenden düşük. Kod, sensörü tek başına arızalı ilan etmez.",
+      "explanation": "Gaz kelebeği veya pedal konum sensörü A devresindeki giriş beklenenden düşük. Kod, sensörü tek başına arızalı ilan etmez.",
+      "firstCheck": "Eşlik eden gaz kelebeği ve pedal kodlarını kaydet.",
+      "symptoms": [
+        "Gaz tepkisi azalabilir veya düzensizleşebilir.",
+        "Motor arıza lambası ve sınırlı güç modu görülebilir."
+      ],
+      "possibleCauses": [
+        "Sensör beslemesi veya şase sorunu",
+        "Sinyal hattında kısa devre ya da kopukluk",
+        "Sensör veya gaz kelebeği bileşeninde arıza"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P0441",
+      "title": "EVAP purge akışı beklenen aralıkta değil",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0441/",
+      "category": "P",
+      "affectedSystem": "Emisyon · yakıt buharı",
+      "summary": "Kontrol ünitesi, EVAP purge valfi komutu ile gözlenen akış arasında uyumsuzluk gördü. Valf, hortum ve kaçak olasılıkları birlikte incelenir.",
+      "explanation": "Kontrol ünitesi, EVAP purge valfi komutu ile gözlenen akış arasında uyumsuzluk gördü. Valf, hortum ve kaçak olasılıkları birlikte incelenir.",
+      "firstCheck": "Diğer EVAP kodlarını ve arızanın oluştuğu koşulları kaydet.",
+      "symptoms": [
+        "Motor arıza lambası yanabilir.",
+        "Bazı araçlarda yakıt dolumu sonrası rölanti düzensizleşebilir."
+      ],
+      "possibleCauses": [
+        "Purge valfinin açık veya kapalı konumda takılması",
+        "EVAP hortumunda kaçak veya tıkanıklık",
+        "Valf kumanda devresi sorunu"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P0505",
+      "title": "Rölanti hava kontrol sistemi arızası",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0505/",
+      "category": "P",
+      "affectedSystem": "Motor · rölanti kontrolü",
+      "summary": "Kontrol ünitesi rölanti devrini beklenen şekilde yönetemiyor. Araç tasarımına göre ayrı rölanti valfi veya elektronik gaz kelebeği kullanılıyor olabilir.",
+      "explanation": "Kontrol ünitesi rölanti devrini beklenen şekilde yönetemiyor. Araç tasarımına göre ayrı rölanti valfi veya elektronik gaz kelebeği kullanılıyor olabilir.",
+      "firstCheck": "Hedef ve gerçek rölanti devrini, diğer kodlarla birlikte oku.",
+      "symptoms": [
+        "Rölanti dalgalanabilir veya motor stop edebilir.",
+        "Motor arıza lambası yanabilir."
+      ],
+      "possibleCauses": [
+        "Emme hattında hava kaçağı",
+        "Rölanti kontrol elemanı veya gaz kelebeğinde kirlenme",
+        "Kontrol devresi ve bağlantı arızası"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P0705",
+      "title": "Şanzıman vites konum sensörü devresi",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0705/",
+      "category": "P",
+      "affectedSystem": "Otomatik şanzıman · vites seçimi",
+      "summary": "Şanzıman kontrolü, seçilen P/R/N/D konumunu bildiren devrede sorun algıladı. Kod, seçici mekanizması ve elektrik devresinin birlikte incelenmesini gerektirir.",
+      "explanation": "Şanzıman kontrolü, seçilen P/R/N/D konumunu bildiren devrede sorun algıladı. Kod, seçici mekanizması ve elektrik devresinin birlikte incelenmesini gerektirir.",
+      "firstCheck": "TCM kodlarını ve seçici konumunun canlı verisini kaydet.",
+      "symptoms": [
+        "Gösterilen vites konumu tutarsız olabilir.",
+        "Marş veya vites geçişi etkilenebilir."
+      ],
+      "possibleCauses": [
+        "Vites konum sensörü ya da ayarı",
+        "Seçici mekanizması ve bağlantıları",
+        "Kablo, konnektör veya besleme sorunu"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P0717",
+      "title": "Şanzıman giriş/türbin hız sensörü sinyali yok",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0717/",
+      "category": "P",
+      "affectedSystem": "Otomatik şanzıman · giriş hızı",
+      "summary": "Şanzıman kontrol modülü giriş veya türbin hız sensöründen beklenen sinyali alamıyor. Sensörün yeri ve ölçüm yöntemi şanzıman tipine göre değişir.",
+      "explanation": "Şanzıman kontrol modülü giriş veya türbin hız sensöründen beklenen sinyali alamıyor. Sensörün yeri ve ölçüm yöntemi şanzıman tipine göre değişir.",
+      "firstCheck": "TCM kodlarını ve giriş/çıkış hızlarını uygun koşullarda karşılaştır.",
+      "symptoms": [
+        "Vites geçişleri sertleşebilir veya sınırlı moda geçilebilir.",
+        "Hız verisi canlı ekranda kaybolabilir."
+      ],
+      "possibleCauses": [
+        "Sensör beslemesi veya sinyal hattı sorunu",
+        "Konnektör ya da iç tesisat hasarı",
+        "Sensör veya şanzıman kontrolünde arıza"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P0722",
+      "title": "Şanzıman çıkış hız sensörü sinyali yok",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0722/",
+      "category": "P",
+      "affectedSystem": "Otomatik şanzıman · çıkış hızı",
+      "summary": "Şanzıman çıkış hızı sinyali alınmıyor. Hız göstergesi ve vites stratejisi etkilenebilir; bazı araçlarda hız verisi farklı modüllerden gelir.",
+      "explanation": "Şanzıman çıkış hızı sinyali alınmıyor. Hız göstergesi ve vites stratejisi etkilenebilir; bazı araçlarda hız verisi farklı modüllerden gelir.",
+      "firstCheck": "TCM ve ABS hız verilerini karşılaştırarak eksik sinyali belirle.",
+      "symptoms": [
+        "Vites geçişi bozulabilir.",
+        "Gösterge hızı veya canlı hız verisi tutarsız olabilir."
+      ],
+      "possibleCauses": [
+        "Çıkış hızı sensörü veya hedef halkası",
+        "Kablo ve konnektör sorunu",
+        "TCM beslemesi ya da sinyal işleme sorunu"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P0730",
+      "title": "Şanzımanda hatalı vites oranı",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0730/",
+      "category": "P",
+      "affectedSystem": "Otomatik şanzıman · oran kontrolü",
+      "summary": "Seçili vitesin giriş ve çıkış hızları beklenen oranla uyuşmuyor. Kayma olasılığı vardır, ancak hız sensörleri ve kontrol verileri de doğrulanmalıdır.",
+      "explanation": "Seçili vitesin giriş ve çıkış hızları beklenen oranla uyuşmuyor. Kayma olasılığı vardır, ancak hız sensörleri ve kontrol verileri de doğrulanmalıdır.",
+      "firstCheck": "Diğer TCM kodlarını ve arızanın hangi viteste oluştuğunu kaydet.",
+      "symptoms": [
+        "Devir yükselirken hızlanma gecikebilir.",
+        "Sert geçiş veya sınırlı vites modu görülebilir."
+      ],
+      "possibleCauses": [
+        "Şanzıman yağı seviyesi veya basınç sorunu",
+        "Kavrama ya da valf gövdesi performansı",
+        "Giriş/çıkış hız sensörü verisi hatası"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P0740",
+      "title": "Tork konvertörü kavrama devresi arızası",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0740/",
+      "category": "P",
+      "affectedSystem": "Otomatik şanzıman · tork konvertörü",
+      "summary": "Tork konvertörü kavramasının kumanda devresinde arıza algılandı. Elektriksel kontrol ile kavramanın mekanik davranışı ayrı test edilir.",
+      "explanation": "Tork konvertörü kavramasının kumanda devresinde arıza algılandı. Elektriksel kontrol ile kavramanın mekanik davranışı ayrı test edilir.",
+      "firstCheck": "TCM içindeki eşlik eden kodları ve kavrama komutunu kaydet.",
+      "symptoms": [
+        "Seyir hızında devir beklenenden yüksek kalabilir.",
+        "Şanzıman uyarısı veya arıza lambası yanabilir."
+      ],
+      "possibleCauses": [
+        "Selenoid devresi veya bağlantı arızası",
+        "Valf gövdesi ya da kumanda sorunu",
+        "Şanzıman yağı veya iç tesisat sorunu"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P0741",
+      "title": "Tork konvertörü kavraması performansı / devreye girmiyor",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0741/",
+      "category": "P",
+      "affectedSystem": "Otomatik şanzıman · tork konvertörü",
+      "summary": "Kontrol modülü tork konvertörü kavramasının beklenen biçimde kilitlenmediğini gördü. Bu kod elektriksel, hidrolik veya mekanik nedenlerden doğabilir.",
+      "explanation": "Kontrol modülü tork konvertörü kavramasının beklenen biçimde kilitlenmediğini gördü. Bu kod elektriksel, hidrolik veya mekanik nedenlerden doğabilir.",
+      "firstCheck": "Kavrama komutu, gerçek kayma ve yağ sıcaklığı verilerini kaydet.",
+      "symptoms": [
+        "Sabit hızda motor devri dalgalanabilir.",
+        "Yakıt tüketimi veya şanzıman sıcaklığı artabilir."
+      ],
+      "possibleCauses": [
+        "Kavrama kumandası veya selenoid performansı",
+        "Hidrolik basınç ve yağ koşulları",
+        "Konvertör iç aşınması"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P0750",
+      "title": "Vites değiştirme selenoidi A arızası",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0750/",
+      "category": "P",
+      "affectedSystem": "Otomatik şanzıman · vites kontrolü",
+      "summary": "Şanzıman kontrolü vites değiştirme selenoidi A ile ilgili sorun kaydetti. Harfin hangi valfe karşılık geldiği şanzıman modeline göre değişir.",
+      "explanation": "Şanzıman kontrolü vites değiştirme selenoidi A ile ilgili sorun kaydetti. Harfin hangi valfe karşılık geldiği şanzıman modeline göre değişir.",
+      "firstCheck": "TCM kodlarını, komutları ve vites değişim koşullarını kaydet.",
+      "symptoms": [
+        "Vites geçişi sertleşebilir veya gecikebilir.",
+        "Şanzıman sınırlı moda geçebilir."
+      ],
+      "possibleCauses": [
+        "Selenoid kumanda devresi ya da bağlantı sorunu",
+        "Yağ veya valf gövdesi kaynaklı hidrolik sorun",
+        "Selenoidin kendisinde arıza"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P0AA6",
+      "title": "Hibrit yüksek voltaj sistemi izolasyon hatası",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0aa6/",
+      "category": "P",
+      "affectedSystem": "Hibrit/EV · yüksek voltaj",
+      "summary": "Yüksek voltaj sistemi ile araç gövdesi arasındaki izolasyon beklenen sınırda değil. Hatanın yeri yalnızca koddan anlaşılamaz.",
+      "explanation": "Yüksek voltaj sistemi ile araç gövdesi arasındaki izolasyon beklenen sınırda değil. Hatanın yeri yalnızca koddan anlaşılamaz.",
+      "firstCheck": "Aracı güvenli konuma al ve yüksek voltaj uyarılarını kaydet.",
+      "symptoms": [
+        "Hibrit sistem uyarısı görülebilir.",
+        "Araç çalışmayı veya sürüşü sınırlayabilir."
+      ],
+      "possibleCauses": [
+        "Yüksek voltaj bileşeninde nem veya izolasyon sorunu",
+        "Kablo ya da bağlantı hasarı",
+        "İzolasyon izleme devresinde arıza"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P2106",
+      "title": "Gaz kelebeği sistemi zorunlu güç sınırlaması",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p2106/",
+      "category": "P",
+      "affectedSystem": "Motor · koruma modu",
+      "summary": "Kontrol ünitesi motor gücünü sınırlama moduna aldı. P2106 çoğu durumda altta yatan başka bir sorunun sonucudur; önce eşlik eden kodlar okunur.",
+      "explanation": "Kontrol ünitesi motor gücünü sınırlama moduna aldı. P2106 çoğu durumda altta yatan başka bir sorunun sonucudur; önce eşlik eden kodlar okunur.",
+      "firstCheck": "Tüm kayıtlı ve bekleyen kodları oluşma zamanlarıyla kaydet.",
+      "symptoms": [
+        "Araç hızlanmaya az tepki verebilir.",
+        "Motor arıza lambası ve koruma modu görülebilir."
+      ],
+      "possibleCauses": [
+        "Gaz kelebeği veya pedal sistemiyle ilgili başka kod",
+        "Besleme ve kontrol modülü koşulları",
+        "Koruma modunu tetikleyen motor yönetimi arızası"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P2135",
+      "title": "Gaz kelebeği/pedal konum sensörü A/B uyumsuzluğu",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p2135/",
+      "category": "P",
+      "affectedSystem": "Motor · elektronik gaz kontrolü",
+      "summary": "Konum sensörlerinin A ve B sinyalleri beklenen ilişkiyi göstermiyor. Hangi iki kanalın karşılaştırıldığı araç tasarımına göre doğrulanmalıdır.",
+      "explanation": "Konum sensörlerinin A ve B sinyalleri beklenen ilişkiyi göstermiyor. Hangi iki kanalın karşılaştırıldığı araç tasarımına göre doğrulanmalıdır.",
+      "firstCheck": "İki konum kanalının canlı verisini pedal hareketi boyunca karşılaştır.",
+      "symptoms": [
+        "Gaz tepkisi düzensizleşebilir.",
+        "Motor güç sınırlama moduna geçebilir."
+      ],
+      "possibleCauses": [
+        "Sensör kanallarından birinde arıza",
+        "Kablo veya konnektörde temas sorunu",
+        "Besleme ya da şase referansı sorunu"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P2138",
+      "title": "Gaz pedalı konum sensörü D/E uyumsuzluğu",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p2138/",
+      "category": "P",
+      "affectedSystem": "Motor · gaz pedalı",
+      "summary": "Gaz pedalı konum sensörü D ve E sinyalleri beklenen korelasyonu sağlamıyor. Sorun pedal birimi kadar tesisat veya besleme hattından da kaynaklanabilir.",
+      "explanation": "Gaz pedalı konum sensörü D ve E sinyalleri beklenen korelasyonu sağlamıyor. Sorun pedal birimi kadar tesisat veya besleme hattından da kaynaklanabilir.",
+      "firstCheck": "D ve E kanallarının canlı verisini pedal hareketiyle karşılaştır.",
+      "symptoms": [
+        "Gaz tepkisi azalabilir.",
+        "Sınırlı güç uyarısı oluşabilir."
+      ],
+      "possibleCauses": [
+        "Pedal sensörü kanallarında sapma",
+        "Pedal konnektörü veya kablo arızası",
+        "Referans beslemesi ya da şase sorunu"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P2181",
+      "title": "Soğutma sistemi performansı",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p2181/",
+      "category": "P",
+      "affectedSystem": "Motor · soğutma",
+      "summary": "Motor sıcaklığının davranışı beklenen soğutma sistemi modeliyle uyuşmuyor. Düşük sıcaklık, aşırı ısınma, sensör veya dolaşım sorunları araç koşullarına göre ayrılır.",
+      "explanation": "Motor sıcaklığının davranışı beklenen soğutma sistemi modeliyle uyuşmuyor. Düşük sıcaklık, aşırı ısınma, sensör veya dolaşım sorunları araç koşullarına göre ayrılır.",
+      "firstCheck": "Donma karesi, sıcaklık eğrisi ve fan komutunu kaydet.",
+      "symptoms": [
+        "Sıcaklık göstergesi normalden farklı davranabilir.",
+        "Isıtma performansı veya fan çalışma biçimi değişebilir."
+      ],
+      "possibleCauses": [
+        "Termostat ya da dolaşım sorunu",
+        "Soğutma suyu seviyesi ve kaçak",
+        "Sıcaklık sensörü veya fan kontrolü arızası"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P2453",
+      "title": "DPF basınç sensörü devresi aralık/performance",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p2453/",
+      "category": "P",
+      "affectedSystem": "Dizel · DPF basınç ölçümü",
+      "summary": "Dizel partikül filtresi basınç sensörü sinyali beklenen aralık veya davranışta değil. Sensör ve hortumlar filtre doluluğundan ayrı değerlendirilir.",
+      "explanation": "Dizel partikül filtresi basınç sensörü sinyali beklenen aralık veya davranışta değil. Sensör ve hortumlar filtre doluluğundan ayrı değerlendirilir.",
+      "firstCheck": "Rölanti ve kontrollü yükte basınç verisini üretici değerleriyle karşılaştır.",
+      "symptoms": [
+        "DPF uyarısı veya arıza lambası yanabilir.",
+        "Rejenerasyon stratejisi etkilenebilir."
+      ],
+      "possibleCauses": [
+        "Basınç hortumunda tıkanma, kaçak veya karışma",
+        "Sensör besleme/sinyal sorunu",
+        "Gerçek egzoz karşı basıncı sorunu"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P2459",
+      "title": "DPF rejenerasyon sıklığı beklenenden fazla",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p2459/",
+      "category": "P",
+      "affectedSystem": "Dizel · DPF rejenerasyonu",
+      "summary": "Kontrol ünitesi DPF rejenerasyon aralıklarının beklenenden kısa olduğunu kaydetti. Sürüş profili, sensörler, egzoz kaçakları ve motorun kurum üretimi incelenir.",
+      "explanation": "Kontrol ünitesi DPF rejenerasyon aralıklarının beklenenden kısa olduğunu kaydetti. Sürüş profili, sensörler, egzoz kaçakları ve motorun kurum üretimi incelenir.",
+      "firstCheck": "Son rejenerasyon mesafesi ve eşlik eden DPF kodlarını kaydet.",
+      "symptoms": [
+        "Rejenerasyon sık tekrarlayabilir.",
+        "Yakıt tüketimi veya DPF uyarısı artabilir."
+      ],
+      "possibleCauses": [
+        "Kısa sürüşler ve tamamlanmayan rejenerasyon",
+        "DPF basınç veya sıcaklık ölçümünde sorun",
+        "Motorun fazla kurum üretmesi"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P2463",
+      "title": "DPF kurum birikimi / filtre kısıtlanması",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p2463/",
+      "category": "P",
+      "affectedSystem": "Dizel · DPF filtre durumu",
+      "summary": "DPF için hesaplanan veya ölçülen kurum yükü sınırı aştı. Sensör okuması ve gerçek karşı basınç doğrulanmadan müdahale seçilmemelidir.",
+      "explanation": "DPF için hesaplanan veya ölçülen kurum yükü sınırı aştı. Sensör okuması ve gerçek karşı basınç doğrulanmadan müdahale seçilmemelidir.",
+      "firstCheck": "DPF, sıcaklık ve basınç kodlarını birlikte kaydet.",
+      "symptoms": [
+        "DPF uyarısı ve güç kaybı görülebilir.",
+        "Rejenerasyon tamamlanmayabilir."
+      ],
+      "possibleCauses": [
+        "Tamamlanmayan rejenerasyon döngüleri",
+        "Aşırı kurum üreten motor sorunu",
+        "Basınç sensörü veya hortum verisi hatası"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "U0101",
+      "title": "Şanzıman kontrol modülüyle iletişim kaybı",
+      "url": "https://www.obdkodu.com/ariza-kodlari/u0101/",
+      "category": "U",
+      "affectedSystem": "Araç ağı · TCM",
+      "summary": "Bir modül şanzıman kontrol modülüyle beklenen iletişimi kuramadı. Kodun hangi modülde kaydedildiği ve kesintinin sürekli olup olmadığı önemlidir.",
+      "explanation": "Bir modül şanzıman kontrol modülüyle beklenen iletişimi kuramadı. Kodun hangi modülde kaydedildiği ve kesintinin sürekli olup olmadığı önemlidir.",
+      "firstCheck": "Tüm modüllerdeki iletişim kodlarını ve oluşma zamanlarını karşılaştır.",
+      "symptoms": [
+        "Şanzıman uyarısı veya vites gösteriminde sorun olabilir.",
+        "Birden fazla U kodu birlikte görülebilir."
+      ],
+      "possibleCauses": [
+        "TCM beslemesi, sigorta veya şase sorunu",
+        "Ağ kablosu ve bağlantı arızası",
+        "Düşük sistem gerilimi veya modül arızası"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P0087",
+      "title": "Yakıt rayı/sistem basıncı düşük",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0087/",
+      "category": "P",
+      "affectedSystem": "Yakıt sistemi · basınç",
+      "summary": "Kontrol ünitesi yakıt basıncının istenen düzeyin altında kaldığını kaydetti. Gerçek basınç, sensör okuması ve pompa kumandası karşılaştırılmadan neden belirlenemez.",
+      "explanation": "Kontrol ünitesi yakıt basıncının istenen düzeyin altında kaldığını kaydetti. Gerçek basınç, sensör okuması ve pompa kumandası karşılaştırılmadan neden belirlenemez.",
+      "firstCheck": "Donma karesinde istenen ve gerçek yakıt basıncını karşılaştır.",
+      "symptoms": [
+        "Yük altında güç kaybı görülebilir.",
+        "Motor zor çalışabilir veya düzensiz çalışabilir.",
+        "Motor arıza lambası yanabilir."
+      ],
+      "possibleCauses": [
+        "Yakıt beslemesinde kısıt veya pompa performans sorunu",
+        "Basınç sensörü ya da tesisatında hatalı okuma",
+        "Basınç düzenleme kumandasında sorun"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P0131",
+      "title": "Bank 1 Sensör 1 oksijen sensörü devresi düşük giriş",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0131/",
+      "category": "P",
+      "affectedSystem": "Emisyon · ön oksijen sensörü",
+      "summary": "Katalizör öncesindeki Bank 1 oksijen sensörü devresinde düşük giriş algılandı. Elektrik devresi kadar gerçek karışım ve egzoz koşulları da sonucu etkileyebilir.",
+      "explanation": "Katalizör öncesindeki Bank 1 oksijen sensörü devresinde düşük giriş algılandı. Elektrik devresi kadar gerçek karışım ve egzoz koşulları da sonucu etkileyebilir.",
+      "firstCheck": "Eşlik eden karışım kodlarını ve yakıt düzeltmelerini kaydet.",
+      "symptoms": [
+        "Motor arıza lambası yanabilir.",
+        "Yakıt tüketimi veya rölanti davranışı değişebilir."
+      ],
+      "possibleCauses": [
+        "Egzoz veya emme kaçağına bağlı gerçek fakir karışım",
+        "Sensör sinyalinde kısa devre ya da bağlantı sorunu",
+        "Yakıt beslemesi veya sensör arızası"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P0137",
+      "title": "Bank 1 Sensör 2 oksijen sensörü devresi düşük giriş",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0137/",
+      "category": "P",
+      "affectedSystem": "Emisyon · arka oksijen sensörü",
+      "summary": "Katalizör sonrasındaki Bank 1 oksijen sensörü devresinde düşük giriş kaydedildi. Sensör sinyali, tesisat ve egzoz kaçağı birlikte değerlendirilmelidir.",
+      "explanation": "Katalizör sonrasındaki Bank 1 oksijen sensörü devresinde düşük giriş kaydedildi. Sensör sinyali, tesisat ve egzoz kaçağı birlikte değerlendirilmelidir.",
+      "firstCheck": "Bank 1 Sensör 2 konumunu ve eşlik eden kodları doğrula.",
+      "symptoms": [
+        "Motor arıza lambası yanabilir.",
+        "Sürüşte belirgin bir fark görülmeyebilir."
+      ],
+      "possibleCauses": [
+        "Arka sensör sinyal hattı veya bağlantı arızası",
+        "Egzoz kaçağı ya da gerçek karışım sorunu",
+        "Sensörün kendisinde hata"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P0402",
+      "title": "EGR akışı beklenenden fazla",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0402/",
+      "category": "P",
+      "affectedSystem": "Emisyon · EGR akışı",
+      "summary": "Kontrol ünitesi EGR akışının komuta göre fazla olduğunu algıladı. Valfin açık kalması, kumanda sorunu ve ölçüm geri bildirimi birlikte incelenir.",
+      "explanation": "Kontrol ünitesi EGR akışının komuta göre fazla olduğunu algıladı. Valfin açık kalması, kumanda sorunu ve ölçüm geri bildirimi birlikte incelenir.",
+      "firstCheck": "EGR komutu ve gerçek tepkiyi çalışma koşullarıyla birlikte kaydet.",
+      "symptoms": [
+        "Rölanti düzensizleşebilir.",
+        "Hızlanmada isteksizlik veya stop etme görülebilir.",
+        "Motor arıza lambası yanabilir."
+      ],
+      "possibleCauses": [
+        "EGR valfinin açık konumda takılması",
+        "Vakum veya elektrik kumandasında sorun",
+        "EGR akışını izleyen sensör verisinde hata"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P2002",
+      "title": "DPF verimliliği eşik altında (Bank 1)",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p2002/",
+      "category": "P",
+      "affectedSystem": "Dizel · partikül filtresi",
+      "summary": "Bank 1 dizel partikül filtresi sisteminin verimliliği beklenen eşiğin altında algılandı. Filtre durumu, diferansiyel basınç ölçümü ve rejenerasyon geçmişi birlikte yorumlanır.",
+      "explanation": "Bank 1 dizel partikül filtresi sisteminin verimliliği beklenen eşiğin altında algılandı. Filtre durumu, diferansiyel basınç ölçümü ve rejenerasyon geçmişi birlikte yorumlanır.",
+      "firstCheck": "Eşlik eden DPF ve egzoz sıcaklığı kodlarını kaydet.",
+      "symptoms": [
+        "DPF veya motor uyarısı yanabilir.",
+        "Güç kısıtlaması veya sık rejenerasyon görülebilir."
+      ],
+      "possibleCauses": [
+        "DPF içinde kurum birikimi veya fiziksel hasar",
+        "Basınç sensörü ve hortumlarında yanlış ölçüm",
+        "Eksik rejenerasyon veya motorda aşırı kurum üretimi"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "U0121",
+      "title": "ABS kontrol modülüyle iletişim kaybı",
+      "url": "https://www.obdkodu.com/ariza-kodlari/u0121/",
+      "category": "U",
+      "affectedSystem": "Araç ağı · ABS modülü",
+      "summary": "Bir kontrol modülü ABS kontrol ünitesiyle beklenen iletişimi kuramadı. Kodun hangi modülde kaydedildiği ve kesintinin sürekli olup olmadığı teşhis sırasını belirler.",
+      "explanation": "Bir kontrol modülü ABS kontrol ünitesiyle beklenen iletişimi kuramadı. Kodun hangi modülde kaydedildiği ve kesintinin sürekli olup olmadığı teşhis sırasını belirler.",
+      "firstCheck": "Tüm modüllerdeki U kodlarını ve iletişim durumunu karşılaştır.",
+      "symptoms": [
+        "ABS veya denge kontrol uyarısı görülebilir.",
+        "Bazı araçlarda ABS modülüne tanı cihazıyla erişilemeyebilir."
+      ],
+      "possibleCauses": [
+        "Düşük akü veya şarj gerilimi",
+        "ABS modülü besleme, sigorta veya şase sorunu",
+        "CAN ağı bağlantısı ya da modül arızası"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "U0073",
+      "title": "Kontrol modülü iletişim veri yolu A kapalı",
+      "url": "https://www.obdkodu.com/ariza-kodlari/u0073/",
+      "category": "U",
+      "affectedSystem": "Araç ağı · veri yolu",
+      "summary": "Araçtaki veri yolu A iletişimi kapanmış veya ciddi biçimde bozulmuş görünüyor. Birden çok modül aynı kök sorunun sonucu olarak kod kaydedebilir.",
+      "explanation": "Araçtaki veri yolu A iletişimi kapanmış veya ciddi biçimde bozulmuş görünüyor. Birden çok modül aynı kök sorunun sonucu olarak kod kaydedebilir.",
+      "firstCheck": "Önce sistem gerilimini ve tüm modüllerin hata kaydını topla.",
+      "symptoms": [
+        "Birden fazla sistem uyarısı aynı anda yanabilir.",
+        "Bazı modüllere tanı cihazıyla ulaşılamayabilir."
+      ],
+      "possibleCauses": [
+        "Düşük akü veya şarj gerilimi",
+        "Ağ hattında kısa devre veya bağlantı sorunu",
+        "Bir modülün ağ iletişimini bozması"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    }
+  ]
+}

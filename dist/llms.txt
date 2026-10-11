@@ -1,0 +1,17 @@
+# OBDKODU
+
+Türkçe OBD-II arıza kodu dizini ve seçilmiş kodlar için teşhis rehberleri. Kod açıklamaları bilgi amaçlıdır; araç üreticisinin servis prosedürü ve uzman ölçümü esastır.
+
+## Başlangıç
+- Ana sayfa: https://www.obdkodu.com/
+- Kod dizini: https://www.obdkodu.com/ariza-kodlari/
+- Birden fazla kodu yorumlama: https://www.obdkodu.com/kodlari-birlikte-yorumla/
+- Rehberler: https://www.obdkodu.com/rehber/
+- Yöntem ve kaynaklar: https://www.obdkodu.com/yontem-ve-kaynaklar/
+
+## Makine tarafından okunabilir kaynaklar
+- Ayrıntılı rehber verisi (JSON): https://www.obdkodu.com/api/guides.json
+- Tam kod arama dizini (JSON): https://www.obdkodu.com/assets/catalog.json
+- Kanonik sayfalar (XML): https://www.obdkodu.com/sitemap.xml
+
+Her kodun ayrıntılı sayfası JSON verisindeki url alanında yer alır. Kaynak gösterirken ilgili kanonik sayfaya bağlantı verin.
