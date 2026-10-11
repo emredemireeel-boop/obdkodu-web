@@ -21,6 +21,12 @@ for(const file of files){
  if(html.includes('<ul class="check-list"></ul>'))errors.push(`${file}: boş belirti listesi`);
  if(!/<html lang="tr">/.test(html))errors.push(`${file}: lang yok`);
  if(!/<link rel="canonical" href="https:\/\/www\.obdkodu\.com\//.test(html))errors.push(`${file}: canonical yok`);
+ const relative=path.relative(root,path.dirname(file)).split(path.sep).join('/');
+ const expected='https://www.obdkodu.com/'+(relative && relative!=='.' ? relative+'/' : '');
+ const actual=html.match(/<link rel="canonical" href="([^"]+)"/)?.[1];
+ if(path.basename(file)==='404.html'){
+  if(!html.includes('content="noindex,follow"'))errors.push('404 sayfası noindex değil');
+ } else if(actual!==expected)errors.push(`${file}: canonical yol uyuşmuyor (${actual})`);
  if(!/<meta name="description"/.test(html))errors.push(`${file}: description yok`);
  for(const match of html.matchAll(/href="(\/[^"]*)"/g)){
   const href=match[1].split(/[?#]/)[0];
@@ -36,6 +42,12 @@ for(const file of files){
 const sitemap=fs.readFileSync(path.join(root,'sitemap.xml'),'utf8');
 const urls=[...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(x=>x[1]);
 if(urls.length!==files.length-1)errors.push(`sitemap ${urls.length}, indexable ${files.length-1}`);
+if(new Set(urls).size!==urls.length)errors.push('sitemap yinelenen URL içeriyor');
+for(const file of files.filter(x=>path.basename(x)!=='404.html')){
+ const relative=path.relative(root,path.dirname(file)).split(path.sep).join('/');
+ const expected='https://www.obdkodu.com/'+(relative && relative!=='.' ? relative+'/' : '');
+ if(!urls.includes(expected))errors.push(`${file}: sitemap içinde yok`);
+}
 if(!fs.existsSync(path.join(root,'assets/og.png')))errors.push('Sosyal paylaşım görseli eksik');
 for(const u of urls)if(!u.startsWith('https://www.obdkodu.com/'))errors.push(`Sitemap URL: ${u}`);
 if(errors.length){console.error(errors.join('\n'));process.exit(1);}

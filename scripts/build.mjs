@@ -256,6 +256,7 @@ fs.writeFileSync(path.join(deployDir,'redirects.csv'),redirectRows.map(row=>row.
 const apacheRules=[
  '# Apache server-context rules. Include after RewriteEngine On.',
  ...guides.map(g=>`RewriteRule ^/kod/${g.code}/?$ /ariza-kodlari/${g.code.toLowerCase()}/ [R=301,L,NC]`),
+ ...guides.map(g=>`RewriteRule ^/kod/${g.code}/.+$ /ariza-kodlari/${g.code.toLowerCase()}/ [R=301,L,NC]`),
  'RewriteRule ^/kod/([PBCU][0-9A-F]{4})/.+$ /kod/$1 [R=301,L,NC]',
  'RewriteRule ^/kod/([PBCU][0-9A-F]{4})/?$ http://127.0.0.1:3000/kod/$1 [P,L,NC]',
  'RewriteRule ^/arama/?$ /ariza-kodlari/ [R=301,L,NC]',
