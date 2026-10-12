@@ -4,7 +4,7 @@ export default [
   {
     id: 'hava-yakit', title: 'Hava, yakıt ve motor tepkisi',
     intro: 'Hava akışı, basınç, sıcaklık, yakıt karışımı ve gaz pedalı verileri aynı çalışma koşulunda birlikte okunur. Kodun adı tek başına arızalı sensörü belirlemez.',
-    match: code => /^(P00|P01|P02)/.test(code) || ['P0505','P2106','P2135','P2138','P2181'].includes(code)
+    match: code => /^(P00|P01|P02)/.test(code) || ['P0505','P0507','P2106','P2135','P2138','P2181'].includes(code)
   },
   {
     id: 'tekleme', title: 'Tekleme, krank ve ateşleme',

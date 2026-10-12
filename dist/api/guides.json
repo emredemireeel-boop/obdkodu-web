@@ -1,7 +1,7 @@
 {
   "name": "OBDKODU ayrıntılı arıza kodu rehberleri",
   "language": "tr-TR",
-  "count": 87,
+  "count": 96,
   "methodology": "https://www.obdkodu.com/yontem-ve-kaynaklar/",
   "notice": "Kod tek başına kesin parça teşhisi değildir. Araç üreticisinin servis prosedürü esastır.",
   "guides": [
@@ -1892,6 +1892,186 @@
         "Düşük akü veya şarj gerilimi",
         "Ağ hattında kısa devre veya bağlantı sorunu",
         "Bir modülün ağ iletişimini bozması"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P0133",
+      "title": "Ön oksijen sensörü yavaş yanıt (Bank 1 Sensör 1)",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0133/",
+      "category": "P",
+      "affectedSystem": "Emisyon · ön oksijen sensörü",
+      "summary": "Kontrol ünitesi, Bank 1 ön oksijen sensörünün karışım değişimine beklenenden yavaş tepki verdiğini kaydetti. Sensörün tipi ve izleme koşulları araca göre değişir.",
+      "explanation": "Kontrol ünitesi, Bank 1 ön oksijen sensörünün karışım değişimine beklenenden yavaş tepki verdiğini kaydetti. Sensörün tipi ve izleme koşulları araca göre değişir.",
+      "firstCheck": "Donma karesini, yakıt düzeltmelerini ve sensörün sıcak çalışma verisini kaydet.",
+      "symptoms": [
+        "Motor arıza lambası yanabilir.",
+        "Yakıt tüketimi artabilir; bazı araçlarda belirgin sürüş belirtisi olmayabilir."
+      ],
+      "possibleCauses": [
+        "Yaşlanmış veya kirlenmiş sensör",
+        "Sensör ısıtıcı devresi ya da kablosunda sorun",
+        "Egzoz kaçağı veya yakıt karışımını etkileyen başka bir arıza"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P0507",
+      "title": "Rölanti devri hedefin üzerinde",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0507/",
+      "category": "P",
+      "affectedSystem": "Motor · rölanti kontrolü",
+      "summary": "Motor ısındığında gerçek rölanti devri kontrol ünitesinin hedeflediği değerin üzerinde kalıyor. Kod, ayrı bir rölanti valfi bulunduğu anlamına gelmez.",
+      "explanation": "Motor ısındığında gerçek rölanti devri kontrol ünitesinin hedeflediği değerin üzerinde kalıyor. Kod, ayrı bir rölanti valfi bulunduğu anlamına gelmez.",
+      "firstCheck": "Motor tam ısınmışken hedef ve gerçek rölantiyi, gaz kelebeği açısını ve yakıt düzeltmesini kaydet.",
+      "symptoms": [
+        "Araç dururken devir yüksek kalabilir.",
+        "Otomatik araçta vitese alırken sarsıntı hissedilebilir."
+      ],
+      "possibleCauses": [
+        "Gaz kelebeği sonrası emme havası kaçağı",
+        "Gaz kelebeği kirlenmesi veya adaptasyon sorunu",
+        "Rölanti kontrol komutu ya da yardımcı yük bilgisinde hata"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P0191",
+      "title": "Yakıt rayı basınç sensörü aralık / performans",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0191/",
+      "category": "P",
+      "affectedSystem": "Yakıt sistemi · basınç ölçümü",
+      "summary": "Yakıt rayı basınç sensörünün okuması beklenen aralıkta veya çalışma koşuluna uygun davranışta değil. Gerçek basınç düşüklüğü ile ölçüm hatası ayrılmalıdır.",
+      "explanation": "Yakıt rayı basınç sensörünün okuması beklenen aralıkta veya çalışma koşuluna uygun davranışta değil. Gerçek basınç düşüklüğü ile ölçüm hatası ayrılmalıdır.",
+      "firstCheck": "İstenen ve ölçülen ray basıncını marş ve yük koşullarıyla birlikte kaydet.",
+      "symptoms": [
+        "Çalıştırma zorlaşabilir veya motor güçten düşebilir.",
+        "Bazı araçlar koruma moduna geçebilir."
+      ],
+      "possibleCauses": [
+        "Basınç sensörü sinyali, beslemesi veya şasesinde sorun",
+        "Gerçek yakıt basıncı sapması",
+        "Konnektör ya da tesisatta kesintili temas"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P0234",
+      "title": "Turbo aşırı basınç durumu",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0234/",
+      "category": "P",
+      "affectedSystem": "Motor · turbo basınç kontrolü",
+      "summary": "Emme basıncı belirli koşullarda kontrol ünitesinin izin verdiği sınırın üstüne çıktı. Ölçüm sensörü, basınç kumandası ve mekanik hareket birlikte değerlendirilir.",
+      "explanation": "Emme basıncı belirli koşullarda kontrol ünitesinin izin verdiği sınırın üstüne çıktı. Ölçüm sensörü, basınç kumandası ve mekanik hareket birlikte değerlendirilir.",
+      "firstCheck": "Donma karesindeki yük, devir ve istenen/gerçek basıncı karşılaştır.",
+      "symptoms": [
+        "Yük altında güç kesilebilir veya sınırlı mod görülebilir.",
+        "Motor arıza lambası yanabilir."
+      ],
+      "possibleCauses": [
+        "Wastegate veya değişken geometrili turbo kumandasının takılması",
+        "Vakum/elektronik aktüatör kontrolünde sorun",
+        "MAP sensörü veya basınç hattı verisinin yanlış olması"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P0030",
+      "title": "Ön oksijen sensörü ısıtıcı kontrol devresi",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0030/",
+      "category": "P",
+      "affectedSystem": "Emisyon · sensör ısıtıcısı",
+      "summary": "Bank 1 Sensör 1 oksijen sensörünün ısıtıcı kontrol devresinde arıza algılandı. Kod, sensörün egzoz gazı ölçümünün mutlaka bozuk olduğunu göstermez.",
+      "explanation": "Bank 1 Sensör 1 oksijen sensörünün ısıtıcı kontrol devresinde arıza algılandı. Kod, sensörün egzoz gazı ölçümünün mutlaka bozuk olduğunu göstermez.",
+      "firstCheck": "Aracın Bank 1 Sensör 1 konumunu ve eşlik eden ısıtıcı kodlarını doğrula.",
+      "symptoms": [
+        "Motor arıza lambası yanabilir.",
+        "Soğuk çalışmadan sonraki emisyon kontrolü gecikebilir."
+      ],
+      "possibleCauses": [
+        "Isıtıcı besleme sigortası veya hattında kesinti",
+        "Konnektörde ısı ve nem hasarı",
+        "Isıtıcı elemanı ya da kontrol hattında arıza"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P0480",
+      "title": "Soğutma fanı 1 kontrol devresi",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0480/",
+      "category": "P",
+      "affectedSystem": "Motor · fan kumandası",
+      "summary": "Motor soğutma fanı 1 kumanda devresinde beklenen elektriksel davranış görülmedi. Fanın dönmemesi kadar kumanda geri bildirimi de kodu tetikleyebilir.",
+      "explanation": "Motor soğutma fanı 1 kumanda devresinde beklenen elektriksel davranış görülmedi. Fanın dönmemesi kadar kumanda geri bildirimi de kodu tetikleyebilir.",
+      "firstCheck": "Soğutma sıcaklığını, fan komutunu ve fanın gerçek çalışmasını birlikte izle.",
+      "symptoms": [
+        "Hararet özellikle dur-kalk trafikte yükselebilir.",
+        "Klima açıkken fan davranışı değişebilir."
+      ],
+      "possibleCauses": [
+        "Fan rölesi, sigorta veya kontrol modülü bağlantısı",
+        "Fan motoru devresinde açık veya kısa devre",
+        "Kumanda hattı ve konnektör arızası"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "U0140",
+      "title": "Gövde kontrol modülüyle iletişim kaybı",
+      "url": "https://www.obdkodu.com/ariza-kodlari/u0140/",
+      "category": "U",
+      "affectedSystem": "Araç ağı · BCM",
+      "summary": "Başka bir kontrol ünitesi gövde kontrol modülünden beklenen ağ mesajını alamadı. Kodun hangi modülde ve ne zaman kaydedildiği önemlidir.",
+      "explanation": "Başka bir kontrol ünitesi gövde kontrol modülünden beklenen ağ mesajını alamadı. Kodun hangi modülde ve ne zaman kaydedildiği önemlidir.",
+      "firstCheck": "Tüm modülleri tarayıp U0140 kaydının hangi modüllerde olduğunu belirle.",
+      "symptoms": [
+        "Merkezi kilit, aydınlatma veya gösterge işlevleri etkilenebilir.",
+        "Birden fazla iletişim kodu birlikte görülebilir."
+      ],
+      "possibleCauses": [
+        "BCM besleme, sigorta veya şasesinde sorun",
+        "CAN ağı bağlantısında kesinti",
+        "Düşük akü gerilimi veya modül arızası"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "C0050",
+      "title": "Sağ arka tekerlek hız sensörü devresi",
+      "url": "https://www.obdkodu.com/ariza-kodlari/c0050/",
+      "category": "C",
+      "affectedSystem": "ABS · sağ arka tekerlek",
+      "summary": "ABS modülü sağ arka tekerlek hız sinyalinin devresinde sorun algıladı. Sensör kadar poyra hedef halkası ve kablo güzergâhı da incelenir.",
+      "explanation": "ABS modülü sağ arka tekerlek hız sinyalinin devresinde sorun algıladı. Sensör kadar poyra hedef halkası ve kablo güzergâhı da incelenir.",
+      "firstCheck": "Dört tekerlek hızını düşük ve güvenli hızda aynı grafikte karşılaştır.",
+      "symptoms": [
+        "ABS veya denge kontrol lambası yanabilir.",
+        "Canlı veride sağ arka hız diğer tekerleklerden kopabilir."
+      ],
+      "possibleCauses": [
+        "Tekerlek yakınındaki kabloda kopma veya ezilme",
+        "Sensör ya da manyetik hedef halkasında hasar",
+        "Konnektörde nem veya temas sorunu"
+      ],
+      "sourceGroup": "OBDKODU editoryal rehberi"
+    },
+    {
+      "code": "P0345",
+      "title": "Eksantrik mili konum sensörü A devresi (Bank 2)",
+      "url": "https://www.obdkodu.com/ariza-kodlari/p0345/",
+      "category": "P",
+      "affectedSystem": "Motor · eksantrik konumu",
+      "summary": "Kontrol ünitesi Bank 2 eksantrik mili konum sensörü A devresinde arıza algıladı. Bank 2 yalnız birden fazla silindir bankası olan motorlarda anlamlıdır; araç yerleşimi doğrulanmalıdır.",
+      "explanation": "Kontrol ünitesi Bank 2 eksantrik mili konum sensörü A devresinde arıza algıladı. Bank 2 yalnız birden fazla silindir bankası olan motorlarda anlamlıdır; araç yerleşimi doğrulanmalıdır.",
+      "firstCheck": "Bank 2 ve sensör A konumunu araç servis verisiyle doğrula; eşlik eden krank/eksantrik kodlarını kaydet.",
+      "symptoms": [
+        "Marş uzayabilir veya motor tekleyebilir.",
+        "Motor arıza lambası ve güç kaybı görülebilir."
+      ],
+      "possibleCauses": [
+        "Sensör sinyali, beslemesi veya şasesinde sorun",
+        "Konnektör ve kabloda yağ/ısı hasarı",
+        "Zamanlama veya sinyal hedefi sorunu"
       ],
       "sourceGroup": "OBDKODU editoryal rehberi"
     }
