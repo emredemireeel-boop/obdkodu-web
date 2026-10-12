@@ -1,0 +1,6 @@
+[Unit]
+Description=Backup OBDKODU comments
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/bash /var/www/obdkoduwebb/deploy/backup-comments.sh

@@ -144,7 +144,8 @@ function adminPage(req, res, u) {
 }
 async function handle(req, res) {
   const u = new URL(req.url, 'http://localhost');
-  const forwarded = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim();
+  // Apache appends the connecting client as the last X-Forwarded-For value.
+  const forwarded = String(req.headers['x-forwarded-for'] || '').split(',').at(-1).trim();
   const ip = forwarded || req.socket.remoteAddress || 'unknown';
   if (req.method === 'GET' && /^\/assets\/[a-zA-Z0-9._/-]+$/.test(u.pathname)) {
     const assetRoot = path.join(dist, 'assets');

@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily OBDKODU comments backup
+
+[Timer]
+OnCalendar=*-*-* 03:30:00
+Persistent=true
+Unit=obdkodu-comments-backup.service
+
+[Install]
+WantedBy=timers.target
