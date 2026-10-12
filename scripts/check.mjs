@@ -58,6 +58,9 @@ const guideFeed=JSON.parse(fs.readFileSync(path.join(root,'api/guides.json'),'ut
 if(!guideFeed.guides.length || guideFeed.count!==guideFeed.guides.length)errors.push('Makine okunabilir rehber sayısı uyuşmuyor');
 for(const guide of guideFeed.guides)if(!urls.includes(guide.url))errors.push(`JSON rehber URL sitemap dışında: ${guide.url}`);
 const guideHub=fs.readFileSync(path.join(root,'ariza-kodlari/rehberler/index.html'),'utf8');
+const apacheRules=fs.readFileSync(path.join(root,'../deploy/apache-route-rules.conf'),'utf8');
+if(apacheRules.includes('127.0.0.1:3000'))errors.push('Eski site uygulamasına Apache geçişi hâlâ açık');
+if(!apacheRules.includes('[G,L,NC]'))errors.push('Karşılığı olmayan eski URL’ler 410 döndürmüyor');
 const hubLinks=[...guideHub.matchAll(/href="(\/ariza-kodlari\/[a-z0-9]{5}\/)">/g)].map(x=>x[1]);
 if(hubLinks.length!==guideFeed.count || new Set(hubLinks).size!==guideFeed.count)errors.push('Ayrıntılı rehber dizini tüm kodlara birer kez bağlanmıyor');
 for(const guide of guideFeed.guides){

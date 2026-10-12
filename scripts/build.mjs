@@ -384,15 +384,14 @@ const apacheRules=[
  'RewriteRule ^/yorum-yonetimi/(giris|sil|cikis)/?$ http://127.0.0.1:3101/yorum-yonetimi/$1 [P,L,NC]',
  ...guides.map(g=>`RewriteRule ^/kod/${g.code}/?$ /ariza-kodlari/${g.code.toLowerCase()}/ [R=301,L,NC]`),
  ...guides.map(g=>`RewriteRule ^/kod/${g.code}/.+$ /ariza-kodlari/${g.code.toLowerCase()}/ [R=301,L,NC]`),
- 'RewriteRule ^/kod/([PBCU][0-9A-F]{4})/.+$ /kod/$1 [R=301,L,NC]',
- 'RewriteRule ^/kod/([PBCU][0-9A-F]{4})/?$ http://127.0.0.1:3000/kod/$1 [P,L,NC]',
+ ...modelPages.map(m=>`RewriteRule ^/marka/${m.slug}/?$ /araclar/${m.slug}/ [R=301,L,NC]`),
  'RewriteRule ^/arama/?$ /ariza-kodlari/ [R=301,L,NC]',
  'RewriteRule ^/hakkinda/?$ /hakkimizda/ [R=301,L,NC]',
  'RewriteRule ^/kaynaklar-ve-metodoloji/?$ /yontem-ve-kaynaklar/ [R=301,L,NC]',
  'RewriteRule ^/gizlilik-politikasi/?$ /gizlilik/ [R=301,L,NC]',
  'RewriteRule ^/sistem/?$ /sistemler/ [R=301,L,NC]',
- 'RewriteRule ^/api/search/?$ http://127.0.0.1:3000/api/search [P,L,NC]',
- 'RewriteRule ^/(marka|gosterge-paneli|sistem|kullanim-kosullari|css|js|images)(/.*)?$ http://127.0.0.1:3000%{REQUEST_URI} [P,L,NC]',
+ '# Retired legacy pages without a close replacement must not remain indexable.',
+ 'RewriteRule ^/(kod|marka|gosterge-paneli|sistem|kullanim-kosullari|css|js|images|api/search)(/.*)?$ - [G,L,NC]',
  ''
 ];
 fs.writeFileSync(path.join(deployDir,'apache-route-rules.conf'),apacheRules.join('\n'));
