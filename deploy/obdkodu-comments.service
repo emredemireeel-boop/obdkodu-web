@@ -1,0 +1,21 @@
+[Unit]
+Description=OBDKODU code-page comments
+After=network.target
+
+[Service]
+Type=simple
+User=obdcomments
+Group=obdcomments
+WorkingDirectory=/var/www/obdkoduwebb
+EnvironmentFile=/etc/obdkodu-comments.env
+ExecStart=/usr/bin/node /var/www/obdkoduwebb/server/comments.mjs
+Restart=always
+RestartSec=2
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/obdkodu-comments
+
+[Install]
+WantedBy=multi-user.target
