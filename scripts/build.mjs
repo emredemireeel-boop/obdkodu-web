@@ -380,6 +380,7 @@ const redirectRows=[
 fs.writeFileSync(path.join(deployDir,'redirects.csv'),redirectRows.map(row=>row.join(',')).join('\n')+'\n');
 const apacheRules=[
  '# Apache server-context rules. Include after RewriteEngine On.',
+ 'RewriteRule ^/kod/P1000(/ford(/.*)?)?/?$ /rehber/ford-p1000-kodu/ [R=301,L,NC]',
  '# Consolidate case and slash variants before proxying code-page comments.',
  ...guides.flatMap(g=>[
    `RewriteCond %{REQUEST_URI} !^/ariza-kodlari/${g.code.toLowerCase()}/$`,

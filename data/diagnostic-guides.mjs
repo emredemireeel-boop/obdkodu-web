@@ -2,6 +2,21 @@
 // not as a statement of Turkish inspection rules or model-specific repair advice.
 export default [
   {
+    slug: 'ford-p1000-kodu',
+    title: 'Ford P1000 Kodu: OBD Hazırlık Testi Neden Tamamlanmadı?',
+    description: 'Ford P1000, hazırlık monitörleri ve kod silme ilişkisi. Hangi bilgileri kaydetmeli, ne zaman başka arıza kodlarına bakmalı? Kaynaklı açıklama.',
+    lead: 'Ford’un P1000 açıklaması, OBD izleme testlerinin tamamlanmadığını bildirir. Bu kayıt tek başına belirli bir parçanın bozulduğunu göstermez.',
+    sections: [
+      ['Hangi işlemlerden sonra görülebilir?', 'Ford servis kaynağı; akü veya motor kontrol ünitesi bağlantısının kesilmesini, kodların cihazla silinmesini ve izleme döngüsünün tamamlanmamasını olası bağlamlar arasında sayar. Son işlem geçmişini not edin.'],
+      ['Tekrar silmek çözüm mü?', 'Kod silme işlemi testlerin tamamlandığını kanıtlamaz. Cihazdaki readiness ekranından hangi monitörün tamamlanmadığını ve eşlik eden kodları kaydedin. Tek başına P1000 kaydına dayanarak sensör veya kontrol ünitesi sipariş etmeyin.'],
+      ['Kaç kilometrede kaybolur?', 'Her araca uygulanabilecek sabit kilometre sözü verilemez. Sürüş ve test koşulları araç sürümüne bağlıdır. Model yılına uygun üretici prosedürü kullanılmalı; güvenli sürüş koşulları zorlanmamalıdır.'],
+      ['Kaynağın sınırı ve muayene', 'Bağlantıdaki belge 1999 Ford PCED servis dokümanıdır; tüm yeni Ford modellerinin prosedürü veya Türkiye muayene mevzuatı olarak uygulanamaz. Marka, yıl, motor, modül, tüm kodlar ve readiness ekranıyla birlikte araca uygun güncel servis kaynağını kontrol edin.']
+    ],
+    sourceUrl: 'https://www.fordservicecontent.dealerconnection.com/pubs/content/~WVX2/~MUS~LEN/15/VX25112.HTM',
+    sourceText: 'Ford PCED (1999): P1000 ve OBD monitörlerinin tamamlanması',
+    related: ['/rehber/obd-readiness-hazir-degil/', '/rehber/kalici-obd-kodu/', '/kodlari-birlikte-yorumla/']
+  },
+  {
     slug: 'obd-cihazi-kod-gostermiyor',
     title: 'OBD cihazı kod göstermiyorsa ne kontrol edilir?',
     description: 'Motor veya ABS uyarısı varken OBD cihazı kod bulamıyor mu? Bağlantı hatası, yanlış modül ve kod durumu arasındaki farkı güvenli sırayla ayırın.',
