@@ -379,6 +379,11 @@ const redirectRows=[
 fs.writeFileSync(path.join(deployDir,'redirects.csv'),redirectRows.map(row=>row.join(',')).join('\n')+'\n');
 const apacheRules=[
  '# Apache server-context rules. Include after RewriteEngine On.',
+ '# Consolidate case and slash variants before proxying code-page comments.',
+ ...guides.flatMap(g=>[
+   `RewriteCond %{REQUEST_URI} !^/ariza-kodlari/${g.code.toLowerCase()}/$`,
+   `RewriteRule ^/ariza-kodlari/${g.code.toLowerCase()}/?$ /ariza-kodlari/${g.code.toLowerCase()}/ [R=301,L,NC]`
+ ]),
  'RewriteRule ^/ariza-kodlari/([PBCU][0-9A-F]{4})/?$ http://127.0.0.1:3101/ariza-kodlari/$1/ [P,L,NC]',
  'RewriteRule ^/yorumlar/ekle/?$ http://127.0.0.1:3101/yorumlar/ekle [P,L,NC]',
  'RewriteRule ^/yorum-yonetimi/?$ http://127.0.0.1:3101/yorum-yonetimi/ [P,L,NC]',
