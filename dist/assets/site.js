@@ -28,11 +28,12 @@
   const findCode = query => String(query || '').toUpperCase().match(/(?:^|[^A-Z0-9])([PBCU][0-9A-F]{1,4})(?![A-Z0-9])/)?.[1] || null;
   const featuredOrder = new Map(['P0420','P0300','P0171','P0128','P0442','P0700'].map((code,index)=>[code,index]));
   const familyOrder = { P:0, B:1, C:2, U:3 };
+  const codeGuidePath = code => code === 'P1000' ? '/rehber/ford-p1000-kodu/' : `/ariza-kodlari/${code.toLowerCase()}/`;
   let dataPromise;
   const getData = () => dataPromise ??= Promise.all([
     fetch('/assets/catalog.json').then(r => { if (!r.ok) throw new Error('Katalog yüklenemedi'); return r.json(); }),
     fetch('/assets/guide-codes.json').then(r => { if (!r.ok) throw new Error('Rehberler yüklenemedi'); return r.json(); })
-  ]).then(([catalog, codes]) => ({ catalog, codes: new Set(codes) }));
+  ]).then(([catalog, codes]) => ({ catalog, codes: new Set([...codes, 'P1000']) }));
 
   const homeForm = document.querySelector('[data-search-form]');
   if (homeForm) {
@@ -58,7 +59,7 @@
       suggestions.replaceChildren();
       for (const item of matches) {
         const link = document.createElement('a');
-        link.href = data.codes.has(item.code) ? `/ariza-kodlari/${item.code.toLowerCase()}/` : `/ariza-kodlari/?q=${encodeURIComponent(item.code)}`;
+        link.href = data.codes.has(item.code) ? codeGuidePath(item.code) : `/ariza-kodlari/?q=${encodeURIComponent(item.code)}`;
         const code = document.createElement('strong'); code.textContent = item.code;
         const label = document.createElement('span'); label.textContent = item.name;
         link.append(code,label); suggestions.append(link);
@@ -80,7 +81,7 @@
       try {
         const { codes } = await getData();
         const code = extracted || q.toUpperCase();
-        if (codes.has(code)) { location.href = `/ariza-kodlari/${code.toLowerCase()}/`; return; }
+        if (codes.has(code)) { location.href = codeGuidePath(code); return; }
       } catch { /* Directory remains reachable. */ }
       location.href = `/ariza-kodlari/?q=${encodeURIComponent(extracted || q)}`;
     });
@@ -114,7 +115,7 @@
           const match=data.catalog.find(item=>item.code===code);
           if(match){
             const note=document.createElement('p');note.className='vehicle-code-name';note.textContent=match.name;result.append(kicker,heading,note,desc);
-            actions.append(addLink(data.codes.has(code)?'Ayrıntılı kod rehberini aç':'Kod dizini kaydını aç',data.codes.has(code)?`/ariza-kodlari/${code.toLowerCase()}/`:`/ariza-kodlari/?q=${code}`));
+            actions.append(addLink(data.codes.has(code)?'Ayrıntılı kod rehberini aç':'Kod dizini kaydını aç',data.codes.has(code)?codeGuidePath(code):`/ariza-kodlari/?q=${code}`));
           } else {
             result.append(kicker,heading,desc);
             actions.append(addLink('Kodu dizinde ara',`/ariza-kodlari/?q=${code}`));
@@ -193,7 +194,7 @@
         const entry = document.createElement('div'); entry.className='catalog-entry';
         const row = document.createElement(hasGuide ? 'a' : 'button');
         row.className = `catalog-row${hasGuide ? ' has-guide' : ''}`;
-        if (hasGuide) row.href = `/ariza-kodlari/${item.code.toLowerCase()}/`;
+        if (hasGuide) row.href = codeGuidePath(item.code);
         else {row.type='button';row.setAttribute('aria-expanded','false');row.setAttribute('aria-controls',`entry-${item.code}`);}
         const code = document.createElement('strong'); code.textContent=item.code;
         const title = document.createElement('span'); title.textContent=item.name;
