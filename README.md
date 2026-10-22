@@ -17,7 +17,7 @@ Yerel önizleme `http://localhost:4173` adresindedir. Yayın için `dist/` klas�
 
 - `data/catalog.json`: 12.181 kodluk aranabilir dizin; 9.533 genel OBDex kodu ve önceki projeden yerel kayıtlar. 3.551 kayıt Türkçe ad taşır. Dizin kaydı, tek başına bir onarım önerisi değildir.
 - `data/guides.json`: Önceki projeden seçilmiş 57 Türkçe rehber.
-- `data/curated-guides.mjs`: Bu sürümde yeniden yazılmış 30 kod rehberi; 87 ayrıntılı sayfa üretilir.
+- `data/curated-guides.mjs`: Bu sürümde yeniden yazılmış 39 kod rehberi; 96 ayrıntılı kod sayfası üretilir.
 - `data/diagnostic-guides.mjs`: Cihazın kod göstermemesi ve readiness durumuna ilişkin kaynaklı teşhis rehberleri.
 - `data/live-pids.mjs`: OBDex CC0 Mode 01 listesinden seçilmiş 13 PID ve özgün Türkçe okuma notları.
 - `data/code-sections.mjs`: Seçilmiş kod rehberlerinin editoryal konu grupları; yeni rehber eklendiğinde her kodun tam bir gruba girmesi build sırasında doğrulanır.
@@ -34,7 +34,7 @@ Yeni kod rehberi eklemek için `data/curated-guides.mjs` içine dikkatle doğrul
 
 `/canli-veri/` seçilmiş Mode 01 PID'lerini açıklar ve Bank 1 STFT/LTFT değerlerini iki koşulda karşılaştırır. Araç veriyi sunucuya göndermez, evrensel arıza eşiği veya parça teşhisi üretmez. Aynı veri `/api/pids.json` üzerinden kaynak ve lisans bilgisiyle sunulur.
 
-`/ariza-kodlari/` tüm dizinde arama içindir. `/ariza-kodlari/rehberler/` seçilmiş 87 ayrıntılı rehberi sistemlere göre statik HTML bağlantılarıyla listeler; arama motorları ve JavaScript kullanmayan ziyaretçiler bütün rehberlere ulaşabilir.
+`/ariza-kodlari/` tüm dizinde arama içindir. `/ariza-kodlari/rehberler/` seçilmiş 96 ayrıntılı rehberi sistemlere göre statik HTML bağlantılarıyla listeler; arama motorları ve JavaScript kullanmayan ziyaretçiler bütün rehberlere ulaşabilir.
 
 ## SEO ve yayın kontrolü
 
@@ -53,3 +53,7 @@ Eski sitenin `/kod/P0420` benzeri adreslerini, marka ve gösterge sayfalarını 
 ## Kaynak ve editoryal yaklaşım
 
 Dizin ve rehber başlangıcı, aynı bilgisayardaki mevcut `obdkodu-web` projesinden alınmıştır. O proje, [OBDex](https://github.com/foerbsnavi/obdex) CC0 verisini de içerir. Sitedeki yöntem ve kaynak sayfası okuyucuya veri kapsamını açıklar. Tanı önerileri üretici servis prosedürünün yerine geçmez; kod genellikle arızalı parçayı değil, kontrol edilmesi gereken sistemi belirtir.
+
+### 22 Ekim 2026 SEO iyileştirmesi
+
+Ana sayfa ve ayrıntılı rehber dizininde altı belirti odaklı gezinme kartı bulunur. 96 kod sayfası kendi konu grubuna bağlantı verir. İçerik sorumlusu görünür olarak OBDKODU ile belirtilir; Article/TechArticle düğümleri aynı Organization kimliğini kullanır. Rehber dizininin ItemList verisi görünür kod listesiyle eşleşir. Uydurma yayın tarihi veya uzman unvanı kullanılmaz. Kontrol komutu, sayfalar arası bölüm bağlantılarının hedeflerini de doğrular.

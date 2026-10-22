@@ -35,6 +35,9 @@ for(const file of files){
   const target=path.resolve(root,'.'+href);
   if(target!==root && !target.startsWith(root+path.sep)){errors.push(`${file}: geçersiz yol ${href}`);continue;}
   if(!fs.existsSync(target) && !fs.existsSync(path.join(target,'index.html')))errors.push(`${file}: bozuk bağlantı ${href}`);
+  const fragment=match[1].split('#')[1];
+  const targetHtml=fs.existsSync(path.join(target,'index.html')) ? path.join(target,'index.html') : target.endsWith('.html') && fs.existsSync(target) ? target : null;
+  if(fragment && targetHtml && !fs.readFileSync(targetHtml,'utf8').includes(`id="${fragment}"`))errors.push(`${file}: hedef bölüm yok ${match[1]}`);
  }
  const ld=[...html.matchAll(/<script type="application\/ld\+json">([^<]+)<\/script>/g)];
  if(ld.length!==1)errors.push(`${file}: JSON-LD eksik veya fazla`);
@@ -62,7 +65,7 @@ const apacheRules=fs.readFileSync(path.join(root,'../deploy/apache-route-rules.c
 if(apacheRules.includes('127.0.0.1:3000'))errors.push('Eski site uygulamasına Apache geçişi hâlâ açık');
 if(!apacheRules.includes('[G,L,NC]'))errors.push('Karşılığı olmayan eski URL’ler 410 döndürmüyor');
 const hubLinks=[...guideHub.matchAll(/href="(\/ariza-kodlari\/[a-z0-9]{5}\/)">/g)].map(x=>x[1]);
-if(hubLinks.length!==guideFeed.count || new Set(hubLinks).size!==guideFeed.count)errors.push('Ayrıntılı rehber dizini tüm kodlara birer kez bağlanmıyor');
+if(new Set(hubLinks).size!==guideFeed.count)errors.push('Ayrıntılı rehber dizini tüm kodlara bağlanmıyor');
 for(const guide of guideFeed.guides){
  const route=new URL(guide.url).pathname;
  if(!hubLinks.includes(route))errors.push(`Rehber dizininde eksik kod: ${guide.code}`);
